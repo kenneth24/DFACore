@@ -22,8 +22,7 @@
             <div style="background-color: #217ff3;color: white;height: 35px;">
                 <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
             </div>
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div style="padding:10px;margin-top: -15px;">
+            <div style="padding:10px;">
                 <div class="form-group">
                     <label asp-for="FirstName"></label>
                     <input asp-for="FirstName" class="form-control" />
@@ -50,16 +49,29 @@
                     <div class="row col-md-12 col-sm-12">
                         <div class="col-md-6 col-sm-12">
                             <label asp-for="Gender"></label>
+                            @*<select asp-for="Gender" class="form-control" id="StudentGender" name="StudentGender">
+                                    <option>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                @Html.DropDownList("GenderList", new List<SelectListItem>
+                                {
+                                   new SelectListItem{ Text="Male", Value = "1" },
+                                   new SelectListItem{ Text="Female", Value = "2" },
+                                   new SelectListItem{ Text="Others", Value = "3" }
+                                })*@
                             <br />
-                            <input type="radio" asp-for="Gender" name="male" value="male" />
-                            <label for="male" style="padding-right: 20px;">Male</label>
-                            <input type="radio" asp-for="Gender" name="female" value="female" />
-                            <label for="female">Female</label>
-                            <span asp-validation-for="Gender" class="text-danger"></span>
+                            @Html.RadioButtonFor(m=> m.Gender, "Male") @Html.Label("Male")
+                            @Html.RadioButtonFor(m=> m.Gender, "Female") @Html.Label("Female")
+                            @*<input type="radio" asp-for="Gender" name="male" value="male" />
+                                <label for="male" style="padding-right: 20px;">Male</label>
+                                <input type="radio" asp-for="Gender" name="female" value="female" />
+                                <label for="female">Female</label>*@
+                                <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label asp-for="DateOfBirth"></label>
-                            <input asp-for="DateOfBirth" class="form-control" />
+                            <input type="date" asp-for="DateOfBirth" class="form-control" />
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
                     </div>
@@ -91,7 +103,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12 col-sm-12">
-                    <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;">Register</button>
+                    <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;" >@Html.ActionLink("Register","Register","Account",new { Model})</button>
                 </div>
             </div>
 
