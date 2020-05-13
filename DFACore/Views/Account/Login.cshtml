@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Log in";
 }
+<style>
+    .form-group {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+</style>
 <div class="jumbotron" style="background-color: white;margin-top: -70px;">
     <h5 class="text-center" style="color: #8080808a">WELCOME TO</h5>
     <h3 class="text-center" style="color: #858585">ONLINE APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h3>
@@ -20,23 +26,23 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div style="padding:10px">
                     <div class="form-group col-md-12 col-sm-12">
-                        <input asp-for="Email" class="form-control col-md-6 col-sm-6" placeholder="Email" style="font-size: 16px;text-align:center;margin-left:25%" />
+                        <input asp-for="Email" class="form-control" placeholder="Email" style="font-size: 16px;text-align:center;" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-md-12 col-sm12">
-                        <input asp-for="Password" class="form-control col-md-6 col-sm-6" placeholder="Password" style="font-size: 16px;text-align:center;margin-left:25%" />
+                    <div class="form-group col-md-12 col-sm-12" >
+                        <input asp-for="Password" class="form-control" placeholder="Password" style="font-size: 16px;text-align:center;" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-md-12 col-sm-12" style="text-align: center;margin-left:25%">
-                        <div class="checkbox col-md-6 col-sm-6" >
+                    <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
+                        <div class="checkbox " >
                             <label asp-for="RememberMe">
                                 <input asp-for="RememberMe" />
                                 @Html.DisplayNameFor(m => m.RememberMe)
                             </label>
                         </div>
                     </div>
-                    <div class="form-group col-md-12 col-sm-12" >
-                        <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%">Log in</button>
+                    <div class="form-group col-md-12 col-sm-12">
+                        <button type="submit" class="btn btn-primary col-md-12 col-sm-12">Log in</button>
                     </div>
                     <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
                         <h6>
