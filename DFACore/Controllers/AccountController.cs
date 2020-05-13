@@ -166,20 +166,12 @@ namespace DFACore.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        ///[ValidateAntiForgeryToken]
         public async Task<ActionResult> LogOff(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            if (returnUrl != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return LocalRedirect(returnUrl);
-            }
-            
+            return RedirectToAction("Login", "Acount");
         }
     }
 }
