@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using DFACore.Models;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using DFACore.Repository;
 
 namespace DFACore
 {
@@ -48,6 +49,8 @@ namespace DFACore
             services.AddMailKit(config =>{
                 config.UseMailKit(Configuration.GetSection("Email").Get<MailKitOptions>());
             });
+            services.Configure<ReCAPTCHASetting>(Configuration.GetSection("GoogleReCAPTCHA"));
+            services.AddTransient<GoogleCaptchaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
