@@ -1,4 +1,5 @@
 ﻿using DFACore.Models;
+using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,17 @@ namespace DFACore.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly GoogleCaptchaService _googleCaptchaService;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailService emailService)
+            IEmailService emailService,
+            GoogleCaptchaService googleCaptchaService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
+            _googleCaptchaService = googleCaptchaService;
         }
 
         [AllowAnonymous]
@@ -41,6 +45,14 @@ namespace DFACore.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            var googleReCaptcha = _googleCaptchaService.VerifyReCaptcha(model.Token);
+            if (!googleReCaptcha.Result.success && googleReCaptcha.Result.score <= 0.5)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid attempt.");
+                return View();
+            }
+
             if (ModelState.IsValid)
             {
                 //Copy data from RegisterViewModel to ApplicationUser

@@ -1,5 +1,8 @@
 ﻿
 @model DFACore.Models.RegisterViewModel;
+@using Microsoft.Extensions.Options
+@inject IOptions<DFACore.Models.ReCAPTCHASetting>  GoogleRecaptcha
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -14,9 +17,6 @@
         padding-left: 30px;
         padding-right: 30px;
     }
-    button a {
-       color: white;
-    }
 </style>
 <div class="row">
     <div class="col-md-3 col-sm-3"></div>
@@ -25,6 +25,7 @@
             <div style="background-color: #217ff3;color: white;height: 35px;">
                 <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
             </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div style="padding:10px;">
                 <div class="form-group">
                     <label asp-for="FirstName"></label>
@@ -64,13 +65,13 @@
                                    new SelectListItem{ Text="Others", Value = "3" }
                                 })*@
                             <br />
-                            @Html.RadioButtonFor(m=> m.Gender, "Male") @Html.Label("Male")
-                            @Html.RadioButtonFor(m=> m.Gender, "Female") @Html.Label("Female")
+                            @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
+                            @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
                             @*<input type="radio" asp-for="Gender" name="male" value="male" />
                                 <label for="male" style="padding-right: 20px;">Male</label>
                                 <input type="radio" asp-for="Gender" name="female" value="female" />
                                 <label for="female">Female</label>*@
-                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <label asp-for="DateOfBirth"></label>
@@ -96,7 +97,8 @@
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                @*Insert recaptcha here...*@
+                <input asp-for="Token" type="hidden" />
+                
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12" style="text-align: center;">
                         <input type="checkbox" name="verify" value="verify" />
@@ -106,7 +108,8 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12 col-sm-12">
-                    <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;" > @Html.ActionLink("Register","Register","Account",new { Model})</button>
+                    @*<button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;" >@Html.ActionLink("Register","Register","Account",new { Model})</button>*@
+                    <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;">Register</button>
                 </div>
             </div>
 
@@ -147,4 +150,14 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+                console.log(token);
+                $('#Token').val(token);
+            });
+        });
+    </script>
 }
