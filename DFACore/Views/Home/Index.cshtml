@@ -1,8 +1,124 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.ApplicantRecordViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h3>Hello @User.Identity.Name!</h3>
+<h3>@DateTime.Now</h3>
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <form method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <select asp-for="Title" class="form-control">
+                    <option value=""></option>
+                    <option value="Title 1">Title 1</option>
+                    <option value="Title 2">Title 2</option>
+                    <option value="Title 3">Title 3</option>
+                </select>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MiddleName"></label>
+                <input asp-for="MiddleName" class="form-control" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Suffix"></label>
+                <input asp-for="Suffix" class="form-control" />
+                <span asp-validation-for="Suffix" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactNumber"></label>
+                <input asp-for="ContactNumber" class="form-control" />
+                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CompanyName"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CountryDestination"></label>
+                <input asp-for="CountryDestination" class="form-control" />
+                <span asp-validation-for="CountryDestination" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOfRepresentative"></label>
+                <input asp-for="NameOfRepresentative" class="form-control" />
+                <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RepresentativeContactNumber"></label>
+                <input asp-for="RepresentativeContactNumber" class="form-control" />
+                <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+            </div>
+
+
+            @*Insert recaptcha here...*@
+
+            <div class="form-group">
+
+                <label class="form-check-label">
+                    <a href="#" data-toggle="modal" data-target="#apostileModal">
+                        Click here to select the document/s to be Apostillized
+                    </a>
+                </label>
+
+
+            </div>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+
+        </form>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Apostile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Body of modal...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

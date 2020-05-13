@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DFACore.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace DFACore.Models
 {
-    public class ApplicantRecord
+    public class ApplicantRecordViewModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
-
         [Required]
         [StringLength(100)]
         public string Title { get; set; }
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [StringLength(100)]
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [StringLength(100)]
         public string Suffix { get; set; }
@@ -30,22 +31,25 @@ namespace DFACore.Models
         public string Address { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Company / Office")]
         public string CompanyName { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Country of Destination")]
         public string CountryDestination { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Name of Authorized Representative")]
         public string NameOfRepresentative { get; set; }
         [Required]
         [StringLength(100)]
+        [Display(Name = "Contact Number")]
         public string RepresentativeContactNumber { get; set; }
- 
+        
         public string ApostileData { get; set; }
-        public DateTime DateCreated { get; set; }
-        public Guid CreatedBy { get; set; }
     }
 }

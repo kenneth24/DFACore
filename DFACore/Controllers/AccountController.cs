@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,25 @@ namespace DFACore.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailService _emailService;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+            else
+                return View();
         }
 
         [HttpPost]
@@ -46,14 +53,9 @@ namespace DFACore.Controllers
                     Gender = model.Gender,
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
-                    Email = model.Email
+                    Email = model.Email,
+                    Type = 0
                 };
-                //var user = new ApplicationUser
-                //{
-                    
-                //    UserName = model.Email,
-                //    Email = model.Email
-                //};
 
                 // Store user data in AspNetUsers database table
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -62,8 +64,12 @@ namespace DFACore.Controllers
                 // SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
+                    //_email.SendMail(user.Email, callbackUrl);
+                    await _emailService.SendAsync(model.Email, "Email Verification", $"<a href=\"{callbackUrl}\">Verify Email</a>", true);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("VerifyEmail");
                 }
 
                 // If there are any errors, add them to the ModelState object
@@ -78,17 +84,43 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult VerifyEmail()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl = null)
         {
             //LogOff();
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+            else
+                return View();
+
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -115,7 +147,7 @@ namespace DFACore.Controllers
                     await LogOff();
                     return RedirectToAction("Login");
                 }
-                return RedirectToPage(returnUrl);
+                return RedirectToAction("Index", "Home");
             }
 
             if (result.IsLockedOut)
