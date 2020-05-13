@@ -6,10 +6,12 @@
     <title>@ViewData["Title"] - DFACore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #217ff3 !important;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 fixed-top" style="background-color: #217ff3 !important;">
             <div class="container">
                 <div>
                     <img src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;"/>
@@ -41,7 +43,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" style="margin-top:100px;">
             @RenderBody()
         </main>
     </div>

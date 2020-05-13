@@ -53,24 +53,9 @@
                     <div class="row col-md-12 col-sm-12">
                         <div class="col-md-6 col-sm-12">
                             <label asp-for="Gender"></label>
-                            @*<select asp-for="Gender" class="form-control" id="StudentGender" name="StudentGender">
-                                    <option>Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                                @Html.DropDownList("GenderList", new List<SelectListItem>
-                                {
-                                   new SelectListItem{ Text="Male", Value = "1" },
-                                   new SelectListItem{ Text="Female", Value = "2" },
-                                   new SelectListItem{ Text="Others", Value = "3" }
-                                })*@
                             <br />
                             @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
                             @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
-                            @*<input type="radio" asp-for="Gender" name="male" value="male" />
-                                <label for="male" style="padding-right: 20px;">Male</label>
-                                <input type="radio" asp-for="Gender" name="female" value="female" />
-                                <label for="female">Female</label>*@
                             <span asp-validation-for="Gender" class="text-danger"></span>
                         </div>
                         <div class="col-md-6 col-sm-12">
@@ -97,8 +82,8 @@
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                <input asp-for="Token" type="hidden" />
-                
+                <input id="Token" asp-for="Token" type="hidden" />
+
                 <div class="form-group">
                     <div class="col-md-12 col-sm-12" style="text-align: center;">
                         <input type="checkbox" name="verify" value="verify" />

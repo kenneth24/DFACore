@@ -23,7 +23,7 @@
         width: 200px;
     }*/
     #documentList h6 {
-        font-weight:600;
+        font-weight: 600;
     }
 </style>
 
@@ -39,17 +39,17 @@
     @*<a asp-action="LogOff" asp-controller="Account">Logout</a>*@
     <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
         <li class="nav-item">
-            <a class="nav-link active" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
+            <a id="active" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
+            <a class="nav-link" onclick="Navigate('step-two',this)" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
+            <a class="nav-link" onclick="Navigate('step-three',this)" href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
         </li>
     </ul>
     <form method="post">
-        <div id="step-one" >
+        <div id="step-one" class="tabcontent">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
                     <h6>Name of the Document Owner</h6>
@@ -186,14 +186,14 @@
                 </div>
             </div>
         </div>
-        <div id="step-two" style="display:none">
+        <div id="step-two" style="display:none" class="tabcontent">
             <p>step 2</p>
         </div>
-        <div id="step-three" style="display:none">
+        <div id="step-three" style="display:none" class="tabcontent">
             <p>step 3</p>
         </div>
         <div style="margin-left: 25%;margin-right: 25%;">
-            <button type="submit" class="btn btn-primary col-md-4 col-sm-12">Next</button>
+            <button type="submit" class="btn  col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
             <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
         </div>
 
@@ -219,3 +219,28 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#active').click();
+        });
+        function Navigate(step,element) {
+            var i, tabcontent, tablinks;
+            tabcontent = $('.tabcontent');
+            //tabcontent.css("display", "none");
+            console.log(tabcontent.length);
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = $('.nav-link');
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+                tablinks[i].style.color = "gray";
+            }
+            element.style.backgroundColor = "#217ff3";
+            element.style.color = "white";
+            document.getElementById(step).style.display = "block";
+        }
+    </script>
+}
