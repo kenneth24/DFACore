@@ -25,6 +25,8 @@ namespace DFACore.Models
 
         [Required]
         public string Gender { get; set; }
+        [Required]
+        public int Type { get; set; }
 
         [Required]
         public DateTime DateOfBirth { get; set; }

@@ -27,8 +27,10 @@ namespace DFACore.Controllers
             _signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            
+            var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
             return View();
         }
         [AllowAnonymous]
