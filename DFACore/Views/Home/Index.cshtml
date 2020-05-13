@@ -3,122 +3,210 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
 
-<h3>Hello @User.Identity.Name!</h3>
-<h3>@DateTime.Now</h3>
-<a asp-action="LogOff" asp-controller="Account">Logout</a>
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <form method="post">
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+    .nav-item .active {
+        color: white;
+    }
 
+    div#application-form {
+        color: gray;
+    }
+
+    /*button {
+        width: 200px;
+    }*/
+    #documentList h6 {
+        font-weight:600;
+    }
+</style>
+
+<div id="application-form" style="border: 1px solid #b7b7b7; padding: 20px;height:auto">
+    <p style="margin-bottom: 2rem;">
+        <span class="float-left font-weight-bold">
+            @User.Identity.Name!
+        </span>
+        <span class="float-right">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    @*<a asp-action="LogOff" asp-controller="Account">Logout</a>*@
+    <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
+        <li class="nav-item">
+            <a class="nav-link active" href="#"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
+        </li>
+    </ul>
+    <form method="post">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="form-group">
-                <label asp-for="Title"></label>
-                <select asp-for="Title" class="form-control">
-                    <option value=""></option>
-                    <option value="Title 1">Title 1</option>
-                    <option value="Title 2">Title 2</option>
-                    <option value="Title 3">Title 3</option>
-                </select>
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <h6>Name of the Document Owner</h6>
+                <div class="row">
+                    <div class="col-md-2 col-sm-12">
+                        <label asp-for="Title"></label>
+                        <select asp-for="Title" class="form-control">
+                            <option value=""></option>
+                            <option value="Title 1">Title 1</option>
+                            <option value="Title 2">Title 2</option>
+                            <option value="Title 3">Title 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <label asp-for="MiddleName"></label>
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-1 col-sm-12">
+                        <label asp-for="Suffix"></label>
+                        <input asp-for="Suffix" class="form-control" />
+                        <span asp-validation-for="Suffix" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-
             <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MiddleName"></label>
-                <input asp-for="MiddleName" class="form-control" />
-                <span asp-validation-for="MiddleName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Suffix"></label>
-                <input asp-for="Suffix" class="form-control" />
-                <span asp-validation-for="Suffix" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ContactNumber"></label>
-                <input asp-for="ContactNumber" class="form-control" />
-                <span asp-validation-for="ContactNumber" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CompanyName"></label>
-                <input asp-for="CompanyName" class="form-control" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CountryDestination"></label>
-                <input asp-for="CountryDestination" class="form-control" />
-                <span asp-validation-for="CountryDestination" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-9 col-sm-12">
+                        <label asp-for="Address"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <label asp-for="ContactNumber"></label>
+                        <input asp-for="ContactNumber" class="form-control" />
+                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="NameOfRepresentative"></label>
-                <input asp-for="NameOfRepresentative" class="form-control" />
-                <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        <label asp-for="CompanyName"></label>
+                        <input asp-for="CompanyName" class="form-control" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <label asp-for="CountryDestination"></label>
+                        @* Change to drop down list of countries *@
+                        <input asp-for="CountryDestination" class="form-control" />
+                        <span asp-validation-for="CountryDestination" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-
             <div class="form-group">
-                <label asp-for="RepresentativeContactNumber"></label>
-                <input asp-for="RepresentativeContactNumber" class="form-control" />
-                <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <label asp-for="NameOfRepresentative"></label>
+                        <input asp-for="NameOfRepresentative" class="form-control" />
+                        <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-5 col-sm-12">
+                        <label asp-for="RepresentativeContactNumber"></label>
+                        <input asp-for="RepresentativeContactNumber" class="form-control" />
+                        <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
+        </div>
 
 
-            @*Insert recaptcha here...*@
-
-            <div class="form-group">
-
+        <div class="form-group">
+            <div class="col-12">
                 <label class="form-check-label">
-                    <a href="#" data-toggle="modal" data-target="#apostileModal">
+                    <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal">
                         Click here to select the document/s to be Apostillized
                     </a>
                 </label>
-
-
             </div>
-            <button type="submit" class="btn btn-primary">Confirm</button>
-
-        </form>
-
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Apostile</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        </div>
+        <div class="form-group">
+            <div class="col-12">
+                <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
+                <div style="background-color: #217ff3;color: white;height: 35px;">
+                    <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized:</p>
                 </div>
-                <div class="modal-body">
-                    Body of modal...
+                <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
+                    <div class="row">
+                        <div class="col-md-1 col-sm-12">
+                            <h6>1 doc/s</h6>
+                        </div>
+                        <div class="col-md-11 col-sm-12">
+                            <h6>Sample DOcument</h6>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <h6>1 doc/s</h6>
+                        </div>
+                        <div class="col-md-11 col-sm-12">
+                            <h6>Sample DOcument</h6>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <h6>1 doc/s</h6>
+                        </div>
+                        <div class="col-md-11 col-sm-12">
+                            <h6>Sample DOcument</h6>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <h6>1 doc/s</h6>
+                        </div>
+                        <div class="col-md-11 col-sm-12">
+                            <h6>Sample DOcument</h6>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <h6>1 doc/s</h6>
+                        </div>
+                        <div class="col-md-11 col-sm-12">
+                            <h6>Sample DOcument</h6>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <div style="margin-left: 25%;margin-right: 25%;">
+            <button type="submit" class="btn btn-primary col-md-4 col-sm-12">Next</button>
+            <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+        </div>
 
-                </div>
+    </form>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Apostile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Body of modal...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
             </div>
         </div>
     </div>

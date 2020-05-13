@@ -26,7 +26,7 @@ namespace DFACore.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        [AllowAnonymous]
+
         public async Task<IActionResult> Index()
         {
             
