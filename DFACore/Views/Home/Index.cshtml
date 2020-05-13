@@ -25,9 +25,14 @@
     #documentList h6 {
         font-weight: 600;
     }
+    #appointmentTime div {
+        margin-left:10px;
+    }
 </style>
 
-<div id="application-form" style="border: 1px solid #b7b7b7; padding: 20px;height:auto">
+<div id="application-form" style="        border: 1px solid #b7b7b7;
+        padding: 20px;
+        height: auto">
     <p style="margin-bottom: 2rem;">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
@@ -39,13 +44,13 @@
     @*<a asp-action="LogOff" asp-controller="Account">Logout</a>*@
     <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
         <li class="nav-item">
-            <a id="active" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
+            <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" onclick="Navigate('step-two',this)" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
+            <a id="stepTwoBtn" class="nav-link" onclick="Navigate('step-two',this)" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" onclick="Navigate('step-three',this)" href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
+            <a id="stepThreeBtn" class="nav-link" onclick="Navigate('step-three',this)" href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
         </li>
     </ul>
     <form method="post">
@@ -185,16 +190,139 @@
                     </div>
                 </div>
             </div>
+            <div style="margin-left: 25%;margin-right: 25%;">
+                <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+            </div>
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
-            <p>step 2</p>
+            <div class="row col-12">
+                <label>Processing Site:</label>
+                <input class="form-control" value="DFA - Office of the Consular Affairs" />
+            </div>
+            <div class="row col-12">
+                <label>Address</label>
+                <input class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
+            </div>            <hr />
+            <div class="row col-12" style="margin-top:10px;">
+                <div class="col-md-6 col-sm-12">
+                    <label>Select Date</label>
+                    <input class="form-control" type="date" />
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <label>Select Time</label>
+                    <div id="appointmentTime" style="border:1px solid #b7b7b7;height:auto;margin-left:10px;">
+                        @*@Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")*@
+                        <div class="col-12">
+                            <input type="radio" name="option1" />
+                            <label for="option1">8:00 AM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option2" />
+                            <label for="option2">9:00 AM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option3" />
+                            <label for="option3">10:00 AM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option4" />
+                            <label for="option4">11:00 AM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option5" />
+                            <label for="option5">12:00 PM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option6" />
+                            <label for="option6">1:00 PM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option7" />
+                            <label for="option7">2:00 PM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option8" />
+                            <label for="option8">3:00 PM</label>
+                        </div>
+                        <div class="col-12">
+                            <input type="radio" name="option9" />
+                            <label for="option9">4:00 PM</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div style="border:1px solid #b7b7b7;height:290px;margin-top: 32px;padding:10px;">
+                        <p>Selected Date and Time</p>
+                        <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
+                        <p>Processing Site</p>
+                        <p class="font-weight-bold">(Site and Address)</p>
+                        <div style="position: relative; top: 70px;">
+                            <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
+                            <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="step-three" style="display:none" class="tabcontent">
-            <p>step 3</p>
-        </div>
-        <div style="margin-left: 25%;margin-right: 25%;">
-            <button type="submit" class="btn  col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
-            <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+            <h6 class="font-weight-bold">Application Summary</h6>
+            <div class="row col-md-12">
+                <div class="col-md-4 col-sm-12">
+                    <span>Name of Applicant </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: Renz Roy Gososo</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Type of Document to be Apostillized </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: NBI Clearance</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Country of Destination</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: Philippines</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Date of Appointment</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: May 20, 2020</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Time</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: 2:00 PM</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Payment</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: PhP 500.00</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Appointment Code</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: MNL-321312312</span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <span>Processing Site</span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span>: DFA site and address</span>
+                </div>
+                <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+            </div>
+            <div style="margin-left: 25%;margin-right: 25%;">
+                <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Send to Email</button>
+            </div>
+            <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
         </div>
 
     </form>
@@ -223,13 +351,16 @@
     <script>
         $(document).ready(function () {
 
-            $('#active').click();
+            $('#stepOneBtn').click();
         });
-        function Navigate(step,element) {
+
+        //$('#nextBtn').click(function () {
+        //    $('#stepTwoBtn').click();
+        //});
+
+        function Navigate(step, element) {
             var i, tabcontent, tablinks;
             tabcontent = $('.tabcontent');
-            //tabcontent.css("display", "none");
-            console.log(tabcontent.length);
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
             }
