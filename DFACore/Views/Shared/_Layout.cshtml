@@ -9,24 +9,41 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #217ff3 !important;">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DFACore</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
+                @*<div class="container">
+                        <img src="~/logo.png" alt="Home" height="75" width="75" />
+                        <span style="color:#ffffffc9;font-size: 12px;position: relative;top: -20px;left: 15px;">REPUBLIC OF THE PHILIPPINES</span>
+                        <div style="background-color:#ffffffc9;height:2px;width: 424px;position: relative;top: -50px;left: 94px;"></div>
+                        <span style="color:#fffffffc;font-weight:bold;font-size: 24px;position: relative;top: -50px;left: 93px;">DEPARTMENT OF FOREIGN AFFAIRS</span>
+                        <span style="color: #ffffffc9;font-size: 12px;position: relative;top: -32px;left: -337px;">2330 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300</span>
+                    </div>*@
+                <div>
+                    <img src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;"/>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;">
+                            REPUBLIC OF THE PHILIPPINES
+                        </h6>
+                        <div style="background-color:#ffffffc9;height:2px;width: 424px;margin-top:-5px;"></div>
+                        <h3 style="color:#fffffffc;font-weight:bold;font-size: 24px; text-align:left;">
+                            DEPARTMENT OF FOREIGN AFFAIRS
+                        </h3>
+                        <h6 style="color:#fffffffc;font-size: 12px; text-align:left;margin-top: -10px;">
+                            2330 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300
+                        </h6>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                @*<div class="navbar-collapse collapse d-sm-inline-flex d-md-inline-flex flex-dm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link float-right" asp-area="" asp-controller="Home" asp-action="Index" style="color:#fffffffc;">ONLINE APOSTILLE APPLICATION & APPOINTMENT SYSTEM</a>
                         </li>
                     </ul>
-                </div>
+                </div>*@
             </div>
         </nav>
     </header>
@@ -36,11 +53,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - DFACore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - DFACore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
