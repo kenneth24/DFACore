@@ -3,89 +3,107 @@
 @{
     ViewData["Title"] = "Register";
 }
+<style>
+    #registrationForm label, #registrationForm input {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9a9a9a;
+    }
 
-<h1>@ViewData["Title"]</h1>
-
+    .form-group {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+</style>
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <h4>Create a new account.</h4>
-            <hr />
+    <div class="col-md-3 col-sm-3"></div>
+    <div class="col-md-6 col-sm-6">
+        <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7;height:auto; ">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
+            </div>
             <div asp-validation-summary="All" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MiddleName"></label>
-                <input asp-for="MiddleName" class="form-control" />
-                <span asp-validation-for="MiddleName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Suffix"></label>
-                <input asp-for="Suffix" class="form-control" />
-                <span asp-validation-for="Suffix" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Gender"></label>
-                <input asp-for="Gender" class="form-control" />
-                <span asp-validation-for="Gender" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="DateOfBirth"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Suffix"></label>
-                <input asp-for="Suffix" class="form-control" />
-                <span asp-validation-for="Suffix" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            @*Insert recaptcha here...*@
-
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="terms_and_condition">
-                    <label class="form-check-label" for="terms_and_condition">
-                        I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
-                    </label>
+            <div style="padding:10px;margin-top: -15px;">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
-                
+                <div class="form-group">
+                    <label asp-for="MiddleName"></label>
+                    <input asp-for="MiddleName" class="form-control" />
+                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Suffix"></label>
+                    <input asp-for="Suffix" class="form-control" />
+                    <span asp-validation-for="Suffix" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="row col-md-12 col-sm-12">
+                        <div class="col-md-6 col-sm-12">
+                            <label asp-for="Gender"></label>
+                            <br />
+                            <input type="radio" asp-for="Gender" name="male" value="male" />
+                            <label for="male" style="padding-right: 20px;">Male</label>
+                            <input type="radio" asp-for="Gender" name="female" value="female" />
+                            <label for="female">Female</label>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <label asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth" class="form-control" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                @*Insert recaptcha here...*@
+                <div class="form-group">
+                    <div class="col-md-12 col-sm-12" style="text-align: center;">
+                        <input type="checkbox" name="verify" value="verify" />
+                        <label class="form-check-label" for="terms_and_condition">
+                            I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12 col-sm-12">
+                    <button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;">Register</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+
 
         </form>
-   
+    </div>
+    <div class="col-md-3 col-sm-3"></div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+
+
     </div>
 
 
@@ -104,7 +122,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    
+
                 </div>
             </div>
         </div>
