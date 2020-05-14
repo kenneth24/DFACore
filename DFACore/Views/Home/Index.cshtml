@@ -206,56 +206,58 @@
                 <input class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
-                <div class="col-md-6 col-sm-12">
-                    <label>Select Date</label>
-                    @*<input class="form-control" type="date" />*@
-                    @*<div id="datetimepicker"></div>*@
-                    @Html.Partial("_CalendarPartial")
-                </div>
-                <div class="col-md-2 col-sm-12">
-                    <label>Select Time</label>
-                    <div id="appointmentTime" style="border:1px solid #b7b7b7;height:auto;margin-left:10px;">
-                        @*@Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")*@
-                        <div class="col-12">
-                            <input type="radio" name="option1" />
-                            <label for="option1">8:00 AM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option2" />
-                            <label for="option2">9:00 AM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option3" />
-                            <label for="option3">10:00 AM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option4" />
-                            <label for="option4">11:00 AM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option5" />
-                            <label for="option5">12:00 PM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option6" />
-                            <label for="option6">1:00 PM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option7" />
-                            <label for="option7">2:00 PM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option8" />
-                            <label for="option8">3:00 PM</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" name="option9" />
-                            <label for="option9">4:00 PM</label>
-                        </div>
+                <div class="col-md-8 col-sm-12">
+                    <div style="height:290px;border:1px solid #b7b7b7;padding: 10px;">
+                        <label>Select Available Schedule</label>
+                        @*<input class="form-control" type="date" />*@
+                        @*<div id="datetimepicker"></div>*@
+                        @*@Html.Partial("_CalendarPartial")*@
+                        <partial name="_CalendarPartial" />
                     </div>
                 </div>
+                @*<div class="col-md-2 col-sm-12">
+                        <label>Select Time</label>
+                        <div id="appointmentTime" style="border:1px solid #b7b7b7;height:auto;margin-left:10px;">
+                            <div class="col-12">
+                                <input type="radio" name="option1" />
+                                <label for="option1">8:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option2" />
+                                <label for="option2">9:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option3" />
+                                <label for="option3">10:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option4" />
+                                <label for="option4">11:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option5" />
+                                <label for="option5">12:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option6" />
+                                <label for="option6">1:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option7" />
+                                <label for="option7">2:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option8" />
+                                <label for="option8">3:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <input type="radio" name="option9" />
+                                <label for="option9">4:00 PM</label>
+                            </div>
+                        </div>
+                    </div>*@
                 <div class="col-md-4 col-sm-12">
-                    <div style="border:1px solid #b7b7b7;height:290px;margin-top: 32px;padding:10px;">
+                    <div style="border:1px solid #b7b7b7;height:290px;padding:10px;">
                         <p>Selected Date and Time</p>
                         <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
                         <p>Processing Site</p>
