@@ -11,7 +11,7 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: ['interaction', 'dayGrid'],
             header: {
-                right: 'prevYear,prev,next,nextYear today',
+                right: 'prevYear,prev,next,nextYear,today',
                 left: 'title',
                 //right: 'dayGridMonth,dayGridWeek,dayGridDay'
             },
@@ -78,6 +78,7 @@
         });
 
         calendar.render();
+        //$('.fc-view-container').show();
     });
 
 </script>
@@ -95,6 +96,9 @@
         margin: 0 auto;
         border:1px solid #b7b7b7;
         padding: 5px;
+    }
+    .fc-scroller {
+        height: auto !important;
     }
 </style>
 <div id='calendar'></div>
