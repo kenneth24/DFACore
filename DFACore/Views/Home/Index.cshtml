@@ -25,12 +25,13 @@
     #documentList h6 {
         font-weight: 600;
     }
+
     #appointmentTime div {
-        margin-left:10px;
+        margin-left: 10px;
     }
 </style>
 
-<div id="application-form" style="        border: 1px solid #b7b7b7;
+<div id="application-form" style=" border: 1px solid #b7b7b7;
         padding: 20px;
         height: auto">
     <p style="margin-bottom: 2rem;">
@@ -152,7 +153,7 @@
                 <div class="col-12">
                     <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
                     <div style="background-color: #217ff3;color: white;height: 35px;">
-                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized:</p>
+                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span>(Count)</span></p>
                     </div>
                     <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
                         <div class="row">
@@ -207,7 +208,9 @@
             <div class="row col-12" style="margin-top:10px;">
                 <div class="col-md-6 col-sm-12">
                     <label>Select Date</label>
-                    <input class="form-control" type="date" />
+                    @*<input class="form-control" type="date" />*@
+                    @*<div id="datetimepicker"></div>*@
+                    @Html.Partial("_CalendarPartial")
                 </div>
                 <div class="col-md-2 col-sm-12">
                     <label>Select Time</label>
@@ -352,6 +355,7 @@
         $(document).ready(function () {
 
             $('#stepOneBtn').click();
+
         });
 
         //$('#nextBtn').click(function () {
@@ -372,6 +376,9 @@
             element.style.backgroundColor = "#217ff3";
             element.style.color = "white";
             document.getElementById(step).style.display = "block";
+            if (step = "step-two") {
+                $('#datepicker').click();
+            }
         }
     </script>
 }
