@@ -43,6 +43,11 @@ namespace DFACore
             .AddDefaultTokenProviders();
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddSession(options => {
+            //    options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            //});
+
             services.AddControllersWithViews();
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddRazorPages();
@@ -71,10 +76,15 @@ namespace DFACore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //app.UseCookiePolicy();
+            //app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+         
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -118,9 +118,9 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl = null)
+        public async Task<ActionResult> Login(string returnUrl = null)
         {
-            //LogOff();
+            await LogOff();
             ViewBag.ReturnUrl = returnUrl;
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
