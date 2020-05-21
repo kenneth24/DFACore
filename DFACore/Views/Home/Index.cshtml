@@ -30,9 +30,9 @@
         margin-left: 10px;
     }
 
-    #step-one input{
+    #step-one input {
         text-transform: uppercase;
-        font-weight:500;
+        font-weight: 500;
     }
 </style>
 
@@ -143,9 +143,8 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label asp-for="CountryDestination"></label>
-                            <select asp-for="CountryDestination" class="form-control">
-                                <partial name="_CountriesPartial" />
-                            </select>
+                            @* Change to drop down list of countries *@
+                            <input asp-for="CountryDestination" class="form-control" />
                             <span asp-validation-for="CountryDestination" class="text-danger"></span>
                         </div>
                     </div>
@@ -219,15 +218,14 @@
                 </div>
             </div>
             <div style="margin-left: 25%;margin-right: 25%;">
-                <a id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;"> Next</a>
-                @*<button id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>*@
-                <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                <button  id="nextBtn" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                <button  class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>
             </div>
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
             <div class="row col-12">
                 <label asp-for="ProcessingSite"></label>
-                <input asp-for="ProcessingSite"  id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
+                <input asp-for="ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
             </div>
             <div class="row col-12">
                 <label asp-for="ProcessingSiteAddress"></label>
@@ -288,13 +286,13 @@
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
-                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" >
+                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" disabled>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
                         <div>
-                            <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
-                            <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                            <button  id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
+                            <button class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">@Html.ActionLink("Back", "Index")</button>
                         </div>
                     </div>
                 </div>
@@ -761,12 +759,13 @@
         $(document).ready(function () {
 
             $('#stepOneBtn').click();
-            $('#siteAndAddress').text($('#site').val().concat(' ',$('#address').val()));
+            $('#siteAndAddress').text($('#site').val().concat(' ', $('#address').val()));
+
+            $('.backBtn').click(function () {
+                $('#stepOneBtn').click();
+            });
         });
 
-        //$('#nextBtn').click(function () {
-        //    $('#stepTwoBtn').click();
-        //});
 
         function Navigate(step, element) {
             var i, tabcontent, tablinks;

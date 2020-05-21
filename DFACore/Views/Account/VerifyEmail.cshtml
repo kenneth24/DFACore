@@ -1,8 +1,32 @@
 ﻿
 @{
-    ViewData["Title"] = "VerifyEmail";
+    ViewData["Title"] = "Verify Email";
 }
-<div>
-    <h2>Verify Email</h2>
-    <h3>For added security, we need to verify your address. We've sent a verification link to </h3>
+<style>
+    button a {
+        color:white;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3 col-sm-0">
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div style="border: 1px solid #b7b7b7;height:auto;">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Verify email</p>
+            </div>
+            <div style="padding:30px;">
+                <h6>
+                    For added security, we need to verify your address. We sent a verification link to (email address)
+                </h6>
+                <p>
+                    If you do not receive it in 2 minutes, click <a href="#" style="color:#217ff3">SEND AGAIN</a>
+                </p>
+                <button type="submit" class="btn col-md-6 col-sm-6" style="background-color:#217ff3;position: relative;left: 120px;">@Html.ActionLink("OK", "Login")</button>
+                @*<button type="submit" class="btn btn-primary col-md-6 col-sm-12">@Html.ActionLink("Log In", "Login", "Account", new { Model })</button>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
 </div>

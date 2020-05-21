@@ -16,9 +16,11 @@
     #reg-info input {
         text-transform: uppercase;
     }
+
     #reg-account input {
-        text-transform:none !important;
+        text-transform: none !important;
     }
+
     .form-group {
         padding-left: 30px;
         padding-right: 30px;
@@ -53,7 +55,17 @@
 
                     <div class="form-group">
                         <label asp-for="Suffix"></label>
-                        <input asp-for="Suffix" class="form-control" />
+                        @*<input asp-for="Suffix" class="form-control" />*@
+                        <select asp-for="Suffix" class="form-control">
+                            <option value=""></option>
+                            <option value="JR.">JR.</option>
+                            <option value="SR.">SR.</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                        </select>
                         <span asp-validation-for="Suffix" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -87,7 +99,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="ConfirmPassword"></label>
-                        <input asp-for="ConfirmPassword" class="form-control"  id="reg-confirmpassword" />
+                        <input asp-for="ConfirmPassword" class="form-control" id="reg-confirmpassword" />
                         <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-confirmpassword float-right" style="position: relative;top: -24px;right: 10px;"></span>
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
@@ -125,17 +137,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Terms And Conditions</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Body of modal...
+                    Terms and conditions here...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+                    <button type="button" class="btn btn-primary float-left" data-dismiss="modal" style="background-color:#217ff3;color:white;width: 160px;margin-right: 85px;">Agree</button>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" style="background-color:white;color:#217ff3;width: 160px;margin-right: 26px;border: 1px solid #ababab;">Decline</button>
                 </div>
             </div>
         </div>
@@ -169,6 +181,9 @@
             var input = $("#reg-confirmpassword");
             input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
             console.log(input.attr('type'));
+        });
+         $('#reg-confirmpassword').on("cut copy paste",function(e) {
+                e.preventDefault();
         });
     </script>
 }
