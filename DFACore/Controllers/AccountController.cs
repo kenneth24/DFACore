@@ -172,7 +172,7 @@ namespace DFACore.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                ModelState.AddModelError("", "Invalid username or password.");
                 return View(model);
             }
 
