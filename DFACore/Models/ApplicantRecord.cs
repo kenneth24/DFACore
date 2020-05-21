@@ -29,22 +29,27 @@ namespace DFACore.Models
         [Required]
         public string Address { get; set; }
         [Required]
+        public string Nationality { get; set; }
+        [Required]
         [StringLength(100)]
         public string ContactNumber { get; set; }
-        [Required]
+
         [StringLength(100)]
         public string CompanyName { get; set; }
         [Required]
         [StringLength(100)]
         public string CountryDestination { get; set; }
-        [Required]
+
         [StringLength(100)]
         public string NameOfRepresentative { get; set; }
-        [Required]
+
         [StringLength(100)]
         public string RepresentativeContactNumber { get; set; }
- 
+        [Required]
         public string ApostileData { get; set; }
+        //[Required]
+        public DateTime ScheduleDate { get; set; }
+
         public DateTime DateCreated { get; set; }
         public Guid CreatedBy { get; set; }
     }
