@@ -47,6 +47,9 @@ namespace DFACore.Models
         public string RepresentativeContactNumber { get; set; }
         [Required]
         public string ApostileData { get; set; }
+
+        public string ProcessingSite { get; set; }
+        public string ProcessingSiteAddress { get; set; }
         //[Required]
         public DateTime ScheduleDate { get; set; }
 
