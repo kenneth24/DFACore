@@ -218,8 +218,8 @@
                 </div>
             </div>
             <div style="margin-left: 25%;margin-right: 25%;">
-                <button  id="nextBtn" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
-                <button  class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>
+                <button id="nextBtn" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                <button class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>
             </div>
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
@@ -291,74 +291,73 @@
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
                         <div>
-                            <button  id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
+                            <button id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
                             <button class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">@Html.ActionLink("Back", "Index")</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="step-three" style="display:none" class="tabcontent">
-            <h6 class="font-weight-bold">Application Summary</h6>
-            <div class="row col-md-12">
-                <div class="col-md-4 col-sm-12">
-                    <span>Name of Applicant </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: Renz Roy Gososo</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Type of Document to be Apostillized </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: NBI Clearance</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Country of Destination</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: Philippines</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Date of Appointment</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: May 20, 2020</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Time</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: 2:00 PM</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Payment</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: PhP 500.00</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Appointment Code</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: MNL-321312312</span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <span>Processing Site</span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span>: DFA site and address</span>
-                </div>
-                <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
-            </div>
-            <div style="margin-left: 25%;margin-right: 25%;">
-                <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Send to Email</button>
-            </div>
-            <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
-        </div>
-
     </form>
+    <div id="step-three" style="display:none" class="tabcontent">
+        <h6 class="font-weight-bold">Application Summary</h6>
+        <div class="row col-md-12">
+            <div class="col-md-4 col-sm-12">
+                <span>Name of Applicant </span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: Renz Roy Gososo</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Type of Document to be Apostillized </span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: NBI Clearance</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Country of Destination</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: Philippines</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Date of Appointment</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: May 20, 2020</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Time</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: 2:00 PM</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Payment</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: PhP 500.00</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Appointment Code</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: MNL-321312312</span>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <span>Processing Site</span>
+            </div>
+            <div class="col-md-8 col-sm-12">
+                <span>: DFA site and address</span>
+            </div>
+            <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+        </div>
+        <div style="margin-left: 25%;margin-right: 25%;">
+            <button type="submit" class="backBtn btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+            <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Send to Email</button>
+        </div>
+        <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
+    </div>
 </div>
 <!-- Modal -->
 <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true">
