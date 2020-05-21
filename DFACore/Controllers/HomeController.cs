@@ -20,7 +20,7 @@ namespace DFACore.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicantRecordRepository _applicantRepo;
 
-        public HomeController(ILogger<HomeController> logger, 
+        public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ApplicantRecordRepository applicantRepo)
@@ -38,12 +38,32 @@ namespace DFACore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(ApplicantRecord record, string returnUrl = null)
+        public IActionResult Index(ApplicantRecordViewModel record, string returnUrl = null)
         {
-            record.CreatedBy = new Guid(_userManager.GetUserId(User));
-            record.ApostileData = "Test only";
-            record.Nationality = "Filipino";
-            var result = _applicantRepo.Add(record);
+            var applicantRecord = new ApplicantRecord
+            {
+                Title = record.Title,
+                FirstName = record.FirstName,
+                MiddleName = record.MiddleName,
+                LastName = record.LastName,
+                Suffix = record.Suffix,
+                Address = record.Address,
+                Nationality = record.Nationality,
+                ContactNumber = record.ContactNumber,
+                CompanyName = record.CompanyName,
+                CountryDestination = record.CountryDestination,
+                NameOfRepresentative = record.NameOfRepresentative,
+                RepresentativeContactNumber = record.RepresentativeContactNumber,
+                ApostileData = "Test",
+                ProcessingSite = record.ProcessingSite,
+                ProcessingSiteAddress = record.ProcessingSiteAddress,
+                ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+                                       System.Globalization.CultureInfo.InvariantCulture),
+                CreatedBy = new Guid(_userManager.GetUserId(User))
+            };
+
+
+            var result = _applicantRepo.Add(applicantRecord);
             if (!result)
             {
                 ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");

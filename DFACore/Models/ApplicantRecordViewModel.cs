@@ -37,7 +37,7 @@ namespace DFACore.Models
         [StringLength(100)]
         [Display(Name = "Nationality")]
         public string Nationality { get; set; }
-        [Required]
+
         [StringLength(100)]
         [Display(Name = "Company / Office")]
         public string CompanyName { get; set; }
@@ -45,15 +45,23 @@ namespace DFACore.Models
         [StringLength(100)]
         [Display(Name = "Country of Destination")]
         public string CountryDestination { get; set; }
-        [Required]
+
         [StringLength(100)]
         [Display(Name = "Name of Authorized Representative")]
         public string NameOfRepresentative { get; set; }
-        [Required]
+
         [StringLength(100)]
         [Display(Name = "Contact Number")]
         public string RepresentativeContactNumber { get; set; }
         
         public string ApostileData { get; set; }
+        [Required]
+        [Display(Name = "Processing Site")]
+        public string ProcessingSite { get; set; }
+        [Required]
+        [Display(Name = "Address")]
+        public string ProcessingSiteAddress { get; set; }
+        [Required]
+        public string ScheduleDate { get; set; }
     }
 }

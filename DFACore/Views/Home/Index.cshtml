@@ -224,12 +224,12 @@
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
             <div class="row col-12">
-                <label>Processing Site:</label>
-                <input id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
+                <label asp-for="ProcessingSite"></label>
+                <input asp-for="ProcessingSite"  id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
             </div>
             <div class="row col-12">
-                <label>Address</label>
-                <input id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
+                <label asp-for="ProcessingSiteAddress"></label>
+                <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
                 <div class="col-md-8 col-sm-12">
@@ -286,7 +286,7 @@
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
-                        <input id="appointmentSchedule" class="font-weight-bold" disabled>
+                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" >
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
