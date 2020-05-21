@@ -143,8 +143,10 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label asp-for="CountryDestination"></label>
-                            @* Change to drop down list of countries *@
-                            <input asp-for="CountryDestination" class="form-control" />
+
+                            <select asp-for="CountryDestination" class="form-control">
+                                <partial name="_CountriesPartial" />
+                            </select>
                             <span asp-validation-for="CountryDestination" class="text-danger"></span>
                         </div>
                     </div>
