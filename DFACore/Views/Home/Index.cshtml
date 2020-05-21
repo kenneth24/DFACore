@@ -119,10 +119,12 @@
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
                         <div class="col-md-3 col-sm-12">
-                            @*<label asp-for="Nationality"></label>*@
-                            <label>Nationality</label>
-                            <input asp-for="ContactNumber" class="form-control" type="number" />
-                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                            <label asp-for="Nationality"></label>
+                            <select asp-for="Nationality" class="form-control">
+                                <option value=""></option>
+                                <option value="FILIPINO">FILIPINO</option>
+                            </select>
+                            <span asp-validation-for="Nationality" class="text-danger"></span>
                         </div>
 
                         <div class="col-md-3 col-sm-12">
