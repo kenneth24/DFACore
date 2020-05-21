@@ -26,23 +26,24 @@
                 <div style="background-color: #217ff3;color: white;height: 35px;">
                     <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
                 </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div style="padding:10px">
                     <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Email" class="form-control" placeholder="Email" style="font-size: 16px;text-align:center;" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-md-12 col-sm-12" >
+                    <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Password" class="form-control" placeholder="Password" style="font-size: 16px;text-align:center;" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     @*<div class="form-group col-md-12 col-sm-12" style="text-align: center;">
-                        <div class="checkbox " >
-                            <label asp-for="RememberMe">
-                                <input asp-for="RememberMe" />
-                                @Html.DisplayNameFor(m => m.RememberMe)
-                            </label>
-                        </div>
-                    </div>*@
+                <div class="checkbox " >
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>*@
                     <div class="form-group col-md-12 col-sm-12">
                         <button type="submit" class="btn btn-primary col-md-12 col-sm-12">@Html.ActionLink("Log In", "Login", "Account", new { Model })</button>
                     </div>

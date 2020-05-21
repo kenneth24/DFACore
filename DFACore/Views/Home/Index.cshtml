@@ -143,8 +143,9 @@
                         </div>
                         <div class="col-md-4 col-sm-12">
                             <label asp-for="CountryDestination"></label>
-                            @* Change to drop down list of countries *@
-                            <input asp-for="CountryDestination" class="form-control" />
+                            <select asp-for="CountryDestination" class="form-control">
+                                <partial name="_CountriesPartial" />
+                            </select>
                             <span asp-validation-for="CountryDestination" class="text-danger"></span>
                         </div>
                     </div>
@@ -218,7 +219,8 @@
                 </div>
             </div>
             <div style="margin-left: 25%;margin-right: 25%;">
-                <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                <a id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;"> Next</a>
+                @*<button id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>*@
                 <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
             </div>
         </div>
