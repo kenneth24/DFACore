@@ -29,9 +29,14 @@
     #appointmentTime div {
         margin-left: 10px;
     }
+
+    #step-one input{
+        text-transform: uppercase;
+        font-weight:500;
+    }
 </style>
 
-<div id="application-form" style=" border: 1px solid #b7b7b7;
+<div id="application-form" style="        border: 1px solid #b7b7b7;
         padding: 20px;
         height: auto">
     <p style="margin-bottom: 2rem;">
@@ -44,7 +49,7 @@
         <span class="float-right" style="padding-right:20px;">
             @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
         </span>
-    </p>   
+    </p>
     <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
         <li class="nav-item">
             <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
@@ -66,9 +71,9 @@
                             <label asp-for="Title"></label>
                             <select asp-for="Title" class="form-control">
                                 <option value=""></option>
-                                <option value="Title 1">Title 1</option>
-                                <option value="Title 2">Title 2</option>
-                                <option value="Title 3">Title 3</option>
+                                <option value="MR">MR.</option>
+                                <option value="MRS">MRS.</option>
+                                <option value="MRS">MS.</option>
                             </select>
                         </div>
                         <div class="col-md-3 col-sm-12">
@@ -201,15 +206,15 @@
         <div id="step-two" style="display:none" class="tabcontent">
             <div class="row col-12">
                 <label>Processing Site:</label>
-                <input class="form-control" value="DFA - Office of the Consular Affairs" />
+                <input id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
             </div>
             <div class="row col-12">
                 <label>Address</label>
-                <input class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
+                <input id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
                 <div class="col-md-8 col-sm-12">
-                    <div style="height:290px;border:1px solid #b7b7b7;padding: 10px;">
+                    <div style="border:1px solid #b7b7b7;padding: 10px;">
                         <label>Select Available Schedule</label>
                         @*<input class="form-control" type="date" />*@
                         @*<div id="datetimepicker"></div>*@
@@ -261,9 +266,11 @@
                 <div class="col-md-4 col-sm-12">
                     <div style="border:1px solid #b7b7b7;height:290px;padding:10px;">
                         <p>Selected Date and Time</p>
-                        <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
+                        @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
+                        <input id="appointmentSchedule" class="font-weight-bold" disabled>
                         <p>Processing Site</p>
-                        <p class="font-weight-bold">(Site and Address)</p>
+                        @*<p class="font-weight-bold">(Site and Address)</p>*@
+                        <input id="siteAndAddress" class="font-weight-bold" disabled>
                         <div style="position: relative; top: 70px;">
                             <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
                             <button type="submit" class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
