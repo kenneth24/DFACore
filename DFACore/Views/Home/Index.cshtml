@@ -39,10 +39,12 @@
             @User.Identity.Name
         </span>
         <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
             @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
         </span>
-    </p>
-    @*<a asp-action="LogOff" asp-controller="Account">Logout</a>*@
+    </p>   
     <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
         <li class="nav-item">
             <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
