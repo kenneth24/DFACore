@@ -16,7 +16,10 @@ namespace DFACore.Repository
         }
         public bool Add(ApplicantRecord applicantRecord)
         {
+            applicantRecord.DateCreated = DateTime.UtcNow;
+            
             _context.ApplicantRecords.Add(applicantRecord);
+            _context.SaveChanges();
             return true;
         }
 

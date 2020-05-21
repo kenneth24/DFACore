@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using DFACore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using DFACore.Repository;
 
 namespace DFACore.Controllers
 {
@@ -17,22 +18,41 @@ namespace DFACore.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicantRecordRepository _applicantRepo;
 
         public HomeController(ILogger<HomeController> logger, 
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            ApplicantRecordRepository applicantRepo)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
+            _applicantRepo = applicantRepo;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            
-            var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(ApplicantRecord record, string returnUrl = null)
+        {
+            record.CreatedBy = new Guid(_userManager.GetUserId(User));
+            record.ApostileData = "Test only";
+            record.Nationality = "Filipino";
+            var result = _applicantRepo.Add(record);
+            if (!result)
+            {
+                ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+            }
+            //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
+            return View();
+        }
+
+
         [AllowAnonymous]
         public IActionResult Privacy()
         {
