@@ -1,87 +1,10 @@
 ﻿<link href='~/lib/calendar/core/main.css' rel='stylesheet' />
 <link href='~/lib/calendar/daygrid/main.css' rel='stylesheet' />
+<link href='~/lib/calendar/timegrid/main.css' rel='stylesheet' />
 <script src='~/lib/calendar/core/main.js'></script>
 <script src='~/lib/calendar/interaction/main.js'></script>
 <script src='~/lib/calendar/daygrid/main.js'></script>
-<script>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['interaction', 'dayGrid'],
-            header: {
-                right: 'prevYear,prev,next,nextYear,today',
-                left: 'title',
-                //right: 'dayGridMonth,dayGridWeek,dayGridDay'
-            },
-            defaultDate: new Date(),
-            navLinks: true, // can click day/week names to navigate views
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-              {
-                title: 'All Day Event',
-                start: '2020-02-01'
-              },
-              {
-                title: 'Long Event',
-                start: '2020-02-07',
-                end: '2020-02-10'
-              },
-              {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-02-09T16:00:00'
-              },
-              {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-02-16T16:00:00'
-              },
-              {
-                title: 'Conference',
-                start: '2020-02-11',
-                end: '2020-02-13'
-              },
-              {
-                title: 'Meeting',
-                start: '2020-02-12T10:30:00',
-                end: '2020-02-12T12:30:00'
-              },
-              {
-                title: 'Lunch',
-                start: '2020-02-12T12:00:00'
-              },
-              {
-                title: 'Meeting',
-                start: '2020-02-12T14:30:00'
-              },
-              {
-                title: 'Happy Hour',
-                start: '2020-02-12T17:30:00'
-              },
-              {
-                title: 'Dinner',
-                start: '2020-02-12T20:00:00'
-              },
-              {
-                title: 'Birthday Party',
-                start: '2020-02-13T07:00:00'
-              },
-              {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2020-02-28'
-              }
-            ]
-        });
-
-        calendar.render();
-        //$('.fc-view-container').show();
-    });
-
-</script>
 <style>
 
     body {
@@ -94,11 +17,143 @@
     #calendar {
         max-width: 900px;
         margin: 0 auto;
-        border:1px solid #b7b7b7;
-        padding: 5px;
     }
+
     .fc-scroller {
         height: auto !important;
     }
+
+    span.fc-title {
+        color: white !important;
+        padding-left: 5px;
+    }
+
+    span.fc-time {
+        color: white !important;
+    }
 </style>
 <div id='calendar'></div>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+
+            plugins: ['interaction', 'dayGrid'],
+            header: {
+                //right: 'prevYear,prev,next,nextYear,today',
+                left: 'title',
+                //right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                right: 'dayGridDay,dayGridWeek,prev,next'
+            },
+            defaultView: 'dayGrid',
+            defaultDate: new Date(),
+            navLinks: true, // can click day/week names to navigate views
+            editable: true,
+            eventLimit: false, // allow "more" link when too many events
+            events: [
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 8:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 9:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 10:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 11:00:00'
+                },
+                {
+                    title: '0 slot/s available',
+                    start: '2020-05-14 12:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 13:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 14:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 15:00:00'
+                },
+                {
+                    title: '50 slot/s available',
+                    start: '2020-05-14 16:00:00'
+                },
+                //{
+                //    title: 'Long Event',
+                //    start: '2020-02-07',
+                //    end: '2020-02-10'
+                //},
+                //{
+                //    groupId: 999,
+                //    title: 'Repeating Event',
+                //    start: '2020-02-09T16:00:00'
+                //},
+                //{
+                //    groupId: 999,
+                //    title: 'Repeating Event',
+                //    start: '2020-02-16T16:00:00'
+                //},
+                //{
+                //    title: 'Conference',
+                //    start: '2020-02-11',
+                //    end: '2020-02-13'
+                //},
+                //{
+                //    title: 'Meeting',
+                //    start: '2020-02-12T10:30:00',
+                //    end: '2020-02-12T12:30:00'
+                //},
+                //{
+                //    title: 'Lunch',
+                //    start: '2020-02-12T12:00:00'
+                //},
+                //{
+                //    title: 'Meeting',
+                //    start: '2020-02-12T14:30:00'
+                //},
+                //{
+                //    title: 'Happy Hour',
+                //    start: '2020-02-12T17:30:00'
+                //},
+                //{
+                //    title: 'Dinner',
+                //    start: '2020-02-12T20:00:00'
+                //},
+                //{
+                //    title: 'Birthday Party',
+                //    start: '2020-02-13T07:00:00'
+                //},
+                //{
+                //    title: 'Click for Google',
+                //    url: 'http://google.com/',
+                //    start: '2020-02-28'
+                //}
+            ],
+            eventClick: function (info) {
+                alert('Event: ' + info.event.title);
+                alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                alert('View: ' + info.view.type);
+
+                // change the border color just for fun
+                info.el.style.borderColor = 'red';
+            }
+
+        });
+        calendar.render();
+        calendar.rerenderEvents();
+        //$('.fc-view-container').show();
+
+    });
+
+</script>
