@@ -13,6 +13,10 @@
         color: #9a9a9a;
     }
 
+    #registrationForm input {
+        text-transform: uppercase;
+    }
+
     .form-group {
         padding-left: 30px;
         padding-right: 30px;
@@ -21,7 +25,7 @@
 <div class="row">
     <div class="col-md-3 col-sm-3"></div>
     <div class="col-md-6 col-sm-6">
-        <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7;height:auto; ">
+        <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7; height: auto; ">
             <div style="background-color: #217ff3;color: white;height: 35px;">
                 <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
             </div>
@@ -73,7 +77,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Password"></label>
-                    <input asp-for="Password" class="form-control" />
+                    <input asp-for="Password" class="form-control" id="reg-password" />
+                    <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password float-right" style="position: relative;top: -24px;right: 10px;"></span>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -143,6 +148,14 @@
                 console.log(token);
                 $('#Token').val(token);
             });
+        });
+        $(document).on('click', '.toggle-password', function() {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#reg-password");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
         });
     </script>
 }
