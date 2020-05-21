@@ -183,7 +183,7 @@ namespace DFACore.Controllers
         public async Task<ActionResult> LogOff(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Acount");
+            return RedirectToAction("Login");
         }
     }
 }
