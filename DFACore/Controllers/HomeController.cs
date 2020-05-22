@@ -85,10 +85,13 @@ namespace DFACore.Controllers
         }
 
  
-        public ActionResult ValidateScheduleDate()
+        public ActionResult ValidateScheduleDate(string scheduleDate)
         {
+            var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+            var result = _applicantRepo.ValidateScheduleDate(date);
 
-            return Json(true);
+            return Json(result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

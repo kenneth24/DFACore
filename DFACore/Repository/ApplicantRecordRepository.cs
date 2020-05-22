@@ -51,7 +51,7 @@ namespace DFACore.Repository
         public bool ValidateScheduleDate(DateTime date)
         {
             var count = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count();
-            if (count <= 50)
+            if (count >= 50)
                 return false;
             else
                 return true;
