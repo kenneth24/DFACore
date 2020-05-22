@@ -95,6 +95,15 @@ namespace DFACore.Controllers
             return View(model);
         }
 
+        private async Task<string> SendEmailConfirmationTokenAsync(ApplicationUser user, string subject)
+        {
+            string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
+            await _emailService.SendAsync(user.Email, subject, $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>", true);
+            
+            return callbackUrl;
+        }
+
         [AllowAnonymous]
         public ActionResult VerifyEmail()
         {
@@ -138,34 +147,56 @@ namespace DFACore.Controllers
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
+
+                    // Uncomment to debug locally  
+                    // ViewBag.Link = callbackUrl;
+                    ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                                         + "The confirmation token has been resent to your email account.";
+                    return View("Error");
+                }
+            }
+
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
-                {
-                    if (!await _userManager.IsEmailConfirmedAsync(user))
-                    {
-                        await LogOff();
-                        return View("Error"); // verify first the email
-                    }
-                }
-                else
-                {
-                    await LogOff();
-                    return RedirectToAction("Login");
-                }
+                //var user = await _userManager.FindByEmailAsync(model.Email);
+                //if (user != null)
+                //{
+                //    if (!await _userManager.IsEmailConfirmedAsync(user))
+                //    {
+                //        await LogOff();
+                //        ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                //              + "The confirmation token has been resent to your email account.";
+                //        return View("Error"); // verify first the email
+                //    }
+                //}
+                //else
+                //{
+                //    await LogOff();
+                //    return RedirectToAction("Login");
+                //}
                 return RedirectToAction("Index", "Home");
             }
 
+            if (result.IsNotAllowed)
+            {
+                ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                              + "The confirmation token has been resent to your email account.";
+                return View("Error");
+            }
             if (result.IsLockedOut)
             {
                 return View("Lockout");
             }
-            if (result.RequiresTwoFactor)
+            else if (result.RequiresTwoFactor)
             {
                 return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
             }
@@ -184,6 +215,8 @@ namespace DFACore.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+        
     }
 }
 
