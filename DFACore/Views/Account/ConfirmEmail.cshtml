@@ -2,10 +2,28 @@
 @{
     ViewData["Title"] = "ConfirmEmail";
 }
-
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
+<style>
+    button a {
+        color: white;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3 col-sm-0">
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div style="border: 1px solid #b7b7b7;height:auto;">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Confirm email</p>
+            </div>
+            <div style="padding:30px;">
+                <p style="text-align:center;">
+                    Your account has been successfully created!
+                </p>
+                
+                <button type="submit" class="btn btn-primary col-md-6 col-sm-12" style="background-color:#217ff3;position: relative;left: 120px;">@Html.ActionLink("Proceed to Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
 </div>
