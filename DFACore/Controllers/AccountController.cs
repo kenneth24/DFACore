@@ -76,12 +76,14 @@ namespace DFACore.Controllers
                 // SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
-                    //_email.SendMail(user.Email, callbackUrl);
-                    await _emailService.SendAsync(model.Email, "Email Verification", $"<a href=\"{callbackUrl}\" style='background-color: #217ff3;color: white; '>Verify Email</a>", true);
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("VerifyEmail");
+
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
+                    ////_email.SendMail(user.Email, callbackUrl);
+                    //await _emailService.SendAsync(model.Email, "Email Verification", $"<a href=\"{callbackUrl}\" style='background-color: #217ff3;color: white; '>Verify Email</a>", true);
+                    ////await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("VerifyEmail", new { email = user.Email });
                 }
 
                 // If there are any errors, add them to the ModelState object
@@ -105,10 +107,35 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult VerifyEmail()
+        public ActionResult VerifyEmail(string email)
         {
+            if (!string.IsNullOrEmpty(email))
+            {
+                ViewData["Email"] = email;
+            }
             return View();
+
         }
+ 
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ResendEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
+                return RedirectToAction("VerifyEmail", new { email = user.Email });
+            }
+            else
+            {
+                ViewBag.errorMessage = "User email not found.";
+                return View("Error");
+            }
+            
+        }
+
+
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
