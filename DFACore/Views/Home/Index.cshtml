@@ -191,55 +191,15 @@
                                 <th>Document</th>
                             </tr>
                             <tbody>
-                                @*@if (Model == null)
-                                    {
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        @foreach (var item in Model.Documents)
-                                        {
-                                            <tr>
-                                                <td>@item.Quantity</td>
-                                                <td>@item.Name</td>
-                                            </tr>
-                                        }
-                                    }*@
                             </tbody>
                         </table>
-                        @*<div class="col-md-1 col-sm-12">
-                                <h6>1 doc/s</h6>
-                            </div>
-                            <div class="col-md-11 col-sm-12">
-                                <h6>Sample DOcument</h6>
-                            </div>
-                            <div class="col-md-1 col-sm-12">
-                                <h6>1 doc/s</h6>
-                            </div>
-                            <div class="col-md-11 col-sm-12">
-                                <h6>Sample DOcument</h6>
-                            </div>
-                            <div class="col-md-1 col-sm-12">
-                                <h6>1 doc/s</h6>
-                            </div>
-                            <div class="col-md-11 col-sm-12">
-                                <h6>Sample DOcument</h6>
-                            </div>
-                            <div class="col-md-1 col-sm-12">
-                                <h6>1 doc/s</h6>
-                            </div>
-                            <div class="col-md-11 col-sm-12">
-                                <h6>Sample DOcument</h6>
-                            </div>
-                            <div class="col-md-1 col-sm-12">
-                                <h6>1 doc/s</h6>
-                            </div>
-                            <div class="col-md-11 col-sm-12">
-                                <h6>Sample DOcument</h6>
-                            </div>*@
-
                     </div>
                 </div>
+                <div class="col-12">
+                    <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
+                    <span asp-validation-for="ApostileData" class="text-danger"></span>
+                </div>
+                
             </div>
             <button id="stepOneNextBtn" type="button" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;margin-left: 33.33%;margin-right: 33.33%;">Next</button>
 
@@ -838,8 +798,10 @@
                 //console.log(tbodyContent);
                 //$('#documentsTable tbody').append(tbodyContent);
                 $('#documentsCount').text(documentObject.length);
+                $('#apostileData').val(JSON.stringify(documentObject));
+                console.log(JSON.stringify(documentObject));
+                 var doc = new jsPDF();
 
-                var doc = new jsPDF();
                 var specialElementHandlers = {
                     '#editor': function (element, renderer) {
                         return true;
