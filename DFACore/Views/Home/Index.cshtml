@@ -75,6 +75,7 @@
                                 <option value="MRS">MRS.</option>
                                 <option value="MRS">MS.</option>
                             </select>
+                            <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <label asp-for="FirstName"></label>
@@ -242,7 +243,7 @@
                 </div>
             </div>
             <div style="margin-left: 25%;margin-right: 25%;">
-                <button id="nextBtn" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                <a id="nextBtn" onclick="GetValueOfTable()" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</a>
                 <button class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>
             </div>
         </div>
@@ -817,7 +818,8 @@
                         documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
                     }
                 });
-                console.log(documentObject);
+                //console.log(documentObject);
+                console.log(JSON.stringify(documentObject));
                 $.each(documentObject, function (index, value) {
                     $('#documentsTable tr:last').after('<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>'));
                 });
@@ -825,6 +827,7 @@
 
 
             });
+
         });
 
 
@@ -845,7 +848,19 @@
             if (step = "step-two") {
                 $('#datepicker').click();
             }
-        }
+        };
+
+        function GetValueOfTable() {
+            
+            //var obj;
+            //$('#documentsTable tr td').each(function () {
+            //    console.log($(this).html());
+                
+            //});
+            //console.log(JSON.stringify(obj));
+        };
+
+       
 
     </script>
 }

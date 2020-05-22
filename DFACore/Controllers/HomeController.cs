@@ -40,6 +40,11 @@ namespace DFACore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Index(ApplicantRecordViewModel record, string returnUrl = null)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(record);
+            }
+
             var applicantRecord = new ApplicantRecord
             {
                 Title = record.Title,
@@ -77,6 +82,13 @@ namespace DFACore.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+ 
+        public IActionResult ValidateScheduleDate()
+        {
+
+            return Ok(true);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
