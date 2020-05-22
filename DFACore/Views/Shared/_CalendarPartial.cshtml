@@ -49,7 +49,7 @@
         all_days.push({ start: new Date(pm).toISOString() });
         date.setDate(date.getDate() + 1);
     }
-    console.log(all_days);
+    //console.log(all_days);
 
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
@@ -75,10 +75,11 @@
                 $.ajax({
                     url: '@Url.Action("ValidateScheduleDate")',
                     type: 'GET',
+                    data: { scheduleDate: moment(info.event.start).format('MM/DD/YYYY hh:mm a') },
                     contentType: 'application/json; charset=utf-8',
                     data: {scheduleDate : info.event.start},
                     success: function (result) {
-                        console.log(result);
+                        console.log($('#appointmentSchedule').val());
                         if (result) {
                             $('#availableSchedMessage').show();
                         }
