@@ -75,7 +75,6 @@
                                 <option value="MRS">MRS.</option>
                                 <option value="MRS">MS.</option>
                             </select>
-                            <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="col-md-3 col-sm-12">
                             <label asp-for="FirstName"></label>
@@ -172,7 +171,7 @@
             <div class="form-group">
                 <div class="col-12">
                     <label class="form-check-label">
-                        <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal">
+                        <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn">
                             Click here to select the document/s to be Apostillized
                         </a>
                     </label>
@@ -182,7 +181,7 @@
                 <div class="col-12">
                     <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
                     <div style="background-color: #217ff3;color: white;height: 35px;">
-                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span>(Count)</span></p>
+                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
                     </div>
                     <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
 
@@ -193,19 +192,19 @@
                             </tr>
                             <tbody>
                                 @*@if (Model == null)
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    @foreach (var item in Model.Documents)
                                     {
-                                        <tr>
-                                            <td>@item.Quantity</td>
-                                            <td>@item.Name</td>
-                                        </tr>
+                                        return;
                                     }
-                                }*@
+                                    else
+                                    {
+                                        @foreach (var item in Model.Documents)
+                                        {
+                                            <tr>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Name</td>
+                                            </tr>
+                                        }
+                                    }*@
                             </tbody>
                         </table>
                         @*<div class="col-md-1 col-sm-12">
@@ -242,10 +241,11 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-left: 25%;margin-right: 25%;">
-                <a id="nextBtn" onclick="GetValueOfTable()" class="btn float-right col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Next</a>
-                <button class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>
-            </div>
+            <button id="stepOneNextBtn" type="button" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;margin-left: 33.33%;margin-right: 33.33%;">Next</button>
+
+
+            @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
+
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
             <div class="row col-12">
@@ -316,8 +316,8 @@
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
                         <div>
-                            <button id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Confirm</button>
-                            <button class="btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">@Html.ActionLink("Back", "Index")</button>
+                            <button type="button" class="btn btn-secondary  col-md-4 col-sm-12 backBtn" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                            <button id="nextBtn" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -773,8 +773,8 @@
             <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
         </div>
         <div style="margin-left: 25%;margin-right: 25%;">
-            <button type="submit" class="backBtn btn btn-secondary float-right col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-            <button type="submit" id="nextBtn" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;">Send to Email</button>
+            <button type="submit" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+            <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Send to Email</button>
         </div>
         <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
     </div>
@@ -789,8 +789,19 @@
             $('.backBtn').click(function () {
                 $('#stepOneBtn').click();
             });
-            $('#selectDocumentsBtn').click(function () {
+            $('#stepOneNextBtn').click(function () {
+                $('#stepTwoBtn').click();
+            });
+            $('#stepThreeBackBtn').click(function () {
+                $('#stepTwoBtn').click();
+                //$('#stepOneBtnContainer').hide();
+            });
+            $('#documentsCount').text(0);
+            $('#documentsSelectionBtn').click(function () {
                 //$("#documentsTable tbody").empty();
+            });
+
+            $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
                 $(':checkbox:checked').each(function (i) {
                     if ($(this).val() == "Professional Regulation Commission (PRC) document/s") {
@@ -818,16 +829,17 @@
                         documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
                     }
                 });
-                //console.log(documentObject);
-                console.log(JSON.stringify(documentObject));
+                $("#documentsTable tbody > tr").empty();
+                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th></tr>');
+                //var tbodyContent = '';
                 $.each(documentObject, function (index, value) {
                     $('#documentsTable tr:last').after('<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>'));
+                    //tbodyContent += '<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>');
                 });
-
-
-
+                //console.log(tbodyContent);
+                //$('#documentsTable tbody').append(tbodyContent);
+                $('#documentsCount').text(documentObject.length);
             });
-
         });
 
 
@@ -845,22 +857,7 @@
             element.style.backgroundColor = "#217ff3";
             element.style.color = "white";
             document.getElementById(step).style.display = "block";
-            if (step = "step-two") {
-                $('#datepicker').click();
-            }
-        };
-
-        function GetValueOfTable() {
-            
-            //var obj;
-            //$('#documentsTable tr td').each(function () {
-            //    console.log($(this).html());
-                
-            //});
-            //console.log(JSON.stringify(obj));
-        };
-
-       
+        }
 
     </script>
 }

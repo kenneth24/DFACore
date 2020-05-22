@@ -64,6 +64,6 @@ namespace DFACore.Models
         [Required]
         public string ScheduleDate { get; set; }
 
-        public List<ApostilleDocumentModel> Documents { get; set; }
+        //public List<ApostilleDocumentModel> Documents { get; set; }
     }
 }
