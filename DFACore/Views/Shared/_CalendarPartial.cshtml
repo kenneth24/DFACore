@@ -72,7 +72,21 @@
             events: all_days,
             eventClick: function (info) {
                 //console.log(info.event.start.getDate());
-                
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        console.log(result);
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                        }
+                        else {
+                            $('#unavailableSchedMessage').show();
+                        }
+                    }
+                    //data: JSON.stringify(person)
+                });
                 $('#appointmentSchedule').val(moment(info.event.start).format('MM/DD/YYYY hh:mm a'));
                 //alert('Event: ' + info.event.title);
                 //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
