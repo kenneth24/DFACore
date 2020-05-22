@@ -171,7 +171,7 @@
             <div class="form-group">
                 <div class="col-12">
                     <label class="form-check-label">
-                        <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal">
+                        <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn">
                             Click here to select the document/s to be Apostillized
                         </a>
                     </label>
@@ -181,7 +181,7 @@
                 <div class="col-12">
                     <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
                     <div style="background-color: #217ff3;color: white;height: 35px;">
-                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span>(Count)</span></p>
+                        <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span id="documentsCount">0</span></p>
                     </div>
                     <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
 
@@ -192,19 +192,19 @@
                             </tr>
                             <tbody>
                                 @*@if (Model == null)
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    @foreach (var item in Model.Documents)
                                     {
-                                        <tr>
-                                            <td>@item.Quantity</td>
-                                            <td>@item.Name</td>
-                                        </tr>
+                                        return;
                                     }
-                                }*@
+                                    else
+                                    {
+                                        @foreach (var item in Model.Documents)
+                                        {
+                                            <tr>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Name</td>
+                                            </tr>
+                                        }
+                                    }*@
                             </tbody>
                         </table>
                         @*<div class="col-md-1 col-sm-12">
@@ -788,8 +788,12 @@
             $('.backBtn').click(function () {
                 $('#stepOneBtn').click();
             });
-            $('#selectDocumentsBtn').click(function () {
+            $('#documentsCount').text(0);
+            $('#documentsSelectionBtn').click(function () {
                 //$("#documentsTable tbody").empty();
+            });
+
+            $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
                 $(':checkbox:checked').each(function (i) {
                     if ($(this).val() == "Professional Regulation Commission (PRC) document/s") {
@@ -817,13 +821,16 @@
                         documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
                     }
                 });
-                console.log(documentObject);
+                $("#documentsTable tbody > tr").empty();
+                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th></tr>');
+                //var tbodyContent = '';
                 $.each(documentObject, function (index, value) {
                     $('#documentsTable tr:last').after('<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>'));
+                    //tbodyContent += '<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>');
                 });
-
-
-
+                //console.log(tbodyContent);
+                //$('#documentsTable tbody').append(tbodyContent);
+                $('#documentsCount').text(documentObject.length);
             });
         });
 

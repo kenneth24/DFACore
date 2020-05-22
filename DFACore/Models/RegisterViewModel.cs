@@ -14,7 +14,7 @@ namespace DFACore.Models
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Middle Name")]
+        [Display(Name = "Middle Name (optional)")]
         public string MiddleName { get; set; }
 
         [Required]
