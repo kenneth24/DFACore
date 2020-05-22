@@ -312,6 +312,8 @@
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" disabled>
+                        <p id="availableSchedMessage"class="text-success font-weight-bold"  style="margin-top:10px;display:none;">Schedule available</p>
+                        <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
@@ -840,6 +842,7 @@
                 //$('#documentsTable tbody').append(tbodyContent);
                 $('#documentsCount').text(documentObject.length);
             });
+
         });
 
 

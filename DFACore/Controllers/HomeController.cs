@@ -85,10 +85,10 @@ namespace DFACore.Controllers
         }
 
  
-        public IActionResult ValidateScheduleDate()
+        public ActionResult ValidateScheduleDate()
         {
 
-            return Ok(true);
+            return Json(true);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
