@@ -85,7 +85,7 @@ namespace DFACore.Controllers
         }
 
  
-        public ActionResult ValidateScheduleDate()
+        public ActionResult ValidateScheduleDate(string scheduleDate)
         {
 
             return Json(true);

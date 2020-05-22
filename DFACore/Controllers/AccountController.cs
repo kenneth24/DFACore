@@ -79,7 +79,7 @@ namespace DFACore.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
                     //_email.SendMail(user.Email, callbackUrl);
-                    await _emailService.SendAsync(model.Email, "Email Verification", $"<a href=\"{callbackUrl}\" style='background-color: #217ff3;color: white; '>Verify Email</a>", true);
+                    await _emailService.SendAsync(model.Email, "Email Verification", $"<a href=\"{callbackUrl}\" '>Verify Email</a>", true);
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("VerifyEmail");
                 }
