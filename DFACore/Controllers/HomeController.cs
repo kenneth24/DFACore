@@ -59,7 +59,7 @@ namespace DFACore.Controllers
                 CountryDestination = record.CountryDestination,
                 NameOfRepresentative = record.NameOfRepresentative,
                 RepresentativeContactNumber = record.RepresentativeContactNumber,
-                ApostileData = "Test",
+                ApostileData = record.ApostileData,
                 ProcessingSite = record.ProcessingSite,
                 ProcessingSiteAddress = record.ProcessingSiteAddress,
                 ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
