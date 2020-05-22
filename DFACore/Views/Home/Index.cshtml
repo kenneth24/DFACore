@@ -312,7 +312,7 @@
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" disabled>
-                        <p id="availableSchedMessage"class="text-success font-weight-bold"  style="margin-top:10px;display:none;">Schedule available</p>
+                        <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
@@ -776,7 +776,7 @@
         </div>
         <div style="margin-left: 25%;margin-right: 25%;">
             <button type="submit" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-            <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Send to Email</button>
+            <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
         </div>
         <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
     </div>
@@ -799,9 +799,6 @@
                 //$('#stepOneBtnContainer').hide();
             });
             $('#documentsCount').text(0);
-            $('#documentsSelectionBtn').click(function () {
-                //$("#documentsTable tbody").empty();
-            });
 
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
@@ -841,7 +838,18 @@
                 //console.log(tbodyContent);
                 //$('#documentsTable tbody').append(tbodyContent);
                 $('#documentsCount').text(documentObject.length);
+
+                var doc = new jsPDF();
+                var specialElementHandlers = {
+                    '#editor': function (element, renderer) {
+                        return true;
+                    }
+                };
+                $('#sendPdfToEmail').click(function () {
+                    //$("#documentsTable tbody").empty();
+                });
             });
+
 
         });
 
