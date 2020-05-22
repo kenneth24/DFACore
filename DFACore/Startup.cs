@@ -37,6 +37,9 @@ namespace DFACore
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 8;
                 options.SignIn.RequireConfirmedAccount = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
