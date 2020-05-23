@@ -3,10 +3,13 @@ using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace DFACore.Controllers
@@ -102,7 +105,7 @@ namespace DFACore.Controllers
             string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
             await _emailService.SendAsync(user.Email, subject, $"Please confirm your account by clicking <a href=\"{callbackUrl}\">here</a>", true);
-            
+
             return callbackUrl;
         }
 
@@ -116,7 +119,7 @@ namespace DFACore.Controllers
             return View();
 
         }
- 
+
 
         [AllowAnonymous]
         public async Task<ActionResult> ResendEmail(string email)
@@ -132,7 +135,7 @@ namespace DFACore.Controllers
                 ViewBag.errorMessage = "User email not found.";
                 return View("Error");
             }
-            
+
         }
 
 
@@ -235,6 +238,108 @@ namespace DFACore.Controllers
 
         }
 
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return RedirectToPage("./ForgotPasswordConfirmation");
+                }
+
+                // For more information on how to enable account confirmation and password reset please 
+                // visit https://go.microsoft.com/fwlink/?LinkID=532713
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Action(
+                    "ResetPassword",
+                    "Account",
+                    new { email = model.Email, code },
+                    protocol: Request.Scheme);
+
+                //var callbackUrl2 = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
+
+                await _emailService.SendAsync(
+                    model.Email,
+                    "Reset Password",
+                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+
+            return View();
+
+        }
+
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string code = null, string email = null)
+        {
+            if (code == null || email == null)
+            {
+                ViewBag.errorMessage = "A code must be supplied for password reset.";
+                return View("Error");
+            }
+            else
+                return View();
+            
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            model.Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(model.Code));
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation()
+        {
+
+            return View();
+
+        }
+
+
         //[HttpPost]
         ///[ValidateAntiForgeryToken]
         public async Task<ActionResult> LogOff(string returnUrl = null)
@@ -243,7 +348,7 @@ namespace DFACore.Controllers
             return RedirectToAction("Login");
         }
 
-        
+
     }
 }
 
