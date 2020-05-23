@@ -859,6 +859,11 @@
             element.style.backgroundColor = "#217ff3";
             element.style.color = "white";
             document.getElementById(step).style.display = "block";
+            if (step == "step-one") {
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
+            }
         }
 
     </script>
