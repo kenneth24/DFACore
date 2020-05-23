@@ -77,7 +77,6 @@
                     type: 'GET',
                     data: { scheduleDate: moment(info.event.start).format('MM/DD/YYYY hh:mm a') },
                     contentType: 'application/json; charset=utf-8',
-                    data: {scheduleDate : info.event.start},
                     success: function (result) {
                         console.log($('#appointmentSchedule').val());
                         if (result) {

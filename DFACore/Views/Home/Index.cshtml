@@ -35,7 +35,6 @@
         font-weight: 500;
     }
 </style>
-
 <div id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
         height: auto">
@@ -199,7 +198,7 @@
                     <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
                     <span asp-validation-for="ApostileData" class="text-danger"></span>
                 </div>
-                
+
             </div>
             <button id="stepOneNextBtn" type="button" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;margin-left: 33.33%;margin-right: 33.33%;">Next</button>
 
@@ -682,6 +681,7 @@
         </div>
     </div>
     <div id="step-three" style="display:none" class="tabcontent">
+        <div id="editor"></div>
         <h6 class="font-weight-bold">Application Summary</h6>
         <div class="row col-md-12">
             <div class="col-md-4 col-sm-12">
@@ -742,6 +742,9 @@
     </div>
 </div>
 @section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -800,18 +803,38 @@
                 $('#documentsCount').text(documentObject.length);
                 $('#apostileData').val(JSON.stringify(documentObject));
                 console.log(JSON.stringify(documentObject));
-                 var doc = new jsPDF();
-
-                var specialElementHandlers = {
-                    '#editor': function (element, renderer) {
-                        return true;
-                    }
-                };
-                $('#sendPdfToEmail').click(function () {
-                    //$("#documentsTable tbody").empty();
-                });
             });
 
+
+            var doc = new jsPDF();
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+            $('#sendPdfToEmail').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GeneratePdf")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {html : JSON.stringify("<h1>Hello World</h1>")}
+                    //success: function (result) {
+                    //    console.log($('#appointmentSchedule').val());
+                    //    if (result) {
+                    //        $('#availableSchedMessage').show();
+                    //    }
+                    //    else {
+                    //        $('#unavailableSchedMessage').show();
+                    //    }
+                    //}
+                });
+                //doc.fromHTML($('#step-three').html(), 30, 30, {
+                //    'width': 550,
+                //    'elementHandlers': specialElementHandlers
+                //});
+                //doc.save('sample-file.pdf');
+            });
 
         });
 

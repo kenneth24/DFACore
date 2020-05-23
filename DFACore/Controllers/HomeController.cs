@@ -99,5 +99,11 @@ namespace DFACore.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public void GeneratePdf(string html) {
+            //var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
+            //var pdfBytes = htmlToPdf.GeneratePdf(html);
+
+            //htmlToPdf.GeneratePdf(html, null, "qrCode.pdf");
+        }
     }
 }
