@@ -217,7 +217,7 @@
                 <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
-                <div class="col-md-8 col-sm-12">
+                <div class="col-md-6 col-sm-12">
                     <div style="border:1px solid #b7b7b7;padding: 10px;">
                         <label>Select Available Schedule</label>
                         @*<input class="form-control" type="date" />*@
@@ -226,47 +226,41 @@
                         <partial name="_CalendarPartial" />
                     </div>
                 </div>
-                @*<div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12">
+                    <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <label>Select Time</label>
-                        <div id="appointmentTime" style="border:1px solid #b7b7b7;height:auto;margin-left:10px;">
-                            <div class="col-12">
-                                <input type="radio" name="option1" />
-                                <label for="option1">8:00 AM</label>
+                        <div id="appointmentTime" style="height:auto;">
+                            <div class="col-12 radio">
+                                <label><input type="radio" name="option1" value="8:00" checked/> 8:00 AM</label>
+                            </div>
+                            <div class="col-12 radio">
+                                <label><input type="radio" name="option1" value="9:00" /> 9:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option2" />
-                                <label for="option2">9:00 AM</label>
+                                
+                                <label><input type="radio" name="option1" value="10:00" /> 10:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option3" />
-                                <label for="option3">10:00 AM</label>
+                                <label><input type="radio" name="option1" value="11:00" /> 11:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option4" />
-                                <label for="option4">11:00 AM</label>
+                                <label><input type="radio" name="option1" value="12:00" /> 12:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option5" />
-                                <label for="option5">12:00 PM</label>
+                                <label><input type="radio" name="option1" value="13:00" /> 1:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option6" />
-                                <label for="option6">1:00 PM</label>
+                                <label><input type="radio" name="option1" value="14:00" /> 2:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option7" />
-                                <label for="option7">2:00 PM</label>
+                                <label><input type="radio" name="option1" value="15:00" /> 3:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option8" />
-                                <label for="option8">3:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <input type="radio" name="option9" />
-                                <label for="option9">4:00 PM</label>
+                                <label><input type="radio" name="option1" value="16:00" /> 4:00 PM</label>
                             </div>
                         </div>
-                    </div>*@
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-12">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
@@ -804,6 +798,10 @@
                 $('#documentsCount').text(documentObject.length);
                 $('#apostileData').val(JSON.stringify(documentObject));
                 console.log(JSON.stringify(documentObject));
+
+                $(':radio:checked').each(function (i) {
+                    $('#appointmentSchedule').val($('#appointmentSchedule').val().concat(' ',$(this).val()));
+                });
             });
 
 

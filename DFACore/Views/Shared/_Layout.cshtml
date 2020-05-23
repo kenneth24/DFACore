@@ -9,26 +9,52 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <style>
+        .navbar-toggler {
+            display: none
+        }
 
+        @@media screen and (min-width: 601px) {
+            div.example {
+                font-size: 80px;
+            }
+        }
+
+        /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+        @@media screen and (max-width: 600px) {
+            /*#BannerLogo {
+                display: none;
+            }*/
+            #dfaTitle {
+                font-size: 15px;
+                margin-top: 5px;
+            }
+
+            #dfaAddress {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 fixed-top" style="background-color: #217ff3 !important;">
             <div class="container">
                 <div id="dfa-banner">
-                    <img id="BannerLogo" src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;" />
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;">
-                            REPUBLIC OF THE PHILIPPINES
-                        </h6>
-                        <div style="background-color:#ffffffc9;height:2px;width: 470px;margin-top:-5px;"></div>
-                        <h3 style="color:#fffffffc;font-weight:bold;font-size: 24px; text-align:left;">
-                            DEPARTMENT OF FOREIGN AFFAIRS
-                        </h3>
-                        <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;margin-top: -10px;">
-                            2330 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300
-                        </h6>
-                    </a>
+                    <img src="~/Banner.png" class="img-fluid" style="width:50%" />
+                    @*<img id="BannerLogo" src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;" />
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;">
+                                REPUBLIC OF THE PHILIPPINES
+                            </h6>
+                            <div style="background-color:#ffffffc9;height:2px;width: 470px;margin-top:-5px;"></div>
+                            <h3 style="color:#fffffffc;font-weight:bold;font-size: 24px; text-align:left;">
+                                DEPARTMENT OF FOREIGN AFFAIRS
+                            </h3>
+                            <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;margin-top: -10px;">
+                                2330 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300
+                            </h6>
+                        </a>*@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
