@@ -108,7 +108,11 @@
                         }
                     }
                 });*@
-                $('#appointmentSchedule').val(moment(info.event.start).format('MM/DD/YYYY'));
+                $('#appointmentDate').text(moment(info.event.start).format('MM/DD/YYYY'));
+                $('#selectTimeContainer').css('z-index','1');
+                $('#selectTimeContainer').css('opacity','1');
+                //z-index: -1; opacity: 0.5;
+
                 //alert('Event: ' + info.event.title);
                 //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
                 //alert('View: ' + info.view.type);

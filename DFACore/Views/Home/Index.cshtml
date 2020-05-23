@@ -37,8 +37,8 @@
 </style>
 <div id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
-        height: auto">
-    <p style="margin-bottom: 2rem;">
+        height: auto;margin-top: 130px;">
+    <p style=" margin-bottom: 2rem;">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
         </span>
@@ -226,18 +226,18 @@
                         <partial name="_CalendarPartial" />
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <label>Select Time</label>
                         <div id="appointmentTime" style="height:auto;">
-                            <div class="col-12 radio">
-                                <label><input type="radio" name="option1" value="8:00" checked/> 8:00 AM</label>
+                            <div class="col-12 ">
+                                <label><input type="radio" name="option1" value="8:00" checked /> 8:00 AM</label>
                             </div>
-                            <div class="col-12 radio">
+                            <div class="col-12 ">
                                 <label><input type="radio" name="option1" value="9:00" /> 9:00 AM</label>
                             </div>
                             <div class="col-12">
-                                
+
                                 <label><input type="radio" name="option1" value="10:00" /> 10:00 AM</label>
                             </div>
                             <div class="col-12">
@@ -266,6 +266,7 @@
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" disabled>
+                        <p id="appointmentDate" style="display:none;"></p>
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
                         <p style="margin-top:10px;">Processing Site</p>
@@ -748,6 +749,9 @@
 
             $('.backBtn').click(function () {
                 $('#stepOneBtn').click();
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
             });
             $('#stepOneNextBtn').click(function () {
                 $('#stepTwoBtn').click();
@@ -798,12 +802,15 @@
                 $('#documentsCount').text(documentObject.length);
                 $('#apostileData').val(JSON.stringify(documentObject));
                 console.log(JSON.stringify(documentObject));
-
-                $(':radio:checked').each(function (i) {
-                    $('#appointmentSchedule').val($('#appointmentSchedule').val().concat(' ',$(this).val()));
-                });
             });
 
+
+            $("input[type*='radio']").click(function () {
+
+                console.log($(this).val());
+                $('#appointmentSchedule').val('');
+                    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$(this).val()));
+                });
 
             var doc = new jsPDF();
 
