@@ -53,7 +53,7 @@ namespace DFACore.Models
         [StringLength(100)]
         [Display(Name = "Contact Number")]
         public string RepresentativeContactNumber { get; set; }
-        
+        [Required]
         public string ApostileData { get; set; }
         [Required]
         [Display(Name = "Processing Site")]

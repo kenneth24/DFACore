@@ -9,33 +9,47 @@
         display: none
     }
 
-    @@media only screen and (min-width: 768px) {
+    @@media screen and (min-width: 601px) {
         .form-group {
             padding-left: 100px;
             padding-right: 100px;
         }
+
+        #dfa-title {
+            margin-top: -20px;
+        }
     }
 
-    @@media only screen and (max-width: 600px) {
+    /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+    @@media screen and (max-width: 600px) {
+        #dfa-title {
+            margin-top: -60px;
+        }
+        .bannerDetails {
+            font-size: 12px;
+        }
+    }
+
+    /*@@media only screen and (max-width: 600px) {
         #BannerLogo {
             display: none;
         }
-    }
+    }*/
 
     button a {
         color: white;
     }
 </style>
-<div id="dfa-title" class="jumbotron" style="background-color: white;margin-top: -50px;">
-    <h5 class="text-center" style="color: #8080808a">WELCOME TO</h5>
-    <h3 class="text-center" style="color: #858585">ONLINE APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h3>
+<div id="dfa-title" class="jumbotron" style="background-color: white;">
+    <h5 class="text-center bannerDetails" style="color: #8080808a">WELCOME TO</h5>
+    <h3 class="text-center bannerDetails" style="color: #858585">ONLINE APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h3>
 </div>
 <div class="row">
     <div class="col-md-3 col-sm-0">
     </div>
     <div class="col-md-6 col-sm-12">
 
-        <section style="border: 1px solid #b7b7b7;height:auto;margin-top:-55px;">
+        <section class="loginSection" style="border: 1px solid #b7b7b7;height:auto;margin-top: -55px;">
             <form id="account" method="post">
                 <div style="background-color: #217ff3;color: white;height: 35px;">
                     <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
@@ -59,7 +73,7 @@
                             </div>
                         </div>*@
                     <div class="form-group col-md-12 col-sm-12">
-                        <button type="submit" class="btn btn-primary col-md-12 col-sm-12">@Html.ActionLink("Log In", "Login", "Account", new { Model })</button>
+                        <button type="submit" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">Log In</button>
                     </div>
                     <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
                         <h6>
