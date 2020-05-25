@@ -60,19 +60,19 @@ namespace DFACore.Repository
                 return true;
         }
 
-        public List<AvailableDates> GenerateListOfDates(DateTime start)
+        public List<AvailableDAtes> GenerateListOfDates(DateTime start)
         {
             var end = start.AddDays(30);
-            var dates = new List<AvailableDates>();
+            var dates = new List<AvailableDAtes>();
             
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
                 if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    var x = new AvailableDates
+                    var x = new AvailableDAtes
                     {
-                        title = "available",
-                        start = dt
+                        title = "Available",
+                        start = dt.ToString("yyyy-MM-dd")
                     };
                     dates.Add(x);
                 }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DFACore.Models.DTO
 {
-    public class AvailableDates
+    public class AvailableDAtes
     {
         public string title { get; set; }
-        public DateTime start { get; set; }
+        public string start { get; set; }
     }
 }

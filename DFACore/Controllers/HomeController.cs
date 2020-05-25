@@ -9,6 +9,7 @@ using DFACore.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DFACore.Repository;
+using Newtonsoft.Json;
 
 namespace DFACore.Controllers
 {
@@ -33,6 +34,8 @@ namespace DFACore.Controllers
 
         public IActionResult Index()
         {
+            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            ViewData["AvailableDates"] = stringify;
             return View();
         }
 
