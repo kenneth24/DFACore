@@ -27,8 +27,8 @@
     }
 </style>
 <div class="row" style="margin-top:130px;">
-    <div class="col-md-3 col-sm-3"></div>
-    <div class="col-md-6 col-sm-6">
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
+    <div class="col-lg-6 col-md-10 col-sm-10">
         <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7; height: auto; ">
             <div style="background-color: #217ff3;color: white;height: 35px;">
                 <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
@@ -69,15 +69,25 @@
                         <span asp-validation-for="Suffix" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <div class="row col-md-12 col-sm-12">
-                            <div class="col-md-6 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-3">
                                 <label asp-for="Gender"></label>
                                 <br />
                                 @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
                                 @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
                                 <span asp-validation-for="Gender" class="text-danger"></span>
+                                @*<div class="d-none d-md-block" style="padding:5px;">
+                                        @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
+                                        @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>
+                                    <div class="d-sm-none" >
+                                        @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
+                                        @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
+                                    </div>*@
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6 col-sm-10">
                                 <label asp-for="DateOfBirth"></label>
                                 <input type="date" asp-for="DateOfBirth" class="form-control" />
                                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
@@ -114,23 +124,20 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group col-md-12 col-sm-12" >
-                    @*<button type="submit" class="btn btn-primary col-md-6 col-sm-6" style="margin-left:25%;" >@Html.ActionLink("Register","Register","Account",new { Model})</button>*@
-                    <button type="button" class="btn btn-secondary col-md-3 col-sm-6" style="margin-left:70px;background-color:white;">@Html.ActionLink("Back", "Login", "Account")</button>
-                    <button type="submit" class="btn btn-primary col-md-3 col-sm-6" style="margin-left:70px;" >Register</button>
+                <div class="row">
+                    <div class="col-md-5 col-sm-5"><button type="button" class="btn btn-secondary col-12" style="background-color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Login", "Account")</button></div>
+                    <div class="col-md-2 col-sm-2">
+                    </div>
+                    <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Register</button></div>
                 </div>
             </div>
 
 
         </form>
     </div>
-    <div class="col-md-3 col-sm-3"></div>
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
 </div>
 <div class="row">
-    <div class="col-md-4">
-
-
-    </div>
 
 
     <!-- Modal -->
