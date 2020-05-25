@@ -34,6 +34,7 @@
         text-transform: uppercase;
         font-weight: 500;
     }
+
     .red {
         color: red;
     }
@@ -52,10 +53,10 @@
             @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
         </span>
     </p>
-    <button id="Step1">Step1</button>
-    <button id="Step2">Step2</button>
-    <button id="Step3">Step3</button>
-    <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;">
+    @*<button id="Step1">Step1</button>
+        <button id="Step2">Step2</button>
+        <button id="Step3">Step3</button>*@
+    <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;z-index:-1;">
         <li class="nav-item">
             <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
         </li>
@@ -273,7 +274,8 @@
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
-                        <p id="appointmentDate"></p>
+                        <p id="appointmentDate" style="display:none;"></p>
+                        <p id="appointmentScheduleTime" style="display:none;"></p>
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
                         <p style="margin-top:10px;">Processing Site</p>
@@ -281,7 +283,7 @@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
                         <div>
                             <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-4 col-sm-12 backBtn" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                            <button id="stepTwoNextBtn" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Confirm</button>
+                            <button id="stepTwoNextBtn" type="button" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -342,7 +344,7 @@
                 <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
             </div>
             <div style="margin-left: 25%;margin-right: 25%;">
-                <button type="submit" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
                 <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
             </div>
             <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
@@ -754,6 +756,7 @@
         $(document).ready(function () {
 
             $("#backToStepOne").click(function () {
+                $('#stepOneBtn').click();
                 $("#step-one").show();
                 $("#step-two").hide();
                 $("#step-three").hide();
@@ -815,6 +818,7 @@
                     $('.contactnumber').text('');
                     $('.countrydestination').text('');
                     $('.apostiledata').text('');
+                    $('#stepTwoBtn').click();
                 }
 
 
@@ -827,7 +831,7 @@
                 $("#step-one").hide();
                 $("#step-two").hide();
                 $("#step-three").show();
-
+                $('#stepThreeBtn').click();
 
                 $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase());
                 $('#LblTypeOfDocument').text($('#apostileData').val());
@@ -841,24 +845,24 @@
 
             });
 
-            
+
 
             $('#stepOneBtn').click();
             $('#siteAndAddress').text($('#site').val().concat(' ', $('#address').val()));
 
-            $('.backBtn').click(function () {
-                $('#stepOneBtn').click();
-                $('#selectTimeContainer').css('z-index','-1');
-                $('#selectTimeContainer').css('opacity', '0.5');
-                $('#appointmentSchedule').val('');
-            });
+            //$('.backBtn').click(function () {
+            //    $('#stepOneBtn').click();
+            //    $('#selectTimeContainer').css('z-index','-1');
+            //    $('#selectTimeContainer').css('opacity', '0.5');
+            //    $('#appointmentSchedule').val('');
+            //});
             //$('#stepOneNextBtn').click(function () {
             //    $('#stepTwoBtn').click();
             //});
-            $('#stepThreeBackBtn').click(function () {
-                $('#stepTwoBtn').click();
-                //$('#stepOneBtnContainer').hide();
-            });
+            //$('#stepThreeBackBtn').click(function () {
+            //    $('#stepTwoBtn').click();
+            //    //$('#stepOneBtnContainer').hide();
+            //});
             $('#documentsCount').text(0);
 
             $('#selectDocumentsBtn').click(function () {
@@ -907,9 +911,10 @@
             $("input[type*='radio']").click(function () {
 
                 console.log($(this).val());
-                $('#appointmentSchedule').val('');
-                    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$(this).val()));
-                });
+                //$('#appointmentSchedule').val('');
+                $('#appointmentScheduleTime').text($(this).val());
+                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$('#appointmentScheduleTime').text()));
+            });
 
             var doc = new jsPDF();
 

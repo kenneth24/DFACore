@@ -32,6 +32,9 @@
     span.fc-time {
         color: white !important;
     }
+    a.fc-event {
+        cursor:pointer !important;
+    }
 </style>
 <div id='calendar'></div>
 <script>
@@ -103,10 +106,12 @@
                         }
                     }
                 });*@
+                $('#appointmentDate').text('');
                 $('#appointmentDate').text(moment(info.event.start).format('MM/DD/YYYY'));
-                $('#appointmentSchedule').val('');
+                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$('#appointmentScheduleTime').text()));
                 $('#selectTimeContainer').css('z-index','1');
-                $('#selectTimeContainer').css('opacity','1');
+                $('#selectTimeContainer').css('opacity', '1');
+
                 //z-index: -1; opacity: 0.5;
 
                 //alert('Event: ' + info.event.title);
@@ -114,12 +119,12 @@
                 //alert('View: ' + info.view.type);
 
                 // change the border color just for fun
-                info.el.style.borderColor = 'red';
+                //info.el.style.borderColor = 'red';
             }
 
         });
         calendar.render();
-        calendar.rerenderEvents();
+        //calendar.rerenderEvents();
         //$('.fc-view-container').show();
 
     });
