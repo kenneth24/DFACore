@@ -58,6 +58,7 @@ namespace DFACore
             services.AddMailKit(config =>{
                 config.UseMailKit(Configuration.GetSection("Email").Get<MailKitOptions>());
             });
+            services.AddTransient<IMessageService, MessageService>();
             services.Configure<ReCAPTCHASetting>(Configuration.GetSection("GoogleReCAPTCHA"));
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();

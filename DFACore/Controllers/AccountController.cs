@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using MimeKit;
 using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,19 @@ namespace DFACore.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
         private readonly GoogleCaptchaService _googleCaptchaService;
+        private readonly IMessageService _messageService;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailService emailService,
-            GoogleCaptchaService googleCaptchaService)
+            GoogleCaptchaService googleCaptchaService,
+            IMessageService messageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _googleCaptchaService = googleCaptchaService;
+            _messageService = messageService;
         }
 
         [AllowAnonymous]
@@ -276,11 +280,23 @@ namespace DFACore.Controllers
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                //var attachment = new Attachment("test.pdf", TestStream(), new ContentType("application", "pdf"));
+
+                //await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password", 
+                //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
+                //        attachment);
+
                 return RedirectToAction("ForgotPasswordConfirmation");
             }
 
             return View();
 
+        }
+
+        private System.IO.Stream TestStream()
+        {
+            System.IO.Stream fs = System.IO.File.OpenRead(@"D:\test\dfa.pdf");
+            return fs;
         }
 
         [AllowAnonymous]

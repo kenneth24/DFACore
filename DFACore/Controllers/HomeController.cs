@@ -77,7 +77,7 @@ namespace DFACore.Controllers
                 ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
-            return View();
+            return RedirectToAction("Success");
         }
 
 
@@ -87,7 +87,12 @@ namespace DFACore.Controllers
             return View();
         }
 
- 
+        public IActionResult Success()
+        {
+            return View();
+        }
+
+
         public ActionResult ValidateScheduleDate(string scheduleDate)
         {
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
