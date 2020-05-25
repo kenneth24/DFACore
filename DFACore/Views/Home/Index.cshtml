@@ -38,11 +38,21 @@
     .red {
         color: red;
     }
+
+    .step-three-field {
+        margin-top: 10px;
+    }
+    /*li.nav-item {
+        height:25px;
+        overflow-y:hidden;
+    }
+        li.nav-item a {
+        height: 25px;
+        line-height: 10px;
+        }*/
 </style>
-<div id="application-form" style="border: 1px solid #b7b7b7;
-        padding: 20px;
-        height: auto;margin-top: 130px;">
-    <p style=" margin-bottom: 2rem;">
+<div id="application-form" style="border: 1px solid #b7b7b7; padding: 20px; height: auto; margin-top: 130px;">
+    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
         </span>
@@ -53,23 +63,34 @@
             @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
         </span>
     </p>
+    <div class="d-sm-none">
+        <p>
+            <span>@User.Identity.Name</span>
+            <span class="float-right"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></span>
+        </p>
+        <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
+    </div>
     @*<button id="Step1">Step1</button>
         <button id="Step2">Step2</button>
         <button id="Step3">Step3</button>*@
-    <ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;z-index:-1;">
-        <li class="nav-item">
-            <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
-        </li>
-        <li class="nav-item">
-            <a id="stepTwoBtn" class="nav-link" onclick="Navigate('step-two',this)" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
-        </li>
-        <li class="nav-item">
-            <a id="stepThreeBtn" class="nav-link" onclick="Navigate('step-three',this)" href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
-        </li>
+    @*<ul class="col-12 nav nav-pills nav-fill" style="margin-bottom: 1rem;z-index:-1;">
+            <li class="nav-item">
+                <a id="stepOneBtn" class="nav-link" onclick="Navigate('step-one',this)" href="#step-one"><span class="font-weight-bold">STEP 1:</span><span> Apostille Application</span></a>
+            </li>
+            <li class="nav-item">
+                <a id="stepTwoBtn" class="nav-link" onclick="Navigate('step-two',this)" href="#step-two"><span class="font-weight-bold">STEP 2:</span><span> Schedule an Appointment</span></a>
+            </li>
+            <li class="nav-item">
+                <a id="stepThreeBtn" class="nav-link" onclick="Navigate('step-three',this)" href="#step-three"><span class="font-weight-bold">STEP 3:</span><span> Generate Appointment Letter</span></a>
+            </li>
 
-    </ul>
+        </ul>*@
+
     <form method="post">
         <div id="step-one" class="tabcontent">
+            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1: Apostille Application</p>
+            </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
                     <h6>Name of the Document Owner</h6>
@@ -188,7 +209,7 @@
             <div class="form-group">
                 <div class="col-12">
                     <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
-                    <div style="background-color: #217ff3;color: white;height: 35px;">
+                    <div style="background-color: #217ff3;color: white;height: auto;">
                         <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
                     </div>
                     <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
@@ -209,13 +230,23 @@
                 </div>
 
             </div>
-            <button id="stepOneNextBtn" type="button" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;margin-left: 33.33%;margin-right: 33.33%;">Next</button>
+            <div class="row">
+                <div class="col-md-4 col-sm-12"></div>
+                <div class="col-md-4 col-sm-12">
+                    <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                </div>
+                <div class="col-md-4 col-sm-12"></div>
+            </div>
+
 
 
             @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
 
         </div>
         <div id="step-two" style="display:none" class="tabcontent">
+            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2: Schedule an Appointment</p>
+            </div>
             <div class="row col-12">
                 <label asp-for="ProcessingSite"></label>
                 <input asp-for="ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
@@ -225,7 +256,7 @@
                 <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-lg-6 col-md-12 col-sm-12" style="margin-bottom: 10px">
                     <div style="border:1px solid #b7b7b7;padding: 10px;">
                         <label>Select Available Schedule</label>
                         @*<input class="form-control" type="date" />*@
@@ -234,42 +265,57 @@
                         <partial name="_CalendarPartial" />
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
-                    <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
+                <div class="col-lg-2 col-md-12 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                    <div style="border:1px solid #b7b7b7;height:auto;padding:5px;margin-bottom: 10px">
                         <label>Select Time</label>
-                        <div id="appointmentTime" style="height:auto;">
-                            <div class="col-12 ">
-                                <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-12 col-sm-12"></div>
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <label><input type="radio" name="option1" value="08:00 AM" /> 8AM</label>
+                                <label><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
+                                <label><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
+                                <label><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
+                                <label><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
+                                <label><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
+                                <label><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
+                                <label><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
+                                <label><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
                             </div>
-                            <div class="col-12 ">
-                                <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
-                            </div>
-                            <div class="col-12">
-
-                                <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
-                            </div>
+                            <div class="col-lg-2 col-md-12 col-sm-12"></div>
                         </div>
+                        @*<div id="appointmentTime" style="height:auto;">
+                                <div class="col-12 ">
+                                    <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
+                                </div>
+                                <div class="col-12 ">
+                                    <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
+                                </div>
+                                <div class="col-12">
+
+                                    <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
+                                </div>
+                                <div class="col-12">
+                                    <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
+                                </div>
+                            </div>*@
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-lg-4 col-md-12 col-sm-12">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
@@ -281,71 +327,122 @@
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
-                        <div>
-                            <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-4 col-sm-12 backBtn" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                            <button id="stepTwoNextBtn" type="button" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Confirm</button>
+                        <div class="row">
+                            <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
+                                <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button id="stepTwoNextBtn" type="button" class="btn col-md-12 col-sm-12 " style="background-color:#217ff3;color:white;">Confirm</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div id="step-three" style="display:none" class="tabcontent">
+            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3: Generate an Appointment Letter</p>
+            </div>
             <div id="editor"></div>
             <h6 class="font-weight-bold">Application Summary</h6>
-            <div class="row col-md-12">
-                <div class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Name of Applicant </span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblNameOfApplicant">: Renz Roy Gososo</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblNameOfApplicant"></span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Type of Document to be Apostillized </span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblTypeOfDocument">: NBI Clearance</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblTypeOfDocument"></span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Country of Destination</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblCountryDestination">: Philippines</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblCountryDestination"></span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Date of Appointment</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblDateOfAppointment">: May 20, 2020</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblDateOfAppointment"></span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Time</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblTimeOfAppointment">: 2:00 PM</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblTimeOfAppointment"></span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Payment</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblPayment">: PhP 500.00</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblPayment"> PhP 500.00</span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Appointment Code</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAppointmentCode">: MNL-321312312</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblAppointmentCode"> MNL-321312312</span>
+                </div>
+
+                <div class="step-three-field col-md-4 col-sm-12">
                     <span>Processing Site</span>
                 </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblProcessingSite">: DFA site and address</span>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
                 </div>
-                <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblProcessingSite"></span>
+                </div>
             </div>
-            <div style="margin-left: 25%;margin-right: 25%;">
-                <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
+
+
+            <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-5" style="margin-bottom: 10px;">
+                    <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                </div>
+                <div class="col-md-4 col-sm-2">
+
+                </div>
+                <div class="col-md-4 col-sm-5">
+                    <button type="submit" class="btn col-md-12 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
+                </div>
             </div>
             <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
         </div>
@@ -763,68 +860,68 @@
             });
             $("#stepOneNextBtn").click(function () {
 
-                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == "" || $('#Nationality').val() == ""
-                    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
+                //if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == "" || $('#Nationality').val() == ""
+                //    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
 
-                    if ($('#Title').val() == "")
-                        $('.title').text('This field is required.');
-                    else
-                        $('.title').text('');
+                //    if ($('#Title').val() == "")
+                //        $('.title').text('This field is required.');
+                //    else
+                //        $('.title').text('');
 
-                    if ($('#FirstName').val() == "")
-                        $('.fname').text('This field is required.');
-                    else
-                        $('.fname').text('');
+                //    if ($('#FirstName').val() == "")
+                //        $('.fname').text('This field is required.');
+                //    else
+                //        $('.fname').text('');
 
-                    if ($('#LastName').val() == "")
-                        $('.lname').text('This field is required.');
-                    else
-                        $('.lname').text('');
+                //    if ($('#LastName').val() == "")
+                //        $('.lname').text('This field is required.');
+                //    else
+                //        $('.lname').text('');
 
-                    if ($('#Address').val() == "")
-                        $('.address').text('This field is required.');
-                    else
-                        $('.address').text('');
+                //    if ($('#Address').val() == "")
+                //        $('.address').text('This field is required.');
+                //    else
+                //        $('.address').text('');
 
-                    if ($('#Nationality').val() == "")
-                        $('.nationality').text('This field is required.');
-                    else
-                        $('.nationality').text('');
+                //    if ($('#Nationality').val() == "")
+                //        $('.nationality').text('This field is required.');
+                //    else
+                //        $('.nationality').text('');
 
-                    if ($('#ContactNumber').val() == "")
-                        $('.contactnumber').text('This field is required.');
-                    else
-                        $('.contactnumber').text('');
+                //    if ($('#ContactNumber').val() == "")
+                //        $('.contactnumber').text('This field is required.');
+                //    else
+                //        $('.contactnumber').text('');
 
-                    if ($('#CountryDestination').val() == "")
-                        $('.countrydestination').text('This field is required.');
-                    else
-                        $('.countrydestination').text('');
+                //    if ($('#CountryDestination').val() == "")
+                //        $('.countrydestination').text('This field is required.');
+                //    else
+                //        $('.countrydestination').text('');
 
-                    if ($('#apostileData').val() == "")
-                        $('.apostiledata').text('This field is required.');
-                    else
-                        $('.apostiledata').text('');
+                //    if ($('#apostileData').val() == "")
+                //        $('.apostiledata').text('This field is required.');
+                //    else
+                //        $('.apostiledata').text('');
 
 
-                    return;
-                }
-                else {
-                    $('.title').text('');
-                    $('.fname').text('');
-                    $('.lname').text('');
-                    $('.address').text('');
-                    $('.nationality').text('');
-                    $('.contactnumber').text('');
-                    $('.countrydestination').text('');
-                    $('.apostiledata').text('');
-                    $('#stepTwoBtn').click();
-                }
+                //    return;
+                //}
+                //else {
+                //    $('.title').text('');
+                //    $('.fname').text('');
+                //    $('.lname').text('');
+                //    $('.address').text('');
+                //    $('.nationality').text('');
+                //    $('.contactnumber').text('');
+                //    $('.countrydestination').text('');
+                //    $('.apostiledata').text('');
+                //}
 
 
                 $("#step-one").hide();
                 $("#step-two").show();
                 $("#step-three").hide();
+                //$('#stepTwoBtn').click();
             });
             $("#stepTwoNextBtn").click(function () {
 
@@ -859,10 +956,12 @@
             //$('#stepOneNextBtn').click(function () {
             //    $('#stepTwoBtn').click();
             //});
-            //$('#stepThreeBackBtn').click(function () {
-            //    $('#stepTwoBtn').click();
-            //    //$('#stepOneBtnContainer').hide();
-            //});
+            $('#stepThreeBackBtn').click(function () {
+                //$('#stepOneBtn').click();
+                $("#step-one").hide();
+                $("#step-two").show();
+                $("#step-three").hide();
+            });
             $('#documentsCount').text(0);
 
             $('#selectDocumentsBtn').click(function () {
