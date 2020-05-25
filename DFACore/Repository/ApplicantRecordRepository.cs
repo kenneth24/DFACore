@@ -1,5 +1,8 @@
 ﻿using DFACore.Data;
 using DFACore.Models;
+using DFACore.Models.DTO;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +20,7 @@ namespace DFACore.Repository
         public bool Add(ApplicantRecord applicantRecord)
         {
             applicantRecord.DateCreated = DateTime.UtcNow;
-            
+
             _context.ApplicantRecords.Add(applicantRecord);
             _context.SaveChanges();
             return true;
@@ -55,6 +58,47 @@ namespace DFACore.Repository
                 return false;
             else
                 return true;
+        }
+
+        public List<AvailableDates> GenerateListOfDates(DateTime start)
+        {
+            var end = start.AddDays(30);
+            var dates = new List<AvailableDates>();
+            
+            for (var dt = start; dt <= end; dt = dt.AddDays(1))
+            {
+                if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    var x = new AvailableDates
+                    {
+                        title = "available",
+                        start = dt
+                    };
+                    dates.Add(x);
+                }
+            }
+            return dates;
+        }
+
+        public List<DateTime> GetUnAvailableDates()
+        {
+
+            using (var context = _context)
+            {
+                var commandText = "SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
+                "GROUP BY ScheduleDate HAVING COUNT(*) = 1";
+                context.Database.ExecuteSqlCommand(commandText);
+                
+            }
+
+
+            var result = _context.Set<ApplicantModelDTO>();
+
+            // use Database.ExecuteSqlCommand
+
+            var x = result.FromSqlRaw("SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
+                "GROUP BY ScheduleDate HAVING COUNT(*) = 1", "").ToList();
+            return default;
         }
     }
 }

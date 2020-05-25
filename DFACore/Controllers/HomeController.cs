@@ -42,7 +42,7 @@ namespace DFACore.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(record);
+                return View();
             }
 
             var applicantRecord = new ApplicantRecord
@@ -98,6 +98,13 @@ namespace DFACore.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [AllowAnonymous]
+        public ActionResult Test()
+        {
+            var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
+            return Json(result);
         }
     }
 }
