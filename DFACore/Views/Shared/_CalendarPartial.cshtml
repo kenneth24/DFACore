@@ -45,7 +45,21 @@
     while (new Date(date) <= new Date(dateToCompare)) {
         var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 8:00';
         all_days.push({ start: new Date(am).toISOString() });
+        var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 9:00';
+        all_days.push({ start: new Date(am).toISOString() });
+        var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 10:00';
+        all_days.push({ start: new Date(am).toISOString() });
+        var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 11:00';
+        all_days.push({ start: new Date(am).toISOString() });
+        var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 12:00';
+        all_days.push({ start: new Date(am).toISOString() });
         var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 13:00';
+        all_days.push({ start: new Date(pm).toISOString() });
+        var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 14:00';
+        all_days.push({ start: new Date(pm).toISOString() });
+        var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 15:00';
+        all_days.push({ start: new Date(pm).toISOString() });
+        var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 16:00';
         all_days.push({ start: new Date(pm).toISOString() });
         date.setDate(date.getDate() + 1);
     }
@@ -66,13 +80,20 @@
             },
             defaultView: 'dayGridMonth',
             defaultDate: new Date(),
-            navLinks: true, // can click day/week names to navigate views
+            navLinks: false, // can click day/week names to navigate views
             //editable: true,
             eventLimit: false, // allow "more" link when too many events
-            events: all_days,
+            //events: all_days,
+            events: [
+                {
+                    title: "Available",
+                    start: '2020-05-23',
+                    backgroundColor: "green"
+                },
+            ],
             eventClick: function (info) {
                 //console.log(info.event.start.getDate());
-                $.ajax({
+                @*$.ajax({
                     url: '@Url.Action("ValidateScheduleDate")',
                     type: 'GET',
                     data: { scheduleDate: moment(info.event.start).format('MM/DD/YYYY hh:mm a') },
@@ -86,9 +107,12 @@
                             $('#unavailableSchedMessage').show();
                         }
                     }
-                    //data: JSON.stringify(person)
-                });
-                $('#appointmentSchedule').val(moment(info.event.start).format('MM/DD/YYYY hh:mm a'));
+                });*@
+                $('#appointmentDate').text(moment(info.event.start).format('MM/DD/YYYY'));
+                $('#selectTimeContainer').css('z-index','1');
+                $('#selectTimeContainer').css('opacity','1');
+                //z-index: -1; opacity: 0.5;
+
                 //alert('Event: ' + info.event.title);
                 //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
                 //alert('View: ' + info.view.type);

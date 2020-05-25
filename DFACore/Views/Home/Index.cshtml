@@ -35,11 +35,10 @@
         font-weight: 500;
     }
 </style>
-
 <div id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
-        height: auto">
-    <p style="margin-bottom: 2rem;">
+        height: auto;margin-top: 130px;">
+    <p style=" margin-bottom: 2rem;">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
         </span>
@@ -67,8 +66,6 @@
                 <div class="form-group">
                     <h6>Name of the Document Owner</h6>
                     <div class="row">
-
-                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="col-md-2 col-sm-12">
                             <label asp-for="Title"></label>
                             <select asp-for="Title" class="form-control">
@@ -202,7 +199,7 @@
                     <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
                     <span asp-validation-for="ApostileData" class="text-danger"></span>
                 </div>
-                
+
             </div>
             <button id="stepOneNextBtn" type="button" class="btn col-md-4 col-sm-12" style="background-color:#217ff3;color:white;margin-left: 33.33%;margin-right: 33.33%;">Next</button>
 
@@ -220,7 +217,7 @@
                 <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>            <hr />
             <div class="row col-12" style="margin-top:10px;">
-                <div class="col-md-8 col-sm-12">
+                <div class="col-md-6 col-sm-12">
                     <div style="border:1px solid #b7b7b7;padding: 10px;">
                         <label>Select Available Schedule</label>
                         @*<input class="form-control" type="date" />*@
@@ -229,53 +226,47 @@
                         <partial name="_CalendarPartial" />
                     </div>
                 </div>
-                @*<div class="col-md-2 col-sm-12">
+                <div class="col-md-2 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                    <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <label>Select Time</label>
-                        <div id="appointmentTime" style="border:1px solid #b7b7b7;height:auto;margin-left:10px;">
-                            <div class="col-12">
-                                <input type="radio" name="option1" />
-                                <label for="option1">8:00 AM</label>
+                        <div id="appointmentTime" style="height:auto;">
+                            <div class="col-12 ">
+                                <label><input type="radio" name="option1" value="8:00" checked /> 8:00 AM</label>
+                            </div>
+                            <div class="col-12 ">
+                                <label><input type="radio" name="option1" value="9:00" /> 9:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option2" />
-                                <label for="option2">9:00 AM</label>
+
+                                <label><input type="radio" name="option1" value="10:00" /> 10:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option3" />
-                                <label for="option3">10:00 AM</label>
+                                <label><input type="radio" name="option1" value="11:00" /> 11:00 AM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option4" />
-                                <label for="option4">11:00 AM</label>
+                                <label><input type="radio" name="option1" value="12:00" /> 12:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option5" />
-                                <label for="option5">12:00 PM</label>
+                                <label><input type="radio" name="option1" value="13:00" /> 1:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option6" />
-                                <label for="option6">1:00 PM</label>
+                                <label><input type="radio" name="option1" value="14:00" /> 2:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option7" />
-                                <label for="option7">2:00 PM</label>
+                                <label><input type="radio" name="option1" value="15:00" /> 3:00 PM</label>
                             </div>
                             <div class="col-12">
-                                <input type="radio" name="option8" />
-                                <label for="option8">3:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <input type="radio" name="option9" />
-                                <label for="option9">4:00 PM</label>
+                                <label><input type="radio" name="option1" value="16:00" /> 4:00 PM</label>
                             </div>
                         </div>
-                    </div>*@
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-12">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
-                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold">
-                        <span asp-validation-for="ScheduleDate" class="text-danger"></span>
+                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" disabled>
+                        <p id="appointmentDate" style="display:none;"></p>
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
                         <p style="margin-top:10px;">Processing Site</p>
@@ -686,6 +677,7 @@
         </div>
     </div>
     <div id="step-three" style="display:none" class="tabcontent">
+        <div id="editor"></div>
         <h6 class="font-weight-bold">Application Summary</h6>
         <div class="row col-md-12">
             <div class="col-md-4 col-sm-12">
@@ -740,12 +732,15 @@
         </div>
         <div style="margin-left: 25%;margin-right: 25%;">
             <button type="submit" id="stepThreeBackBtn" class=" btn btn-secondary col-md-4 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-            <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;">Send to Email</button>
+            <button type="submit" class="btn col-md-4 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
         </div>
         <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
     </div>
 </div>
 @section Scripts {
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -754,6 +749,9 @@
 
             $('.backBtn').click(function () {
                 $('#stepOneBtn').click();
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
             });
             $('#stepOneNextBtn').click(function () {
                 $('#stepTwoBtn').click();
@@ -763,9 +761,6 @@
                 //$('#stepOneBtnContainer').hide();
             });
             $('#documentsCount').text(0);
-            $('#documentsSelectionBtn').click(function () {
-                //$("#documentsTable tbody").empty();
-            });
 
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
@@ -809,6 +804,44 @@
                 console.log(JSON.stringify(documentObject));
             });
 
+
+            $("input[type*='radio']").click(function () {
+
+                console.log($(this).val());
+                $('#appointmentSchedule').val('');
+                    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$(this).val()));
+                });
+
+            var doc = new jsPDF();
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+            $('#sendPdfToEmail').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GeneratePdf")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {html : JSON.stringify("<h1>Hello World</h1>")}
+                    //success: function (result) {
+                    //    console.log($('#appointmentSchedule').val());
+                    //    if (result) {
+                    //        $('#availableSchedMessage').show();
+                    //    }
+                    //    else {
+                    //        $('#unavailableSchedMessage').show();
+                    //    }
+                    //}
+                });
+                //doc.fromHTML($('#step-three').html(), 30, 30, {
+                //    'width': 550,
+                //    'elementHandlers': specialElementHandlers
+                //});
+                //doc.save('sample-file.pdf');
+            });
+
         });
 
 
@@ -826,6 +859,11 @@
             element.style.backgroundColor = "#217ff3";
             element.style.color = "white";
             document.getElementById(step).style.display = "block";
+            if (step == "step-one") {
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
+            }
         }
 
     </script>
