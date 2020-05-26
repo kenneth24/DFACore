@@ -19,8 +19,14 @@
                 <p style="text-align:center;">
                     Your account has been successfully created!
                 </p>
+                <div class="row">
+                    <div class="col-md-2 col-sm-1"></div>
+                    <div class="col-md-8 col-sm-10">
+                        <button type="submit" class="btn btn-primary col-md-12 col-sm-12" style="background-color:#217ff3;">@Html.ActionLink("Proceed to Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</button>
+                    </div>
+                    <div class="col-md-2 col-sm-1"></div>
+                </div>
                 
-                <button type="submit" class="btn btn-primary col-md-6 col-sm-12" style="background-color:#217ff3;position: relative;left: 120px;">@Html.ActionLink("Proceed to Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</button>
             </div>
         </div>
     </div>
