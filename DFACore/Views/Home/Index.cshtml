@@ -39,8 +39,12 @@
         color: red;
     }
 
-    .step-three-field {
+    /*.step-three-field {
         margin-top: 10px;
+    }*/
+
+    p.appointmentHeader {
+        margin-bottom: 0;
     }
     /*li.nav-item {
         height:25px;
@@ -349,45 +353,136 @@
             <div id="editor"></div>
             <h6 class="font-weight-bold">Application Summary</h6>
             <div class="row">
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Name of Applicant </span>
+                <div class="col-md-3 col-sm-12">
+                    <p class="appointmentHeader">Application Code</p>
+                    <div class="font-weight-bold">
+                        <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                        <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                    </div>
                 </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                <div class="col-md-3 col-sm-12">
+                    <p>Application Date</p>
+                    <div class="font-weight-bold">
+                        <span id="LblDateOfAppointment"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <p>Application Date</p>
+                    <div class="font-weight-bold">
+                        <span id="LblTimeOfAppointment"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <p>Processing Site</p>
+                    <div class="font-weight-bold">
+                        <span id="LblProcessingSite"></span>
+                    </div>
+                </div>
+            </div>
+            <p class="red font-weight-bold">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Document Owner: </span>
+                </div>
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
+                </div>*@
+                <div class="col-md-8 col-sm-12">
                     <span id="LblNameOfApplicant"></span>
                 </div>
 
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Type of Document to be Apostillized </span>
+            </div>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Address: </span>
                 </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblAddress"></span>
                 </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblTypeOfDocument"></span>
+            </div>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Contact No: </span>
                 </div>
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblContactNumber"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Authorize Representative: </span>
+                </div>
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblAuthorizeRepresentative"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Contact No: </span>
+                </div>
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblRepresentativeContactNumber"></span>
+                </div>
+            </div>
 
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Country of Destination</span>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Company/ Office: </span>
                 </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblCompany"></span>
                 </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
+            </div>
+
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Country of Destination: </span>
+                </div>
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
                     <span id="LblCountryDestination"></span>
                 </div>
+            </div>
 
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Date of Appointment</span>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Type of Document to be Apostillized: </span>
                 </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
+                </div>*@
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblTypeOfDocument"></span>
                 </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblDateOfAppointment"></span>
-                </div>
+            </div>
+
+
+            @*<div class="step-three-field col-md-4 col-sm-12">
+                        <span>Date of Appointment</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <span id="LblDateOfAppointment"></span>
+                    </div>
 
                 <div class="step-three-field col-md-4 col-sm-12">
                     <span>Time</span>
@@ -397,28 +492,30 @@
                 </div>
                 <div class="col-md-7 col-sm-12 font-weight-bold">
                     <span id="LblTimeOfAppointment"></span>
-                </div>
+                </div>*@
 
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Payment</span>
+
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Total Fees:</span>
                 </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
+                </div>*@
+                <div class="col-md-8 col-sm-12 font-weight-bold">
                     <span id="LblPayment"> PhP 500.00</span>
                 </div>
-
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Appointment Code</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                </div>
+            </div>
+            @*<div class="step-three-field col-md-4 col-sm-12">
+                        <span>Appointment Code</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                        <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                    </div>
 
                 <div class="step-three-field col-md-4 col-sm-12">
                     <span>Processing Site</span>
@@ -428,21 +525,26 @@
                 </div>
                 <div class="col-md-7 col-sm-12 font-weight-bold">
                     <span id="LblProcessingSite"></span>
-                </div>
-            </div>
+                </div>*@
 
 
-            <p style="margin-top:10px" class="font-weight-bold">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+            <p style="margin-top:10px">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
 
             <div class="row">
-                <div class="col-md-4 col-sm-5" style="margin-bottom: 10px;">
-                    <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                </div>
-                <div class="col-md-4 col-sm-2">
+                <div class="col-md-2 col-sm-1">
 
                 </div>
-                <div class="col-md-4 col-sm-5">
+                <div class="col-md-3 col-sm-12" style="margin-bottom: 10px;">
+                    <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                </div>
+                <div class="col-md-2 col-sm-1">
+
+                </div>
+                <div class="col-md-3 col-sm-12">
                     <button type="submit" class="btn col-md-12 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
+                </div>
+                <div class="col-md-2 col-sm-1">
+
                 </div>
             </div>
             <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
@@ -931,7 +1033,7 @@
                 $("#step-three").show();
                 $('#stepThreeBtn').click();
 
-                $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase());
+                $('#LblNameOfApplicant').text($('#Title').val().toUpperCase() + '. ' + $('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase() + ' ' + $('#Suffix').val().toUpperCase());
 
                 var docuType = JSON.parse($('#apostileData').val())
                 var lbldocuType = $('#LblTypeOfDocument');
@@ -940,19 +1042,27 @@
                     var Quantity = v.Quantity;
                     var DocuName = v.Name;
                     lbldocuType.append('(' + Quantity + ') ' + DocuName + '<br />');
-                    
+
                 });
 
 
                 console.log(docuType);
                 //$('#LblTypeOfDocument').text($('#apostileData').val());
+
+                $('#LblAddress').text($('#Address').val());
+                $('#LblContactNumber').text($('#ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#NameOfRepresentative').val());
+                $('#LblRepresentativeContactNumber').text($('#RepresentativeContactNumber').val());
+                $('#LblCompany').text($('#CompanyName').val());
+
+
                 $('#LblCountryDestination').text($('#CountryDestination').val());
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
                 $('#LblPayment').text('500php');
                 //$('#LblAppointmentCode').text('MNL-20200524');
-                $('#LblProcessingSite').text($('#site').val().toUpperCase() + ' ' + $('#address').val().toUpperCase());
+                $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
 
             });
 
