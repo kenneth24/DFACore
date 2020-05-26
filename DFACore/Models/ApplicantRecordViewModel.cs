@@ -63,6 +63,8 @@ namespace DFACore.Models
         public string ProcessingSiteAddress { get; set; }
         [Required]
         public string ScheduleDate { get; set; }
+        [Required]
+        public string ApplicationCode { get; set; }
 
         //public List<ApostilleDocumentModel> Documents { get; set; }
     }

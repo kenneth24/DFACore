@@ -50,8 +50,10 @@ namespace DFACore.Models
 
         public string ProcessingSite { get; set; }
         public string ProcessingSiteAddress { get; set; }
-        //[Required]
+        [Required]
         public DateTime ScheduleDate { get; set; }
+        [Required]
+        public string ApplicationCode { get; set; }
 
         public DateTime DateCreated { get; set; }
         public Guid CreatedBy { get; set; }

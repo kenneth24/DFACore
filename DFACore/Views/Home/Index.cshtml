@@ -416,7 +416,8 @@
                     <span>: </span>
                 </div>
                 <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblAppointmentCode"> MNL-321312312</span>
+                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
                 </div>
 
                 <div class="step-three-field col-md-4 col-sm-12">
@@ -931,13 +932,26 @@
                 $('#stepThreeBtn').click();
 
                 $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase());
-                $('#LblTypeOfDocument').text($('#apostileData').val());
+
+                var docuType = JSON.parse($('#apostileData').val())
+                var lbldocuType = $('#LblTypeOfDocument');
+
+                docuType.forEach(function (v) {
+                    var Quantity = v.Quantity;
+                    var DocuName = v.Name;
+                    lbldocuType.append('(' + Quantity + ') ' + DocuName + '<br />');
+                    
+                });
+
+
+                console.log(docuType);
+                //$('#LblTypeOfDocument').text($('#apostileData').val());
                 $('#LblCountryDestination').text($('#CountryDestination').val());
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
                 $('#LblPayment').text('500php');
-                $('#LblAppointmentCode').text('MNL-20200524');
+                //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase() + ' ' + $('#address').val().toUpperCase());
 
             });

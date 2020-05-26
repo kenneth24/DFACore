@@ -36,6 +36,7 @@ namespace DFACore.Controllers
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
+            ViewData["ApplicationCode"] = GetApplicantCode();
             return View();
         }
 
@@ -67,6 +68,7 @@ namespace DFACore.Controllers
                 ProcessingSiteAddress = record.ProcessingSiteAddress,
                 ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
+                ApplicationCode = record.ApplicationCode,
                 CreatedBy = new Guid(_userManager.GetUserId(User))
             };
 
@@ -90,6 +92,23 @@ namespace DFACore.Controllers
         public IActionResult Success()
         {
             return View();
+        }
+
+        public static string GetApplicantCode()
+        {
+            int length = 4;
+            var random = new Random();
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var result = new string(
+                Enumerable.Repeat(chars, length)
+                          .Select(s => s[random.Next(s.Length)])
+                          .ToArray());
+
+            Random r = new Random();
+            var date = DateTime.Now;
+            var applicantCode = $"{date.ToString("hhmmss")}-{date.ToString("ddd").Substring(0, 2)}{result}-{date.ToString("MMdd")}".ToUpper();
+
+            return applicantCode;
         }
 
 
