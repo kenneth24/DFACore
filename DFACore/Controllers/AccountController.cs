@@ -304,12 +304,18 @@ namespace DFACore.Controllers
 
         public async Task<MemoryStream> GeneratePDF()
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory + "header.html";
-            var path2 = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+            var header = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
             {
-                HeaderHtml = path2,
+                HeaderHtml = header,
+                FooterHtml = footer,
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 20,
+                    Bottom = 20
+                }
             };
             _generatePdf.SetConvertOptions(options);
 

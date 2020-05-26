@@ -1,6 +1,8 @@
-﻿@model DFACore.Models.TestData
+﻿@model DFACore.Models.ApplicantRecordViewModel
 @{
     Layout = null;
+    var sched = DateTime.ParseExact(Model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+            System.Globalization.CultureInfo.InvariantCulture);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,18 +14,74 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Helvetica, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>@Model.Text</h1>
-    </header>
-    <div>
-        <h2>@Model.Number</h2>
-    </div>
+    
     <div class="container">
-        <h2>Rounded Corners</h2>
-        <p>The .rounded class adds rounded corners to an image:</p>
-        <img src="https://www.w3schools.com/bootstrap4/cinqueterre.jpg" class="rounded" alt="Cinque Terre" width="304" height="236">
+        <div class="row">
+            <p>Dear @Model.Title @Model.FirstName @Model.MiddleName @Model.LastName,</p>
+            <p>Your application has been successfully confirmed.</p>
+            <p>Appointment Code</p>
+            <p>@Model.ApplicationCode</p>
+            <p>Appointment Date</p>
+            <p>@sched.ToString("MMMM dd, yyyy")</p>
+            <p>Appointment Time</p>
+            <p>@sched.ToString("hh:mm tt")</p>
+            <p>Processing Site</p>
+            <p>@Model.ProcessingSite</p>
+        </div>
+        <div class="row">
+            <p class="text-danger">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
+        </div>
+        <div class="row">
+            <p>Application Summary</p>
+        </div>
+        <div class="row">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td>Document Owner:</td>
+                        <td>Document Owner:</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>Address:</td>
+                    </tr>
+                    <tr>
+                        <td>Contact No.:</td>
+                        <td>Contact No.:</td>
+                    </tr>
+                    <tr>
+                        <td>Authorized Representative:</td>
+                        <td>Authorized Representative:</td>
+                    </tr>
+                    <tr>
+                        <td>Contact No.:</td>
+                        <td>Contact No.:</td>
+                    </tr>
+                    <tr>
+                        <td>Company/Office:</td>
+                        <td>Company/Office:</td>
+                    </tr>
+                    <tr>
+                        <td>Country of Destination:</td>
+                        <td>Country of Destination:</td>
+                    </tr>
+                    <tr>
+                        <td>Type of Document/s:</td>
+                        <td>Type of Document/s:</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        
+
     </div>
 
 </body>

@@ -92,7 +92,7 @@ namespace DFACore.Controllers
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
-            var attachment = new Attachment("test.pdf", await GeneratePDF(), new MimeKit.ContentType("application", "pdf"));
+            var attachment = new Attachment("test.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Reset Password",
                     $"Download the attachment and present to the selected branch.",
@@ -131,7 +131,7 @@ namespace DFACore.Controllers
         }
 
 
-        public async Task<MemoryStream> GeneratePDF()
+        public async Task<MemoryStream> GeneratePDF(ApplicantRecordViewModel model)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + "header.html";
             var path2 = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
@@ -142,13 +142,13 @@ namespace DFACore.Controllers
             };
             _generatePdf.SetConvertOptions(options);
 
-            var data = new TestData
-            {
-                Text = "This is a test",
-                Number = 123456
-            };
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
 
-            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", data);
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model);
             var pdfStream = new System.IO.MemoryStream();
             pdfStream.Write(pdf, 0, pdf.Length);
             pdfStream.Position = 0;
