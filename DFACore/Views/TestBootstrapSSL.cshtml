@@ -3,6 +3,7 @@
     Layout = null;
     var sched = DateTime.ParseExact(Model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
             System.Globalization.CultureInfo.InvariantCulture);
+    var docuData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(Model.ApostileData);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,71 +17,145 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <style>
         body {
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Helvetica, sans-serif;
+            font-family: Arial, sans-serif, Helvetica, sans-serif;
+            font-weight: 400;
+            color: black;
+        }
+
+        .appointMentTable {
+            font-size: 14px;
+        }
+
+        .appointMentValue {
+            font-weight: bold;
+        }
+
+        .customTable table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+            .customTable table td {
+                padding: 5px;
+            }
+
+        .borderless td {
+            border: none;
+        }
+
+        .borderless td {
+            padding: 1px;
+            vertical-align: top;
+        }
+
+        .padding30 {
+            padding-left: 30px !important;
         }
     </style>
 </head>
 <body>
-    
-    <div class="container">
-        <div class="row">
-            <p>Dear @Model.Title @Model.FirstName @Model.MiddleName @Model.LastName,</p>
-            <p>Your application has been successfully confirmed.</p>
-            <p>Appointment Code</p>
-            <p>@Model.ApplicationCode</p>
-            <p>Appointment Date</p>
-            <p>@sched.ToString("MMMM dd, yyyy")</p>
-            <p>Appointment Time</p>
-            <p>@sched.ToString("hh:mm tt")</p>
-            <p>Processing Site</p>
-            <p>@Model.ProcessingSite</p>
-        </div>
-        <div class="row">
-            <p class="text-danger">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
-        </div>
-        <div class="row">
-            <p>Application Summary</p>
-        </div>
-        <div class="row">
-            <table class="table table-borderless">
-                <tbody>
-                    <tr>
-                        <td>Document Owner:</td>
-                        <td>Document Owner:</td>
-                    </tr>
-                    <tr>
-                        <td>Address:</td>
-                        <td>Address:</td>
-                    </tr>
-                    <tr>
-                        <td>Contact No.:</td>
-                        <td>Contact No.:</td>
-                    </tr>
-                    <tr>
-                        <td>Authorized Representative:</td>
-                        <td>Authorized Representative:</td>
-                    </tr>
-                    <tr>
-                        <td>Contact No.:</td>
-                        <td>Contact No.:</td>
-                    </tr>
-                    <tr>
-                        <td>Company/Office:</td>
-                        <td>Company/Office:</td>
-                    </tr>
-                    <tr>
-                        <td>Country of Destination:</td>
-                        <td>Country of Destination:</td>
-                    </tr>
-                    <tr>
-                        <td>Type of Document/s:</td>
-                        <td>Type of Document/s:</td>
-                    </tr>
 
-                </tbody>
-            </table>
+    <div class="container">
+        <div style="padding-left:10px;padding-right:10px;">
+            <div class="row">
+                <p class="text-right">@DateTime.UtcNow.ToLocalTime().ToString("MMMM dd, yyyy")</p>
+            </div>
+            <div class="row">
+                <p>
+                    Dear @Model.Title <span style="font-weight:bold">@Model.FirstName @Model.MiddleName @Model.LastName</span>, <br />
+                    Your application has been successfully confirmed.
+                </p>
+
+                <div class="customTable">
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="appointMentTable">Appointment Code</span><br />
+                                    <span class="appointMentValue">@Model.ApplicationCode</span>
+                                </td>
+                                <td>
+                                    <span class="appointMentTable">Appointment Date</span><br />
+                                    <span class="appointMentValue">@sched.ToString("MMMM dd, yyyy")</span>
+                                </td>
+                                <td>
+                                    <span class="appointMentTable">Time</span><br />
+                                    <span class="appointMentValue">@sched.ToString("hh:mm tt")</span>
+                                </td>
+                                <td>
+                                    <span class="appointMentTable">Processing Site</span><br />
+                                    <span class="appointMentValue">@Model.ProcessingSite</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <p style="color:red;font-weight:bold;font-size:15px;margin-top:5px;">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
+
+
+            </div>
+
+            <div class="row">
+                <p class="text-center" style="font-weight:bold;font-size:22px;">Application Summary</p>
+            </div>
+            <div class="row">
+                <table class="borderless">
+                    <tbody>
+                        <tr>
+                            <td>Document Owner:</td>
+                            <td class="padding30"> @Model.FirstName @Model.MiddleName @Model.LastName</td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td class="padding30">@Model.Address</td>
+                        </tr>
+                        <tr>
+                            <td>Contact No.:</td>
+                            <td class="padding30">@Model.ContactNumber</td>
+                        </tr>
+                        <tr>
+                            <td>Authorized Representative:</td>
+                            <td class="padding30">@Model.NameOfRepresentative</td>
+                        </tr>
+                        <tr>
+                            <td>Contact No.:</td>
+                            <td class="padding30">@Model.RepresentativeContactNumber</td>
+                        </tr>
+                        <tr>
+                            <td>Company/Office:</td>
+                            <td class="padding30">@Model.CompanyName</td>
+                        </tr>
+                        <tr>
+                            <td>Country of Destination:</td>
+                            <td class="padding30">@Model.CountryDestination</td>
+                        </tr>
+                        <tr>
+                            <td>Type of Document/s:</td>
+                            <td class="padding30">
+                                @foreach (var item in docuData)
+                                {
+                                    <span>(@item.Quantity)</span> <span>@item.Name</span> <br />
+                                }
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Fees:</td>
+                            <td class="padding30">PhP500.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Processing of Documents</p>
+            </div>
         </div>
-        
+
+
+
 
     </div>
 

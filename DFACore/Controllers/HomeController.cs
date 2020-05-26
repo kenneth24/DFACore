@@ -64,20 +64,20 @@ namespace DFACore.Controllers
             var applicantRecord = new ApplicantRecord
             {
                 Title = record.Title,
-                FirstName = record.FirstName,
-                MiddleName = record.MiddleName,
-                LastName = record.LastName,
+                FirstName = record.FirstName.ToUpper(),
+                MiddleName = record.MiddleName.ToUpper(),
+                LastName = record.LastName.ToUpper(),
                 Suffix = record.Suffix,
-                Address = record.Address,
-                Nationality = record.Nationality,
+                Address = record.Address.ToUpper(),
+                Nationality = record.Nationality.ToUpper(),
                 ContactNumber = record.ContactNumber,
-                CompanyName = record.CompanyName,
+                CompanyName = record.CompanyName.ToUpper(),
                 CountryDestination = record.CountryDestination,
-                NameOfRepresentative = record.NameOfRepresentative,
+                NameOfRepresentative = record.NameOfRepresentative.ToUpper(),
                 RepresentativeContactNumber = record.RepresentativeContactNumber,
                 ApostileData = record.ApostileData,
-                ProcessingSite = record.ProcessingSite,
-                ProcessingSiteAddress = record.ProcessingSiteAddress,
+                ProcessingSite = record.ProcessingSite.ToUpper(),
+                ProcessingSiteAddress = record.ProcessingSiteAddress.ToUpper(),
                 ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
                 ApplicationCode = record.ApplicationCode,
@@ -94,7 +94,7 @@ namespace DFACore.Controllers
 
             var attachment = new Attachment("test.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
 
-            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Reset Password",
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
                     attachment);
 
@@ -133,11 +133,12 @@ namespace DFACore.Controllers
 
         public async Task<MemoryStream> GeneratePDF(ApplicantRecordViewModel model)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory + "header.html";
-            var path2 = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+            var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
             {
-                HeaderHtml = path2,
+                HeaderHtml = header,
+                FooterHtml = footer,
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
             };
             _generatePdf.SetConvertOptions(options);
