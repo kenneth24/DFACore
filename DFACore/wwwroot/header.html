@@ -1,34 +1,96 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <script>function subst() {
-      var vars = {};
-      var query_strings_from_url = document.location.search.substring(1).split('&');
-      for (var query_string in query_strings_from_url) {
-          if (query_strings_from_url.hasOwnProperty(query_string)) {
-              var temp_var = query_strings_from_url[query_string].split('=', 2);
-              vars[temp_var[0]] = decodeURI(temp_var[1]);
-          }
-      }
-      var css_selector_classes = ['page', 'frompage', 'topage', 'webpage', 'section', 'subsection', 'date', 'isodate', 'time', 'title', 'doctitle', 'sitepage', 'sitepages'];
-      for (var css_class in css_selector_classes) {
-          if (css_selector_classes.hasOwnProperty(css_class)) {
-              var element = document.getElementsByClassName(css_selector_classes[css_class]);
-              for (var j = 0; j < element.length; ++j) {
-                  element[j].textContent = vars[css_selector_classes[css_class]];
-              }
-          }
-      }
-  }</script>
+    <link href="css/site.css" rel="stylesheet" />
+    <!--<script>function subst() {
+        var vars = {};
+        var query_strings_from_url = document.location.search.substring(1).split('&');
+        for (var query_string in query_strings_from_url) {
+            if (query_strings_from_url.hasOwnProperty(query_string)) {
+                var temp_var = query_strings_from_url[query_string].split('=', 2);
+                vars[temp_var[0]] = decodeURI(temp_var[1]);
+            }
+        }
+        var css_selector_classes = ['page', 'frompage', 'topage', 'webpage', 'section', 'subsection', 'date', 'isodate', 'time', 'title', 'doctitle', 'sitepage', 'sitepages'];
+        for (var css_class in css_selector_classes) {
+            if (css_selector_classes.hasOwnProperty(css_class)) {
+                var element = document.getElementsByClassName(css_selector_classes[css_class]);
+                for (var j = 0; j < element.length; ++j) {
+                    element[j].textContent = vars[css_selector_classes[css_class]];
+                }
+            }
+        }
+    }</script>-->
+    <style>
+        .item1 {
+            grid-area: header;
+        }
+
+        .item2 {
+            grid-area: menu;
+        }
+
+        .item3 {
+            grid-area: main;
+        }
+
+        .item4 {
+            grid-area: right;
+        }
+
+        .item5 {
+            grid-area: footer;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-areas: 'header header header header header header' 'menu main main main right right' 'menu footer footer footer footer footer';
+            grid-gap: 10px;
+            /*background-color: #2196F3;*/
+            padding: 10px;
+        }
+
+            .grid-container > div {
+                /*background-color: rgba(255, 255, 255, 0.8);*/
+                text-align: center;
+                padding: 20px 0;
+                /*font-size: 16px;*/
+            }
+    </style>
 </head>
-<body style="border:0; margin: 0;" onload="subst()">
-    <table style="border-bottom: 1px solid black; width: 100%">
+<body >
+    <!--<div class="container" style="margin-left:8.33%;margin-right:8.33%">
+        <div style="width:8.33%; margin-top:50px;">
+            <img src="logo.png" alt="Alternate Text" height="80" />
+        </div>
+        <div style="width:33.33%; margin-top:10px;text-align:center;font-family: 'Trajan Pro Bold';position: relative;top: -90px;left: 300px;">
+            <span>REPUBLIC OF THE PHILIPPINES</span>
+        </div>
+    </div>-->
+
+    <div class="grid-container">
+        <div class="item1">
+            <img src="logo.png" alt="Alternate Text" height="70" style="margin-left: -85%;    position: relative;    top: -10px;"/>
+            <div style="text-align:center;font-family: 'Trajan Pro Bold';margin-top: -105px">
+                <p style="color:gray;">REPUBLIC OF THE PHILIPPINES</p>
+                <p style="font-size:25px;position: relative;top: -20px;">DEPARTMENT OF FOREIGN AFFAIRS</p>
+                <p style="color:gray;position: relative;top: -40px;">OFFICE OF CONSULAR AFFAIRS</p>
+            </div>
+            <p style="font-size:22px;font-family: 'Trajan Pro Bold';margin-top:-20px;">ONLINE APOSTILLE APPLICATION & APPOINTMENT LETTER</p>
+            <hr />
+        </div>
+        <!--<div class="item2">Menu</div>
+        <div class="item3">Main</div>
+        <div class="item4">Right</div>
+        <div class="item5">Footer</div>-->
+    </div>
+    <!--<table style="border-bottom: 1px solid black; width: 100%">
         <tr>
             <td class="section"></td>
             <td style="text-align:right">
                 Page <span class="page"></span> of <span class="topage"></span>
             </td>
         </tr>
-    </table>
+    </table>-->
 </body>
 </html>
