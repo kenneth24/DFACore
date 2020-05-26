@@ -1,6 +1,7 @@
 ﻿using DFACore.Models;
 using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -8,10 +9,12 @@ using MimeKit;
 using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
 {
@@ -22,18 +25,24 @@ namespace DFACore.Controllers
         private readonly IEmailService _emailService;
         private readonly GoogleCaptchaService _googleCaptchaService;
         private readonly IMessageService _messageService;
+        private readonly IGeneratePdf _generatePdf;
+        private readonly IWebHostEnvironment _env;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailService emailService,
             GoogleCaptchaService googleCaptchaService,
-            IMessageService messageService)
+            IMessageService messageService,
+            IGeneratePdf generatePdf,
+            IWebHostEnvironment env)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _googleCaptchaService = googleCaptchaService;
             _messageService = messageService;
+            _generatePdf = generatePdf;
+            _env = env;
         }
 
         [AllowAnonymous]
@@ -275,22 +284,46 @@ namespace DFACore.Controllers
 
                 //var callbackUrl2 = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
 
-                await _emailService.SendAsync(
-                    model.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                //await _emailService.SendAsync(
+                //    model.Email,
+                //    "Reset Password",
+                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                //var attachment = new Attachment("test.pdf", TestStream(), new ContentType("application", "pdf"));
+                var attachment = new Attachment("test.pdf", await GeneratePDF(), new ContentType("application", "pdf"));
 
-                //await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password", 
-                //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
-                //        attachment);
+                await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password",
+                        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
+                        attachment);
 
                 return RedirectToAction("ForgotPasswordConfirmation");
             }
 
             return View();
 
+        }
+
+        public async Task<MemoryStream> GeneratePDF()
+        {
+            var path = AppDomain.CurrentDomain.BaseDirectory + "header.html";
+            var path2 = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                HeaderHtml = path2,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var data = new TestData
+            {
+                Text = "This is a test",
+                Number = 123456
+            };
+
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
         }
 
         private System.IO.Stream TestStream()

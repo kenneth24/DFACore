@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DFACore.Repository;
 using Newtonsoft.Json;
+using Wkhtmltopdf.NetCore;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DFACore.Controllers
 {
@@ -20,16 +23,25 @@ namespace DFACore.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicantRecordRepository _applicantRepo;
+        private readonly IMessageService _messageService;
+        private readonly IGeneratePdf _generatePdf;
+        private readonly IWebHostEnvironment _env;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ApplicantRecordRepository applicantRepo)
+            ApplicantRecordRepository applicantRepo,
+            IMessageService messageService,
+            IGeneratePdf generatePdf,
+            IWebHostEnvironment env)
         {
             _logger = logger;
             _userManager = userManager;
             _signInManager = signInManager;
             _applicantRepo = applicantRepo;
+            _messageService = messageService;
+            _generatePdf = generatePdf;
+            _env = env;
         }
 
         public IActionResult Index()
@@ -42,7 +54,7 @@ namespace DFACore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(ApplicantRecordViewModel record, string returnUrl = null)
+        public async Task<IActionResult> Index(ApplicantRecordViewModel record, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -79,6 +91,13 @@ namespace DFACore.Controllers
                 ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
+
+            var attachment = new Attachment("test.pdf", await GeneratePDF(), new MimeKit.ContentType("application", "pdf"));
+
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Reset Password",
+                    $"Download the attachment and present to the selected branch.",
+                    attachment);
+
             return RedirectToAction("Success");
         }
 
@@ -111,6 +130,30 @@ namespace DFACore.Controllers
             return applicantCode;
         }
 
+
+        public async Task<MemoryStream> GeneratePDF()
+        {
+            var path = AppDomain.CurrentDomain.BaseDirectory + "header.html";
+            var path2 = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                HeaderHtml = path2,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var data = new TestData
+            {
+                Text = "This is a test",
+                Number = 123456
+            };
+
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
 
         public ActionResult ValidateScheduleDate(string scheduleDate)
         {

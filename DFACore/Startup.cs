@@ -16,6 +16,7 @@ using DFACore.Models;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using DFACore.Repository;
+using Wkhtmltopdf.NetCore;
 
 namespace DFACore
 {
@@ -62,6 +63,7 @@ namespace DFACore
             services.Configure<ReCAPTCHASetting>(Configuration.GetSection("GoogleReCAPTCHA"));
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();
+            services.AddWkhtmltopdf();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
