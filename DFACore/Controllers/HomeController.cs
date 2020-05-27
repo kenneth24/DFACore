@@ -49,6 +49,7 @@ namespace DFACore.Controllers
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
+            ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             return View();
         }
 
@@ -187,9 +188,16 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult GetCity()
+        public ActionResult GetCity(string municipality)
         {
-            var result = _applicantRepo.GetCity();//_applicantRepo.GetUnAvailableDates();
+            var result = _applicantRepo.GetCity().Where(a => a.municipality.Equals(municipality)).Select(a => a.city).ToList();
+            return Json(result);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GetMunicipality(string city)
+        {
+            var result = _applicantRepo.GetCity().Where(a => a.city == city).Select(a => a.municipality).ToList();//_applicantRepo.GetUnAvailableDates();
             return Json(result);
         }
 

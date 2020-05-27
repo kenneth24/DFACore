@@ -2,6 +2,7 @@
 @model DFACore.Models.ApplicantRecordViewModel
 @{
     ViewData["Title"] = "Home Page";
+
 }
 <style>
     .nav-item a {
@@ -159,20 +160,28 @@
                             <input asp-for="Barangay" class="form-control" />
                             <span asp-validation-for="Barangay" class="text-danger address"></span>
                         </div>
-                        <div class="col-md-3 col-sm-12">
-                            <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                            <select asp-for="City" class="form-control">
-                                <partial name="_CityPartial" />
-                            </select>
-                            <span asp-validation-for="City" class="text-danger nationality"></span>
-                        </div>
+
 
                         <div class="col-md-3 col-sm-12">
                             <label asp-for="Region">Region/Province <span class="red">*</span></label>
                             <select asp-for="Region" class="form-control">
-                                <partial name="_MunicipalityPartial" />
+                                <option value=""></option>
+                                @foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                                @*<partial name="_MunicipalityPartial" />*@
                             </select>
                             <span asp-validation-for="Region" class="text-danger nationality"></span>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                            <select asp-for="City" class="form-control">
+
+                                @*<partial name="_CityPartial" />*@
+
+                            </select>
+                            <span asp-validation-for="City" class="text-danger nationality"></span>
                         </div>
                     </div>
                 </div>
@@ -995,6 +1004,37 @@
     <script>
         $(document).ready(function () {
             var canConfirm = false;
+
+            $("#Region").change(function () {
+                $.ajax({
+                    url: '@Url.Action("GetCity")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { municipality : $('#Region').val()},
+                    success: function (result) {
+                        console.log(result);
+                        $('#City').html("");
+                        $('#City').append(
+                            $('<option></option>').val("").html("")
+                        );
+                        $.each(result, function (index, val) {
+                            console.log(index, val)
+                            
+                            $('#City').append(
+                                $('<option></option>').val(val).html(val)
+                            );
+                        });
+                        
+                    },
+                    error: function () {
+                        
+                        alert('Something went wrong!');
+                    }
+
+                });
+            });
+
+
             $("#backToStepOne").click(function () {
                 $('#stepOneBtn').click();
                 $("#step-one").show();
