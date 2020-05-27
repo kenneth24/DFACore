@@ -2,6 +2,7 @@
 for details on configuring this project to bundle and minify static web assets. */
 body {
     font-family:Arial, Helvetica, sans-serif;
+    margin:0;
 }
 a.navbar-brand {
   white-space: normal;
@@ -85,4 +86,7 @@ body {
 }
 #dfa-banner, #dfa-title {
     font-family: 'Trajan Pro Bold';
+}
+div.pageContainers {
+    margin-top: 150px !important;
 }

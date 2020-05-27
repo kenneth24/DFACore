@@ -7,7 +7,7 @@
         color:white;
     }
 </style>
-<div class="row">
+<div class="row pageContainers">
     <div class="col-md-3 col-sm-0">
     </div>
     <div class="col-md-6 col-sm-12">
@@ -21,15 +21,15 @@
                 </h6>
                 <p>
                     If you do not receive it in 2 minutes, click <a href="/Account/ResendEmail?email=@ViewData["Email"]" style="color:#217ff3">SEND AGAIN</a>
-                    @ViewData["Email"];
+                    @ViewData["Email"]
                 </p>
-                <div class="row">
+                @*<div class="row">
                     <div class="col-md-2 col-sm-1"></div>
                     <div class="col-md-8 col-sm-10">
                         <button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;">@Html.ActionLink("", $"ResendEmail?email=" + @ViewData["Email"], "Account")</button>
                     </div>
                     <div class="col-md-2 col-sm-1"></div>
-                </div>
+                </div>*@
                 
                 @*<button type="submit" class="btn btn-primary col-md-6 col-sm-12">@Html.ActionLink("Log In", "Login", "Account", new { Model })</button>*@
             </div>

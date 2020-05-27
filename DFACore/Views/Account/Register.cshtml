@@ -26,7 +26,7 @@
         padding-right: 30px;
     }
 </style>
-<div class="row" style="margin-top:130px;">
+<div class="row pageContainers">
     <div class="col-lg-3 col-md-1 col-sm-1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10">
         <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7; height: auto; ">
@@ -154,8 +154,8 @@
                     Terms and conditions here...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary float-left" data-dismiss="modal" style="background-color:#217ff3;color:white;width: 160px;margin-right: 85px;">Agree</button>
-                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" style="background-color:white;color:#217ff3;width: 160px;margin-right: 26px;border: 1px solid #ababab;">Decline</button>
+                    <button type="button" onclick="TermsAndConditionsAction(true)" class="btn btn-primary float-left" data-dismiss="modal" style="background-color:#217ff3;color:white;width: 160px;margin-right: 85px;">Agree</button>
+                    <button type="button" onclick="TermsAndConditionsAction(false)" class="btn btn-secondary float-right" data-dismiss="modal" style="background-color:white;color:#217ff3;width: 160px;margin-right: 26px;border: 1px solid #ababab;">Decline</button>
                 </div>
             </div>
         </div>
@@ -192,6 +192,15 @@
         });
          $('#reg-confirmpassword').on("cut copy paste",function(e) {
                 e.preventDefault();
-        });
+         });
+        function TermsAndConditionsAction(result) {
+            console.log(result);
+            //$('#IsTermsAndConditionChecked').ch
+            $("#IsTermsAndConditionChecked").prop("checked", result);
+            $("#IsTermsAndConditionChecked").val(result);
+            console.log($("#IsTermsAndConditionChecked").val());
+        }
+       
+   });
     </script>
 }

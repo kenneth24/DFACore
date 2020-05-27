@@ -50,6 +50,7 @@ namespace DFACore.Models
         public string ConfirmPassword { get; set; }
         [Required]
         public string Token { get; set; }
+        //[MinLength(1, ErrorMessage = "You must agree to Terms and Conditions.")]
         public bool IsTermsAndConditionChecked { get; set; }
     }
 }
