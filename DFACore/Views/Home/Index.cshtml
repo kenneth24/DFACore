@@ -130,16 +130,21 @@
                         <div class="col-md-1 col-sm-12">
                             <label asp-for="Suffix"></label>
                             @*<input asp-for="Suffix" class="form-control" />*@
-                            <select asp-for="Suffix" class="form-control">
-                                <option value=""></option>
-                                <option value="JR.">JR.</option>
-                                <option value="SR.">SR.</option>
-                                <option value="I">I</option>
-                                <option value="II">II</option>
-                                <option value="III">III</option>
-                                <option value="IV">IV</option>
-                                <option value="V">V</option>
-                            </select>
+                        <select asp-for="Suffix" class="form-control">
+                            <option value="N/A">N/A</option>
+                            <option value="JR.">JR.</option>
+                            <option value="SR.">SR.</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                            <option value="VI">VI</option>
+                            <option value="VII">VII</option>
+                            <option value="VIII">VIII</option>
+                            <option value="IX">IX</option>
+                            <option value="X">X</option>
+                        </select>
                             <span asp-validation-for="Suffix" class="text-danger"></span>
                         </div>
                     </div>
@@ -155,7 +160,7 @@
                             <label asp-for="Nationality">Nationality <span class="red">*</span></label>
                             <select asp-for="Nationality" class="form-control">
                                 <option value=""></option>
-                                <option value="FILIPINO">FILIPINO</option>
+                                <partial name="_CountriesPartial" />
                             </select>
                             <span asp-validation-for="Nationality" class="text-danger nationality"></span>
                         </div>
