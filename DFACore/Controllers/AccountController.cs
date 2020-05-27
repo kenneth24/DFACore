@@ -69,6 +69,12 @@ namespace DFACore.Controllers
                 return View();
             }
 
+            if (!model.IsTermsAndConditionChecked)
+            {
+                ModelState.AddModelError(string.Empty, "You need to accept the Terms and Conditions to continue.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 //Copy data from RegisterViewModel to ApplicationUser
@@ -106,11 +112,27 @@ namespace DFACore.Controllers
                 // which will be displayed by the validation summary tag helper
                 foreach (var error in result.Errors)
                 {
+
+                    if (error.Code == "DuplicateUserName")
+                        error.Description = $"Email '{model.Email}' is already taken.";
+                    //if (error.Description.EndsWith("is already taken."))
+                    //    error.Description = $"Email '{model.Email}' is already taken.";
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
 
             return View(model);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                string errorMessage = error.Description;
+                if (error.Description.EndsWith("is already taken."))
+                    errorMessage = "Email 'kneth.villafuerte@gmail.com' is already taken.";
+                ModelState.AddModelError("", errorMessage);
+            }
         }
 
         private async Task<string> SendEmailConfirmationTokenAsync(ApplicationUser user, string subject)
@@ -284,16 +306,16 @@ namespace DFACore.Controllers
 
                 //var callbackUrl2 = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
 
-                //await _emailService.SendAsync(
-                //    model.Email,
-                //    "Reset Password",
-                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailService.SendAsync(
+                    model.Email,
+                    "Reset Password",
+                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                var attachment = new Attachment("test.pdf", await GeneratePDF(), new ContentType("application", "pdf"));
+                //var attachment = new Attachment("test.pdf", await GeneratePDF(), new ContentType("application", "pdf"));
 
-                await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password",
-                        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
-                        attachment);
+                //await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password",
+                //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
+                //        attachment);
 
                 return RedirectToAction("ForgotPasswordConfirmation");
             }
@@ -302,41 +324,35 @@ namespace DFACore.Controllers
 
         }
 
-        public async Task<MemoryStream> GeneratePDF()
-        {
-            var header = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
-            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
-            var options = new ConvertOptions
-            {
-                HeaderHtml = header,
-                FooterHtml = footer,
-                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
-                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
-                {
-                    Top = 20,
-                    Bottom = 20
-                }
-            };
-            _generatePdf.SetConvertOptions(options);
+        //public async Task<MemoryStream> GeneratePDF()
+        //{
+        //    var header = _env.WebRootFileProvider.GetFileInfo("header.html")?.PhysicalPath;
+        //    var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+        //    var options = new ConvertOptions
+        //    {
+        //        HeaderHtml = header,
+        //        FooterHtml = footer,
+        //        PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+        //        PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+        //        {
+        //            Top = 20,
+        //            Bottom = 20
+        //        }
+        //    };
+        //    _generatePdf.SetConvertOptions(options);
 
-            var data = new TestData
-            {
-                Text = "This is a test",
-                Number = 123456
-            };
+        //    var data = new TestData
+        //    {
+        //        Text = "This is a test",
+        //        Number = 123456
+        //    };
 
-            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", data);
-            var pdfStream = new System.IO.MemoryStream();
-            pdfStream.Write(pdf, 0, pdf.Length);
-            pdfStream.Position = 0;
-            return pdfStream;
-        }
-
-        private System.IO.Stream TestStream()
-        {
-            System.IO.Stream fs = System.IO.File.OpenRead(@"D:\test\dfa.pdf");
-            return fs;
-        }
+        //    var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", data);
+        //    var pdfStream = new System.IO.MemoryStream();
+        //    pdfStream.Write(pdf, 0, pdf.Length);
+        //    pdfStream.Position = 0;
+        //    return pdfStream;
+        //}
 
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
@@ -354,7 +370,7 @@ namespace DFACore.Controllers
             }
             else
                 return View();
-            
+
         }
 
         [HttpPost]

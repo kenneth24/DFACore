@@ -50,5 +50,6 @@ namespace DFACore.Models
         public string ConfirmPassword { get; set; }
         [Required]
         public string Token { get; set; }
+        public bool IsTermsAndConditionChecked { get; set; }
     }
 }

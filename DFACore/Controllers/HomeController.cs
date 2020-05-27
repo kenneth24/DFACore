@@ -63,21 +63,21 @@ namespace DFACore.Controllers
 
             var applicantRecord = new ApplicantRecord
             {
-                Title = record.Title,
-                FirstName = record.FirstName.ToUpper(),
-                MiddleName = record.MiddleName.ToUpper(),
-                LastName = record.LastName.ToUpper(),
-                Suffix = record.Suffix,
-                Address = record.Address.ToUpper(),
-                Nationality = record.Nationality.ToUpper(),
+                Title = record.Title?.ToUpper(),
+                FirstName = record.FirstName?.ToUpper(),
+                MiddleName = record.MiddleName?.ToUpper(),
+                LastName = record.LastName?.ToUpper(),
+                Suffix = record.Suffix?.ToUpper(),
+                Address = record.Address?.ToUpper(),
+                Nationality = record.Nationality?.ToUpper(),
                 ContactNumber = record.ContactNumber,
-                CompanyName = record.CompanyName.ToUpper(),
-                CountryDestination = record.CountryDestination,
-                NameOfRepresentative = record.NameOfRepresentative.ToUpper(),
-                RepresentativeContactNumber = record.RepresentativeContactNumber,
+                CompanyName = record.CompanyName?.ToUpper(),
+                CountryDestination = record.CountryDestination?.ToUpper(),
+                NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
+                RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
                 ApostileData = record.ApostileData,
-                ProcessingSite = record.ProcessingSite.ToUpper(),
-                ProcessingSiteAddress = record.ProcessingSiteAddress.ToUpper(),
+                ProcessingSite = record.ProcessingSite?.ToUpper(),
+                ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
                 ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
                 ApplicationCode = record.ApplicationCode,
@@ -92,7 +92,7 @@ namespace DFACore.Controllers
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
-            var attachment = new Attachment("test.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
+            var attachment = new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
@@ -140,6 +140,13 @@ namespace DFACore.Controllers
                 HeaderHtml = header,
                 FooterHtml = footer,
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 40,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
             };
             _generatePdf.SetConvertOptions(options);
 

@@ -326,8 +326,15 @@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
                         <p id="appointmentDate" style="display:none;"></p>
                         <p id="appointmentScheduleTime" style="display:none;"></p>
+                        <div id="schedLoader" class="text-center" style="display:none;">
+                            <div class="spinner-border m-3" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
+                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose your preferred date and time.</p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight-bold"></p>
@@ -385,8 +392,8 @@
                     <span>Document Owner: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblNameOfApplicant"></span>
                 </div>
@@ -397,8 +404,8 @@
                     <span>Address: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblAddress"></span>
                 </div>
@@ -408,8 +415,8 @@
                     <span>Contact No: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblContactNumber"></span>
                 </div>
@@ -419,8 +426,8 @@
                     <span>Authorize Representative: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblAuthorizeRepresentative"></span>
                 </div>
@@ -430,8 +437,8 @@
                     <span>Contact No: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblRepresentativeContactNumber"></span>
                 </div>
@@ -442,8 +449,8 @@
                     <span>Company/ Office: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblCompany"></span>
                 </div>
@@ -454,8 +461,8 @@
                     <span>Country of Destination: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblCountryDestination"></span>
                 </div>
@@ -466,8 +473,8 @@
                     <span>Type of Document to be Apostillized: </span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12">
                     <span id="LblTypeOfDocument"></span>
                 </div>
@@ -500,8 +507,8 @@
                     <span>Total Fees:</span>
                 </div>
                 @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                        <span>: </span>
+                    </div>*@
                 <div class="col-md-8 col-sm-12 font-weight-bold">
                     <span id="LblPayment"> PhP 500.00</span>
                 </div>
@@ -547,7 +554,7 @@
 
                 </div>
             </div>
-            <p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>
+            @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
         </div>
     </form>
 
@@ -573,7 +580,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label font-weight-bold">
-                                            <input type="checkbox" class="form-check-input" id="nbiClearance" value="NBI Clearance/Sundry">1. NBI Clearance/Sundry
+                                            <input type="checkbox" class="form-check-input" id="nbiClearance" value="NBI Clearance">1. NBI Clearance/Sundry
                                         </label>
                                     </div>
                                 </td>
@@ -621,7 +628,7 @@
                                     </label>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="elementaryAndHighschool" value="Elementary and High School Level (Form 137 and Diploma)"> For Elementary and High School Level (Form 137 and Diploma)
+                                            <input type="checkbox" class="form-check-input" id="elementaryAndHighschool" value="Form 137 & Diploma"> For Elementary and High School Level (Form 137 and Diploma)
                                         </label>
                                     </div>
                                 </td>
@@ -634,7 +641,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="techVoch" value="Technical and Vocational Courses (TOR and Diploma/National Certificate)"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
+                                            <input type="checkbox" class="form-check-input" id="techVoch" value="TOR & Diploma/National Certificate"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
                                         </label>
                                     </div>
                                 </td>
@@ -647,7 +654,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="State Colleges and Universities (TOR and Diploma)"> For State Colleges and Universities (TOR and Diploma)
+                                            <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
                                         </label>
                                     </div>
                                 </td>
@@ -659,7 +666,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="Private/Local Colleges and Universities (TOR and Diploma)"> For Private/Local Colleges and Universities (TOR and Diploma)
+                                            <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
                                         </label>
                                     </div>
                                 </td>
@@ -672,7 +679,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label font-weight-bold">
-                                            <input type="checkbox" class="form-check-input" id="PRC" value="Professional Regulation Commission (PRC) document/s"> 4. Professional Regulation Commission (PRC) document/s
+                                            <input type="checkbox" class="form-check-input" id="PRC" value="PRC Document/s"> 4. Professional Regulation Commission (PRC) document/s
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -707,7 +714,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label font-weight-bold">
-                                            <input type="checkbox" class="form-check-input" id="CAAP" value="Civil Aviation Authority of the Philippines (CAAP) issued document/s"> 6. Civil Aviation Authority of the Philippines (CAAP) issued document/s
+                                            <input type="checkbox" class="form-check-input" id="CAAP" value="CAAP Documents"> 6. Civil Aviation Authority of the Philippines (CAAP) issued document/s
                                         </label>
                                     </div>
                                     <div class="form-group">
@@ -759,7 +766,7 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document"> Other Document
+                                            <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document (Private Entity)"> Other Document
                                         </label>
                                     </div>
                                 </td>
@@ -791,12 +798,12 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="anyContract" value="Any Form of Contract"> Any Form of Contract
+                                            <input type="checkbox" class="form-check-input" id="anyContract" value="Contract"> Any Form of Contract
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent or Advise"> Affidavit of Consent or Advise
+                                            <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent/Advice"> Affidavit of Consent or Advise
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -831,7 +838,7 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Court Other Document"> Other Document
+                                            <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Court Other Document"> Other Court Documents
                                         </label>
                                     </div>
                                 </td>
@@ -877,7 +884,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label font-weight-bold">
-                                            <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance
+                                            <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance/Sundry
                                         </label>
                                     </div>
                                 </td>
@@ -954,7 +961,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
         $(document).ready(function () {
-
+            var canConfirm = false;
             $("#backToStepOne").click(function () {
                 $('#stepOneBtn').click();
                 $("#step-one").show();
@@ -1027,7 +1034,10 @@
                 //$('#stepTwoBtn').click();
             });
             $("#stepTwoNextBtn").click(function () {
-
+                if (canConfirm == false) {
+                    $("#errSchedDate").show();
+                    return;
+                }
                 $("#step-one").hide();
                 $("#step-two").hide();
                 $("#step-three").show();
@@ -1130,13 +1140,14 @@
                 console.log(JSON.stringify(documentObject));
             });
 
-
+            $('#appointmentScheduleTime').text('08:00 AM')
             $("input[type*='radio']").click(function () {
 
                 console.log($(this).val());
                 //$('#appointmentSchedule').val('');
                 $('#appointmentScheduleTime').text($(this).val());
-                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$('#appointmentScheduleTime').text()));
+                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                $('#appointmentSchedule').change();
             });
 
             var doc = new jsPDF();
@@ -1167,6 +1178,38 @@
                 //    'elementHandlers': specialElementHandlers
                 //});
                 //doc.save('sample-file.pdf');
+            });
+
+            $('#appointmentSchedule').change(function () {
+                $("#errSchedDate").hide();
+                $('#schedLoader').show();
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val()},
+                    success: function (result) {
+                        console.log('success');
+                        $('#schedLoader').hide();
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                            $('#unavailableSchedMessage').hide();
+                            canConfirm = true;
+                        }
+                        else {
+                            $('#availableSchedMessage').hide();
+                            $('#unavailableSchedMessage').show();
+                            canConfirm = false;
+                        }
+                    },
+                    error: function () {
+                        $('#schedLoader').hide();
+                        canConfirm = false;
+                        alert('Something went wrong!');
+                    }
+                    
+                });
+
             });
 
         });

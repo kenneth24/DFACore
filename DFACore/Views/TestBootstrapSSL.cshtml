@@ -51,6 +51,10 @@
         .padding30 {
             padding-left: 30px !important;
         }
+        p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +66,7 @@
             </div>
             <div class="row">
                 <p>
-                    Dear @Model.Title <span style="font-weight:bold">@Model.FirstName @Model.MiddleName @Model.LastName</span>, <br />
+                    Dear <span style="font-weight:bold">@Model.Title @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @Model.Suffix</span>, <br />
                     Your application has been successfully confirmed.
                 </p>
 
@@ -106,11 +110,11 @@
                     <tbody>
                         <tr>
                             <td>Document Owner:</td>
-                            <td class="padding30"> @Model.FirstName @Model.MiddleName @Model.LastName</td>
+                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @Model.Suffix</td>
                         </tr>
                         <tr>
                             <td>Address:</td>
-                            <td class="padding30">@Model.Address</td>
+                            <td class="padding30">@Model.Address?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Contact No.:</td>
@@ -118,19 +122,19 @@
                         </tr>
                         <tr>
                             <td>Authorized Representative:</td>
-                            <td class="padding30">@Model.NameOfRepresentative</td>
+                            <td class="padding30">@Model.NameOfRepresentative?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Contact No.:</td>
-                            <td class="padding30">@Model.RepresentativeContactNumber</td>
+                            <td class="padding30">@Model.RepresentativeContactNumber?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Company/Office:</td>
-                            <td class="padding30">@Model.CompanyName</td>
+                            <td class="padding30">@Model.CompanyName?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Country of Destination:</td>
-                            <td class="padding30">@Model.CountryDestination</td>
+                            <td class="padding30">@Model.CountryDestination?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Type of Document/s:</td>
@@ -177,15 +181,15 @@
                 5. The DFA assumes no responsibility for any delay, delivery error, loss or damage to the document once it has
                 been released to my authorized representative/courier company.
             </p>
-            <p>
-                <span style="margin-left:100px;">
+            <p style="margin-top:20px;">
+                <span style="margin-left: 100px;">
                     __________________________________
                 </span>
                 <span style="margin-left:50px;">
                     ________________________
                 </span>
             </p>
-            <p style="margin-top:-20px;">
+            <p style="margin-top:0;">
                 <span style="margin-left:160px;">
                     Signature over Printed Name
                 </span>
@@ -193,7 +197,7 @@
                     Date
                 </span>
             </p>
-            <p style="margin-top:-20px;">
+            <p style="margin-bottom:10px;">
                 <span style="margin-left:170px;margin-top:-20px;">
                     (Applicant/Representative)
                 </span>
@@ -244,7 +248,7 @@
                     ________________________
                 </span>
             </p>
-            <p style="margin-top:-20px;">
+            <p style="margin-top:0;">
                 <span style="margin-left:160px;">
                     Signature over Printed Name
                 </span>
@@ -252,7 +256,7 @@
                     Date
                 </span>
             </p>
-            <p style="margin-top:-20px;">
+            <p style="margin-top:10px;">
                 <span style="margin-left:170px;margin-top:-20px;">
                     (Applicant/Representative)
                 </span>
