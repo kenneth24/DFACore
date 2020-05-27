@@ -50,7 +50,7 @@ namespace DFACore.Repository
 
                 // Start of provider specific settings
                 await client.ConnectAsync("smtp-relay.sendinblue.com", 587, false).ConfigureAwait(false);
-                await client.AuthenticateAsync("kneth.villafuerte@gmail.com", "hIdBYvGzkCDXASZq").ConfigureAwait(false);
+                await client.AuthenticateAsync("dfa.npo2019@gmail.com", "k5W2DMZLc1Tb3s7X").ConfigureAwait(false);
                 // End of provider specific settings
 
                 await client.SendAsync(email).ConfigureAwait(false);
