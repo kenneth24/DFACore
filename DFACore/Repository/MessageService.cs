@@ -18,7 +18,7 @@ namespace DFACore.Repository
             params Attachment[] attachments)
         {
             var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("kenneth villafuerte", "kneth.villafuerte@gmail.com"));
+            email.From.Add(new MailboxAddress("DFA.NPO", "dfa.npo2019@gmail.com"));
             email.To.Add(new MailboxAddress(toName, toEmailAddress));
             email.Subject = subject;
 

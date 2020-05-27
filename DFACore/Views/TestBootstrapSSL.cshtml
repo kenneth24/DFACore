@@ -114,7 +114,7 @@
                         </tr>
                         <tr>
                             <td>Address:</td>
-                            <td class="padding30">@Model.Address?.ToUpper()</td>
+                            <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
                         </tr>
                         <tr>
                             <td>Contact No.:</td>
@@ -148,7 +148,7 @@
                         </tr>
                         <tr>
                             <td>Total Fees:</td>
-                            <td class="padding30">PhP500.00</td>
+                            <td class="padding30">@Model.Fees?.ToUpper()</td>
                         </tr>
                     </tbody>
                 </table>

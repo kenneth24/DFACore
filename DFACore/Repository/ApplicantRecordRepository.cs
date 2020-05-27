@@ -64,7 +64,7 @@ namespace DFACore.Repository
         {
             var end = start.AddDays(30);
             var dates = new List<AvailableDAtes>();
-            
+
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
                 if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
@@ -88,10 +88,10 @@ namespace DFACore.Repository
                 var commandText = "SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
                 "GROUP BY ScheduleDate HAVING COUNT(*) = 1";
                 context.Database.ExecuteSqlCommand(commandText);
-                
+
             }
 
-
+            
             var result = _context.Set<ApplicantModelDTO>();
 
             // use Database.ExecuteSqlCommand
@@ -99,6 +99,53 @@ namespace DFACore.Repository
             var x = result.FromSqlRaw("SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
                 "GROUP BY ScheduleDate HAVING COUNT(*) = 1", "").ToList();
             return default;
+        }
+
+        public List<City> GetCity()
+        {
+            var cities = new List<City>{
+                new City { municipality = "Abra ", city = "Bangued" },
+                new City { municipality = "Abra ", city = "Boliney" },
+                new City { municipality = "Abra ", city = "Bucay" },
+                new City { municipality = "Abra ", city = "Bucloc" },
+                new City { municipality = "Abra ", city = "Daguioman" },
+                new City { municipality = "Abra ", city = "Danglas" },
+                new City { municipality = "Abra ", city = "Dolores" },
+                new City { municipality = "Abra ", city = "La Paz" },
+                new City { municipality = "Abra ", city = "Lacub" },
+                new City { municipality = "Abra ", city = "Lagangilang" },
+                new City { municipality = "Abra ", city = "Lagayan" },
+                new City { municipality = "Abra ", city = "Langiden" },
+                new City { municipality = "Abra ", city = "Licuan-Baay" },
+                new City { municipality = "Abra ", city = "Luba" },
+                new City { municipality = "Abra ", city = "Malibcong" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "Abra ", city = "" },
+                new City { municipality = "", city = "" },
+
+            };
+
+
+            return cities;
         }
     }
 }

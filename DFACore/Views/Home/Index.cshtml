@@ -117,7 +117,7 @@
                             <span asp-validation-for="FirstName" class="text-danger fname"></span>
                         </div>
 
-                        <div class="col-md-3 col-sm-12">
+                        <div class="col-md-2 col-sm-12">
                             <label asp-for="MiddleName"></label>
                             <input asp-for="MiddleName" class="form-control" />
                             <span asp-validation-for="MiddleName" class="text-danger"></span>
@@ -129,24 +129,24 @@
                             <span asp-validation-for="LastName" class="text-danger lname"></span>
                         </div>
 
-                        <div class="col-md-1 col-sm-12">
+                        <div class="col-md-2 col-sm-12">
                             <label asp-for="Suffix"></label>
                             @*<input asp-for="Suffix" class="form-control" />*@
-                        <select asp-for="Suffix" class="form-control">
-                            <option value="N/A">N/A</option>
-                            <option value="JR.">JR.</option>
-                            <option value="SR.">SR.</option>
-                            <option value="I">I</option>
-                            <option value="II">II</option>
-                            <option value="III">III</option>
-                            <option value="IV">IV</option>
-                            <option value="V">V</option>
-                            <option value="VI">VI</option>
-                            <option value="VII">VII</option>
-                            <option value="VIII">VIII</option>
-                            <option value="IX">IX</option>
-                            <option value="X">X</option>
-                        </select>
+                            <select asp-for="Suffix" class="form-control">
+                                <option value="N/A">N/A</option>
+                                <option value="JR.">JR.</option>
+                                <option value="SR.">SR.</option>
+                                <option value="I">I</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                                <option value="V">V</option>
+                                <option value="VI">VI</option>
+                                <option value="VII">VII</option>
+                                <option value="VIII">VIII</option>
+                                <option value="IX">IX</option>
+                                <option value="X">X</option>
+                            </select>
                             <span asp-validation-for="Suffix" class="text-danger"></span>
                         </div>
                     </div>
@@ -155,26 +155,24 @@
                     <h6>Address</h6>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <label asp-for="Address">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                            <input asp-for="Address" class="form-control" />
-                            <span asp-validation-for="Address" class="text-danger address"></span>
+                            <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
+                            <input asp-for="Barangay" class="form-control" />
+                            <span asp-validation-for="Barangay" class="text-danger address"></span>
                         </div>
                         <div class="col-md-3 col-sm-12">
-                            <label asp-for="Address">City/Municipality <span class="red">*</span></label>
-                            <select asp-for="Address" class="form-control">
-                                <option value=""></option>
-                                <option value="CALOOCAN">CALOOCAN</option>
+                            <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                            <select asp-for="City" class="form-control">
+                                <partial name="_CityPartial" />
                             </select>
-                            <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                            <span asp-validation-for="City" class="text-danger nationality"></span>
                         </div>
 
                         <div class="col-md-3 col-sm-12">
-                            <label asp-for="Address">Region/Province <span class="red">*</span></label>
-                            <select asp-for="Address" class="form-control">
-                                <option value=""></option>
-                                <option value="METRO MANILA">METRO MANILA</option>
+                            <label asp-for="Region">Region/Province <span class="red">*</span></label>
+                            <select asp-for="Region" class="form-control">
+                                <partial name="_MunicipalityPartial" />
                             </select>
-                            <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                            <span asp-validation-for="Region" class="text-danger nationality"></span>
                         </div>
                     </div>
                 </div>
@@ -304,7 +302,7 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                             <div class="col-lg-8 col-md-12 col-sm-12">
-                                <label><input type="radio" name="option1" value="08:00 AM" /> 8AM</label>
+                                <label><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
                                 <label><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
                                 <label><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
                                 <label><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
@@ -539,7 +537,8 @@
                         <span>: </span>
                     </div>*@
                 <div class="col-md-8 col-sm-12 font-weight-bold">
-                    <span id="LblPayment"> PhP 500.00</span>
+                    <span id="LblPayment"> PhP 0.00</span>
+                    <input asp-for="Fees" type="hidden" />
                 </div>
             </div>
             @*<div class="step-three-field col-md-4 col-sm-12">
@@ -979,8 +978,8 @@
                         <div class="col-md-2 col-sm-2">
                         </div>
                         <div class="col-md-5 col-sm-5"><button id="selectDocumentsBtn" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">Select</button></div>
-                    </div>                   
-                   
+                    </div>
+
 
                 </div>
             </div>
@@ -1104,7 +1103,8 @@
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
-                $('#LblPayment').text('PhP'.concat(' ',parseInt($('#documentsCount').text()) * 100,'.00') );
+                $('#LblPayment').text('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
 

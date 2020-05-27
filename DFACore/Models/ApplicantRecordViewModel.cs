@@ -28,7 +28,11 @@ namespace DFACore.Models
         [StringLength(100)]
         public string Suffix { get; set; }
         [Required]
-        public string Address { get; set; }
+        public string Barangay { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string Region { get; set; }
         [Required]
         [StringLength(100)]
         [Display(Name = "Contact Number")]
@@ -65,6 +69,7 @@ namespace DFACore.Models
         public string ScheduleDate { get; set; }
         [Required]
         public string ApplicationCode { get; set; }
+        public string Fees { get; set; }
 
         //public List<ApostilleDocumentModel> Documents { get; set; }
     }

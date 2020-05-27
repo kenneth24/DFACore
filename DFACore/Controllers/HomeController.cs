@@ -68,7 +68,7 @@ namespace DFACore.Controllers
                 MiddleName = record.MiddleName?.ToUpper(),
                 LastName = record.LastName?.ToUpper(),
                 Suffix = record.Suffix?.ToUpper(),
-                Address = record.Address?.ToUpper(),
+                Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
                 Nationality = record.Nationality?.ToUpper(),
                 ContactNumber = record.ContactNumber,
                 CompanyName = record.CompanyName?.ToUpper(),
@@ -81,7 +81,8 @@ namespace DFACore.Controllers
                 ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
                 ApplicationCode = record.ApplicationCode,
-                CreatedBy = new Guid(_userManager.GetUserId(User))
+                CreatedBy = new Guid(_userManager.GetUserId(User)),
+                Fees = record.Fees
             };
 
 
@@ -184,5 +185,13 @@ namespace DFACore.Controllers
             var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
             return Json(result);
         }
+
+        [AllowAnonymous]
+        public ActionResult GetCity()
+        {
+            var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
+            return Json(result);
+        }
+
     }
 }
