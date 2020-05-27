@@ -55,7 +55,9 @@
         line-height: 10px;
         }*/
 </style>
-<div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7; padding: 20px; height: auto;">
+<div class="pageContainers" id="application-form" style="        border: 1px solid #b7b7b7;
+        padding: 20px;
+        height: auto;">
     <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
@@ -145,13 +147,35 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <h6>Address</h6>
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
-                            <label asp-for="Address">Address <span class="red">*</span></label>
+                            <label asp-for="Address">Block/Lot/Street/Barangay <span class="red">*</span></label>
                             <input asp-for="Address" class="form-control" />
                             <span asp-validation-for="Address" class="text-danger address"></span>
                         </div>
                         <div class="col-md-3 col-sm-12">
+                            <label asp-for="Address">City/Municipality <span class="red">*</span></label>
+                            <select asp-for="Address" class="form-control">
+                                <option value=""></option>
+                                <option value="CALOOCAN">CALOOCAN</option>
+                            </select>
+                            <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                        </div>
+
+                        <div class="col-md-3 col-sm-12">
+                            <label asp-for="Address">Region/Province <span class="red">*</span></label>
+                            <select asp-for="Address" class="form-control">
+                                <option value=""></option>
+                                <option value="METRO MANILA">METRO MANILA</option>
+                            </select>
+                            <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
                             <label asp-for="Nationality">Nationality <span class="red">*</span></label>
                             <select asp-for="Nationality" class="form-control">
                                 <option value=""></option>
@@ -160,7 +184,7 @@
                             <span asp-validation-for="Nationality" class="text-danger nationality"></span>
                         </div>
 
-                        <div class="col-md-3 col-sm-12">
+                        <div class="col-md-6 col-sm-12">
                             <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
                             <input asp-for="ContactNumber" class="form-control" type="number" />
                             <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
@@ -945,8 +969,13 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button id="selectDocumentsBtn" type="button" class="btn btn-primary" data-dismiss="modal">Select</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn btn-secondary col-md-12 col-sm-12" data-dismiss="modal" style="color:#217ff3;background-color:white;">Close</button></div>
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-5"><button id="selectDocumentsBtn" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">Select</button></div>
+                    </div>                   
+                   
 
                 </div>
             </div>
@@ -1070,7 +1099,7 @@
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
-                $('#LblPayment').text('500php');
+                $('#LblPayment').text('PhP'.concat(' ',parseInt($('#documentsCount').text()) * 100,'.00') );
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
 
@@ -1150,7 +1179,7 @@
                 $('#appointmentSchedule').change();
             });
 
-            var doc = new jsPDF();
+            @*var doc = new jsPDF();
 
             var specialElementHandlers = {
                 '#editor': function (element, renderer) {
@@ -1178,7 +1207,7 @@
                 //    'elementHandlers': specialElementHandlers
                 //});
                 //doc.save('sample-file.pdf');
-            });
+            });*@
 
             $('#appointmentSchedule').change(function () {
                 $("#errSchedDate").hide();
@@ -1207,7 +1236,7 @@
                         canConfirm = false;
                         alert('Something went wrong!');
                     }
-                    
+
                 });
 
             });
