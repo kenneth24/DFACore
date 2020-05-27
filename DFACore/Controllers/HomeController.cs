@@ -189,7 +189,7 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public ActionResult GetCity()
         {
-            var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
+            var result = _applicantRepo.GetCity();//_applicantRepo.GetUnAvailableDates();
             return Json(result);
         }
 
