@@ -28,7 +28,7 @@ namespace DFACore.Models
         public string Suffix { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
+        //[Required]
         public string Nationality { get; set; }
         [Required]
         [StringLength(100)]

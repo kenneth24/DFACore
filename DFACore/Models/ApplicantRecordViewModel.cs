@@ -37,7 +37,7 @@ namespace DFACore.Models
         [StringLength(100)]
         [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
-        [Required]
+        //[Required]
         [StringLength(100)]
         [Display(Name = "Nationality")]
         public string Nationality { get; set; }

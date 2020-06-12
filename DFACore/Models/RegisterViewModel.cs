@@ -14,7 +14,7 @@ namespace DFACore.Models
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Middle Name (optional)")]
+        [Display(Name = "Middle Name")]
         public string MiddleName { get; set; }
 
         [Required]
@@ -22,7 +22,7 @@ namespace DFACore.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Suffix (ex: Jr)")]
+        [Display(Name = "Suffix")]
         public string Suffix { get; set; }
 
         [Required]
