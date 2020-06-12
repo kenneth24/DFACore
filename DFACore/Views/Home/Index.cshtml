@@ -100,7 +100,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
-                    <h6 class="text-danger" style="font-weight:bold">Name of Applicant</h6>
+                    <h6  style="font-weight:bold">Name of Applicant</h6>
                     <div class="row">
                         <div class="col-md-2 col-sm-12">
                             <label asp-for="Title">Title <span class="red">*</span></label>
@@ -648,6 +648,11 @@
                                             <input type="checkbox" class="form-check-input" id="nbiClearance" value="NBI Clearance">1. NBI Clearance/Sundry
                                         </label>
                                     </div>
+
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyNbiClearance" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                 </td>
                                 <td>
                                     <p>*Original document issued by National Bureau of Investigation (NBI) with dry seal.</p>
@@ -691,6 +696,10 @@
                                             <input type="checkbox" class="form-check-input" id="cenomar" value="Certificate of No Marriage Record"> Certificate of No Marriage Record (CENOMAR, Advisory on Marriage and/or Negative Records)
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCenomar" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                 </td>
                                 <td>
                                     <p>*Original document issued by Philippine Statistics Authority (PSA)/ National Statistics Office (NSO).</p>
@@ -708,6 +717,10 @@
                                             <input type="checkbox" class="form-check-input" id="elementaryAndHighschool" value="Form 137 & Diploma"> For Elementary and High School Level (Form 137 and Diploma)
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyElementaryAndHighschool" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                 </td>
                                 <td>
                                     <p>*Certified True Copies from school; and</p>
@@ -721,6 +734,10 @@
                                             <input type="checkbox" class="form-check-input" id="techVoch" value="TOR & Diploma/National Certificate"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyTechVoch" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                 </td>
                                 <td>
                                     <p>*Certified True Copies from school; and</p>
@@ -731,8 +748,12 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
+                                            <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="State Colleges and Universities TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
                                         </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -743,8 +764,12 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label ">
-                                            <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
+                                            <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="Private/Local Colleges and Universities TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
                                         </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -810,6 +835,10 @@
                                             <input type="checkbox" class="form-check-input" id="driverLicense" value="Driver's License"> 7. Driver's License
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyDriverLicense" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                 </td>
                                 <td>
                                     <p>*Certification from Land Transportation Office (LTO Main Branch Only).</p>
@@ -825,25 +854,45 @@
                                             <input type="checkbox" class="form-check-input" id="COE" value="Certificate of Employment"> Certificate of Employment
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCOE" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="invitationLetter" value="Invitation Letter"> Invitation Letter
                                         </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyInvitationLetter" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="trainings" value="Trainings"> Trainings
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyTrainings" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="baptismalCert" value="Baptismal Certificate"> Baptismal Certificate
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBaptismalCert" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document (Private Entity)"> Other Document
                                         </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -862,36 +911,71 @@
                                             <input type="checkbox" class="form-check-input" id="specialPowerOfAttorney" value="Special Power of Attorney"> Special Power of Attorney
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="MOA" value="Memorandum of Agreement"> Memorandum of Agreement
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyMOA" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="MOU" value="Memorandum of Understanding"> Memorandum of Understanding
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyMOU" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="anyContract" value="Contract"> Any Form of Contract
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyAnyContract" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent/Advice"> Affidavit of Consent or Advise
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="jointAffidavit" value="Joint Affidavit"> Joint Affidavit
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyJointAffidavit" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="otherAffidavit" value="Other Affidavit"> Other Affidavit
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                 </td>
                                 <td>
                                     <p>*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</p>
@@ -907,16 +991,31 @@
                                             <input type="checkbox" class="form-check-input" id="courtDecision" value="Court Decision"> Decision
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCourtDecision" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" id="courtResolution" value="Court Resolution/Order"> Resolution/Order
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCourtResolution" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                     <div class="form-check">
                                         <label class="form-check-label ">
                                             <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Court Other Document"> Other Court Documents
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                 </td>
                                 <td>
                                     <p>*Certified True Copies from the Court.</p>
@@ -963,6 +1062,11 @@
                                             <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance/Sundry
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPoliceClearance" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                 </td>
                                 <td>
                                     <p>*Original document issued by Philippine National Police (PNP).</p>
@@ -994,6 +1098,11 @@
                                             15. Barangay Clearance/Certifcate
                                         </label>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBarangayClearance" style="width: 15%;height:30px;">
+                                        <span> Please insert no. of document/s (if more than one (1) type of document)</span>
+                                    </div>
+
                                 </td>
                                 <td>
                                     <p>*Mayor's certification/clearance which has a jurisdiction over the Barangay.</p>
@@ -1217,14 +1326,92 @@
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
                 $(':checkbox:checked').each(function (i) {
-                    if ($(this).val() == "Professional Regulation Commission (PRC) document/s") {
+                    if ($(this).val() == "NBI Clearance") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyNbiClearance').val() ? 1 : parseInt($('#qtyNbiClearance').val()) });
+                    }
+                    else if ($(this).val() == "Birth Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyBirthCertificate').val() ? 1 : parseInt($('#qtyBirthCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Marriage Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMarriageCertificate').val() ? 1 : parseInt($('#qtyMarriageCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Death Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyDeathCertificate').val() ? 1 : parseInt($('#qtyDeathCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Certificate of No Marriage Record") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyCenomar').val() ? 1 : parseInt($('#qtyCenomar').val()) });
+                    }
+                    else if ($(this).val() == "Form 137 & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyElementaryAndHighschool').val() ? 1 : parseInt($('#qtyElementaryAndHighschool').val()) });
+                    }
+                    else if ($(this).val() == "TOR & Diploma/National Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyTechVoch').val() ? 1 : parseInt($('#qtyTechVoch').val()) });
+                    }
+                    else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyStateCollegesAndUniversities').val() ? 1 : parseInt($('#qtyStateCollegesAndUniversities').val()) });
+                    }
+                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
+                    }
+                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
+                    }
+                    else if ($(this).val() == "PRC Document/s") {
                         documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPRC').val() ? 1 : parseInt($('#qtyPRC').val()) });
                     }
                     else if ($(this).val() == "Medical Certificates") {
                         documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMedCerts').val() ? 1 : parseInt($('#qtyMedCerts').val()) });
                     }
-                    else if ($(this).val() == "Civil Aviation Authority of the Philippines (CAAP) issued document/s") {
+                    else if ($(this).val() == "CAAP Documents") {
                         documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCAAP').val() ? 1 : parseInt($('#qtyCAAP').val()) });
+                    }
+                    else if ($(this).val() == "Driver's License") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDriverLicense').val() ? 1 : parseInt($('#qtyDriverLicense').val()) });
+                    }
+                    else if ($(this).val() == "Certificate of Employment") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCOE').val() ? 1 : parseInt($('#qtyCOE').val()) });
+                    }
+                    else if ($(this).val() == "Invitation Letter") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyInvitationLetter').val() ? 1 : parseInt($('#qtyInvitationLetter').val()) });
+                    }
+                    else if ($(this).val() == "Trainings") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyTrainings').val() ? 1 : parseInt($('#qtyTrainings').val()) });
+                    }
+                    else if ($(this).val() == "Baptismal Certificate") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBaptismalCert').val() ? 1 : parseInt($('#qtyBaptismalCert').val()) });
+                    }
+                    else if ($(this).val() == "Other Document (Private Entity)") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPrivateIssuedOtherDocu').val() ? 1 : parseInt($('#qtyPrivateIssuedOtherDocu').val()) });
+                    }
+                    else if ($(this).val() == "Special Power of Attorney") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtySpecialPowerOfAttorney').val() ? 1 : parseInt($('#qtySpecialPowerOfAttorney').val()) });
+                    }
+                    else if ($(this).val() == "Memorandum of Agreement") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOA').val() ? 1 : parseInt($('#qtyMOA').val()) });
+                    }
+                    else if ($(this).val() == "Memorandum of Understanding") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOU').val() ? 1 : parseInt($('#qtyMOU').val()) });
+                    }
+                    else if ($(this).val() == "Contract") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAnyContract').val() ? 1 : parseInt($('#qtyAnyContract').val()) });
+                    }
+                    else if ($(this).val() == "Affidavit of Consent/Advice") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAffidavitOfConsent').val() ? 1 : parseInt($('#qtyAffidavitOfConsent').val()) });
+                    }
+                    else if ($(this).val() == "Joint Affidavit") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyJointAffidavit').val() ? 1 : parseInt($('#qtyJointAffidavit').val()) });
+                    }
+                    else if ($(this).val() == "Other Affidavit") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyOtherAffidavit').val() ? 1 : parseInt($('#qtyOtherAffidavit').val()) });
+                    }
+                    else if ($(this).val() == "Court Decision") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtDecision').val() ? 1 : parseInt($('#qtyCourtDecision').val()) });
+                    }
+                    else if ($(this).val() == "Court Resolution/Order") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtResolution').val() ? 1 : parseInt($('#qtyCourtResolution').val()) });
+                    }
+                    else if ($(this).val() == "Court Other Document") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtOtherDocument').val() ? 1 : parseInt($('#qtyCourtOtherDocument').val()) });
                     }
                     else if ($(this).val() == "Immigration Record/s") {
                         documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyImmigration').val() ? 1 : parseInt($('#qtyImmigration').val()) });
@@ -1232,15 +1419,21 @@
                     else if ($(this).val() == "DSWD Clearance") {
                         documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDSWDClearance').val() ? 1 : parseInt($('#qtyDSWDClearance').val()) });
                     }
+                    else if ($(this).val() == "Police Clearance") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPoliceClearance').val() ? 1 : parseInt($('#qtyPoliceClearance').val()) });
+                    }
                     else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
                         documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBusinessRegistration').val() ? 1 : parseInt($('#qtyBusinessRegistration').val()) });
                     }
-                    else if ($(this).val() == "Export Document/s") {
+                    else if ($(this).val() == "Barangay Clearance/Certifcate") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBarangayClearance').val() ? 1 : parseInt($('#qtyBarangayClearance').val()) });
+                    }
+                    else /*if ($(this).val() == "Export Document/s")*/ {
                         documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyExportDocuments').val() ? 1 : parseInt($('#qtyExportDocuments').val()) });
                     }
-                    else {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
-                    }
+                    //else {
+                    //    documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
+                    //}
                 });
                 $("#documentsTable tbody > tr").empty();
                 $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th></tr>');
