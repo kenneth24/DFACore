@@ -56,7 +56,7 @@
         line-height: 10px;
         }*/
 </style>
-<p style="display:none;" id="IsUserAgreed"></p>
+@*<p style="display:none;" id="IsUserAgreed"></p>
 <div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -185,7 +185,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
         height: auto;">
@@ -1282,21 +1282,21 @@
     <script>
         $(document).ready(function () {
             var canConfirm = false;
-            if ($("#IsUserAgreed").text() !== "Agreed") {
-                $("#declaration-modal").modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            }
-            $("#declaration-agree").click(function () {
-                $("#terms-and-conditions-modal").modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            });
-            $("#terms-and-conditions-agree").click(function () {
-                $("#IsUserAgreed").text() = "Agreed"
-            });
+            //if ($("#IsUserAgreed").text() !== "Agreed") {
+            //    $("#declaration-modal").modal({
+            //        backdrop: 'static',
+            //        keyboard: false
+            //    });
+            //}
+            //$("#declaration-agree").click(function () {
+            //    $("#terms-and-conditions-modal").modal({
+            //        backdrop: 'static',
+            //        keyboard: false
+            //    });
+            //});
+            //$("#terms-and-conditions-agree").click(function () {
+            //    $("#IsUserAgreed").text() = "Agreed"
+            //});
             $("#Region").change(function () {
                 $.ajax({
                     url: '@Url.Action("GetCity")',

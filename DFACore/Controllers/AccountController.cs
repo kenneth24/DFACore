@@ -248,6 +248,7 @@ namespace DFACore.Controllers
                 //    await LogOff();
                 //    return RedirectToAction("Login");
                 //}
+                //return View(model);
                 return RedirectToAction("Index", "Home");
             }
 
