@@ -56,7 +56,137 @@
         line-height: 10px;
         }*/
 </style>
-<div class="pageContainers" id="application-form" style="        border: 1px solid #b7b7b7;
+<p style="display:none;" id="IsUserAgreed"></p>
+<div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                    <div class="col-lg-4 col-md-2 col-sm-2">
+                        <p class="black-text" style="font-size:12px;">Department of Foreign Affairs</p>
+                        <p class="black-text" style="font-size:12px;margin-top: -15px;">Office of Consular Affairs</p>
+                        <p class="black-text" style="font-size:12px;margin-top: -15px;">Authentication Division</p>
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                    <div class="col-lg-4 col-md-2 col-sm-2">
+                        <h4 class="modal-title text-center black-text-bold">DECLARATION</h4>
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                </div>
+                <hr />
+                <div class="form-group container">
+                    <p class="black-text" style="font-size:12px;">
+                        I hereby declare and certify that the documents submitted are authentic, I understand that the documents
+                        submitted shall be subjected to verification by the Department of Foreign Affairs(DFA).
+                        In the event that the same be found to be falsified or forged, my application shall be forfeited and I
+                        shall be subject to legal sanctions in accordance with the law.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        In case my document needs further verification from the issuing agency, I am aware that release of
+                        submitted document/s may exceed beyond the prescribed processing time depending on the
+                        compliance of the vefication request from the issuing agency.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        I undestand that should my document/s be submitted to any jurisdiction where the Hague
+                        Convention Abolishing the Requirement of Legalization for Foreign Public Documents (otherwise
+                        known as the Apostille Convention of 1961) does not apply, I shall undertake to present said
+                        document/s to the appropriate Embassy/Consulate in the Philippines for legalization.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        Further, I hold the DFA free from any liability should the Apostilized document be not accepted
+                        by any foreign jurisdiction, or for any delay, delivery error, loss, or damage due to unforeseen
+                        events beyond the control of the DFA, or once the Apostillized documents has been issued to the
+                        courier company or to my authorized representative.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        By proceeding with this application, I understand that I am signifying my unequivocal consent
+                        which effectively constitutes as waiver of any and all privacy rights pertaining to the disclosure,
+                        collection, and use of my personal information and data under the specific terms and conditions
+                        of R.A. No. 10173 or the Data Privacy Act of 2012 and it's Implementing Rules and Regulations,
+                        and other pertinent DFA rules, regulations, and policies on the matter.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-5 col-sm-5"> </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button id="declaration-agree" type="button" class="button-primary text-white" data-dismiss="modal">I AGREE</button>
+                        </div>
+                        <div class="col-md-5 col-sm-5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="terms-and-conditions-modal" tabindex="-1" role="dialog" aria-labelledby="termsAndConditionsModallLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                    <div class="col-lg-4 col-md-2 col-sm-2">
+                        <p class="black-text" style="font-size:12px;">Department of Foreign Affairs</p>
+                        <p class="black-text" style="font-size:12px;margin-top: -15px;">Office of Consular Affairs</p>
+                        <p class="black-text" style="font-size:12px;margin-top: -15px;">Authentication Division</p>
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-lg-3 col-md-2 col-sm-12"></div>
+                    <div class="col-lg-6 col-md-5 col-sm-12">
+                        <h4 class="modal-title text-center black-text-bold">TERMS AND CONDITIONS</h4>
+                    </div>
+                    <div class="col-lg-3 col-md-2 col-sm-12"></div>
+                </div>
+                <hr />
+                <div class="form-group container">
+                    <p class="black-text" style="font-size:12px;">
+                        This appointment and scheduling system allocates slots on a first come, first serve basis.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        Users accept the responsibility for supplying, checking, and verifying the accuracy and
+                        correctness of the information they provide on this system in connection with their application.
+                        Incorrect information supplied may result in delay or rejection of authentication / Apostille
+                        application. Misrepresentation of the user supplying inaccurate information may be considered
+                        grounds for refusal/cancellation/forfeiture of authentication / Apostille application.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        All fees are non-refundable. Fees shall be forfeited for applicants who fail to show up on their
+                        confirmed appointment, applicants who cancel their appointment, applicants whose application
+                        was rejected due to inconsistency and/or incorrect information, and applicants who present
+                        discrepant, fake or spurious documents.
+                    </p>
+                    <p class="black-text-bold" style="font-size:12px;">
+                        <i>
+                            By proceeding with this application, I understand that I am signifying my unequivocal 
+                            consent to the disclosure, collection, and use of my personal information and the data
+                            required under the Executive Order No. 582. My consent which effectively constitutes a
+                            waiver of any and all privacy rights pertaining to the disclosure, collection, and use of my
+                            Appointment System Website's Privacy Policy, the Data Privacy Act of 2012 and it's 
+                            Implementing Rules and Regulations, and other pertinent DFA rules, regulation, policies 
+                            on the matter.
+                        </i>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-5 col-sm-5"> </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button id="terms-and-conditions-agree" type="button" class="button-primary text-white" data-dismiss="modal">I AGREE</button>
+                        </div>
+                        <div class="col-md-5 col-sm-5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
         height: auto;">
     <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
@@ -100,7 +230,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="form-group">
-                    <h6  style="font-weight:bold">Name of Applicant</h6>
+                    <h6 style="font-weight:bold">Name of Applicant</h6>
                     <div class="row">
                         <div class="col-md-2 col-sm-12">
                             <label asp-for="Title">Title <span class="red">*</span></label>
@@ -210,13 +340,13 @@
                 <div class="form-group">
                     <div class="row">
                         @*<div class="col-md-6 col-sm-12">
-                            <label asp-for="Nationality">Nationality <span class="red">*</span></label>
-                            <select asp-for="Nationality" class="form-control">
-                                <option value=""></option>
-                                <partial name="_CountriesPartial" />
-                            </select>
-                            <span asp-validation-for="Nationality" class="text-danger nationality"></span>
-                        </div>*@
+                                <label asp-for="Nationality">Nationality <span class="red">*</span></label>
+                                <select asp-for="Nationality" class="form-control">
+                                    <option value=""></option>
+                                    <partial name="_CountriesPartial" />
+                                </select>
+                                <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                            </div>*@
 
                         <div class="col-md-6 col-sm-12">
                             <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
@@ -234,22 +364,22 @@
                     </div>
                 </div>
                 @*<div class="form-group">
-            <div class="row">
-                <div class="col-md-8 col-sm-12">
-                    <label asp-for="CompanyName"></label>
-                    <input asp-for="CompanyName" class="form-control" />
-                    <span asp-validation-for="CompanyName" class="text-danger"></span>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+                        <div class="row">
+                            <div class="col-md-8 col-sm-12">
+                                <label asp-for="CompanyName"></label>
+                                <input asp-for="CompanyName" class="form-control" />
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
 
-                    <select asp-for="CountryDestination" class="form-control">
-                        <partial name="_CountriesPartial" />
-                    </select>
-                    <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                </div>
-            </div>
-        </div>*@
+                                <select asp-for="CountryDestination" class="form-control">
+                                    <partial name="_CountriesPartial" />
+                                </select>
+                                <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                            </div>
+                        </div>
+                    </div>*@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-7 col-sm-12">
@@ -270,10 +400,10 @@
             <div class="form-group">
                 <div class="col-12">
                     @*<label class="form-check-label">*@
-                        <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;">
-                            @*Click here to select the document/s to be Apostillized*@
-                            ADD DOCUMENTS (<i class="fa fa-plus" aria-hidden="true"></i>)
-                        </a>
+                    <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;">
+                        @*Click here to select the document/s to be Apostillized*@
+                        ADD DOCUMENTS (<i class="fa fa-plus" aria-hidden="true"></i>)
+                    </a>
                     @*</label>*@
                 </div>
             </div>
@@ -512,13 +642,13 @@
             </div>
 
             @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Company/ Office: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblCompany"></span>
-                </div>
-            </div>*@
+                    <div class="step-three-field col-md-3 col-sm-12">
+                        <span>Company/ Office: </span>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                        <span id="LblCompany"></span>
+                    </div>
+                </div>*@
 
             <div class="row">
                 <div class="step-three-field col-md-3 col-sm-12">
@@ -1152,7 +1282,21 @@
     <script>
         $(document).ready(function () {
             var canConfirm = false;
-
+            if ($("#IsUserAgreed").text() !== "Agreed") {
+                $("#declaration-modal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }
+            $("#declaration-agree").click(function () {
+                $("#terms-and-conditions-modal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+            $("#terms-and-conditions-agree").click(function () {
+                $("#IsUserAgreed").text() = "Agreed"
+            });
             $("#Region").change(function () {
                 $.ajax({
                     url: '@Url.Action("GetCity")',
@@ -1167,15 +1311,15 @@
                         );
                         $.each(result, function (index, val) {
                             console.log(index, val)
-                            
+
                             $('#City').append(
                                 $('<option></option>').val(val).html(val)
                             );
                         });
-                        
+
                     },
                     error: function () {
-                        
+
                         alert('Something went wrong!');
                     }
 
@@ -1194,7 +1338,7 @@
             });
             $("#stepOneNextBtn").click(function () {
                 //|| $('#Nationality').val() == ""
-                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == "" 
+                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
                     || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
 
                     if ($('#Title').val() == "")

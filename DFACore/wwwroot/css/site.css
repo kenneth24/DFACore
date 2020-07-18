@@ -90,3 +90,61 @@ body {
 div.pageContainers {
     margin-top: 150px !important;
 }
+.black-text {
+    color: #000000 !important;
+    font-family:Arial;
+    font-weight:normal;
+}
+.black-text-bold {
+    color: #000000 !important;
+    font-family: Arial;
+    font-weight: bold;
+}
+.grey-text {
+    color: #808080 !important;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.grey-text-bold {
+    color: #808080 !important;
+    font-family: Arial;
+    font-weight: bold;
+}
+.red-text {
+    color: #FF0000 !important;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.red-text-bold {
+    color: #FF0000 !important;
+    font-family: Arial;
+    font-weight: bold;
+}
+.blue-text {
+    color: #217FF3 !important;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.blue-text-bold {
+    color: #217FF3 !important;
+    font-family: Arial;
+    font-weight: bold;
+}
+.button-primary {
+    background-color: #217FF3 !important;
+    border: 1px solid #217FF3;
+    border-radius: 5px;
+}
+.button-secondary {
+    background-color: #838E9E !important;
+    border: 1px solid #838E9E;
+    border-radius: 5px;
+}
+.button-other {
+    background-color: #FA4646 !important;
+    border: 1px solid #FA4646;
+    border-radius: 5px;
+}
