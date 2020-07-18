@@ -138,13 +138,25 @@ div.pageContainers {
     border: 1px solid #217FF3;
     border-radius: 5px;
 }
+.primary {
+    background-color: #217FF3 !important;
+    border: 1px solid #217FF3;
+}
 .button-secondary {
     background-color: #838E9E !important;
     border: 1px solid #838E9E;
     border-radius: 5px;
 }
+.secondary {
+    background-color: #838E9E !important;
+    border: 1px solid #838E9E;
+}
 .button-other {
     background-color: #FA4646 !important;
     border: 1px solid #FA4646;
     border-radius: 5px;
+}
+.secondary {
+    background-color: #FA4646 !important;
+    border: 1px solid #FA4646;
 }
