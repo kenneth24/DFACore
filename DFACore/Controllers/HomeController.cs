@@ -112,6 +112,8 @@ namespace DFACore.Controllers
                 return View();
             }
 
+            var attachments = new List<Attachment>();
+
             foreach (var record in records)
             {
                 var applicantRecord = new ApplicantRecord
@@ -143,15 +145,14 @@ namespace DFACore.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
                 }
-                //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
-                var attachment = new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
-
-                await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
-                        $"Download the attachment and present to the selected branch.",
-                        attachment);
+                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
             }
-            
+
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
+                        $"Download the attachment and present to the selected branch.",
+                        attachments.ToArray());
+
             return RedirectToAction("Success");
         }
 
