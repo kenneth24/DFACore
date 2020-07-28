@@ -26,6 +26,19 @@ namespace DFACore.Repository
             return true;
         }
 
+        public bool AddRange(IEnumerable<ApplicantRecord> applicantRecords)
+        {
+            foreach (var applicantRecord in applicantRecords)
+            {
+                applicantRecord.DateCreated = DateTime.UtcNow;
+            }
+            //applicantRecord.DateCreated = DateTime.UtcNow;
+
+            _context.ApplicantRecords.AddRange(applicantRecords);
+            _context.SaveChanges();
+            return true;
+        }
+
         public bool Delete(long id)
         {
             throw new NotImplementedException();
