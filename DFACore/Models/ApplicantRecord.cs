@@ -57,6 +57,7 @@ namespace DFACore.Models
         public string Fees { get; set; }
         public DateTime DateCreated { get; set; }
         public Guid CreatedBy { get; set; }
-        
+        public long Type { get; set; }
+
     }
 }
