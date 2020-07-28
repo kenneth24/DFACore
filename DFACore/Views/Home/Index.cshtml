@@ -106,6 +106,36 @@
                data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
                 View requirements
             </a>
+
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+    </div>
+    <div id="insert-applicants-number" class="row" style="display:none;margin-top:2%;">
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 text-center">
+            <h4 class="black-text-bold text-center">INSERT NUMBER OF APPLICANTS</h4>
+            <input type="number"
+                   id="applicantsNumber" 
+                   name="applicantsNumber" 
+                   value="0" 
+                   class="black-text-bold " 
+                    style="height: 70px;
+                    width: 60px;
+                    font-size: 60px;
+                    text-align: center;
+                    border: none;
+                    background-color: #ddd;" />
+            <p class="black-text text-center">
+                If you are applying for Apostille, please include yourself in the number of apostille.
+            </p>
+            <div class="row" style="width: 100%;">
+                <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-12">Back</button></div>
+                <div class="col-md-2 col-sm-2">
+                </div>
+                <div class="col-md-5 col-sm-5"><button id="show-step-one-authorized" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">OK</button></div>
+            </div>
         </div>
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
@@ -182,9 +212,9 @@
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                 <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
                 <div class="form-group">
-                    <h6 style="font-weight:bold">Document Owner</h6>
+                    <h6 style="font-weight: bold">Document Owner</h6>
                     <div class="row">
                         <div class="col-md-2 col-sm-12">
                             <label asp-for="Title">Title <span class="red">*</span></label>
@@ -351,7 +381,7 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 20px;">
                 <div class="col-12">
                     @*<label class="form-check-label">*@
                     <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
@@ -369,7 +399,7 @@
                     </div>
                     <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
 
-                        <table class="table " id="documentsTable">
+                        <table class="table " id="documentsTableAuthorized">
                             <tr>
                                 <th>Document</th>
                                 <th>Quantity</th>
@@ -403,7 +433,7 @@
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                 <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
                 <div class="form-group">
                     <h6 style="font-weight:bold">Authorized Representative</h6>
                     <div class="row">
@@ -572,7 +602,7 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top:20px;">
                 <div class="col-12">
                     @*<label class="form-check-label">*@
                     <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
@@ -1020,7 +1050,9 @@
                                     <div class="form-group">
                                         <input type="number" class="small" id="qtyDeathCertificateExpedite" style="width: 15%;height:30px;">
                                         <span> Expedite</span>
-                                        <input type="number" class="small" id="qtyDeathCertificateRegular" style="width: 15%;height:30px;">
+                                        <input type="number" class="small" id="qtyDeathCertificateRegular" style="        width: 15%;
+        height: 30px;
+">
                                         <span> Regular</span>
                                         <input type="number" disabled class="small" id="qtyDeathCertificate" style="width: 15%;height:30px;">
                                         <span> Total</span>
@@ -1959,9 +1991,18 @@
                 $("#step-one").show();
                 $(".choose-user-container").hide();
             });
+
             $("#show-authorized-representative").click(function () {
-                $("#step-one-authorized").show();
+                $("#insert-applicants-number").show();
                 $(".choose-user-container").hide();
+            });
+            $("#back-to-choose-user").click(function () {
+                $(".choose-user-container").show();
+                $("#insert-applicants-number").hide();
+            });
+            $("#show-step-one-authorized").click(function () {
+                $("#step-one-authorized").show();
+                $("#insert-applicants-number").hide();
             });
             $("#Region").change(function () {
                 $.ajax({
@@ -2132,129 +2173,440 @@
                 $("#step-three").hide();
             });
             $('#documentsCount').text(0);
-
+            //$("#qtyNbiClearanceExpedite").focusout(function () {
+            //   var totalNbiClearance = parseInt($("#qtyNbiClearanceExpedite").val()) + (!$("#qtyNbiClearanceRegular").val() ? 0 : parseInt($("#qtyNbiClearanceRegular").val()));
+            //    $("#qtyNbiClearance").val(totalNbiClearance);
+            //});
+            //$("#qtyNbiClearanceExpedite").focusout(function () {
+            //   var totalNbiClearance = parseInt($("#qtyNbiClearanceExpedite").val()) + (!$("#qtyNbiClearanceRegular").val() ? 0 : parseInt($("#qtyNbiClearanceRegular").val()));
+            //    $("#qtyNbiClearance").val(totalNbiClearance);
+            //});
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
                 $(':checkbox:checked').each(function (i) {
                     if ($(this).val() == "NBI Clearance") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyNbiClearance').val() ? 1 : parseInt($('#qtyNbiClearance').val()) });
+                        if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Birth Certificate") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyBirthCertificate').val() ? 1 : parseInt($('#qtyBirthCertificate').val()) });
+                        if (parseInt($('#qtyBirthCertificateExpedite').val()) > 0 && !$('#qtyBirthCertificateRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyBirthCertificateRegular').val()) > 0 && !$('#qtyBirthCertificateExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Marriage Certificate") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMarriageCertificate').val() ? 1 : parseInt($('#qtyMarriageCertificate').val()) });
+                        if (parseInt($('#qtyMarriageCertificateExpedite').val()) > 0 && !$('#qtyMarriageCertificateRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyMarriageCertificateRegular').val()) > 0 && !$('#qtyMarriageCertificateExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Death Certificate") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyDeathCertificate').val() ? 1 : parseInt($('#qtyDeathCertificate').val()) });
+                        if (parseInt($('#qtyDeathCertificateExpedite').val()) > 0 && !$('#qtyDeathCertificateRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyDeathCertificateRegular').val()) > 0 && !$('#qtyDeathCertificateExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Certificate of No Marriage Record") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyCenomar').val() ? 1 : parseInt($('#qtyCenomar').val()) });
+                        if (parseInt($('#qtyCenomarExpedite').val()) > 0 && !$('#qtyCenomarRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCenomarRegular').val()) > 0 && !$('#qtyCenomarExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Form 137 & Diploma") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyElementaryAndHighschool').val() ? 1 : parseInt($('#qtyElementaryAndHighschool').val()) });
+                       if (parseInt($('#qtyElementaryAndHighschoolExpedite').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyElementaryAndHighschoolRegular').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "TOR & Diploma/National Certificate") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyTechVoch').val() ? 1 : parseInt($('#qtyTechVoch').val()) });
+                        if (parseInt($('#qtyTechVochExpedite').val()) > 0 && !$('#qtyTechVochRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyTechVochRegular').val()) > 0 && !$('#qtyTechVochExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyStateCollegesAndUniversities').val() ? 1 : parseInt($('#qtyStateCollegesAndUniversities').val()) });
+                        if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
-                    }
-                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
+                        if (parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "PRC Document/s") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPRC').val() ? 1 : parseInt($('#qtyPRC').val()) });
+                        if (parseInt($('#qtyPRCExpedite').val()) > 0 && !$('#qtyPRCRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyPRCRegular').val()) > 0 && !$('#qtyPRCExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Medical Certificates") {
-                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMedCerts').val() ? 1 : parseInt($('#qtyMedCerts').val()) });
+                        if (parseInt($('#qtyMedCertsExpedite').val()) > 0 && !$('#qtyMedCertsRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyMedCertsRegular').val()) > 0 && !$('#qtyMedCertsExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "CAAP Documents") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCAAP').val() ? 1 : parseInt($('#qtyCAAP').val()) });
+                        if (parseInt($('#qtyCAAPExpedite').val()) > 0 && !$('#qtyCAAPRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCAAPRegular').val()) > 0 && !$('#qtyCAAPExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Driver's License") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDriverLicense').val() ? 1 : parseInt($('#qtyDriverLicense').val()) });
+                        if (parseInt($('#qtyDriverLicenseExpedite').val()) > 0 && !$('#qtyDriverLicenseRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyDriverLicenseRegular').val()) > 0 && !$('#qtyDriverLicenseExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Certificate of Employment") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCOE').val() ? 1 : parseInt($('#qtyCOE').val()) });
+                        if (parseInt($('#qtyCOEExpedite').val()) > 0 && !$('#qtyCOERegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCOERegular').val()) > 0 && !$('#qtyCOEExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Invitation Letter") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyInvitationLetter').val() ? 1 : parseInt($('#qtyInvitationLetter').val()) });
+                        if (parseInt($('#qtyInvitationLetterExpedite').val()) > 0 && !$('#qtyInvitationLetterRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyInvitationLetterRegular').val()) > 0 && !$('#qtyInvitationLetterExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Trainings") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyTrainings').val() ? 1 : parseInt($('#qtyTrainings').val()) });
+                        if (parseInt($('#qtyTrainingsExpedite').val()) > 0 && !$('#qtyTrainingsRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyTrainingsRegular').val()) > 0 && !$('#qtyTrainingsExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Baptismal Certificate") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBaptismalCert').val() ? 1 : parseInt($('#qtyBaptismalCert').val()) });
+                        if (parseInt($('#qtyBaptismalCertExpedite').val()) > 0 && !$('#qtyBaptismalCertRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyBaptismalCertRegular').val()) > 0 && !$('#qtyBaptismalCertExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Other Document (Private Entity)") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPrivateIssuedOtherDocu').val() ? 1 : parseInt($('#qtyPrivateIssuedOtherDocu').val()) });
+                        if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Special Power of Attorney") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtySpecialPowerOfAttorney').val() ? 1 : parseInt($('#qtySpecialPowerOfAttorney').val()) });
+                        if (parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Memorandum of Agreement") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOA').val() ? 1 : parseInt($('#qtyMOA').val()) });
+                        if (parseInt($('#qtyMOAExpedite').val()) > 0 && !$('#qtyMOARegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyMOARegular').val()) > 0 && !$('#qtyMOAExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Memorandum of Understanding") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOU').val() ? 1 : parseInt($('#qtyMOU').val()) });
+                        if (parseInt($('#qtyMOUExpedite').val()) > 0 && !$('#qtyMOURegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyMOURegular').val()) > 0 && !$('#qtyMOUExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Contract") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAnyContract').val() ? 1 : parseInt($('#qtyAnyContract').val()) });
+                        if (parseInt($('#qtyAnyContractExpedite').val()) > 0 && !$('#qtyAnyContractRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyAnyContractRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Affidavit of Consent/Advice") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAffidavitOfConsent').val() ? 1 : parseInt($('#qtyAffidavitOfConsent').val()) });
+                        if (parseInt($('#qtyAffidavitOfConsentExpedite').val()) > 0 && !$('#qtyAffidavitOfConsentRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyAffidavitOfConsentRegular').val()) > 0 && !$('#qtyAffidavitOfConsentExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Joint Affidavit") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyJointAffidavit').val() ? 1 : parseInt($('#qtyJointAffidavit').val()) });
+                        if (parseInt($('#qtyJointAffidavitExpedite').val()) > 0 && !$('#qtyJointAffidavitRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyJointAffidavitRegular').val()) > 0 && !$('#qtyJointAffidavitExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Other Affidavit") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyOtherAffidavit').val() ? 1 : parseInt($('#qtyOtherAffidavit').val()) });
+                        if (parseInt($('#qtyOtherAffidavitExpedite').val()) > 0 && !$('#qtyOtherAffidavitRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyOtherAffidavitRegular').val()) > 0 && !$('#qtyOtherAffidavitExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Court Decision") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtDecision').val() ? 1 : parseInt($('#qtyCourtDecision').val()) });
+                        if (parseInt($('#qtyCourtDecisionExpedite').val()) > 0 && !$('#qtyCourtDecisionRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCourtDecisionRegular').val()) > 0 && !$('#qtyCourtDecisionExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Court Resolution/Order") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtResolution').val() ? 1 : parseInt($('#qtyCourtResolution').val()) });
+                        if (parseInt($('#qtyCourtResolutionExpedite').val()) > 0 && !$('#qtyCourtResolutionRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCourtResolutionRegular').val()) > 0 && !$('#qtyCourtResolutionExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Court Other Document") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtOtherDocument').val() ? 1 : parseInt($('#qtyCourtOtherDocument').val()) });
+                        if (parseInt($('#qtyCourtOtherDocumentExpedite').val()) > 0 && !$('#qtyCourtOtherDocumentRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyCourtOtherDocumentRegular').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Immigration Record/s") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyImmigration').val() ? 1 : parseInt($('#qtyImmigration').val()) });
+                        if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "DSWD Clearance") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDSWDClearance').val() ? 1 : parseInt($('#qtyDSWDClearance').val()) });
+                        if (parseInt($('#qtyDSWDClearanceExpedite').val()) > 0 && !$('#qtyDSWDClearanceRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyDSWDClearanceRegular').val()) > 0 && !$('#qtyDSWDClearanceExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Police Clearance") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPoliceClearance').val() ? 1 : parseInt($('#qtyPoliceClearance').val()) });
+                        if (parseInt($('#qtyPoliceClearanceExpedite').val()) > 0 && !$('#qtyPoliceClearanceRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyPoliceClearanceRegular').val()) > 0 && !$('#qtyPoliceClearanceExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBusinessRegistration').val() ? 1 : parseInt($('#qtyBusinessRegistration').val()) });
+                        if (parseInt($('#qtyBusinessRegistrationExpedite').val()) > 0 && !$('#qtyBusinessRegistrationRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyBusinessRegistrationRegular').val()) > 0 && !$('#qtyBusinessRegistrationExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else if ($(this).val() == "Barangay Clearance/Certifcate") {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBarangayClearance').val() ? 1 : parseInt($('#qtyBarangayClearance').val()) });
+                        if (parseInt($('#qtyBarangayClearanceExpedite').val()) > 0 && !$('#qtyBarangayClearanceRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyBarangayClearanceRegular').val()) > 0 && !$('#qtyBarangayClearanceExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     else /*if ($(this).val() == "Export Document/s")*/ {
-                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyExportDocuments').val() ? 1 : parseInt($('#qtyExportDocuments').val()) });
+                        if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && !$('#qtyExportDocumentsRegular').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($('#qtyExportDocumentsRegular').val()) > 0 && !$('#qtyExportDocumentsExpedite').val()) {
+                            documentObject[i] = ({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()) , Transaction: "Regular"});
+                        }
+                        else {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
+                        }
                     }
                     //else {
                     //    documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
                     //}
                 });
                 $("#documentsTable tbody > tr").empty();
-                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th></tr>');
+                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th><th>Transaction</th></tr>');
                 //var tbodyContent = '';
+                var numberOfDocuments = 0;
                 $.each(documentObject, function (index, value) {
-                    $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td></tr>'));
-                    //tbodyContent += '<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>');
+                    $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>',value.Transaction, '</td></tr>'));
+                    numberOfDocuments += value.Quantity;
                 });
                 //console.log(tbodyContent);
                 //$('#documentsTable tbody').append(tbodyContent);
-                $('#documentsCount').text(documentObject.length);
+                $('#documentsCount').text(numberOfDocuments);
                 $('#apostileData').val(JSON.stringify(documentObject));
                 console.log(JSON.stringify(documentObject));
             });
@@ -2356,6 +2708,7 @@
                 $('#selectTimeContainer').css('opacity', '0.5');
                 $('#appointmentSchedule').val('');
             }
+
         };
 
 
