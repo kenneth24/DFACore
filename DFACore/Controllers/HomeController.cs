@@ -157,6 +157,27 @@ namespace DFACore.Controllers
         }
 
 
+        public IActionResult Authorized()
+        {
+            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            ViewData["AvailableDates"] = stringify;
+            ViewData["ApplicationCode"] = GetApplicantCode();
+            ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Authorized(ApplicantsViewModel record, string returnUrl = null)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Success");
+        }
+
         [AllowAnonymous]
         public IActionResult Privacy()
         {

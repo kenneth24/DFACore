@@ -1,0 +1,1808 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.ApplicantsViewModel
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+<style>
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: gray;
+    }
+
+    /*button {
+        width: 200px;
+    }*/
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    /*.step-three-field {
+        margin-top: 10px;
+    }*/
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+    /*li.nav-item {
+        height:25px;
+        overflow-y:hidden;
+    }
+        li.nav-item a {
+        height: 25px;
+        line-height: 10px;
+        }*/
+</style>
+
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
+        padding: 20px;
+        height: auto;">
+    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
+        <span class="float-left font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="d-sm-none">
+        <p>
+            <span>@User.Identity.Name</span>
+            <span class="float-right"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></span>
+        </p>
+        <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
+    </div>
+    <div class="modal fade" id="view-requirements-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header primary"></div>
+                <div class="modal-body">
+                    <div class="form-group container">
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Requirements for filing/claiming Authentication applications via Authorized Representative:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            1. Authorization letter from the owner. For Minor Applicants - Original Special Power
+                            of Attorney executed by parent/s.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            2. Photocopy of the owner's ID bearing his/her signature.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            3. Photocopy and original copy of representative's ID.
+                        </p>
+                        <p class="black-text-bold" style="font-size:12px;">
+                            List of Acceptable IDs:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *All digitized Philippines government-issued IDs bearing the signature of the applicant.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *Other acceptable IDs: Senior Citizens ID, Solo Parent ID, PWD ID, Voter's ID, Voter's Certification,
+                            Seaman's Book and Alumni ID or Student ID (1 year upon graduation).
+                        </p>
+                        <p class="black-text-bold text-center" style="font-size:14px;">
+                            REMINDER FOR MINOR APPLICANTS
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            For applications / documents involving Minor (age below 18 years old), the following additional documents
+                            must be presented if the applicant / representative processing the authentication / Apostille is:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any of the parent as reflected on Birth Certificate:</strong> proof of filiation such as Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any representative other than the parent as reflected on Birth Certificate:</strong> notarized Special Power of Attorney
+                            executed by any of the parent of the minor as reflected on Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>NOTE:</strong> If the child is not acknowledged by the father, then any  representative (even if he is the biological father) who
+                            is NOT the mother of the minor applicant must present a notarized Special Power of Attorney executed by the mother.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-4 col-sm-12"> </div>
+
+                            <button id="declaration-agree"
+                                    type="button"
+                                    class="button-secondary text-white col-md-4 col-sm-12"
+                                    data-dismiss="modal"
+                                    style="height:30px;">
+                                CLOSE
+                            </button>
+
+                            <div class="col-md-4 col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="post" id="application-form">
+
+        <div id="step-one-authorized" class="tabcontent">
+            <div>
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <h6 style="font-weight:bold">Authorized Representative</h6>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Records[0].FirstName">First Name <span class="red">*</span></label>
+                                <input asp-for="Records[0].FirstName" class="form-control" />
+                                <span asp-validation-for="Records[0].FirstName" class="text-danger fname"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Records[0].MiddleName"></label>
+                                <input asp-for="Records[0].MiddleName" class="form-control" />
+                                <span asp-validation-for="Records[0].MiddleName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Records[0].LastName">Last Name <span class="red">*</span></label>
+                                <input asp-for="Records[0].LastName" class="form-control" />
+                                <span asp-validation-for="Records[0].LastName" class="text-danger lname"></span>
+                            </div>
+
+
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Records[0].Suffix"></label>
+                                @*<input asp-for="Suffix" class="form-control" />*@
+                                <select asp-for="Records[0].Suffix" class="form-control">
+                                    <option value="N/A">N/A</option>
+                                    <option value="JR.">JR.</option>
+                                    <option value="SR.">SR.</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="VI">VI</option>
+                                    <option value="VII">VII</option>
+                                    <option value="VIII">VIII</option>
+                                    <option value="IX">IX</option>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                    <option value="XIII">XIII</option>
+                                    <option value="XIV">XIV</option>
+                                    <option value="XV">XV</option>
+                                </select>
+                                <span asp-validation-for="Records[0].Suffix" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="Records[0].DateOfBirth">Date Birth <span class="red">*</span></label>
+                                <input asp-for="Records[0].DateOfBirth" class="datepicker form-control" />
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="Records[0].CountryDestination">Country of Destination <span class="red">*</span></label>
+                                <select asp-for="Records[0].CountryDestination" class="form-control">
+                                    <partial name="_CountriesPartial" />
+                                </select>
+                                <span asp-validation-for="Records[0].CountryDestination" class="text-danger countrydestination"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-12">
+                                    <label asp-for="CompanyName"></label>
+                                    <input asp-for="CompanyName" class="form-control" />
+                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                    <select asp-for="CountryDestination" class="form-control">
+                                        <partial name="_CountriesPartial" />
+                                    </select>
+                                    <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                </div>
+                            </div>
+                        </div>*@
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-12">
+                        @*<label class="form-check-label">*@
+                        <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
+                            @*Click here to select the document/s to be Apostillized*@
+                            ADD DOCUMENTS (<i class="fa fa-plus" aria-hidden="true"></i>)
+                        </a>
+                        @*</label>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
+                        <div style="background-color: #217ff3;color: white;height: auto;">
+                            <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
+                        </div>
+                        <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
+
+                            <table class="table" id="documentsTable">
+                                <tr>
+                                    <th>Document</th>
+                                    <th>Quantity</th>
+                                    <th>Transaction</th>
+                                </tr>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input asp-for="Records[0].ApostileData" id="apostileData" class="form-control" hidden />
+                        <span asp-validation-for="Records[0].ApostileData" class="text-danger apostiledata"></span>
+                    </div>
+
+                </div>
+            </div>
+            <div id="ApplicantContainer">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <input id="AddApplicant" type="button" value="Add" />
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 col-sm-12"></div>
+            <div class="col-md-4 col-sm-12">
+                <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+            </div>
+            <div class="col-md-4 col-sm-12"></div>
+        </div>
+        <div>
+            <div class="col-md-4 col-sm-12">
+                <input id="AddApplicant" type="submit" value="Add" />
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title black-text-bold" id="exampleModalLabel">ADD DOCUMENTS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="primary" style="padding:15px;margin-bottom:10px;">
+                        <p class="text-white">
+                            <strong>INSTRUCTIONS</strong>: Select the type of Document then insert the number of document/s per transaction (REGULAR -
+                            3 working days, EXPEDITE - 1 working day). Please be advised that the EXPEDITE transaction is temporary unavailable for processing.
+                            Please check the DFA website www.dfa.gov.ph for further announcements.
+
+                        </p>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead></thead>
+                        <tr style="background-color: #217ff3;color: white;height: 35px;text-align:center">
+                            <th>TYPE OF DOCUMENT</th>
+                            <th>GUIDELINES <br />(Click link to view the document)</th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="nbiClearance" value="NBI Clearance">1. NBI Clearance/Sundry
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyNbiClearanceExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyNbiClearanceRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyNbiClearance" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>*Original document issued by National Bureau of Investigation (NBI) with dry seal.</p>
+                                    <br />
+                                    <a href="#" class="blue-text-bold" data-toggle="modal" data-target="#personalCopyNotValid-modal">*Personal Copy is NOT valid</a>
+                                    <br />
+                                    <a href="#" class="blue-text-bold" data-toggle="modal" data-target="#nbiSampleCopy-modal">*Sample copy of NBI sundry</a>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-check-label font-weight-bold">
+                                        2. PSA/NSO/Local Civil Registrar
+                                    </label>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="birthCertificate" value="Birth Certificate"> Birth Certificate
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBirthCertificateExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyBirthCertificateRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyBirthCertificate" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="marriageCertificate" value="Marriage Certificate"> Marriage Certificate
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyMarriageCertificateExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyMarriageCertificateRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyMarriageCertificate" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="deathCertificate" value="Death Certificate"> Death Certificate
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyDeathCertificateExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyDeathCertificateRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyDeathCertificate" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="cenomar" value="Certificate of No Marriage Record"> Certificate of No Marriage Record (CENOMAR, Advisory on Marriage and/or Negative Records)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCenomarExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCenomarRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCenomar" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>*Original document issued by Philippine Statistics Authority (PSA)/ National Statistics Office (NSO).</p>
+                                    <p>*For newly registered records, Local Civil Registrar (LCR) copy should be certified by PSA.</p>
+                                    <p>*Provide an LCR copy of Birth (Form 1A)/ Death (Form 2A)/ Marriage (Form 3A) Certificate if the entries from PSA/NSO are UNCLEAR.</p>
+                                    <br />
+                                    <a href="#" class="blue-text-bold" data-toggle="modal" data-target="#birthCertificate-modal">*Sample LCR copy of Birth Certificate (From 1A)</a>
+                                    <br />
+                                    <a href="#" class="blue-text-bold" data-toggle="modal" data-target="#deathCertificate-modal">*Sample LCR copy of Death Certificate (From 2A)</a>
+                                    <br />
+                                    <a href="#" class="blue-text-bold" data-toggle="modal" data-target="#marriageCertificate-modal">*Sample LCR copy of Marriage Certificate (From 3A)</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-check-label font-weight-bold">
+                                        3. School Documents
+                                    </label>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="elementaryAndHighschool" value="Form 137 & Diploma"> For Elementary and High School Level (Form 137 and Diploma)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyElementaryAndHighschoolExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyElementaryAndHighschoolRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyElementaryAndHighschool" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold">*Certified True Copies from school; and</a></p>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#elementaryAndHighSchoolCAV-modal">*Certification, Authentication and Verification (CAV) from DepEd Regional Office.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="techVoch" value="TOR & Diploma/National Certificate"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyTechVochExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyTechVochRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyTechVoch" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold">*Certified True Copies from school; and</a></p>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#techVocCAV-modal">*Certification, Authentication and Verification (CAV) from Technical and Skills Development Authority (TESDA).</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="State Colleges and Universities TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyStateCollegesAndUniversitiesExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyStateCollegesAndUniversitiesRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#SCandUnivCAV-modal">*Certified True Copies from school; and Certification, Authentication and Verification (CAV) from the school.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="Private/Local Colleges and Universities TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPrivateOrLocalCollegesExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyPrivateOrLocalCollegesRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold">*Certified True Copies from school; and </a></p>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#chedCOV-modal">*Certification, Authentication and Verification (CAV) from Commission on Higher Education (CHED). </a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="PRC" value="PRC Document/s"> 4. Professional Regulation Commission (PRC) document/s
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPRCExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyPRCRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyPRC" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#prcCTC-modal">*Certified True Copies from PRC.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="medCerts" value="Medical Certificates"> 5. Medical Certificates
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="number" class="small" id="qtyMedCertsExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyMedCertsRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyMedCerts" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#dohStamp-modal">*For employement: DOH Stamp per document.</a></p>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#dohMedCert-modal">*For other purpose: Certification issued by the DOH with attached Medical Certificate.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="CAAP" value="CAAP Documents"> 6. Civil Aviation Authority of the Philippines (CAAP) issued document/s
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCAAPExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCAAPRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCAAP" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#caapCert-modal">*Certificate by CAAP.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="driverLicense" value="Driver's License"> 7. Driver's License
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="number" class="small" id="qtyDriverLicenseExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyDriverLicenseRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyDriverLicense" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#ltoCert-modal">*Certification from Land Transportation Office (LTO Main Branch Only).</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-check-label font-weight-bold">
+                                        8. Documents issued by a private entity
+                                    </label>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="COE" value="Certificate of Employment"> Certificate of Employment
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCOEExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCOERegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCOE" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="invitationLetter" value="Invitation Letter"> Invitation Letter
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyInvitationLetterExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyInvitationLetterRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyInvitationLetter" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="trainings" value="Trainings"> Trainings
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyTrainingsExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyTrainingsRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyTrainings" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="baptismalCert" value="Baptismal Certificate"> Baptismal Certificate
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBaptismalCertExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyBaptismalCertRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyBaptismalCert" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document (Private Entity)"> Other Document
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPrivateIssuedOtherDocuExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyPrivateIssuedOtherDocuRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>*Notarized Affidavit stating financial circumstances and indicating certificate/s as attachments.</p>
+                                    <p><a href="#" class="blue-text-bold">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
+                                    <p>*Copy of Notarial Commission is not the same as Certificate of Authority for a Notarial Act.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-check-label font-weight-bold">
+                                        9. Notary Public Documents
+                                    </label>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" id="specialPowerOfAttorney" value="Special Power of Attorney"> Special Power of Attorney
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtySpecialPowerOfAttorneyExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtySpecialPowerOfAttorneyRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="MOA" value="Memorandum of Agreement"> Memorandum of Agreement
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyMOAExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyMOARegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyMOA" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="MOU" value="Memorandum of Understanding"> Memorandum of Understanding
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyMOUExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyMOURegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyMOU" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="anyContract" value="Contract"> Any Form of Contract
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyAnyContractExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyAnyContractRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyAnyContract" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent/Advice"> Affidavit of Consent or Advise
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyAffidavitOfConsentExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyAffidavitOfConsentRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="jointAffidavit" value="Joint Affidavit"> Joint Affidavit
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyJointAffidavitExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyJointAffidavitRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyJointAffidavit" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="otherAffidavit" value="Other Affidavit"> Other Affidavit
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyOtherAffidavitExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyOtherAffidavitRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#cana-modal">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-check-label font-weight-bold">
+                                        10. Court Document/s
+                                    </label>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" id="courtDecision" value="Court Decision"> Decision
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="number" class="small" id="qtyCourtDecisionExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCourtDecisionRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCourtDecision" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" id="courtResolution" value="Court Resolution/Order"> Resolution/Order
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <input type="number" class="small" id="qtyCourtResolutionExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCourtResolutionRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCourtResolution" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label ">
+                                            <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Court Other Document"> Other Court Documents
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyCourtOtherDocumentExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyCourtOtherDocumentRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#courtDocuCTC-modal">*Certified True Copies from the Court.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="immigrationRecords" value="Immigration Record/s"> 11. Immigration Record/s
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyImmigrationExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyImmigrationRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyImmigration" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#immigrationDocu-modal">*Certified by Bureau of Immigration.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="DSWDClearance" value="DSWD Clearance"> 12. DSWD Clearance
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyDSWDClearanceExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyDSWDClearanceRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyDSWDClearance" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#dswdClearance-modal">*Original document issued by Department of Social Welfare and Development.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance/Sundry
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyPoliceClearanceExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyPoliceClearanceRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyPoliceClearance" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#pnpCert-modal">*Original document issued by Philippine National Police (PNP).</a></p>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#pnpSundry-modal">*Sample copy of PNP Sundry.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="businessRegistration" value="Business Registration & Other Documents issued by a Government Agency">
+                                            14. Business Registration & Other Documents issued by a Government Agency (e.g. SEC, DTI, SSS, BIR, Municipal Business Permit and Licensing Office, etc.)
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBusinessRegistrationExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyBusinessRegistrationRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyBusinessRegistration" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#govtCTC-modal">*Certified true copy/ies from the issuing office.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="barangayClearance" value="Barangay Clearance/Certifcate">
+                                            15. Barangay Clearance/Certifcate
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyBarangayClearanceExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyBarangayClearanceRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyBarangayClearance" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#mayorCert-modal">*Mayor's certification/clearance which has a jurisdiction over the Barangay.</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label font-weight-bold">
+                                            <input type="checkbox" class="form-check-input" id="exportDocuments" value="Export Document/s">
+                                            16. Export Document/s
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="small" id="qtyExportDocumentsExpedite" style="width: 15%;height:30px;">
+                                        <span> Expedite</span>
+                                        <input type="number" class="small" id="qtyExportDocumentsRegular" style="width: 15%;height:30px;">
+                                        <span> Regular</span>
+                                        <input type="number" disabled class="small" id="qtyExportDocuments" style="width: 15%;height:30px;">
+                                        <span> Total</span>
+                                        @*<label for="qtyPRC"></label>*@
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="#" class="blue-text-bold" data-toggle="modal" data-target="#exportDocu-modal">*Certified by Philippine Chamber of Commerce (PCCI), Department Of Health (DOH), Department of Agriculture (DA) or by the Food and Drug Administration (FDA) depending on the nature of the document.</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Close</button></div>
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-5"><button id="selectDocumentsBtn" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">Select</button></div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="personalCopyNotValid-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="nbiSampleCopy-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="nbiSampleCopy-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/images/documents/1 Sample NBI Sundry-1.png" alt="First slide" height="800">
+                                <p class="text-center grey-text-bold">1 of 2</p>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/images/documents/1 Sample NBI Sundry-2.png" alt="Second slide" height="800">
+                                <p class="text-center grey-text-bold">2 of 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                                <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#nbiSampleCopy-carousel').carousel('prev')">Previous</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#nbiSampleCopy-carousel').carousel('next')">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="birthCertificate-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/2 LCR copy of Birth (Form 1A).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deathCertificate-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/2 LCR copy of Death (Form 2A).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="marriageCertificate-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/2 LCR copy of Marriage (Form 3A).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="elementaryAndHighSchoolCAV-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/3a Sample CAV for Elementary and Highschool Level (Form-137 and Diploma).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="techVocCAV-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <img class="d-block w-100" src="~/images/documents/3b Sample CAV for Technical and Vocational Courses (TOR and Diploma; National Certificate).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="SCandUnivCAV-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <img class="d-block w-100" src="~/images/documents/3c Sample CAV for State Colleges and Universities (TOR and Diploma).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="chedCOV-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/3d Sample CAV for Private or Local Colleges and Universities (TOR and Diploma).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="prcCTC-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/4 PRC Certified True Copy Stamp.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dohStamp-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/5 Sample DOH stamp.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dohMedCert-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/5 Sample DOH Certification.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="caapCert-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/6 Sample CAAP Certification.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ltoCert-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/7 Sample LTO Certification.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="cana-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/9 Sample Certificate of Authority for a Notarial Act (CANA).jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="courtDocuCTC-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/10 Court Document Certified True Copy Stamp.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="immigrationDocu-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/11 Sample Immigration Documents.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dswdClearance-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="dswdClearance-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/images/documents/12 Sample DSWD Clearance-1.png" alt="First slide" height="800">
+                                <p class="text-center grey-text-bold">1 of 2</p>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/images/documents/12 Sample DSWD Clearance-2.png" alt="Second slide" height="800">
+                                <p class="text-center grey-text-bold">2 of 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                                <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#dswdClearance-carousel').carousel('prev')">Previous</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#dswdClearance-carousel').carousel('next')">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="pnpCert-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/13 Sample PNP Certification.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="pnpSundry-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="pnpSundry-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/images/documents/13 Sample PNP Sundry-1.png" alt="First slide" height="800">
+                                <p class="text-center grey-text-bold">1 of 2</p>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/images/documents/13 Sample PNP Sundry-2.png" alt="Second slide" height="800">
+                                <p class="text-center grey-text-bold">2 of 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                                <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#pnpSundry-carousel').carousel('prev')">Previous</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#pnpSundry-carousel').carousel('next')">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="govtCTC-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="govtCTC-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/images/documents/14 SEC GIS CERTIFIED TRUE COPY AND SSS CERTIFICATION-1.png" alt="First slide" height="800">
+                                <p class="text-center grey-text-bold">1 of 2</p>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/images/documents/14 SEC GIS CERTIFIED TRUE COPY AND SSS CERTIFICATION-2.png" alt="Second slide" height="800">
+                                <p class="text-center grey-text-bold">2 of 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                                <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#govtCTC-carousel').carousel('prev')">Previous</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#govtCTC-carousel').carousel('next')">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mayorCert-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="d-block w-100" src="~/images/documents/15 Sample Mayor's Certification.jpg" alt="First slide" height="800">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exportDocu-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="exportDocu-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/images/documents/16 Sample DOH Quarantine Certification and PCCI Certification-1.png" alt="First slide" height="800">
+                                <p class="text-center grey-text-bold">1 of 2</p>
+                            </div>
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/images/documents/16 Sample DOH Quarantine Certification and PCCI Certification-2.png" alt="Second slide" height="800">
+                                <p class="text-center grey-text-bold">2 of 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                                <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#exportDocu-carousel').carousel('prev')">Previous</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#exportDocu-carousel').carousel('next')">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+    <script>
+
+        
+
+        $(document).ready(function () {
+
+            window.onbeforeunload = function () {
+                return "Are you sure you want to close the window?";
+            };
+
+            $(".datepicker").datepicker({
+                uiLibrary: 'bootstrap4'
+            });
+            var i = 1;
+            $("#AddApplicant").click(function () {
+                var div = $("<div />");
+                var value = "";
+                //<label asp-for="Records[0].FirstName">First Name <span class="red">*</span></label>
+                var fName = $("<div />").attr("class", "col-md-3 col-sm-12")
+                    .append($("<label>First Name <span class='red'>*</span></label>").attr("asp-for", "Records[" + i + "].FirstName"))
+                    .append($("<input />").attr("class", "form-control").attr("name", "Records[" + i + "].FirstName"));
+
+                var mName = $("<div />").attr("class", "col-md-3 col-sm-12")
+                    .append($("<label>Middle Name</label>").attr("asp-for", "Records[" + i + "].MiddleName"))
+                    .append($("<input />").attr("class", "form-control").attr("name", "Records[" + i + "].MiddleName"));
+                var lName = $("<div />").attr("class", "col-md-3 col-sm-12")
+                    .append($("<label>Last Name <span class='red'>*</span></label>").attr("asp-for", "Records[" + i + "].LastName"))
+                    .append($("<input />").attr("class", "form-control").attr("name", "Records[" + i + "].LastName"));
+                var suffix = $("<div />").attr("class", "col-md-3 col-sm-12")
+                    .append($("<label>Suffix</label>").attr("asp-for", "Records[" + i + "].Suffix"))
+                    .append($("<select />").attr("class", "form-control").attr("name", "Records[" + i + "].Suffix"));
+
+                var dateOfBirth = $("<div />").attr("class", "col-md-6 col-sm-12").append($("<input />").attr("class", "form-control").attr("name", "Records[" + i + "].DateOfBirth"));
+
+                var formGroup1 = $("<div />").attr("class", "form-group");
+                var formGroup2 = $("<div />").attr("class", "form-group");
+                //<a href="C:\DFA\DFACore\Views\Shared\_CountriesPartial.cshtml">C:\DFA\DFACore\Views\Shared\_CountriesPartial.cshtml</a>
+                var countryDest = $("<div />").attr("class", "col-md-6 col-sm-12").append($("<select />").attr("class", "form-control").attr("name", "Records[" + i + "].CountryDestination").load("countries.html"));
+
+                var rowNameDiv = $("<div />").attr("class", "row");
+                var rowDOBDiv = $("<div />").attr("class", "row");
+                var colLg12Div = $("<div />").attr("class", "col-sm-12"); //<div class="col-md-3 col-sm-12">
+                var md2Div = $("<div />").attr("class", "col-md-2 col-sm-12");
+
+                rowNameDiv.append(fName);
+                rowNameDiv.append(mName);
+                rowNameDiv.append(lName);
+                rowNameDiv.append(suffix);
+                
+                rowDOBDiv.append(dateOfBirth);
+                rowDOBDiv.append(countryDest);
+
+                formGroup1.append(rowNameDiv);
+                formGroup2.append(rowDOBDiv);
+
+                colLg12Div.append(formGroup1);
+                colLg12Div.append(formGroup2);
+
+                div.append(colLg12Div);
+
+                var removeButton = $("<input />").attr("type", "button").attr("value", "Remove");
+                removeButton.attr("onclick", "RemoveApplicant(this)");
+                div.append(removeButton);
+                $("#ApplicantContainer").append(div);
+                i++;
+
+            });
+            function RemoveApplicant(button) {
+                $(button).parent().remove();
+            };
+
+
+            var canConfirm = false;
+
+            //if ($("#IsUserAgreed").text() !== "Agreed") {
+            //    $("#declaration-modal").modal({
+            //        backdrop: 'static',
+            //        keyboard: false
+            //    });
+            //}
+            $("#show-document-owner").click(function () {
+                $("#step-one").show();
+                $(".choose-user-container").hide();
+            });
+            $("#show-authorized-representative").click(function () {
+                $("#step-one-authorized").show();
+                $(".choose-user-container").hide();
+            });
+            $("#Region").change(function () {
+                $.ajax({
+                    url: '@Url.Action("GetCity")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { municipality : $('#Region').val()},
+                    success: function (result) {
+                        console.log(result);
+                        $('#City').html("");
+                        $('#City').append(
+                            $('<option></option>').val("").html("")
+                        );
+                        $.each(result, function (index, val) {
+                            console.log(index, val)
+
+                            $('#City').append(
+                                $('<option></option>').val(val).html(val)
+                            );
+                        });
+
+                    },
+                    error: function () {
+
+                        alert('Something went wrong!');
+                    }
+
+                });
+            });
+
+            $("#Region").val('NCR');
+
+
+
+            $("#backToStepOne").click(function () {
+                $('#stepOneBtn').click();
+                $("#step-one").show();
+                $("#step-two").hide();
+                $("#step-three").hide();
+            });
+            $("#stepOneNextBtn").click(function () {
+                //|| $('#Nationality').val() == ""
+                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
+                    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
+
+                    if ($('#Title').val() == "")
+                        $('.title').text('This field is required.');
+                    else
+                        $('.title').text('');
+
+                    if ($('#FirstName').val() == "")
+                        $('.fname').text('This field is required.');
+                    else
+                        $('.fname').text('');
+
+                    if ($('#LastName').val() == "")
+                        $('.lname').text('This field is required.');
+                    else
+                        $('.lname').text('');
+
+                    if ($('#Address').val() == "")
+                        $('.address').text('This field is required.');
+                    else
+                        $('.address').text('');
+
+                    //if ($('#Nationality').val() == "")
+                    //    $('.nationality').text('This field is required.');
+                    //else
+                    //    $('.nationality').text('');
+
+                    if ($('#ContactNumber').val() == "")
+                        $('.contactnumber').text('This field is required.');
+                    else
+                        $('.contactnumber').text('');
+
+                    if ($('#CountryDestination').val() == "")
+                        $('.countrydestination').text('This field is required.');
+                    else
+                        $('.countrydestination').text('');
+
+                    if ($('#apostileData').val() == "")
+                        $('.apostiledata').text('This field is required.');
+                    else
+                        $('.apostiledata').text('');
+
+
+                    return;
+                }
+                else {
+                    $('.title').text('');
+                    $('.fname').text('');
+                    $('.lname').text('');
+                    $('.address').text('');
+                    //$('.nationality').text('');
+                    $('.contactnumber').text('');
+                    $('.countrydestination').text('');
+                    $('.apostiledata').text('');
+                }
+
+
+                $("#step-one").hide();
+                $("#step-two").show();
+                $("#step-three").hide();
+                //$('#stepTwoBtn').click();
+            });
+            $("#stepTwoNextBtn").click(function () {
+                if (canConfirm == false) {
+                    $("#errSchedDate").show();
+                    return;
+                }
+                $("#step-one").hide();
+                $("#step-two").hide();
+                $("#step-three").show();
+                $('#stepThreeBtn').click();
+
+                $('#LblNameOfApplicant').text($('#Title').val().toUpperCase() + '. ' + $('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase() + ' ' + $('#Suffix').val().toUpperCase());
+
+                var docuType = JSON.parse($('#apostileData').val())
+                var lbldocuType = $('#LblTypeOfDocument');
+
+                docuType.forEach(function (v) {
+                    var Quantity = v.Quantity;
+                    var DocuName = v.Name;
+                    lbldocuType.append('(' + Quantity + ') ' + DocuName + '<br />');
+
+                });
+
+
+                console.log(docuType);
+                //$('#LblTypeOfDocument').text($('#apostileData').val());
+
+                $('#LblAddress').text($('#Address').val());
+                $('#LblContactNumber').text($('#ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#NameOfRepresentative').val());
+                $('#LblRepresentativeContactNumber').text($('#RepresentativeContactNumber').val());
+                $('#LblCompany').text($('#CompanyName').val());
+
+
+                $('#LblCountryDestination').text($('#CountryDestination').val());
+
+                $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
+                $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
+                $('#LblPayment').text('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                //$('#LblAppointmentCode').text('MNL-20200524');
+                $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
+
+            });
+
+
+
+            $('#stepOneBtn').click();
+            $('#siteAndAddress').text($('#site').val().concat(' ', $('#address').val()));
+
+            //$('.backBtn').click(function () {
+            //    $('#stepOneBtn').click();
+            //    $('#selectTimeContainer').css('z-index','-1');
+            //    $('#selectTimeContainer').css('opacity', '0.5');
+            //    $('#appointmentSchedule').val('');
+            //});
+            //$('#stepOneNextBtn').click(function () {
+            //    $('#stepTwoBtn').click();
+            //});
+            $('#stepThreeBackBtn').click(function () {
+                //$('#stepOneBtn').click();
+                $("#step-one").hide();
+                $("#step-two").show();
+                $("#step-three").hide();
+            });
+            $('#documentsCount').text(0);
+
+            $('#selectDocumentsBtn').click(function () {
+                var documentObject = [];
+                $(':checkbox:checked').each(function (i) {
+                    if ($(this).val() == "NBI Clearance") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyNbiClearance').val() ? 1 : parseInt($('#qtyNbiClearance').val()) });
+                    }
+                    else if ($(this).val() == "Birth Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyBirthCertificate').val() ? 1 : parseInt($('#qtyBirthCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Marriage Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMarriageCertificate').val() ? 1 : parseInt($('#qtyMarriageCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Death Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyDeathCertificate').val() ? 1 : parseInt($('#qtyDeathCertificate').val()) });
+                    }
+                    else if ($(this).val() == "Certificate of No Marriage Record") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyCenomar').val() ? 1 : parseInt($('#qtyCenomar').val()) });
+                    }
+                    else if ($(this).val() == "Form 137 & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyElementaryAndHighschool').val() ? 1 : parseInt($('#qtyElementaryAndHighschool').val()) });
+                    }
+                    else if ($(this).val() == "TOR & Diploma/National Certificate") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyTechVoch').val() ? 1 : parseInt($('#qtyTechVoch').val()) });
+                    }
+                    else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyStateCollegesAndUniversities').val() ? 1 : parseInt($('#qtyStateCollegesAndUniversities').val()) });
+                    }
+                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
+                    }
+                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPrivateOrLocalColleges').val() ? 1 : parseInt($('#qtyPrivateOrLocalColleges').val()) });
+                    }
+                    else if ($(this).val() == "PRC Document/s") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyPRC').val() ? 1 : parseInt($('#qtyPRC').val()) });
+                    }
+                    else if ($(this).val() == "Medical Certificates") {
+                        documentObject[i] = ({ Name: $(this).val(), Quantity: !$('#qtyMedCerts').val() ? 1 : parseInt($('#qtyMedCerts').val()) });
+                    }
+                    else if ($(this).val() == "CAAP Documents") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCAAP').val() ? 1 : parseInt($('#qtyCAAP').val()) });
+                    }
+                    else if ($(this).val() == "Driver's License") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDriverLicense').val() ? 1 : parseInt($('#qtyDriverLicense').val()) });
+                    }
+                    else if ($(this).val() == "Certificate of Employment") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCOE').val() ? 1 : parseInt($('#qtyCOE').val()) });
+                    }
+                    else if ($(this).val() == "Invitation Letter") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyInvitationLetter').val() ? 1 : parseInt($('#qtyInvitationLetter').val()) });
+                    }
+                    else if ($(this).val() == "Trainings") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyTrainings').val() ? 1 : parseInt($('#qtyTrainings').val()) });
+                    }
+                    else if ($(this).val() == "Baptismal Certificate") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBaptismalCert').val() ? 1 : parseInt($('#qtyBaptismalCert').val()) });
+                    }
+                    else if ($(this).val() == "Other Document (Private Entity)") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPrivateIssuedOtherDocu').val() ? 1 : parseInt($('#qtyPrivateIssuedOtherDocu').val()) });
+                    }
+                    else if ($(this).val() == "Special Power of Attorney") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtySpecialPowerOfAttorney').val() ? 1 : parseInt($('#qtySpecialPowerOfAttorney').val()) });
+                    }
+                    else if ($(this).val() == "Memorandum of Agreement") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOA').val() ? 1 : parseInt($('#qtyMOA').val()) });
+                    }
+                    else if ($(this).val() == "Memorandum of Understanding") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyMOU').val() ? 1 : parseInt($('#qtyMOU').val()) });
+                    }
+                    else if ($(this).val() == "Contract") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAnyContract').val() ? 1 : parseInt($('#qtyAnyContract').val()) });
+                    }
+                    else if ($(this).val() == "Affidavit of Consent/Advice") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyAffidavitOfConsent').val() ? 1 : parseInt($('#qtyAffidavitOfConsent').val()) });
+                    }
+                    else if ($(this).val() == "Joint Affidavit") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyJointAffidavit').val() ? 1 : parseInt($('#qtyJointAffidavit').val()) });
+                    }
+                    else if ($(this).val() == "Other Affidavit") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyOtherAffidavit').val() ? 1 : parseInt($('#qtyOtherAffidavit').val()) });
+                    }
+                    else if ($(this).val() == "Court Decision") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtDecision').val() ? 1 : parseInt($('#qtyCourtDecision').val()) });
+                    }
+                    else if ($(this).val() == "Court Resolution/Order") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtResolution').val() ? 1 : parseInt($('#qtyCourtResolution').val()) });
+                    }
+                    else if ($(this).val() == "Court Other Document") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyCourtOtherDocument').val() ? 1 : parseInt($('#qtyCourtOtherDocument').val()) });
+                    }
+                    else if ($(this).val() == "Immigration Record/s") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyImmigration').val() ? 1 : parseInt($('#qtyImmigration').val()) });
+                    }
+                    else if ($(this).val() == "DSWD Clearance") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyDSWDClearance').val() ? 1 : parseInt($('#qtyDSWDClearance').val()) });
+                    }
+                    else if ($(this).val() == "Police Clearance") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyPoliceClearance').val() ? 1 : parseInt($('#qtyPoliceClearance').val()) });
+                    }
+                    else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBusinessRegistration').val() ? 1 : parseInt($('#qtyBusinessRegistration').val()) });
+                    }
+                    else if ($(this).val() == "Barangay Clearance/Certifcate") {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyBarangayClearance').val() ? 1 : parseInt($('#qtyBarangayClearance').val()) });
+                    }
+                    else /*if ($(this).val() == "Export Document/s")*/ {
+                        documentObject[i] = ({ 'Name': $(this).val(), 'Quantity': !$('#qtyExportDocuments').val() ? 1 : parseInt($('#qtyExportDocuments').val()) });
+                    }
+                    //else {
+                    //    documentObject[i] = ({ Name: $(this).val(), Quantity: 1 });
+                    //}
+                });
+                $("#documentsTable tbody > tr").empty();
+                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th></tr>');
+                //var tbodyContent = '';
+                $.each(documentObject, function (index, value) {
+                    $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td></tr>'));
+                    //tbodyContent += '<tr><td>'.concat(value.Quantity, '</td><td>', value.Name, '</td></tr>');
+                });
+                //console.log(tbodyContent);
+                //$('#documentsTable tbody').append(tbodyContent);
+                $('#documentsCount').text(documentObject.length);
+                $('#apostileData').val(JSON.stringify(documentObject));
+                console.log(JSON.stringify(documentObject));
+            });
+
+            $('#appointmentScheduleTime').text('08:00 AM')
+            $("input[type*='radio']").click(function () {
+
+                console.log($(this).val());
+                //$('#appointmentSchedule').val('');
+                $('#appointmentScheduleTime').text($(this).val());
+                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                $('#appointmentSchedule').change();
+            });
+
+            @*var doc = new jsPDF();
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+            $('#sendPdfToEmail').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GeneratePdf")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {html : JSON.stringify("<h1>Hello World</h1>")}
+                    //success: function (result) {
+                    //    console.log($('#appointmentSchedule').val());
+                    //    if (result) {
+                    //        $('#availableSchedMessage').show();
+                    //    }
+                    //    else {
+                    //        $('#unavailableSchedMessage').show();
+                    //    }
+                    //}
+                });
+                //doc.fromHTML($('#step-three').html(), 30, 30, {
+                //    'width': 550,
+                //    'elementHandlers': specialElementHandlers
+                //});
+                //doc.save('sample-file.pdf');
+            });*@
+
+            $('#appointmentSchedule').change(function () {
+                $("#errSchedDate").hide();
+                $('#schedLoader').show();
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val()},
+                    success: function (result) {
+                        console.log('success');
+                        $('#schedLoader').hide();
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                            $('#unavailableSchedMessage').hide();
+                            canConfirm = true;
+                        }
+                        else {
+                            $('#availableSchedMessage').hide();
+                            $('#unavailableSchedMessage').show();
+                            canConfirm = false;
+                        }
+                    },
+                    error: function () {
+                        $('#schedLoader').hide();
+                        canConfirm = false;
+                        alert('Something went wrong!');
+                    }
+
+                });
+
+            });
+            $('.carousel').carousel();
+            $('#personalCopyNotValid-modal').on('hide.bs.modal', function (e) {
+                $('#apostileModal').modal('show');
+            });
+        });
+
+
+        function Navigate(step, element) {
+            var i, tabcontent, tablinks;
+            tabcontent = $('.tabcontent');
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = $('.nav-link');
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+                tablinks[i].style.color = "gray";
+            }
+            element.style.backgroundColor = "#217ff3";
+            element.style.color = "white";
+            document.getElementById(step).style.display = "block";
+            if (step == "step-one") {
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
+            }
+        };
+
+
+    </script>
+}
