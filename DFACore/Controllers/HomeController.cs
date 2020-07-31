@@ -163,6 +163,12 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
         public IActionResult Success()
         {
             return View();
