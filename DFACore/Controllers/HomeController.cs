@@ -182,6 +182,15 @@ namespace DFACore.Controllers
             return RedirectToAction("Success");
         }
 
+        public IActionResult PartialApplicant(int i)
+        {
+            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+            ViewData[$"ApplicationCode{i}"] = GetApplicantCode();
+            ViewBag.Increment = i;
+            return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Privacy()
         {
