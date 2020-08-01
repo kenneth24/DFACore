@@ -275,6 +275,91 @@ namespace DFACore.Controllers
 
         }
 
+
+        [AllowAnonymous]
+        public async Task<ActionResult> AdminLogin(string returnUrl = null)
+        {
+            await LogOff();
+            ViewBag.ReturnUrl = returnUrl;
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+            else
+                return View();
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AdminLogin(LoginViewModel model, string returnUrl = null)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
+
+                    // Uncomment to debug locally  
+                    // ViewBag.Link = callbackUrl;
+                    ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                                         + "The confirmation token has been resent to your email account.";
+                    return View("Error");
+                }
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                //var user = await _userManager.FindByEmailAsync(model.Email);
+                //if (user != null)
+                //{
+                //    if (!await _userManager.IsEmailConfirmedAsync(user))
+                //    {
+                //        await LogOff();
+                //        ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                //              + "The confirmation token has been resent to your email account.";
+                //        return View("Error"); // verify first the email
+                //    }
+                //}
+                //else
+                //{
+                //    await LogOff();
+                //    return RedirectToAction("Login");
+                //}
+                //return View(model);
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (result.IsNotAllowed)
+            {
+                ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                              + "The confirmation token has been resent to your email account.";
+                return View("Error");
+            }
+            if (result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+            else if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View(model);
+            }
+
+        }
+
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
