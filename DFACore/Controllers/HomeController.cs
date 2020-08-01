@@ -44,15 +44,19 @@ namespace DFACore.Controllers
             _env = env;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int applicantsCount = 0)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+            ViewData["ApplicantCount"] = applicantsCount;
             return View();
         }
-
+        public IActionResult ApplicantTypeSelection()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ApplicantRecordViewModel record, string returnUrl = null)
@@ -252,6 +256,16 @@ namespace DFACore.Controllers
         {
             var result = _applicantRepo.GetCity().Where(a => a.city == city).Select(a => a.municipality).ToList();//_applicantRepo.GetUnAvailableDates();
             return Json(result);
+        }
+        
+        public int SetNumberOfApplicants(int applicantsCount)
+        {
+            //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            //ViewData["AvailableDates"] = stringify;
+            //ViewData["ApplicationCode"] = GetApplicantCode();
+            //ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+            ViewData["ApplicationCount"] = applicantsCount;
+            return (int)ViewData["ApplicationCount"];
         }
 
     }

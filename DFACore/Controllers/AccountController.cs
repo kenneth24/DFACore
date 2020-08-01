@@ -249,7 +249,8 @@ namespace DFACore.Controllers
                 //    return RedirectToAction("Login");
                 //}
                 //return View(model);
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("ApplicantTypeSelection", "Home");
             }
 
             if (result.IsNotAllowed)

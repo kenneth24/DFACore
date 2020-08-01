@@ -70,6 +70,8 @@ namespace DFACore.Models
         [Required]
         public string ApplicationCode { get; set; }
         public string Fees { get; set; }
+        public List<ApplicantRecord> Applicants { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         //public List<ApostilleDocumentModel> Documents { get; set; }
     }

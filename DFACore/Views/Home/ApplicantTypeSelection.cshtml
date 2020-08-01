@@ -1,0 +1,205 @@
+﻿@*@model DFACore.Models.DTO.ApplicantModelDTO*@
+<div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
+        padding: 20px;
+        height: auto;">
+    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
+        <span class="float-left font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="d-sm-none">
+        <p>
+            <span>@User.Identity.Name</span>
+            <span class="float-right"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></span>
+        </p>
+        <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
+    </div>
+    <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+    </div>
+    <div class="row choose-user-container" style="margin-top:2%">
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 text-center">
+            <h4 class="black-text-bold">PLEASE CHOOSE ONE:</h4>
+            <p class="grey-text">Are you the</p>
+            <div class="row">
+                <a id="show-document-owner" href="@Url.Action("Index", "Home")" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;font-weight:bold;">DOCUMENT OWNER</a>
+                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 10px;"></div>
+                <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size:14px;font-weight:bold;">
+                    AUTHORIZED REPRESENTATIVE OWNER
+                    <br />
+                    (for filing/claiming)
+                </a>
+            </div>
+            <a class="blue-text-bold text-right d-none d-lg-block"
+               style="font-size:14px;cursor:pointer;margin-right:10%;"
+               data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                View requirements
+            </a>
+            <a class="blue-text-bold text-center d-lg-none"
+               style="font-size:14px;cursor:pointer;"
+               data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                View requirements
+            </a>
+
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+    </div>
+    <div id="insert-applicants-number" class="row" style="display:none;margin-top:2%;">
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+        <div class="col-sm-12 col-md-8 col-lg-8 text-center">
+            <form action="@Url.Action("Index", "Home")">
+                <h4 class="black-text-bold text-center">INSERT NUMBER OF APPLICANTS</h4>
+                <input id="applicantsCount"
+                       type="number"
+                       min="1"
+                       name="applicantsCount"
+                       class="black-text-bold "
+                       style="height: 70px;
+                    width: 60px;
+                    font-size: 60px;
+                    text-align: center;
+                    border: none;
+                    background-color: #ddd;" />
+                <p class="black-text text-center">
+                    If you are applying for Apostille, please include yourself in the number of apostille.
+                </p>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-12">Back</button></div>
+                    <div class="col-md-2 col-sm-2">
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                        <button id="show-step-one-authorized"
+                                type="submit"
+                                class="btn btn-primary col-md-12 col-sm-12"
+                                style="color:white;background-color:#217ff3;z-index:-1;"
+                                data-dismiss="modal">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2">
+        </div>
+    </div>
+    <div class="modal fade" id="view-requirements-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header primary"></div>
+                <div class="modal-body">
+                    <div class="form-group container">
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Requirements for filing/claiming Authentication applications via Authorized Representative:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            1. Authorization letter from the owner. For Minor Applicants - Original Special Power
+                            of Attorney executed by parent/s.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            2. Photocopy of the owner's ID bearing his/her signature.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            3. Photocopy and original copy of representative's ID.
+                        </p>
+                        <p class="black-text-bold" style="font-size:12px;">
+                            List of Acceptable IDs:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *All digitized Philippines government-issued IDs bearing the signature of the applicant.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *Other acceptable IDs: Senior Citizens ID, Solo Parent ID, PWD ID, Voter's ID, Voter's Certification,
+                            Seaman's Book and Alumni ID or Student ID (1 year upon graduation).
+                        </p>
+                        <p class="black-text-bold text-center" style="font-size:14px;">
+                            REMINDER FOR MINOR APPLICANTS
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            For applications / documents involving Minor (age below 18 years old), the following additional documents
+                            must be presented if the applicant / representative processing the authentication / Apostille is:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any of the parent as reflected on Birth Certificate:</strong> proof of filiation such as Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any representative other than the parent as reflected on Birth Certificate:</strong> notarized Special Power of Attorney
+                            executed by any of the parent of the minor as reflected on Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>NOTE:</strong> If the child is not acknowledged by the father, then any  representative (even if he is the biological father) who
+                            is NOT the mother of the minor applicant must present a notarized Special Power of Attorney executed by the mother.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-4 col-sm-12"> </div>
+
+                            <button id="declaration-agree"
+                                    type="button"
+                                    class="button-secondary text-white col-md-4 col-sm-12"
+                                    data-dismiss="modal"
+                                    style="height:30px;">
+                                CLOSE
+                            </button>
+
+                            <div class="col-md-4 col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            //$("#show-document-owner").click(function () {
+            //    $("#step-one").show();
+            //    $(".choose-user-container").hide();
+            //});
+
+            $("#show-authorized-representative").click(function () {
+                $("#insert-applicants-number").show();
+                $(".choose-user-container").hide();
+            });
+            $("#back-to-choose-user").click(function () {
+                $(".choose-user-container").show();
+                $("#insert-applicants-number").hide();
+            });
+        $("#applicantsCount").change(function () {
+            if (parseInt($("#applicantsCount").val()) >= 1) {
+                $("#show-step-one-authorized").css("z-index", "1");
+                }
+        });
+            @*$("#show-step-one-authorized").click(function () {
+                //$("#step-one-authorized").show();
+                //$("#insert-applicants-number").hide();
+                //$("#applicantsNumber").val();
+                $.ajax({
+                    url: '@Url.Action("Index","Home")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { dto : @Model},
+                    success: function (result) {
+                        console.log(result);
+
+                    },
+                    error: function () {
+
+                        alert('Something went wrong!');
+                    }
+
+                });
+            });*@
+        });
+</script>
