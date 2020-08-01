@@ -107,58 +107,58 @@ namespace DFACore.Controllers
             return RedirectToAction("Success");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(IEnumerable<ApplicantRecordViewModel> records, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Index(IEnumerable<ApplicantRecordViewModel> records, string returnUrl = null)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View();
+        //    }
 
-            var attachments = new List<Attachment>();
+        //    var attachments = new List<Attachment>();
 
-            foreach (var record in records)
-            {
-                var applicantRecord = new ApplicantRecord
-                {
-                    Title = record.Title?.ToUpper(),
-                    FirstName = record.FirstName?.ToUpper(),
-                    MiddleName = record.MiddleName?.ToUpper(),
-                    LastName = record.LastName?.ToUpper(),
-                    Suffix = record.Suffix?.ToUpper(),
-                    Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
-                    Nationality = record.Nationality?.ToUpper(),
-                    ContactNumber = record.ContactNumber,
-                    CompanyName = record.CompanyName?.ToUpper(),
-                    CountryDestination = record.CountryDestination?.ToUpper(),
-                    NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
-                    RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
-                    ApostileData = record.ApostileData,
-                    ProcessingSite = record.ProcessingSite?.ToUpper(),
-                    ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-                                       System.Globalization.CultureInfo.InvariantCulture),
-                    ApplicationCode = record.ApplicationCode,
-                    CreatedBy = new Guid(_userManager.GetUserId(User)),
-                    Fees = record.Fees
-                };
+        //    foreach (var record in records)
+        //    {
+        //        var applicantRecord = new ApplicantRecord
+        //        {
+        //            Title = record.Title?.ToUpper(),
+        //            FirstName = record.FirstName?.ToUpper(),
+        //            MiddleName = record.MiddleName?.ToUpper(),
+        //            LastName = record.LastName?.ToUpper(),
+        //            Suffix = record.Suffix?.ToUpper(),
+        //            Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
+        //            Nationality = record.Nationality?.ToUpper(),
+        //            ContactNumber = record.ContactNumber,
+        //            CompanyName = record.CompanyName?.ToUpper(),
+        //            CountryDestination = record.CountryDestination?.ToUpper(),
+        //            NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
+        //            RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
+        //            ApostileData = record.ApostileData,
+        //            ProcessingSite = record.ProcessingSite?.ToUpper(),
+        //            ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
+        //            ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+        //                               System.Globalization.CultureInfo.InvariantCulture),
+        //            ApplicationCode = record.ApplicationCode,
+        //            CreatedBy = new Guid(_userManager.GetUserId(User)),
+        //            Fees = record.Fees
+        //        };
 
-                var result = _applicantRepo.Add(applicantRecord);
-                if (!result)
-                {
-                    ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
-                }
+        //        var result = _applicantRepo.Add(applicantRecord);
+        //        if (!result)
+        //        {
+        //            ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+        //        }
 
-                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
-            }
+        //        attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
+        //    }
 
-            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
-                        $"Download the attachment and present to the selected branch.",
-                        attachments.ToArray());
+        //    await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
+        //                $"Download the attachment and present to the selected branch.",
+        //                attachments.ToArray());
 
-            return RedirectToAction("Success");
-        }
+        //    return RedirectToAction("Success");
+        //}
 
 
         public IActionResult Authorized()
