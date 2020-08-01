@@ -8,5 +8,6 @@ namespace DFACore.Models
     public class ApplicantsViewModel
     {
         public List<ApplicantRecordViewModel> Records { get; set; }
+        public DateTime ScheduleDate { get; set; }
     }
 }
