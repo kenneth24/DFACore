@@ -77,207 +77,162 @@
         </p>
         <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
     </div>
-    @*<div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
-        </div>*@
-    @*<div class="row choose-user-container" style="margin-top:2%">
-            <div class="col-sm-12 col-md-2 col-lg-2">
-            </div>
-            <div class="col-sm-12 col-md-8 col-lg-8 text-center">
-                <h4 class="black-text-bold">PLEASE CHOOSE ONE:</h4>
-                <p class="grey-text">Are you the</p>
-                <div class="row">
-                    <a id="show-document-owner" href="#" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;font-weight:bold;">DOCUMENT OWNER</a>
-                    <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 10px;"></div>
-                    <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size:14px;font-weight:bold;">
-                        AUTHORIZED REPRESENTATIVE OWNER
-                        <br />
-                        (for filing/claiming)
-                    </a>
+
+    @*<form method="post" id="application-form">*@
+    @{
+        int applicants = (int)ViewData["ApplicantCount"];
+        @*<p>@applicants</p>*@
+        if (applicants == 0)
+        {
+
+            <div id="step-one" class="tabcontent">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
                 </div>
-                <a class="blue-text-bold text-right d-none d-lg-block"
-                   style="font-size:14px;cursor:pointer;margin-right:10%;"
-                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
-                    View requirements
-                </a>
-                <a class="blue-text-bold text-center d-lg-none"
-                   style="font-size:14px;cursor:pointer;"
-                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
-                    View requirements
-                </a>
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
+                    <div class="form-group">
+                        <h6 style="font-weight: bold">Document Owner</h6>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-12">
+                                <label asp-for="Title">Title <span class="red">*</span></label>
+                                <select asp-for="Title" class="form-control">
+                                    <option value=""></option>
+                                    <option value="MR">MR.</option>
+                                    <option value="MRS">MRS.</option>
+                                    <option value="MRS">MS.</option>
+                                </select>
+                                <span asp-validation-for="Title" class="text-danger title"></span>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="FirstName">First Name <span class="red">*</span></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                            </div>
 
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2">
-            </div>
-        </div>
-        <div id="insert-applicants-number" class="row" style="display:none;margin-top:2%;">
-            <div class="col-sm-12 col-md-2 col-lg-2">
-            </div>
-            <div class="col-sm-12 col-md-8 col-lg-8 text-center">
-                <h4 class="black-text-bold text-center">INSERT NUMBER OF APPLICANTS</h4>
-                <input type="number"
-                       id="applicantsNumber"
-                       name="applicantsNumber"
-                       value="0"
-                       class="black-text-bold "
-                       style="height: 70px;
-                        width: 60px;
-                        font-size: 60px;
-                        text-align: center;
-                        border: none;
-                        background-color: #ddd;" />
-                <p class="black-text text-center">
-                    If you are applying for Apostille, please include yourself in the number of apostille.
-                </p>
-                <div class="row" style="width: 100%;">
-                    <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-12">Back</button></div>
-                    <div class="col-md-2 col-sm-2">
-                    </div>
-                    <div class="col-md-5 col-sm-5"><button id="show-step-one-authorized" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">OK</button></div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2">
-            </div>
-        </div>*@
+                            <div class="col-md-2 col-sm-12">
+                                <label asp-for="MiddleName"></label>
+                                <input asp-for="MiddleName" class="form-control" />
+                                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                            </div>
 
-    <form method="post" id="application-form">
-        @{
-            int applicants = (int)ViewData["ApplicantCount"];
-            @*<p>@applicants</p>*@
-            if (applicants == 0)
-            {
-
-                <div id="step-one" class="tabcontent">
-                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
-                        <div class="form-group">
-                            <h6 style="font-weight: bold">Document Owner</h6>
-                            <div class="row">
-                                <div class="col-md-2 col-sm-12">
-                                    <label asp-for="Title">Title <span class="red">*</span></label>
-                                    <select asp-for="Title" class="form-control">
-                                        <option value=""></option>
-                                        <option value="MR">MR.</option>
-                                        <option value="MRS">MRS.</option>
-                                        <option value="MRS">MS.</option>
-                                    </select>
-                                    <span asp-validation-for="Title" class="text-danger title"></span>
-                                </div>
-                                <div class="col-md-3 col-sm-12">
-                                    <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="FirstName" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger fname"></span>
-                                </div>
-
-                                <div class="col-md-2 col-sm-12">
-                                    <label asp-for="MiddleName"></label>
-                                    <input asp-for="MiddleName" class="form-control" />
-                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-3 col-sm-12">
-                                    <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="LastName" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger lname"></span>
-                                </div>
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="LastName">Last Name <span class="red">*</span></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger lname"></span>
+                            </div>
 
 
-                                <div class="col-md-2 col-sm-12">
-                                    <label asp-for="Suffix"></label>
-                                    @*<input asp-for="Suffix" class="form-control" />*@
-                                    <select asp-for="Suffix" class="form-control">
-                                        <option value="N/A">N/A</option>
-                                        <option value="JR.">JR.</option>
-                                        <option value="SR.">SR.</option>
-                                        <option value="I">I</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
-                                        <option value="V">V</option>
-                                        <option value="VI">VI</option>
-                                        <option value="VII">VII</option>
-                                        <option value="VIII">VIII</option>
-                                        <option value="IX">IX</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                        <option value="XIII">XIII</option>
-                                        <option value="XIV">XIV</option>
-                                        <option value="XV">XV</option>
-                                    </select>
-                                    <span asp-validation-for="Suffix" class="text-danger"></span>
-                                </div>
+                            <div class="col-md-2 col-sm-12">
+                                <label asp-for="Suffix"></label>
+                                @*<input asp-for="Suffix" class="form-control" />*@
+                                <select asp-for="Suffix" class="form-control">
+                                    <option value="N/A">N/A</option>
+                                    <option value="JR.">JR.</option>
+                                    <option value="SR.">SR.</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="VI">VI</option>
+                                    <option value="VII">VII</option>
+                                    <option value="VIII">VIII</option>
+                                    <option value="IX">IX</option>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                    <option value="XIII">XIII</option>
+                                    <option value="XIV">XIV</option>
+                                    <option value="XV">XV</option>
+                                </select>
+                                <span asp-validation-for="Suffix" class="text-danger"></span>
                             </div>
                         </div>
-                        @*<div class="form-group">
-                                <h6>Address</h6>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">
-                                        <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                                        <input asp-for="Barangay" class="form-control" />
-                                        <span asp-validation-for="Barangay" class="text-danger address"></span>
-                                    </div>
-
-
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Region">Region/Province <span class="red">*</span></label>
-                                        <select asp-for="Region" class="form-control">
-                                            <option value=""></option>
-                                            @foreach (var item in ViewData["GetMunicipality"] as List<string>)
-                                            {
-                                                <option value="@item">@item</option>
-                                            }
-                                        </select>
-                                        <span asp-validation-for="Region" class="text-danger nationality"></span>
-                                    </div>
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                                        <select asp-for="City" class="form-control">
-                                            <option value=""></option>
-                                            <option value="Caloocan">Caloocan</option>
-                                            <option value="Las Piñas">Las Piñas</option>
-                                            <option value="Makati">Makati</option>
-                                            <option value="Malabon">Malabon</option>
-                                            <option value="Mandaluyong">Mandaluyong</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Marikina">Marikina</option>
-                                            <option value="Muntinlupa">Muntinlupa</option>
-                                            <option value="Navotas">Navotas</option>
-                                            <option value="Parañaque">Parañaque</option>
-                                            <option value="Pasay">Pasay</option>
-                                            <option value="Pasig">Pasig</option>
-                                            <option value="Pateros">Pateros</option>
-                                            <option value="Quezon City">Quezon City</option>
-                                            <option value="San Juan">San Juan</option>
-                                            <option value="Taguig">Taguig</option>
-                                            <option value="Valenzuela">Valenzuela</option>
-                                        </select>
-                                        <span asp-validation-for="City" class="text-danger nationality"></span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group">
+                    </div>
+                    @*<div class="form-group">
+                            <h6>Address</h6>
                             <div class="row">
-                                @*<div class="col-md-6 col-sm-12">
-                                        <label asp-for="Nationality">Nationality <span class="red">*</span></label>
-                                        <select asp-for="Nationality" class="form-control">
-                                            <option value=""></option>
-                                            <partial name="_CountriesPartial" />
-                                        </select>
-                                        <span asp-validation-for="Nationality" class="text-danger nationality"></span>
-                                    </div>*@
-
-                                <div class="col-md-4 col-sm-12">
-                                    <label asp-for="DateOfBirth"></label>
-                                    <input type="date" asp-for="DateOfBirth" class="form-control" />
-                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                <div class="col-md-6 col-sm-12">
+                                    <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
+                                    <input asp-for="Barangay" class="form-control" />
+                                    <span asp-validation-for="Barangay" class="text-danger address"></span>
                                 </div>
-                                <div class="col-md-4 col-sm-12">
-                                    <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="ContactNumber" class="form-control" type="number" />
-                                    <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+
+
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Region">Region/Province <span class="red">*</span></label>
+                                    <select asp-for="Region" class="form-control">
+                                        <option value=""></option>
+                                        @foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="Region" class="text-danger nationality"></span>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                                    <select asp-for="City" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Caloocan">Caloocan</option>
+                                        <option value="Las Piñas">Las Piñas</option>
+                                        <option value="Makati">Makati</option>
+                                        <option value="Malabon">Malabon</option>
+                                        <option value="Mandaluyong">Mandaluyong</option>
+                                        <option value="Manila">Manila</option>
+                                        <option value="Marikina">Marikina</option>
+                                        <option value="Muntinlupa">Muntinlupa</option>
+                                        <option value="Navotas">Navotas</option>
+                                        <option value="Parañaque">Parañaque</option>
+                                        <option value="Pasay">Pasay</option>
+                                        <option value="Pasig">Pasig</option>
+                                        <option value="Pateros">Pateros</option>
+                                        <option value="Quezon City">Quezon City</option>
+                                        <option value="San Juan">San Juan</option>
+                                        <option value="Taguig">Taguig</option>
+                                        <option value="Valenzuela">Valenzuela</option>
+                                    </select>
+                                    <span asp-validation-for="City" class="text-danger nationality"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="row">
+                            @*<div class="col-md-6 col-sm-12">
+                                    <label asp-for="Nationality">Nationality <span class="red">*</span></label>
+                                    <select asp-for="Nationality" class="form-control">
+                                        <option value=""></option>
+                                        <partial name="_CountriesPartial" />
+                                    </select>
+                                    <span asp-validation-for="Nationality" class="text-danger nationality"></span>
+                                </div>*@
+
+                            <div class="col-md-4 col-sm-12">
+                                <label asp-for="DateOfBirth"></label>
+                                <input type="date" asp-for="DateOfBirth" class="form-control" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
+                                <input asp-for="ContactNumber" class="form-control" type="number" />
+                                <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                <select asp-for="CountryDestination" class="form-control">
+                                    <partial name="_CountriesPartial" />
+                                </select>
+                                <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-12">
+                                    <label asp-for="CompanyName"></label>
+                                    <input asp-for="CompanyName" class="form-control" />
+                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
@@ -288,99 +243,83 @@
                                     <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
                                 </div>
                             </div>
-                        </div>
-                        @*<div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-8 col-sm-12">
-                                        <label asp-for="CompanyName"></label>
-                                        <input asp-for="CompanyName" class="form-control" />
-                                        <span asp-validation-for="CompanyName" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
-
-                                        <select asp-for="CountryDestination" class="form-control">
-                                            <partial name="_CountriesPartial" />
-                                        </select>
-                                        <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-7 col-sm-12">
-                                    <label asp-for="NameOfRepresentative"></label>
-                                    <input asp-for="NameOfRepresentative" class="form-control" />
-                                    <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-5 col-sm-12">
-                                    <label asp-for="RepresentativeContactNumber"></label>
-                                    <input asp-for="RepresentativeContactNumber" class="form-control" type="number" />
-                                    <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group" style="margin-top: 20px;">
-                        <div class="col-12">
-                            @*<label class="form-check-label">*@
-                            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
-                                @*Click here to select the document/s to be Apostillized*@
-                                ADD DOCUMENTS (<i class="fa fa-plus" aria-hidden="true"></i>)
-                            </a>
-                            @*</label>*@
-                        </div>
-                    </div>
+                        </div>*@
                     <div class="form-group">
-                        <div class="col-12">
-                            <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
-                            <div style="background-color: #217ff3;color: white;height: auto;">
-                                <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
+                        <div class="row">
+                            <div class="col-md-7 col-sm-12">
+                                <label asp-for="NameOfRepresentative"></label>
+                                <input asp-for="NameOfRepresentative" class="form-control" />
+                                <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
                             </div>
-                            <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
-
-                                <table class="table " id="documentsTable">
-                                    <tr>
-                                        <th>Document</th>
-                                        <th>Quantity</th>
-                                        <th>Transaction</th>
-                                    </tr>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="col-md-5 col-sm-12">
+                                <label asp-for="RepresentativeContactNumber"></label>
+                                <input asp-for="RepresentativeContactNumber" class="form-control" type="number" />
+                                <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
-                            <span asp-validation-for="ApostileData" class="text-danger apostiledata"></span>
-                        </div>
-
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12"></div>
-                        <div class="col-md-4 col-sm-12">
-                            <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
-                        </div>
-                        <div class="col-md-4 col-sm-12"></div>
+                </div>
+
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <div class="col-12">
+                        @*<label class="form-check-label">*@
+                        <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
+                            @*Click here to select the document/s to be Apostillized*@
+                            ADD DOCUMENTS (<i class="fa fa-plus" aria-hidden="true"></i>)
+                        </a>
+                        @*</label>*@
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>
+                        <div style="background-color: #217ff3;color: white;height: auto;">
+                            <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
+                        </div>
+                        <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;">
 
-
-
-                    @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
+                            <table class="table " id="documentsTable">
+                                <tr>
+                                    <th>Document</th>
+                                    <th>Quantity</th>
+                                    <th>Transaction</th>
+                                </tr>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
+                        <span asp-validation-for="ApostileData" class="text-danger apostiledata"></span>
+                    </div>
 
                 </div>
-            }
-            else
-            {
+                <div class="row">
+                    <div class="col-md-4 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12">
+                        <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                    </div>
+                    <div class="col-md-4 col-sm-12"></div>
+                </div>
+
+
+
+                @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
+
+            </div>
+        }
+        else
+        {
+            <form method="post" id="application-form">
                 <div id="step-one-authorized" class="tabcontent">
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                         <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
                         <div class="form-group">
-                            <h6 style="font-weight:bold">Authorized Representative</h6>
+                            <h6 style="font-weight:bold">Name of the Authorized Representative</h6>
                             <div class="row">
                                 <div class="col-md-2 col-sm-12">
                                     <label asp-for="Title">Title <span class="red">*</span></label>
@@ -519,51 +458,45 @@
                     </div>
                     <div id="documentOwners" style="height: 500px;overflow:scroll;margin-top:10px;">
 
-                        @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                            @for (int i = 0; i < (int)ViewData["ApplicantCount"]; i++)
                             {
-                                <p>@item</p>
-                            }*@
-                        @{
-                            var i = 0;
-                            while (i < (int)ViewData["ApplicantCount"])
-                            {
-                                i += 1;
+                                var documentNo = i + 1;
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
                                     <div class="form-group">
-                                        <h6 style="font-weight:bold">Document Owner <span>@i</span> of <span>@applicants</span></h6>
+                                        <h6 style="font-weight:bold">Document Owner <span>@documentNo</span> of <span>@applicants</span></h6>
                                         <div class="row">
                                             <div class="col-md-2 col-sm-12">
-                                                <label asp-for="Title">Title <span class="red">*</span></label>
-                                                <select asp-for="Title" class="form-control">
+                                                <label asp-for="Applicants[i].Title">Title <span class="red">*</span></label>
+                                                <select asp-for="Applicants[i].Title" class="form-control">
                                                     <option value=""></option>
                                                     <option value="MR">MR.</option>
                                                     <option value="MRS">MRS.</option>
                                                     <option value="MRS">MS.</option>
                                                 </select>
-                                                <span asp-validation-for="Title" class="text-danger title"></span>
+                                                <span asp-validation-for="Applicants[i].Title" class="text-danger title"></span>
                                             </div>
                                             <div class="col-md-3 col-sm-12">
-                                                <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                                <input asp-for="FirstName" class="form-control" />
-                                                <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                                                <label asp-for="Applicants[i].FirstName">First Name <span class="red">*</span></label>
+                                                <input asp-for="Applicants[i].FirstName" class="form-control" />
+                                                <span asp-validation-for="Applicants[i].FirstName" class="text-danger fname"></span>
                                             </div>
 
                                             <div class="col-md-2 col-sm-12">
-                                                <label asp-for="MiddleName"></label>
-                                                <input asp-for="MiddleName" class="form-control" />
-                                                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                                <label asp-for="Applicants[i].MiddleName"></label>
+                                                <input asp-for="Applicants[i].MiddleName" class="form-control" />
+                                                <span asp-validation-for="Applicants[i].MiddleName" class="text-danger"></span>
                                             </div>
 
                                             <div class="col-md-3 col-sm-12">
-                                                <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                                <input asp-for="LastName" class="form-control" />
-                                                <span asp-validation-for="LastName" class="text-danger lname"></span>
+                                                <label asp-for="Applicants[i].LastName">Last Name <span class="red">*</span></label>
+                                                <input asp-for="Applicants[i].LastName" class="form-control" />
+                                                <span asp-validation-for="Applicants[i].LastName" class="text-danger lname"></span>
                                             </div>
 
 
                                             <div class="col-md-2 col-sm-12">
-                                                <label asp-for="Suffix"></label>
-                                                <select asp-for="Suffix" class="form-control">
+                                                <label asp-for="Applicants[i].Suffix"></label>
+                                                <select asp-for="Applicants[i].Suffix" class="form-control">
                                                     <option value="N/A">N/A</option>
                                                     <option value="JR.">JR.</option>
                                                     <option value="SR.">SR.</option>
@@ -583,19 +516,26 @@
                                                     <option value="XIV">XIV</option>
                                                     <option value="XV">XV</option>
                                                 </select>
-                                                <span asp-validation-for="Suffix" class="text-danger"></span>
+                                                <span asp-validation-for="Applicants[i].Suffix" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12">
-                                                <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+                                                <div class="col-md-2 col-sm-12">
+                                                    <label asp-for="Applicants[i].DateOfBirth"></label>
+                                                    <input asp-for="Applicants[i].DateOfBirth" class="form-control" />
+                                                    <span asp-validation-for="Applicants[i].DateOfBirth" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <label asp-for="Applicants[i].CountryDestination">Country of Destination <span class="red">*</span></label>
 
-                                                <select asp-for="CountryDestination" class="form-control">
+                                                <select asp-for="Applicants[i].CountryDestination" class="form-control">
                                                     <partial name="_CountriesPartial" />
                                                 </select>
-                                                <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                                <span asp-validation-for="Applicants[i].CountryDestination" class="text-danger countrydestination"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -629,11 +569,12 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
-                                        <span asp-validation-for="ApostileData" class="text-danger apostiledata"></span>
+                                        <input asp-for="Applicants[i].ApostileData" id="apostileData" class="form-control" hidden />
+                                        <span asp-validation-for="Applicants[i].ApostileData" class="text-danger apostiledata"></span>
                                     </div>
 
                                 </div>
+
                             }
                         }
 
@@ -641,326 +582,327 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-12"></div>
                         <div class="col-md-4 col-sm-12">
-                            <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                            <button id="stepOneNextBtn" type="button" onclick="alert('asdsada')" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
                         </div>
                         <div class="col-md-4 col-sm-12"></div>
                     </div>
 
-
+                    <button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>
 
 
 
                 </div>
-            }
+            </form>
         }
-        <div id="step-two" style="display:none" class="tabcontent">
-            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 3: Schedule an Appointment</p>
-            </div>
-            <div class="row col-12">
-                <label asp-for="ProcessingSite"></label>
-                <input asp-for="ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
-            </div>
-            <div class="row col-12">
-                <label asp-for="ProcessingSiteAddress"></label>
-                <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
-            </div>            <hr />
-            <div class="row col-12" style="margin-top:10px;">
-                <div class="col-lg-6 col-md-12 col-sm-12" style="margin-bottom: 10px">
-                    <div style="border:1px solid #b7b7b7;padding: 10px;">
-                        <label>Select Available Schedule</label>
-                        @*<input class="form-control" type="date" />*@
-                        @*<div id="datetimepicker"></div>*@
-                        @*@Html.Partial("_CalendarPartial")*@
-                        <partial name="_CalendarPartial" />
-                    </div>
+    }
+    <div id="step-two" style="display:none" class="tabcontent">
+        <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 3: Schedule an Appointment</p>
+        </div>
+        <div class="row col-12">
+            <label asp-for="ProcessingSite"></label>
+            <input asp-for="ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
+        </div>
+        <div class="row col-12">
+            <label asp-for="ProcessingSiteAddress"></label>
+            <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
+        </div>            <hr />
+        <div class="row col-12" style="margin-top:10px;">
+            <div class="col-lg-6 col-md-12 col-sm-12" style="margin-bottom: 10px">
+                <div style="border:1px solid #b7b7b7;padding: 10px;">
+                    <label>Select Available Schedule</label>
+                    @*<input class="form-control" type="date" />*@
+                    @*<div id="datetimepicker"></div>*@
+                    @*@Html.Partial("_CalendarPartial")*@
+                    <partial name="_CalendarPartial" />
                 </div>
-                <div class="col-lg-2 col-md-12 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
-                    <div style="border:1px solid #b7b7b7;height:auto;padding:5px;margin-bottom: 10px">
-                        <label>Select Time</label>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-12 col-sm-12"></div>
-                            <div class="col-lg-8 col-md-12 col-sm-12">
-                                <label><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
-                                <label><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
-                                <label><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
-                                <label><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
-                                <label><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
-                                <label><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
-                                <label><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
-                                <label><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
-                                <label><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
-                            </div>
-                            <div class="col-lg-2 col-md-12 col-sm-12"></div>
+            </div>
+            <div class="col-lg-2 col-md-12 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                <div style="border:1px solid #b7b7b7;height:auto;padding:5px;margin-bottom: 10px">
+                    <label>Select Time</label>
+                    <div class="row">
+                        <div class="col-lg-2 col-md-12 col-sm-12"></div>
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <label><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
+                            <label><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
+                            <label><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
+                            <label><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
+                            <label><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
+                            <label><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
+                            <label><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
+                            <label><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
+                            <label><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
                         </div>
-                        @*<div id="appointmentTime" style="height:auto;">
-                                <div class="col-12 ">
-                                    <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
-                                </div>
-                                <div class="col-12 ">
-                                    <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
-                                </div>
-                                <div class="col-12">
-
-                                    <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
-                                </div>
-                                <div class="col-12">
-                                    <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
-                                </div>
-                            </div>*@
+                        <div class="col-lg-2 col-md-12 col-sm-12"></div>
                     </div>
+                    @*<div id="appointmentTime" style="height:auto;">
+                            <div class="col-12 ">
+                                <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
+                            </div>
+                            <div class="col-12 ">
+                                <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
+                            </div>
+                            <div class="col-12">
+
+                                <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
+                            </div>
+                            <div class="col-12">
+                                <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
+                            </div>
+                        </div>*@
                 </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
-                        <p>Selected Date and Time</p>
-                        @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
-                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
-                        <p id="appointmentDate" style="display:none;"></p>
-                        <p id="appointmentScheduleTime" style="display:none;"></p>
-                        <div id="schedLoader" class="text-center" style="display:none;">
-                            <div class="spinner-border m-3" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
+                    <p>Selected Date and Time</p>
+                    @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
+                    <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
+                    <p id="appointmentDate" style="display:none;"></p>
+                    <p id="appointmentScheduleTime" style="display:none;"></p>
+                    <div id="schedLoader" class="text-center" style="display:none;">
+                        <div class="spinner-border m-3" role="status">
+                            <span class="sr-only">Loading...</span>
                         </div>
+                    </div>
 
-                        <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
-                        <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
-                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose your preferred date and time.</p>
-                        <p style="margin-top:10px;">Processing Site</p>
-                        @*<p class="font-weight-bold">(Site and Address)</p>*@
-                        <p id="siteAndAddress" class="font-weight-bold"></p>
-                        <div class="row">
-                            <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
-                                <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                            </div>
-                            <div class="col-md-2 col-sm-2">
+                    <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
+                    <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
+                    <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose your preferred date and time.</p>
+                    <p style="margin-top:10px;">Processing Site</p>
+                    @*<p class="font-weight-bold">(Site and Address)</p>*@
+                    <p id="siteAndAddress" class="font-weight-bold"></p>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
+                            <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
 
-                            </div>
-                            <div class="col-md-5 col-sm-5">
-                                <button id="stepTwoNextBtn" type="button" class="btn col-md-12 col-sm-12 " style="background-color:#217ff3;color:white;">Confirm</button>
-                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5">
+                            <button id="stepTwoNextBtn" type="button" class="btn col-md-12 col-sm-12 " style="background-color:#217ff3;color:white;">Confirm</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="step-three" style="display:none" class="tabcontent">
-            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Generate an Appointment Letter</p>
-            </div>
-            <div id="editor"></div>
-            <h6 class="font-weight-bold">Application Summary</h6>
-            <div class="row">
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Code</p>
-                    <div class="font-weight-bold">
-                        <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                        <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Date</p>
-                    <div class="font-weight-bold">
-                        <span id="LblDateOfAppointment"></span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Date</p>
-                    <div class="font-weight-bold">
-                        <span id="LblTimeOfAppointment"></span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Processing Site</p>
-                    <div class="font-weight-bold">
-                        <span id="LblProcessingSite"></span>
-                    </div>
+    </div>
+    <div id="step-three" style="display:none" class="tabcontent">
+        <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Generate an Appointment Letter</p>
+        </div>
+        <div id="editor"></div>
+        <h6 class="font-weight-bold">Application Summary</h6>
+        <div class="row">
+            <div class="col-md-3 col-sm-12">
+                <p class="appointmentHeader">Application Code</p>
+                <div class="font-weight-bold">
+                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
                 </div>
             </div>
-            <p class="red font-weight-bold">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Document Owner: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblNameOfApplicant"></span>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Address: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAddress"></span>
+            <div class="col-md-3 col-sm-12">
+                <p class="appointmentHeader">Application Date</p>
+                <div class="font-weight-bold">
+                    <span id="LblDateOfAppointment"></span>
                 </div>
             </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblContactNumber"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Authorize Representative: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAuthorizeRepresentative"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblRepresentativeContactNumber"></span>
-                </div>
-            </div>
-
-            @*<div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Company/ Office: </span>
-                    </div>
-                    <div class="col-md-8 col-sm-12">
-                        <span id="LblCompany"></span>
-                    </div>
-                </div>*@
-
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Country of Destination: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblCountryDestination"></span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Type of Document to be Apostillized: </span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblTypeOfDocument"></span>
-                </div>
-            </div>
-
-
-            @*<div class="step-three-field col-md-4 col-sm-12">
-                        <span>Date of Appointment</span>
-                    </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <span id="LblDateOfAppointment"></span>
-                    </div>
-
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Time</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
+            <div class="col-md-3 col-sm-12">
+                <p class="appointmentHeader">Application Date</p>
+                <div class="font-weight-bold">
                     <span id="LblTimeOfAppointment"></span>
-                </div>*@
-
-
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Total Fees:</span>
-                </div>
-                @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>*@
-                <div class="col-md-8 col-sm-12 font-weight-bold">
-                    <span id="LblPayment"> PhP 0.00</span>
-                    <input asp-for="Fees" type="hidden" />
                 </div>
             </div>
-            @*<div class="step-three-field col-md-4 col-sm-12">
-                        <span>Appointment Code</span>
-                    </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                        <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                    </div>
+            <div class="col-md-3 col-sm-12">
+                <p class="appointmentHeader">Processing Site</p>
+                <div class="font-weight-bold">
+                    <span id="LblProcessingSite"></span>
+                </div>
+            </div>
+        </div>
+        <p class="red font-weight-bold">IMPORTANT REMINDER: Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</p>
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Document Owner: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblNameOfApplicant"></span>
+            </div>
 
-                <div class="step-three-field col-md-4 col-sm-12">
-                    <span>Processing Site</span>
+        </div>
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Address: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblAddress"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Contact No: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblContactNumber"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Authorize Representative: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblAuthorizeRepresentative"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Contact No: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblRepresentativeContactNumber"></span>
+            </div>
+        </div>
+
+        @*<div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Company/ Office: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblCompany"></span>
+                </div>
+            </div>*@
+
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Country of Destination: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblCountryDestination"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Type of Document to be Apostillized: </span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12">
+                <span id="LblTypeOfDocument"></span>
+            </div>
+        </div>
+
+
+        @*<div class="step-three-field col-md-4 col-sm-12">
+                    <span>Date of Appointment</span>
                 </div>
                 <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                     <span>: </span>
                 </div>
                 <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblProcessingSite"></span>
-                </div>*@
-
-
-            <p style="margin-top:10px">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
-
-            <div class="row">
-                <div class="col-md-2 col-sm-1">
-
+                    <span id="LblDateOfAppointment"></span>
                 </div>
-                <div class="col-md-3 col-sm-12" style="margin-bottom: 10px;">
-                    <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
-                </div>
-                <div class="col-md-2 col-sm-1">
 
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <button type="submit" class="btn col-md-12 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
-                </div>
-                <div class="col-md-2 col-sm-1">
-
-                </div>
+            <div class="step-three-field col-md-4 col-sm-12">
+                <span>Time</span>
             </div>
-            @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
+            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                <span>: </span>
+            </div>
+            <div class="col-md-7 col-sm-12 font-weight-bold">
+                <span id="LblTimeOfAppointment"></span>
+            </div>*@
+
+
+        <div class="row">
+            <div class="step-three-field col-md-3 col-sm-12">
+                <span>Total Fees:</span>
+            </div>
+            @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>*@
+            <div class="col-md-8 col-sm-12 font-weight-bold">
+                <span id="LblPayment"> PhP 0.00</span>
+                <input asp-for="Fees" type="hidden" />
+            </div>
         </div>
-    </form>
+        @*<div class="step-three-field col-md-4 col-sm-12">
+                    <span>Appointment Code</span>
+                </div>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                </div>
+
+            <div class="step-three-field col-md-4 col-sm-12">
+                <span>Processing Site</span>
+            </div>
+            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                <span>: </span>
+            </div>
+            <div class="col-md-7 col-sm-12 font-weight-bold">
+                <span id="LblProcessingSite"></span>
+            </div>*@
+
+
+        <p style="margin-top:10px">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+
+        <div class="row">
+            <div class="col-md-2 col-sm-1">
+
+            </div>
+            <div class="col-md-3 col-sm-12" style="margin-bottom: 10px;">
+                <button type="button" id="stepThreeBackBtn" class=" btn btn-secondary col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+            </div>
+            <div class="col-md-2 col-sm-1">
+
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <button type="submit" class="btn col-md-12 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
+            </div>
+            <div class="col-md-2 col-sm-1">
+
+            </div>
+        </div>
+        @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
+    </div>
+    @*</form>*@
 
     <!-- Modal -->
     <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">

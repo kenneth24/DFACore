@@ -28,11 +28,11 @@ namespace DFACore.Models
         [StringLength(100)]
         public string Suffix { get; set; }
         public DateTime DateOfBirth { get; set; }
-        [Required]
+        //[Required]
         public string Barangay { get; set; }
-        [Required]
+        //[Required]
         public string City { get; set; }
-        [Required]
+        //[Required]
         public string Region { get; set; }
         [Required]
         [StringLength(100)]
@@ -58,7 +58,7 @@ namespace DFACore.Models
         [StringLength(100)]
         [Display(Name = "Contact Number")]
         public string RepresentativeContactNumber { get; set; }
-        [Required]
+        //[Required]
         public string ApostileData { get; set; }
         [Required]
         [Display(Name = "Processing Site")]
@@ -72,7 +72,7 @@ namespace DFACore.Models
         public string ApplicationCode { get; set; }
         public string Fees { get; set; }
         public List<ApplicantRecord> Applicants { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        //public DateTime? DateOfBirth { get; set; }
 
         //public List<ApostilleDocumentModel> Documents { get; set; }
     }

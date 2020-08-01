@@ -30,7 +30,7 @@ namespace DFACore.Models
         public string Address { get; set; }
         //[Required]
         public string Nationality { get; set; }
-        [Required]
+        //[Required]
         [StringLength(100)]
         public string ContactNumber { get; set; }
 
@@ -58,6 +58,7 @@ namespace DFACore.Models
         public DateTime DateCreated { get; set; }
         public Guid CreatedBy { get; set; }
         public long Type { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
     }
 }
