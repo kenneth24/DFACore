@@ -5,14 +5,19 @@
     ViewData["Title"] = "PartialApplicant";
     int increment = (int)ViewBag.Increment;
 }
-
+<style>
+    #applicants-container input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+</style>
 <div>
     @*<h1>@increment</h1>
     <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
-    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;margin-bottom: 25px;">
+    <div id="applicants-container" class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px; border: 1px solid #a0a0a0; border-radius: 5px; margin-bottom: 25px;">
         @{ var documentOwnerNo = 1;
             documentOwnerNo += increment;
-            }
+        }
         <h6 style="font-weight:bold">Document Owner @*no. <span>@documentOwnerNo</span>*@</h6>
         <div class="form-group">
 
@@ -157,7 +162,7 @@
                                     <input type="number" min="1"  class="small" id="qtyNbiClearanceExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyNbiClearanceRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyNbiClearance@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -185,7 +190,7 @@
                                     <input type="number" min="1"  class="small" id="qtyBirthCertificateExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyBirthCertificateRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyBirthCertificate@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -198,7 +203,7 @@
                                     <input type="number" min="1" class="small" id="qtyMarriageCertificateExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyMarriageCertificateRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyMarriageCertificate@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -211,7 +216,7 @@
                                     <input type="number" min="1" class="small" id="qtyDeathCertificateExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyDeathCertificateRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyDeathCertificate@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -224,7 +229,7 @@
                                     <input type="number" min="1" class="small" id="qtyCenomarExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCenomarRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCenomar@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -255,7 +260,7 @@
                                     <input type="number" min="1" class="small" id="qtyElementaryAndHighschoolExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyElementaryAndHighschoolRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyElementaryAndHighschool@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -276,7 +281,7 @@
                                     <input type="number" min="1" class="small" id="qtyTechVochExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyTechVochRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyTechVoch@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -297,7 +302,7 @@
                                     <input type="number" min="1" class="small" id="qtyStateCollegesAndUniversitiesExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyStateCollegesAndUniversitiesRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyStateCollegesAndUniversities@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -317,7 +322,7 @@
                                     <input type="number" min="1" class="small" id="qtyPrivateOrLocalCollegesExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyPrivateOrLocalCollegesRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyPrivateOrLocalColleges@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -338,7 +343,7 @@
                                     <input type="number" min="1" class="small" id="qtyPRCExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyPRCRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyPRC@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -359,7 +364,7 @@
                                     <input type="number" min="1" class="small" id="qtyMedCertsExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyMedCertsRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyMedCerts@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
@@ -381,7 +386,7 @@
                                     <input type="number" min="1" class="small" id="qtyCAAPExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCAAPRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCAAP@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
@@ -403,7 +408,7 @@
                                     <input type="number" min="1" class="small" id="qtyDriverLicenseExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyDriverLicenseRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyDriverLicense@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -426,7 +431,7 @@
                                     <input type="number" min="1" class="small" id="qtyCOEExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCOERegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCOE@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
 
@@ -440,7 +445,7 @@
                                     <input type="number" min="1" class="small" id="qtyInvitationLetterExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyInvitationLetterRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyInvitationLetter@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -453,7 +458,7 @@
                                     <input type="number" min="1" class="small" id="qtyTrainingsExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyTrainingsRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyTrainings@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -466,7 +471,7 @@
                                     <input type="number" min="1" class="small" id="qtyBaptismalCertExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyBaptismalCertRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyBaptismalCert@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -479,7 +484,7 @@
                                     <input type="number" min="1" class="small" id="qtyPrivateIssuedOtherDocuExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyPrivateIssuedOtherDocuRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyPrivateIssuedOtherDocu@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -504,7 +509,7 @@
                                     <input type="number" min="1" class="small" id="qtySpecialPowerOfAttorneyExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtySpecialPowerOfAttorneyRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtySpecialPowerOfAttorney@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -518,7 +523,7 @@
                                     <input type="number" min="1" class="small" id="qtyMOAExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyMOARegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyMOA@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -532,7 +537,7 @@
                                     <input type="number" min="1" class="small" id="qtyMOUExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyMOURegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyMOU@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -546,7 +551,7 @@
                                     <input type="number" min="1" class="small" id="qtyAnyContractExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyAnyContractRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyAnyContract@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -560,7 +565,7 @@
                                     <input type="number" min="1" class="small" id="qtyAffidavitOfConsentExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyAffidavitOfConsentRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyAffidavitOfConsent@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -574,7 +579,7 @@
                                     <input type="number" min="1" class="small" id="qtyJointAffidavitExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyJointAffidavitRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyJointAffidavit@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -588,7 +593,7 @@
                                     <input type="number" min="1" class="small" id="qtyOtherAffidavitExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyOtherAffidavitRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyOtherAffidavit@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -613,7 +618,7 @@
                                     <input type="number" min="1" class="small" id="qtyCourtDecisionExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCourtDecisionRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCourtDecision@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -628,7 +633,7 @@
                                     <input type="number" min="1" class="small" id="qtyCourtResolutionExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCourtResolutionRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCourtResolution@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -642,7 +647,7 @@
                                     <input type="number" min="1" class="small" id="qtyCourtOtherDocumentExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyCourtOtherDocumentRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyCourtOtherDocument@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -663,7 +668,7 @@
                                     <input type="number" min="1" class="small" id="qtyImmigrationExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyImmigrationRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyImmigration@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
@@ -684,7 +689,7 @@
                                     <input type="number" min="1" class="small" id="qtyDSWDClearanceExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyDSWDClearanceRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyDSWDClearance@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
@@ -705,7 +710,7 @@
                                     <input type="number" min="1" class="small" id="qtyPoliceClearanceExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyPoliceClearanceRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyPoliceClearance@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -728,7 +733,7 @@
                                     <input type="number" min="1" class="small" id="qtyBusinessRegistrationExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyBusinessRegistrationRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyBusinessRegistration@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
@@ -750,7 +755,7 @@
                                     <input type="number" min="1" class="small" id="qtyBarangayClearanceExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyBarangayClearanceRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyBarangayClearance@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                 </div>
@@ -772,7 +777,7 @@
                                     <input type="number" min="1" class="small" id="qtyExportDocumentsExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyExportDocumentsRegular@(increment)" style="width: 15%;height:30px;">
-                                    <span> Regular</span>
+                                    <span style="margin-right:10px"> Regular</span>
                                     <input type="number" min="1" disabled class="small" id="qtyExportDocuments@(increment)" style="width: 15%;height:30px;">
                                     <span> Total</span>
                                     @*<label for="qtyPRC"></label>*@
