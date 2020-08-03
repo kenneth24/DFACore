@@ -2016,8 +2016,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
+        var canConfirm = false;
         $(document).ready(function () {
-            var canConfirm = false;
+            
 
             //if ($("#IsUserAgreed").text() !== "Agreed") {
             //    $("#declaration-modal").modal({
@@ -2654,7 +2655,8 @@
                 //$('#appointmentSchedule').val('');
                 $('#appointmentScheduleTime').text($(this).val());
                 $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
-                $('#appointmentSchedule').change();
+                //$('#appointmentSchedule').change();
+                canConfirm = validateSchedule
             });
 
             @*var doc = new jsPDF();
@@ -2747,6 +2749,40 @@
 
         };
 
+        function validateSchedule() {
+            alert('hi');
+
+            $("#errSchedDate").hide();
+                $('#schedLoader').show();
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val()},
+                    success: function (result) {
+                        console.log('success');
+                        $('#schedLoader').hide();
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                            $('#unavailableSchedMessage').hide();
+                            return true;
+                        }
+                        else {
+                            $('#availableSchedMessage').hide();
+                            $('#unavailableSchedMessage').show();
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        $('#schedLoader').hide();
+                        return false;
+                        alert('Something went wrong!');
+                    }
+
+                });
+
+            return true;
+        };
 
     </script>
 }
