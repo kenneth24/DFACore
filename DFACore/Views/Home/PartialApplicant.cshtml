@@ -1745,6 +1745,91 @@
                 //documentObject@(increment) = [];
 
             });
+            
+                $('#appointmentSchedule').change(function () {
+                $("#errSchedDate").hide();
+                $('#schedLoader').show();
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val()},
+                    success: function (result) {
+                        console.log('success');
+                        $('#schedLoader').hide();
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                            $('#unavailableSchedMessage').hide();
+                            canConfirm = true;
+                        }
+                        else {
+                            $('#availableSchedMessage').hide();
+                            $('#unavailableSchedMessage').show();
+                            canConfirm = false;
+                        }
+                    },
+                    error: function () {
+                        $('#schedLoader').hide();
+                        canConfirm = false;
+                        alert('Something went wrong!');
+                    }
+
+                });
+
+                });
+            $("#stepTwoNextBtn").click(function () {
+                if (canConfirm == false) {
+                    $("#errSchedDate").show();
+                    return;
+                }
+                $("#step-one").hide();
+                $("#step-one-authorized").hide();
+                $("#step-two").hide();
+                $("#step-three").show();
+                $('#stepThreeBtn').click();
+
+                $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase() + ' ' + $('#Suffix').val().toUpperCase());
+
+                var docuType@(increment) = JSON.parse($('#apostileData@(increment)').val());
+                var lbldocuType@(increment) = $('#LblTypeOfDocument-@(increment)');
+
+                docuType@(increment).forEach(function (v) {
+                    var Quantity = v.Quantity;
+                    var DocuName = v.Name;
+                    var Transaction = v.Transaction;
+                    lbldocuType@(increment).append('(' + Quantity + ') ' + DocuName + ' ' + Transaction + '<br />');
+
+                });
+                @*@{ var appCode = ViewData[$"ApplicationCode{increment}"] as string;}
+                $('#LblAppointmentCode-@(increment)').text(@appCode);*@
+                $('#documentOwner-@(increment)').text($('#Records_@(increment)__FirstName').val().toUpperCase() + ' ' + $('#Records_@(increment)__MiddleName').val().toUpperCase() + ' ' + $('#Records_@(increment)__LastName').val().toUpperCase());
+                $('#dateofBirth-@(increment)').text($('#Records_@(increment)__DateOfBirth').val());
+                $('#LblCountryDestination-@(increment)').text($('#Records_@(increment)__CountryDestination').val());
+                //console.log($('#Records_@(increment)__FirstName').val());
+                console.log(docuType@(increment));
+                //$('#LblTypeOfDocument').text($('#apostileData').val());
+
+                $('#LblAddress').text($('#Address').val());
+                $('#LblContactNumber').text($('#ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#NameOfRepresentative').val());
+                //$('#LblRepresentativeContactNumber').text($('#RepresentativeContactNumber').val());
+                $('#LblRepresentativeContactNumber').text($('#LblNameOfApplicant').text());
+                //$('#LblCompany').text($('#CompanyName').val());
+
+
+                $('#LblCountryDestination').text($('#CountryDestination@(increment)').val());
+
+                $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
+                $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
+                $('#LblPayment-@(increment)').text('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));
+                $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));
+                var fees = 0;
+                fees += parseInt($('#documentsCount@(increment)').text()) * 100;
+                $('#totalFees').text('PhP'.concat(' ', fees, '.00'));
+                //$('#LblAppointmentCode').text('MNL-20200524');
+                $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
+
+            });
         });
 
 
