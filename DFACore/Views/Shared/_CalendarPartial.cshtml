@@ -111,7 +111,8 @@
                 $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ',$('#appointmentScheduleTime').text()));
                 $('#selectTimeContainer').css('z-index','1');
                 $('#selectTimeContainer').css('opacity', '1');
-                $('#appointmentSchedule').change();
+                //$('#appointmentSchedule').change();
+                canConfirm = validateSchedule();
 
                 //z-index: -1; opacity: 0.5;
 
