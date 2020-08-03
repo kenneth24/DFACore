@@ -321,7 +321,7 @@
                         <div class="form-group">
                             <h6 style="font-weight:bold">Name of the Authorized Representative</h6>
                             <div class="row">
-                                <div class="col-md-2 col-sm-12">
+                                @*<div class="col-md-2 col-sm-12">
                                     <label asp-for="Title">Title <span class="red">*</span></label>
                                     <select asp-for="Title" class="form-control">
                                         <option value=""></option>
@@ -330,14 +330,14 @@
                                         <option value="MRS">MS.</option>
                                     </select>
                                     <span asp-validation-for="Title" class="text-danger title"></span>
-                                </div>
+                                </div>*@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="FirstName">First Name <span class="red">*</span></label>
                                     <input asp-for="FirstName" class="form-control" />
                                     <span asp-validation-for="FirstName" class="text-danger fname"></span>
                                 </div>
 
-                                <div class="col-md-2 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label asp-for="MiddleName"></label>
                                     <input asp-for="MiddleName" class="form-control" />
                                     <span asp-validation-for="MiddleName" class="text-danger"></span>
@@ -350,7 +350,7 @@
                                 </div>
 
 
-                                <div class="col-md-2 col-sm-12">
+                                <div class="col-md-3 col-sm-12">
                                     <label asp-for="Suffix"></label>
                                     <select asp-for="Suffix" class="form-control">
                                         <option value="N/A">N/A</option>
@@ -456,7 +456,7 @@
                                 </div>
                             </div>*@
                     </div>
-                    <div id="documentOwners" style="height: 500px;overflow:scroll;margin-top:10px;margin-bottom:10px;">
+                    <div id="documentOwners" style="margin-top:10px;margin-bottom:10px;">
 
                         @*@for (int i = 0; i < (int)ViewData["ApplicantCount"]; i++)
                                 {
@@ -1939,7 +1939,7 @@
                             url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
                             cache: false,
                             success: function (html) {
-                                $("#documentOwners").append(html); // initial load
+                                $("#documentOwners").prepend(html); // initial load
                             }
                     });
                 }

@@ -10,7 +10,6 @@ namespace DFACore.Models
 {
     public class ApplicantRecordViewModel
     {
-        [Required]
         [StringLength(100)]
         public string Title { get; set; }
 

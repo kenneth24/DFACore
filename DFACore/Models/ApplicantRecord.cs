@@ -12,7 +12,6 @@ namespace DFACore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string Title { get; set; }
 
