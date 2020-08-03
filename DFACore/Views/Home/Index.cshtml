@@ -1939,7 +1939,7 @@
                             url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
                             cache: false,
                             success: function (html) {
-                                $("#documentOwners").prepend(html); // initial load
+                                $("#documentOwners").append(html).insertAfter("#documentOwners"); // initial load
                             }
                     });
                 }
