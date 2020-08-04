@@ -9,7 +9,7 @@ namespace DFACore.Models
     {
         public ApplicantRecordViewModel Record { get; set; }
         public List<ApplicantRecordViewModel> Records { get; set; }
-        public DateTime ScheduleDate { get; set; }
+        public string ScheduleDate { get; set; }
         public int ApplicantCount { get; set; }
     }
 }

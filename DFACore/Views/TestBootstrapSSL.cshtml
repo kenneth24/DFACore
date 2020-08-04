@@ -1,8 +1,7 @@
-﻿@model DFACore.Models.ApplicantRecordViewModel
+﻿@model DFACore.Models.ApplicantRecord
 @{
     Layout = null;
-    var sched = DateTime.ParseExact(Model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-            System.Globalization.CultureInfo.InvariantCulture);
+    var sched = Model.ScheduleDate;
     var docuData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(Model.ApostileData);
 }
 <!DOCTYPE html>
@@ -112,10 +111,10 @@
                             <td>Document Owner:</td>
                             <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @Model.Suffix</td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <td>Address:</td>
                             <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
-                        </tr>
+                        </tr>*@
                         <tr>
                             <td>Contact No.:</td>
                             <td class="padding30">@Model.ContactNumber</td>

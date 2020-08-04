@@ -82,7 +82,7 @@ namespace DFACore.Controllers
                     ApostileData = model.Record.ApostileData,
                     ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
                     ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = DateTime.ParseExact(model.Record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+                    ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
                     ApplicationCode = model.Record.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -90,7 +90,7 @@ namespace DFACore.Controllers
                     Type = 0
                 };
                 applicantRecords.Add(applicantRecord);
-                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(model.Record), new MimeKit.ContentType("application", "pdf")));
+                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
             }
             else
@@ -113,7 +113,7 @@ namespace DFACore.Controllers
                         ApostileData = record.ApostileData,
                         ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
                         ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
-                        ScheduleDate = DateTime.ParseExact(model.Record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+                        ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                            System.Globalization.CultureInfo.InvariantCulture),
                         ApplicationCode = Guid.NewGuid().ToString(), //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -122,7 +122,7 @@ namespace DFACore.Controllers
                     };
 
                     applicantRecords.Add(applicantRecord);
-                    attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
+                    attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
                 }
                 
             };
@@ -262,7 +262,7 @@ namespace DFACore.Controllers
         }
 
 
-        public async Task<MemoryStream> GeneratePDF(ApplicantRecordViewModel model)
+        public async Task<MemoryStream> GeneratePDF(ApplicantRecord model)
         {
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
