@@ -11,9 +11,10 @@
         font-weight: 500;
     }
 </style>
-<div>
+<div dat-worth="@increment">
     @*<h1>@increment</h1>
-    <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
+        <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
+    @*<input asp-for="Records[increment].ApplicationCode" value="" class="form-control" />*@
     <div id="applicants-container" class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px; border: 1px solid #a0a0a0; border-radius: 5px; margin-bottom: 25px;">
         @{ var documentOwnerNo = 1;
             documentOwnerNo += increment;

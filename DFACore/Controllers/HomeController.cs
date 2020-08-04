@@ -115,7 +115,7 @@ namespace DFACore.Controllers
                         ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
                         ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                            System.Globalization.CultureInfo.InvariantCulture),
-                        ApplicationCode = Guid.NewGuid().ToString(), //record.ApplicationCode,
+                        ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
                         Type = 1
@@ -222,7 +222,7 @@ namespace DFACore.Controllers
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-            ViewData[$"ApplicationCode{i}"] = GetApplicantCode();
+            //ViewData[$"ApplicationCode{i}"] = applicationCode + (i + 1);
             ViewBag.Increment = i;
             return View();
         }

@@ -96,6 +96,7 @@
         @{
             int applicants = (int)ViewData["ApplicantCount"];
             <p id="applicantCount" style="display:none;">@applicants</p>
+
             if (applicants == 0)
             {
 
@@ -777,8 +778,9 @@
                 for (var i = 0; i < @applicants; i++)
                 {
                     <div class="font-weight-bold">
-                        <input value="@ViewData[$"ApplicationCode{i}"]" asp-for="Records[@i].ApplicationCode" type="hidden" />
+
                         @{var appcodeIndex = i + 1;}
+                        <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" />
                         <span id="LblAppointmentCode-@i">@ViewData["ApplicationCode"]</span><span>-@appcodeIndex</span>
                     </div>
                     <div class="row">
@@ -840,54 +842,54 @@
 
                 </div>
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Address: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAddress"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Address: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblAddress"></span>
+                        </div>
+                    </div>*@
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblContactNumber"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Contact No: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblContactNumber"></span>
+                        </div>
+                    </div>*@
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Authorize Representative: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAuthorizeRepresentative"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblRepresentativeContactNumber"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Authorize Representative: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblAuthorizeRepresentative"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Contact No: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblRepresentativeContactNumber"></span>
+                        </div>
+                    </div>*@
 
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Company/ Office: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblCompany"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Company/ Office: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblCompany"></span>
+                        </div>
+                    </div>*@
 
                 <div class="row">
                     <div class="step-three-field col-md-3 col-sm-12">
                         <span>Country of Destination: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span id="LblCountryDestination"></span>
                     </div>
@@ -898,8 +900,8 @@
                         <span>Type of Document to be Apostillized: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span id="LblTypeOfDocument"></span>
                     </div>
@@ -907,24 +909,24 @@
 
 
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                    <span>Date of Appointment</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblDateOfAppointment"></span>
-                </div>
+                            <span>Date of Appointment</span>
+                        </div>
+                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                            <span>: </span>
+                        </div>
+                        <div class="col-md-7 col-sm-12 font-weight-bold">
+                            <span id="LblDateOfAppointment"></span>
+                        </div>
 
-            <div class="step-three-field col-md-4 col-sm-12">
-                <span>Time</span>
-            </div>
-            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                <span>: </span>
-            </div>
-            <div class="col-md-7 col-sm-12 font-weight-bold">
-                <span id="LblTimeOfAppointment"></span>
-            </div>*@
+                    <div class="step-three-field col-md-4 col-sm-12">
+                        <span>Time</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <span id="LblTimeOfAppointment"></span>
+                    </div>*@
 
 
                 <div class="row">
@@ -932,33 +934,33 @@
                         <span>Total Fees:</span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12 font-weight-bold">
                         <span id="LblPayment"> PhP 0.00</span>
                         <input asp-for="Record.Fees" type="hidden" />
                     </div>
                 </div>
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                    <span>Appointment Code</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                </div>
+                            <span>Appointment Code</span>
+                        </div>
+                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                            <span>: </span>
+                        </div>
+                        <div class="col-md-7 col-sm-12 font-weight-bold">
+                            <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                            <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                        </div>
 
-            <div class="step-three-field col-md-4 col-sm-12">
-                <span>Processing Site</span>
-            </div>
-            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                <span>: </span>
-            </div>
-            <div class="col-md-7 col-sm-12 font-weight-bold">
-                <span id="LblProcessingSite"></span>
-            </div>*@
+                    <div class="step-three-field col-md-4 col-sm-12">
+                        <span>Processing Site</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <span id="LblProcessingSite"></span>
+                    </div>*@
             }
 
             <p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
@@ -2101,6 +2103,8 @@
                     });
                 }
             }
+
+
             $("#Region").change(function () {
                 $.ajax({
                     url: '@Url.Action("GetCity")',
