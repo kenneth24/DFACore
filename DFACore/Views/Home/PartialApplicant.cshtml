@@ -31,14 +31,14 @@
 
                 <div class="col-md-3 col-sm-12">
                     <label asp-for="Records[increment].MiddleName"></label>
-                    <input asp-for="Records[increment].MiddleName" class="form-control" />
-                    <span asp-validation-for="Records[increment].MiddleName" class="text-danger"></span>
+                    <input asp-for="Records[increment].MiddleName" class="form-control " />
+                    <span asp-validation-for="Records[increment].MiddleName" class="text-danger "></span>
                 </div>
 
                 <div class="col-md-3 col-sm-12">
                     <label asp-for="Records[increment].LastName">Last Name <span class="red">*</span></label>
-                    <input asp-for="Records[increment].LastName" class="form-control" />
-                    <span asp-validation-for="Records[increment].LastName" class="text-danger lname"></span>
+                    <input asp-for="Records[increment].LastName" class="form-control lNamePartial" />
+                    <span asp-validation-for="Records[increment].LastName" class="text-danger lNamePartialValidation"></span>
                 </div>
 
 
@@ -74,14 +74,15 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12">
                     <label asp-for="Records[increment].DateOfBirth">Date Birth <span class="red">*</span></label>
-                    <input type="date" asp-for="Records[increment].DateOfBirth" class="datepicker form-control" />
+                    <input type="date" asp-for="Records[increment].DateOfBirth" class="datepicker form-control dateOfbirthPartial" />
+                    <span asp-validation-for="Records[increment].CountryDestination" class="text-danger dateOfbirthPartialValidation"></span>
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <label asp-for="Records[increment].CountryDestination">Country of Destination <span class="red">*</span></label>
-                    <select asp-for="Records[increment].CountryDestination" class="form-control">
+                    <select asp-for="Records[increment].CountryDestination" class="form-control countrydestinationPartial">
                         <partial name="_CountriesPartial" />
                     </select>
-                    <span asp-validation-for="Records[increment].CountryDestination" class="text-danger countrydestination"></span>
+                    <span asp-validation-for="Records[increment].CountryDestination" class="text-danger countrydestinationPartialValidation"></span>
                 </div>
             </div>
         </div>
@@ -119,7 +120,8 @@
         </div>
         <div class="col-12 " style="display:none;">
             <input asp-for="Records[increment].ApostileData" id="apostileData@(increment)" class="form-control" />
-            <span asp-validation-for="Records[increment].ApostileData" class="text-danger apostiledata"></span>
+            <span asp-validation-for="Records[increment].ApostileData" class="text-danger apostiledataPartial"></span>
+            <span asp-validation-for="Records[increment].ApostileData" class="text-danger apostiledataPartialValidation"></span>
         </div>
 
     </div>

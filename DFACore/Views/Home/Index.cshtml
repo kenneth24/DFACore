@@ -2169,19 +2169,32 @@
             });
             $("#stepOneNextBtn").click(function () {
                 //|| $('#Nationality').val() == "" fNamePartial
-                if ($('.fNamePartial').val() == "" ||$('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
-                    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
+                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
+                    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == ""
+                    || $('#dateOfbirthPartial').val() == ""
+                ) {
 
                     //if ($('#Title').val() == "")
                     //    $('.title').text('This field is required.');
                     //else
                     //    $('.title').text('');
                     if ($('.fNamePartial').val() == "") {
-                        alert('test');
                         $('.fNamePartialValidation').text('This field is required.');
                     }
                     else
                         $('.fNamePartialValidation').text('');
+
+                    if ($('.lNamePartial').val() == "") {
+                        $('.lNamePartialValidation').text('This field is required.');
+                    }
+                    else
+                        $('.lNamePartialValidation').text('');
+
+                    if ($('.dateOfbirthPartial').val() == "") {
+                        $('.dateOfbirthPartialValidation').text('This field is required.');
+                    }
+                    else
+                        $('.dateOfbirthPartialValidation').text('');
 
                     if ($('#FirstName').val() == "")
                         $('.fname').text('This field is required.');
