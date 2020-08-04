@@ -68,7 +68,7 @@ namespace DFACore.Controllers
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
-            if (model.Records.Count == 0)
+            if (model.Records is null)
             {
                 var applicantRecord = new ApplicantRecord
                 {
@@ -218,11 +218,11 @@ namespace DFACore.Controllers
             return RedirectToAction("Success");
         }
 
-        public IActionResult PartialApplicant(int i)
+        public IActionResult PartialApplicant(int i, string applicantCode)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-            ViewData[$"ApplicationCode{i}"] = GetApplicantCode();
+            ViewData[$"ApplicationCode{i}"] = $"{applicantCode}-{i + 1}";
             ViewBag.Increment = i;
             return View();
         }
