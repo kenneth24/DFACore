@@ -44,13 +44,14 @@ namespace DFACore.Controllers
             _env = env;
         }
 
-        public IActionResult Index(int applicantsCount = 0)
+        public async Task<IActionResult> Index(int applicantsCount = 0)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             ViewData["ApplicantCount"] = applicantsCount;
+            ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             return View();
         }
         public IActionResult ApplicantTypeSelection()

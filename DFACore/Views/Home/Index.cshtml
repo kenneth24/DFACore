@@ -2,6 +2,7 @@
 @model DFACore.Models.ApplicantsViewModel
 @{
     ViewData["Title"] = "Home Page";
+    var currentUser = (ApplicationUser)ViewBag.User;
 
 }
 <style>
@@ -120,19 +121,19 @@
                                     </div>*@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <input asp-for="Record.FirstName" class="form-control" value="@currentUser.FirstName" />
                                     <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.MiddleName"></label>
-                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <input asp-for="Record.MiddleName" class="form-control" value="@currentUser.MiddleName" />
                                     <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <input asp-for="Record.LastName" class="form-control" value="@currentUser.LastName" />
                                     <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
@@ -141,24 +142,8 @@
                                     <label asp-for="Record.Suffix"></label>
                                     @*<input asp-for="Suffix" class="form-control" />*@
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="N/A">N/A</option>
-                                        <option value="JR.">JR.</option>
-                                        <option value="SR.">SR.</option>
-                                        <option value="I">I</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
-                                        <option value="V">V</option>
-                                        <option value="VI">VI</option>
-                                        <option value="VII">VII</option>
-                                        <option value="VIII">VIII</option>
-                                        <option value="IX">IX</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                        <option value="XIII">XIII</option>
-                                        <option value="XIV">XIV</option>
-                                        <option value="XV">XV</option>
+                                        <option value="@currentUser.Suffix">@currentUser.Suffix</option>
+                                        
                                     </select>
                                     <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
@@ -224,12 +209,12 @@
 
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.DateOfBirth"></label>
-                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" />
+                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" value="@currentUser.DateOfBirth" />
                                     <span asp-validation-for="Record.DateOfBirth" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control" type="number" min="1" />
+                                    <input asp-for="Record.ContactNumber" class="form-control" value="@currentUser.PhoneNumber" type="number" min="1" />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
@@ -348,19 +333,19 @@
                                     </div>*@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <input asp-for="Record.FirstName" class="form-control" value="@currentUser.FirstName" />
                                     <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.MiddleName"></label>
-                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <input asp-for="Record.MiddleName" class="form-control" value="@currentUser.MiddleName" />
                                     <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <input asp-for="Record.LastName" class="form-control" value="@currentUser.LastName" />
                                     <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
@@ -368,24 +353,7 @@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.Suffix"></label>
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="N/A">N/A</option>
-                                        <option value="JR.">JR.</option>
-                                        <option value="SR.">SR.</option>
-                                        <option value="I">I</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
-                                        <option value="V">V</option>
-                                        <option value="VI">VI</option>
-                                        <option value="VII">VII</option>
-                                        <option value="VIII">VIII</option>
-                                        <option value="IX">IX</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                        <option value="XIII">XIII</option>
-                                        <option value="XIV">XIV</option>
-                                        <option value="XV">XV</option>
+                                        <option value="@currentUser.Suffix">@currentUser.Suffix</option>
                                     </select>
                                     <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
@@ -443,7 +411,7 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control" type="number" min="1" />
+                                    <input asp-for="Record.ContactNumber" class="form-control" value="@currentUser.PhoneNumber" type="number" min="1" />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
