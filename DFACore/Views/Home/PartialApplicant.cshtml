@@ -162,7 +162,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="number" min="1"  class="small" id="qtyNbiClearanceExpedite@(increment)" style="width: 15%;height:30px;">
+                                    <input type="number" min="1" class="small" id="qtyNbiClearanceExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyNbiClearanceRegular@(increment)" style="width: 15%;height:30px;">
                                     <span style="margin-right:10px"> Regular</span>
@@ -190,7 +190,7 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" min="1"  class="small" id="qtyBirthCertificateExpedite@(increment)" style="width: 15%;height:30px;">
+                                    <input type="number" min="1" class="small" id="qtyBirthCertificateExpedite@(increment)" style="width: 15%;height:30px;">
                                     <span> Expedite</span>
                                     <input type="number" min="1" class="small" id="qtyBirthCertificateRegular@(increment)" style="width: 15%;height:30px;">
                                     <span style="margin-right:10px"> Regular</span>
@@ -814,7 +814,7 @@
 
         $(document).ready(function () {
             //Compute total qty per document function
-            $('#qtyNbiClearanceExpedite@(increment)').focusout(function () {                
+            $('#qtyNbiClearanceExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyNbiClearanceExpedite@(increment)').val()) > 0 && !$('#qtyNbiClearanceRegular@(increment)').val()) {
                     $('#qtyNbiClearance@(increment)').val(parseInt($('#qtyNbiClearanceExpedite@(increment)').val()))
                 }
@@ -822,7 +822,7 @@
                     $('#qtyNbiClearance@(increment)').val(parseInt($('#qtyNbiClearanceExpedite@(increment)').val()) + parseInt($('#qtyNbiClearanceRegular@(increment)').val()))
                 }
             });
-            $('#qtyNbiClearanceRegular@(increment)').focusout(function () {                
+            $('#qtyNbiClearanceRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyNbiClearanceRegular@(increment)').val()) > 0 && !$('#qtyNbiClearanceExpedite@(increment)').val()) {
                     $('#qtyNbiClearance@(increment)').val(parseInt($('#qtyNbiClearanceRegular@(increment)').val()))
                 }
@@ -831,7 +831,7 @@
                 }
             });
 
-            $('#qtyBirthCertificateExpedite@(increment)').focusout(function () {                
+            $('#qtyBirthCertificateExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyBirthCertificateExpedite@(increment)').val()) > 0 && !$('#qtyBirthCertificateRegular@(increment)').val()) {
                     $('#qtyBirthCertificate@(increment)').val(parseInt($('#qtyBirthCertificateExpedite@(increment)').val()))
                 }
@@ -839,7 +839,7 @@
                     $('#qtyBirthCertificate@(increment)').val(parseInt($('#qtyBirthCertificateExpedite@(increment)').val()) + parseInt($('#qtyBirthCertificateRegular@(increment)').val()))
                 }
             });
-            $('#qtyBirthCertificateRegular@(increment)').focusout(function () {                
+            $('#qtyBirthCertificateRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyBirthCertificateRegular@(increment)').val()) > 0 && !$('#qtyBirthCertificateExpedite@(increment)').val()) {
                     $('#qtyBirthCertificate@(increment)').val(parseInt($('#qtyBirthCertificateRegular@(increment)').val()))
                 }
@@ -848,7 +848,7 @@
                 }
             });
 
-            $('#qtyMarriageCertificateExpedite@(increment)').focusout(function () {                
+            $('#qtyMarriageCertificateExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyMarriageCertificateExpedite@(increment)').val()) > 0 && !$('#qtyMarriageCertificateRegular@(increment)').val()) {
                     $('#qtyMarriageCertificate@(increment)').val(parseInt($('#qtyMarriageCertificateExpedite@(increment)').val()))
                 }
@@ -856,7 +856,7 @@
                     $('#qtyMarriageCertificate@(increment)').val(parseInt($('#qtyMarriageCertificateExpedite@(increment)').val()) + parseInt($('#qtyMarriageCertificateRegular@(increment)').val()))
                 }
             });
-            $('#qtyMarriageCertificateRegular@(increment)').focusout(function () {                
+            $('#qtyMarriageCertificateRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyMarriageCertificateRegular@(increment)').val()) > 0 && !$('#qtyMarriageCertificateExpedite@(increment)').val()) {
                     $('#qtyMarriageCertificate@(increment)').val(parseInt($('#qtyMarriageCertificateRegular@(increment)').val()))
                 }
@@ -865,7 +865,7 @@
                 }
             });
 
-            $('#qtyDeathCertificateExpedite@(increment)').focusout(function () {                
+            $('#qtyDeathCertificateExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyDeathCertificateExpedite@(increment)').val()) > 0 && !$('#qtyDeathCertificateRegular@(increment)').val()) {
                     $('#qtyDeathCertificate@(increment)').val(parseInt($('#qtyDeathCertificateExpedite@(increment)').val()))
                 }
@@ -873,7 +873,7 @@
                     $('#qtyDeathCertificate@(increment)').val(parseInt($('#qtyDeathCertificateExpedite@(increment)').val()) + parseInt($('#qtyDeathCertificateRegular@(increment)').val()))
                 }
             });
-            $('#qtyDeathCertificateRegular@(increment)').focusout(function () {                
+            $('#qtyDeathCertificateRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyDeathCertificateRegular@(increment)').val()) > 0 && !$('#qtyDeathCertificateExpedite@(increment)').val()) {
                     $('#qtyDeathCertificate@(increment)').val(parseInt($('#qtyDeathCertificateRegular@(increment)').val()))
                 }
@@ -882,7 +882,7 @@
                 }
             });
 
-            $('#qtyCenomarExpedite@(increment)').focusout(function () {                
+            $('#qtyCenomarExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCenomarExpedite@(increment)').val()) > 0 && !$('#qtyCenomarRegular@(increment)').val()) {
                     $('#qtyCenomar@(increment)').val(parseInt($('#qtyCenomarExpedite@(increment)').val()))
                 }
@@ -890,7 +890,7 @@
                     $('#qtyCenomar@(increment)').val(parseInt($('#qtyCenomarExpedite@(increment)').val()) + parseInt($('#qtyCenomarRegular@(increment)').val()))
                 }
             });
-            $('#qtyCenomarRegular@(increment)').focusout(function () {                
+            $('#qtyCenomarRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCenomarRegular@(increment)').val()) > 0 && !$('#qtyCenomarExpedite@(increment)').val()) {
                     $('#qtyCenomar@(increment)').val(parseInt($('#qtyCenomarRegular@(increment)').val()))
                 }
@@ -899,7 +899,7 @@
                 }
             });
 
-            $('#qtyElementaryAndHighschoolExpedite@(increment)').focusout(function () {                
+            $('#qtyElementaryAndHighschoolExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyElementaryAndHighschoolExpedite@(increment)').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular@(increment)').val()) {
                     $('#qtyElementaryAndHighschool@(increment)').val(parseInt($('#qtyElementaryAndHighschoolExpedite@(increment)').val()))
                 }
@@ -907,7 +907,7 @@
                     $('#qtyElementaryAndHighschool@(increment)').val(parseInt($('#qtyElementaryAndHighschoolExpedite@(increment)').val()) + parseInt($('#qtyElementaryAndHighschoolRegular@(increment)').val()))
                 }
             });
-            $('#qtyElementaryAndHighschoolRegular@(increment)').focusout(function () {                
+            $('#qtyElementaryAndHighschoolRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyElementaryAndHighschoolRegular@(increment)').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite@(increment)').val()) {
                     $('#qtyElementaryAndHighschool@(increment)').val(parseInt($('#qtyElementaryAndHighschoolRegular@(increment)').val()))
                 }
@@ -916,7 +916,7 @@
                 }
             });
 
-            $('#qtyTechVochExpedite@(increment)').focusout(function () {                
+            $('#qtyTechVochExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyTechVochExpedite@(increment)').val()) > 0 && !$('#qtyTechVochRegular@(increment)').val()) {
                     $('#qtyTechVoch@(increment)').val(parseInt($('#qtyTechVochExpedite@(increment)').val()))
                 }
@@ -924,7 +924,7 @@
                     $('#qtyTechVoch@(increment)').val(parseInt($('#qtyTechVochExpedite@(increment)').val()) + parseInt($('#qtyTechVochRegular@(increment)').val()))
                 }
             });
-            $('#qtyTechVochRegular@(increment)').focusout(function () {                
+            $('#qtyTechVochRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyTechVochRegular@(increment)').val()) > 0 && !$('#qtyTechVochExpedite@(increment)').val()) {
                     $('#qtyTechVoch@(increment)').val(parseInt($('#qtyTechVochRegular@(increment)').val()))
                 }
@@ -933,7 +933,7 @@
                 }
             });
 
-            $('#qtyStateCollegesAndUniversitiesExpedite@(increment)').focusout(function () {                
+            $('#qtyStateCollegesAndUniversitiesExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite@(increment)').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular@(increment)').val()) {
                     $('#qtyStateCollegesAndUniversities@(increment)').val(parseInt($('#qtyStateCollegesAndUniversitiesExpedite@(increment)').val()))
                 }
@@ -941,7 +941,7 @@
                     $('#qtyStateCollegesAndUniversities@(increment)').val(parseInt($('#qtyStateCollegesAndUniversitiesExpedite@(increment)').val()) + parseInt($('#qtyStateCollegesAndUniversitiesRegular@(increment)').val()))
                 }
             });
-            $('#qtyStateCollegesAndUniversitiesRegular@(increment)').focusout(function () {                
+            $('#qtyStateCollegesAndUniversitiesRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyStateCollegesAndUniversitiesRegular@(increment)').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite@(increment)').val()) {
                     $('#qtyStateCollegesAndUniversities@(increment)').val(parseInt($('#qtyStateCollegesAndUniversitiesRegular@(increment)').val()))
                 }
@@ -950,7 +950,7 @@
                 }
             });
 
-            $('#qtyPrivateOrLocalCollegesExpedite@(increment)').focusout(function () {                
+            $('#qtyPrivateOrLocalCollegesExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyPrivateOrLocalCollegesExpedite@(increment)').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular@(increment)').val()) {
                     $('#qtyPrivateOrLocalColleges@(increment)').val(parseInt($('#qtyPrivateOrLocalCollegesExpedite@(increment)').val()))
                 }
@@ -958,7 +958,7 @@
                     $('#qtyPrivateOrLocalColleges@(increment)').val(parseInt($('#qtyPrivateOrLocalCollegesExpedite@(increment)').val()) + parseInt($('#qtyPrivateOrLocalCollegesRegular@(increment)').val()))
                 }
             });
-            $('#qtyPrivateOrLocalCollegesRegular@(increment)').focusout(function () {                
+            $('#qtyPrivateOrLocalCollegesRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyPrivateOrLocalCollegesRegular@(increment)').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite@(increment)').val()) {
                     $('#qtyPrivateOrLocalColleges@(increment)').val(parseInt($('#qtyPrivateOrLocalCollegesRegular@(increment)').val()))
                 }
@@ -967,7 +967,7 @@
                 }
             });
 
-            $('#qtyPRCExpedite@(increment)').focusout(function () {                
+            $('#qtyPRCExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyPRCExpedite@(increment)').val()) > 0 && !$('#qtyPRCRegular@(increment)').val()) {
                     $('#qtyPRC@(increment)').val(parseInt($('#qtyPRCExpedite@(increment)').val()))
                 }
@@ -975,7 +975,7 @@
                     $('#qtyPRC@(increment)').val(parseInt($('#qtyPRCExpedite@(increment)').val()) + parseInt($('#qtyPRCRegular@(increment)').val()))
                 }
             });
-            $('#qtyPRCRegular@(increment)').focusout(function () {                
+            $('#qtyPRCRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyPRCRegular@(increment)').val()) > 0 && !$('#qtyPRCExpedite@(increment)').val()) {
                     $('#qtyPRC@(increment)').val(parseInt($('#qtyPRCRegular@(increment)').val()))
                 }
@@ -984,7 +984,7 @@
                 }
             });
 
-            $('#qtyMedCertsExpedite@(increment)').focusout(function () {                
+            $('#qtyMedCertsExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyMedCertsExpedite@(increment)').val()) > 0 && !$('#qtyMedCertsRegular@(increment)').val()) {
                     $('#qtyMedCerts@(increment)').val(parseInt($('#qtyMedCertsExpedite@(increment)').val()))
                 }
@@ -992,7 +992,7 @@
                     $('#qtyMedCerts@(increment)').val(parseInt($('#qtyMedCertsExpedite@(increment)').val()) + parseInt($('#qtyMedCertsRegular@(increment)').val()))
                 }
             });
-            $('#qtyMedCertsRegular@(increment)').focusout(function () {                
+            $('#qtyMedCertsRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyMedCertsRegular@(increment)').val()) > 0 && !$('#qtyMedCertsExpedite@(increment)').val()) {
                     $('#qtyMedCerts@(increment)').val(parseInt($('#qtyMedCertsRegular@(increment)').val()))
                 }
@@ -1001,7 +1001,7 @@
                 }
             });
 
-            $('#qtyCAAPExpedite@(increment)').focusout(function () {                
+            $('#qtyCAAPExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCAAPExpedite@(increment)').val()) > 0 && !$('#qtyCAAPRegular@(increment)').val()) {
                     $('#qtyCAAP@(increment)').val(parseInt($('#qtyCAAPExpedite@(increment)').val()))
                 }
@@ -1009,7 +1009,7 @@
                     $('#qtyCAAP@(increment)').val(parseInt($('#qtyCAAPExpedite@(increment)').val()) + parseInt($('#qtyCAAPRegular@(increment)').val()))
                 }
             });
-            $('#qtyCAAPRegular@(increment)').focusout(function () {                
+            $('#qtyCAAPRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCAAPRegular@(increment)').val()) > 0 && !$('#qtyCAAPExpedite@(increment)').val()) {
                     $('#qtyCAAP@(increment)').val(parseInt($('#qtyCAAPRegular@(increment)').val()))
                 }
@@ -1018,7 +1018,7 @@
                 }
             });
 
-            $('#qtyDriverLicenseExpedite@(increment)').focusout(function () {                
+            $('#qtyDriverLicenseExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyDriverLicenseExpedite@(increment)').val()) > 0 && !$('#qtyDriverLicenseRegular@(increment)').val()) {
                     $('#qtyDriverLicense@(increment)').val(parseInt($('#qtyDriverLicenseExpedite@(increment)').val()))
                 }
@@ -1026,7 +1026,7 @@
                     $('#qtyDriverLicense@(increment)').val(parseInt($('#qtyDriverLicenseExpedite@(increment)').val()) + parseInt($('#qtyDriverLicenseRegular@(increment)').val()))
                 }
             });
-            $('#qtyDriverLicenseRegular@(increment)').focusout(function () {                
+            $('#qtyDriverLicenseRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyDriverLicenseRegular@(increment)').val()) > 0 && !$('#qtyDriverLicenseExpedite@(increment)').val()) {
                     $('#qtyDriverLicense@(increment)').val(parseInt($('#qtyDriverLicenseRegular@(increment)').val()))
                 }
@@ -1035,7 +1035,7 @@
                 }
             });
 
-            $('#qtyCOEExpedite@(increment)').focusout(function () {                
+            $('#qtyCOEExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCOEExpedite@(increment)').val()) > 0 && !$('#qtyCOERegular@(increment)').val()) {
                     $('#qtyCOE@(increment)').val(parseInt($('#qtyCOEExpedite@(increment)').val()))
                 }
@@ -1043,7 +1043,7 @@
                     $('#qtyCOE@(increment)').val(parseInt($('#qtyCOEExpedite@(increment)').val()) + parseInt($('#qtyCOERegular@(increment)').val()))
                 }
             });
-            $('#qtyCOERegular@(increment)').focusout(function () {                
+            $('#qtyCOERegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCOERegular@(increment)').val()) > 0 && !$('#qtyCOEExpedite@(increment)').val()) {
                     $('#qtyCOE@(increment)').val(parseInt($('#qtyCOERegular@(increment)').val()))
                 }
@@ -1052,7 +1052,7 @@
                 }
             });
 
-            $('#qtyInvitationLetterExpedite@(increment)').focusout(function () {                
+            $('#qtyInvitationLetterExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyInvitationLetterExpedite@(increment)').val()) > 0 && !$('#qtyInvitationLetterRegular@(increment)').val()) {
                     $('#qtyInvitationLetter@(increment)').val(parseInt($('#qtyInvitationLetterExpedite@(increment)').val()))
                 }
@@ -1060,7 +1060,7 @@
                     $('#qtyInvitationLetter@(increment)').val(parseInt($('#qtyInvitationLetterExpedite@(increment)').val()) + parseInt($('#qtyInvitationLetterRegular@(increment)').val()))
                 }
             });
-            $('#qtyInvitationLetterRegular@(increment)').focusout(function () {                
+            $('#qtyInvitationLetterRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyInvitationLetterRegular@(increment)').val()) > 0 && !$('#qtyInvitationLetterExpedite@(increment)').val()) {
                     $('#qtyInvitationLetter@(increment)').val(parseInt($('#qtyInvitationLetterRegular@(increment)').val()))
                 }
@@ -1069,7 +1069,7 @@
                 }
             });
 
-            $('#qtyTrainingsExpedite@(increment)').focusout(function () {                
+            $('#qtyTrainingsExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyTrainingsExpedite@(increment)').val()) > 0 && !$('#qtyTrainingsRegular@(increment)').val()) {
                     $('#qtyTrainings@(increment)').val(parseInt($('#qtyTrainingsExpedite@(increment)').val()))
                 }
@@ -1077,7 +1077,7 @@
                     $('#qtyTrainings@(increment)').val(parseInt($('#qtyTrainingsExpedite@(increment)').val()) + parseInt($('#qtyTrainingsRegular@(increment)').val()))
                 }
             });
-            $('#qtyTrainingsRegular@(increment)').focusout(function () {                
+            $('#qtyTrainingsRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyTrainingsRegular@(increment)').val()) > 0 && !$('#qtyTrainingsExpedite@(increment)').val()) {
                     $('#qtyTrainings@(increment)').val(parseInt($('#qtyTrainingsRegular@(increment)').val()))
                 }
@@ -1086,7 +1086,7 @@
                 }
             });
 
-            $('#qtyBaptismalCertExpedite@(increment)').focusout(function () {                
+            $('#qtyBaptismalCertExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyBaptismalCertExpedite@(increment)').val()) > 0 && !$('#qtyBaptismalCertRegular@(increment)').val()) {
                     $('#qtyBaptismalCert@(increment)').val(parseInt($('#qtyBaptismalCertExpedite@(increment)').val()))
                 }
@@ -1094,7 +1094,7 @@
                     $('#qtyBaptismalCert@(increment)').val(parseInt($('#qtyBaptismalCertExpedite@(increment)').val()) + parseInt($('#qtyBaptismalCertRegular@(increment)').val()))
                 }
             });
-            $('#qtyBaptismalCertRegular@(increment)').focusout(function () {                
+            $('#qtyBaptismalCertRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyBaptismalCertRegular@(increment)').val()) > 0 && !$('#qtyBaptismalCertExpedite@(increment)').val()) {
                     $('#qtyBaptismalCert@(increment)').val(parseInt($('#qtyBaptismalCertRegular@(increment)').val()))
                 }
@@ -1103,7 +1103,7 @@
                 }
             });
 
-            $('#qtyPrivateIssuedOtherDocuExpedite@(increment)').focusout(function () {                
+            $('#qtyPrivateIssuedOtherDocuExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite@(increment)').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular@(increment)').val()) {
                     $('#qtyPrivateIssuedOtherDocu@(increment)').val(parseInt($('#qtyPrivateIssuedOtherDocuExpedite@(increment)').val()))
                 }
@@ -1111,7 +1111,7 @@
                     $('#qtyPrivateIssuedOtherDocu@(increment)').val(parseInt($('#qtyPrivateIssuedOtherDocuExpedite@(increment)').val()) + parseInt($('#qtyPrivateIssuedOtherDocuRegular@(increment)').val()))
                 }
             });
-            $('#qtyPrivateIssuedOtherDocuRegular@(increment)').focusout(function () {                
+            $('#qtyPrivateIssuedOtherDocuRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyPrivateIssuedOtherDocuRegular@(increment)').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite@(increment)').val()) {
                     $('#qtyPrivateIssuedOtherDocu@(increment)').val(parseInt($('#qtyPrivateIssuedOtherDocuRegular@(increment)').val()))
                 }
@@ -1120,7 +1120,7 @@
                 }
             });
 
-            $('#qtySpecialPowerOfAttorneyExpedite@(increment)').focusout(function () {                
+            $('#qtySpecialPowerOfAttorneyExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtySpecialPowerOfAttorneyExpedite@(increment)').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular@(increment)').val()) {
                     $('#qtySpecialPowerOfAttorney@(increment)').val(parseInt($('#qtySpecialPowerOfAttorneyExpedite@(increment)').val()))
                 }
@@ -1128,7 +1128,7 @@
                     $('#qtySpecialPowerOfAttorney@(increment)').val(parseInt($('#qtySpecialPowerOfAttorneyExpedite@(increment)').val()) + parseInt($('#qtySpecialPowerOfAttorneyRegular@(increment)').val()))
                 }
             });
-            $('#qtySpecialPowerOfAttorneyRegular@(increment)').focusout(function () {                
+            $('#qtySpecialPowerOfAttorneyRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtySpecialPowerOfAttorneyRegular@(increment)').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite@(increment)').val()) {
                     $('#qtySpecialPowerOfAttorney@(increment)').val(parseInt($('#qtySpecialPowerOfAttorneyRegular@(increment)').val()))
                 }
@@ -1137,7 +1137,7 @@
                 }
             });
 
-            $('#qtyMOAExpedite@(increment)').focusout(function () {                
+            $('#qtyMOAExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyMOAExpedite@(increment)').val()) > 0 && !$('#qtyMOARegular@(increment)').val()) {
                     $('#qtyMOA@(increment)').val(parseInt($('#qtyMOAExpedite@(increment)').val()))
                 }
@@ -1145,7 +1145,7 @@
                     $('#qtyMOA@(increment)').val(parseInt($('#qtyMOAExpedite@(increment)').val()) + parseInt($('#qtyMOARegular@(increment)').val()))
                 }
             });
-            $('#qtyMOARegular@(increment)').focusout(function () {                
+            $('#qtyMOARegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyMOARegular@(increment)').val()) > 0 && !$('#qtyMOAExpedite@(increment)').val()) {
                     $('#qtyMOA@(increment)').val(parseInt($('#qtyMOARegular@(increment)').val()))
                 }
@@ -1154,7 +1154,7 @@
                 }
             });
 
-            $('#qtyMOUExpedite@(increment)').focusout(function () {                
+            $('#qtyMOUExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyMOUExpedite@(increment)').val()) > 0 && !$('#qtyMOURegular@(increment)').val()) {
                     $('#qtyMOU@(increment)').val(parseInt($('#qtyMOUExpedite@(increment)').val()))
                 }
@@ -1162,7 +1162,7 @@
                     $('#qtyMOU@(increment)').val(parseInt($('#qtyMOUExpedite@(increment)').val()) + parseInt($('#qtyMOURegular@(increment)').val()))
                 }
             });
-            $('#qtyMOURegular@(increment)').focusout(function () {                
+            $('#qtyMOURegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyMOURegular@(increment)').val()) > 0 && !$('#qtyMOUExpedite@(increment)').val()) {
                     $('#qtyMOU@(increment)').val(parseInt($('#qtyMOURegular@(increment)').val()))
                 }
@@ -1171,7 +1171,7 @@
                 }
             });
 
-            $('#qtyAnyContractExpedite@(increment)').focusout(function () {                
+            $('#qtyAnyContractExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyAnyContractExpedite@(increment)').val()) > 0 && !$('#qtyAnyContractRegular@(increment)').val()) {
                     $('#qtyAnyContract@(increment)').val(parseInt($('#qtyAnyContractExpedite@(increment)').val()))
                 }
@@ -1179,7 +1179,7 @@
                     $('#qtyAnyContract@(increment)').val(parseInt($('#qtyAnyContractExpedite@(increment)').val()) + parseInt($('#qtyAnyContractRegular@(increment)').val()))
                 }
             });
-            $('#qtyAnyContractRegular@(increment)').focusout(function () {                
+            $('#qtyAnyContractRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyAnyContractRegular@(increment)').val()) > 0 && !$('#qtyAnyContractExpedite@(increment)').val()) {
                     $('#qtyAnyContract@(increment)').val(parseInt($('#qtyAnyContractRegular@(increment)').val()))
                 }
@@ -1188,7 +1188,7 @@
                 }
             });
 
-            $('#qtyAffidavitOfConsentExpedite@(increment)').focusout(function () {                
+            $('#qtyAffidavitOfConsentExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyAffidavitOfConsentExpedite@(increment)').val()) > 0 && !$('#qtyAffidavitOfConsentRegular@(increment)').val()) {
                     $('#qtyAffidavitOfConsent@(increment)').val(parseInt($('#qtyAffidavitOfConsentExpedite@(increment)').val()))
                 }
@@ -1196,7 +1196,7 @@
                     $('#qtyAffidavitOfConsent@(increment)').val(parseInt($('#qtyAffidavitOfConsentExpedite@(increment)').val()) + parseInt($('#qtyAffidavitOfConsentRegular@(increment)').val()))
                 }
             });
-            $('#qtyAffidavitOfConsentRegular@(increment)').focusout(function () {                
+            $('#qtyAffidavitOfConsentRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyAffidavitOfConsentRegular@(increment)').val()) > 0 && !$('#qtyAnyContractExpedite@(increment)').val()) {
                     $('#qtyAffidavitOfConsent@(increment)').val(parseInt($('#qtyAffidavitOfConsentRegular@(increment)').val()))
                 }
@@ -1205,7 +1205,7 @@
                 }
             });
 
-            $('#qtyJointAffidavitExpedite@(increment)').focusout(function () {                
+            $('#qtyJointAffidavitExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyJointAffidavitExpedite@(increment)').val()) > 0 && !$('#qtyJointAffidavitRegular@(increment)').val()) {
                     $('#qtyJointAffidavit@(increment)').val(parseInt($('#qtyJointAffidavitExpedite@(increment)').val()))
                 }
@@ -1213,7 +1213,7 @@
                     $('#qtyJointAffidavit@(increment)').val(parseInt($('#qtyJointAffidavitExpedite@(increment)').val()) + parseInt($('#qtyJointAffidavitRegular@(increment)').val()))
                 }
             });
-            $('#qtyJointAffidavitRegular@(increment)').focusout(function () {                
+            $('#qtyJointAffidavitRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyJointAffidavitRegular@(increment)').val()) > 0 && !$('#qtyJointAffidavitExpedite@(increment)').val()) {
                     $('#qtyJointAffidavit@(increment)').val(parseInt($('#qtyJointAffidavitRegular@(increment)').val()))
                 }
@@ -1222,7 +1222,7 @@
                 }
             });
 
-            $('#qtyOtherAffidavitExpedite@(increment)').focusout(function () {                
+            $('#qtyOtherAffidavitExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyOtherAffidavitExpedite@(increment)').val()) > 0 && !$('#qtyOtherAffidavitRegular@(increment)').val()) {
                     $('#qtyOtherAffidavit@(increment)').val(parseInt($('#qtyOtherAffidavitExpedite@(increment)').val()))
                 }
@@ -1230,7 +1230,7 @@
                     $('#qtyOtherAffidavit@(increment)').val(parseInt($('#qtyOtherAffidavitExpedite@(increment)').val()) + parseInt($('#qtyOtherAffidavitRegular@(increment)').val()))
                 }
             });
-            $('#qtyOtherAffidavitRegular@(increment)').focusout(function () {                
+            $('#qtyOtherAffidavitRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyOtherAffidavitRegular@(increment)').val()) > 0 && !$('#qtyOtherAffidavitExpedite@(increment)').val()) {
                     $('#qtyOtherAffidavit@(increment)').val(parseInt($('#qtyOtherAffidavitRegular@(increment)').val()))
                 }
@@ -1239,7 +1239,7 @@
                 }
             });
 
-            $('#qtyCourtDecisionExpedite@(increment)').focusout(function () {                
+            $('#qtyCourtDecisionExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtDecisionExpedite@(increment)').val()) > 0 && !$('#qtyCourtDecisionRegular@(increment)').val()) {
                     $('#qtyCourtDecision@(increment)').val(parseInt($('#qtyCourtDecisionExpedite@(increment)').val()))
                 }
@@ -1247,7 +1247,7 @@
                     $('#qtyCourtDecision@(increment)').val(parseInt($('#qtyCourtDecisionExpedite@(increment)').val()) + parseInt($('#qtyCourtDecisionRegular@(increment)').val()))
                 }
             });
-            $('#qtyCourtDecisionRegular@(increment)').focusout(function () {                
+            $('#qtyCourtDecisionRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtDecisionRegular@(increment)').val()) > 0 && !$('#qtyCourtDecisionExpedite@(increment)').val()) {
                     $('#qtyCourtDecision@(increment)').val(parseInt($('#qtyCourtDecisionRegular@(increment)').val()))
                 }
@@ -1256,7 +1256,7 @@
                 }
             });
 
-            $('#qtyCourtResolutionExpedite@(increment)').focusout(function () {                
+            $('#qtyCourtResolutionExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtResolutionExpedite@(increment)').val()) > 0 && !$('#qtyCourtResolutionRegular@(increment)').val()) {
                     $('#qtyCourtResolution@(increment)').val(parseInt($('#qtyCourtResolutionExpedite@(increment)').val()))
                 }
@@ -1264,7 +1264,7 @@
                     $('#qtyCourtResolution@(increment)').val(parseInt($('#qtyCourtResolutionExpedite@(increment)').val()) + parseInt($('#qtyCourtResolutionRegular@(increment)').val()))
                 }
             });
-            $('#qtyCourtResolutionRegular@(increment)').focusout(function () {                
+            $('#qtyCourtResolutionRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtResolutionRegular@(increment)').val()) > 0 && !$('#qtyCourtResolutionExpedite@(increment)').val()) {
                     $('#qtyCourtResolution@(increment)').val(parseInt($('#qtyCourtResolutionRegular@(increment)').val()))
                 }
@@ -1273,7 +1273,7 @@
                 }
             });
 
-            $('#qtyCourtOtherDocumentExpedite@(increment)').focusout(function () {                
+            $('#qtyCourtOtherDocumentExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtOtherDocumentExpedite@(increment)').val()) > 0 && !$('#qtyCourtOtherDocumentRegular@(increment)').val()) {
                     $('#qtyCourtOtherDocument@(increment)').val(parseInt($('#qtyCourtOtherDocumentExpedite@(increment)').val()))
                 }
@@ -1281,7 +1281,7 @@
                     $('#qtyCourtOtherDocument@(increment)').val(parseInt($('#qtyCourtOtherDocumentExpedite@(increment)').val()) + parseInt($('#qtyCourtOtherDocumentRegular@(increment)').val()))
                 }
             });
-            $('#qtyCourtOtherDocumentRegular@(increment)').focusout(function () {                
+            $('#qtyCourtOtherDocumentRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyCourtOtherDocumentRegular@(increment)').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite@(increment)').val()) {
                     $('#qtyCourtOtherDocument@(increment)').val(parseInt($('#qtyCourtOtherDocumentRegular@(increment)').val()))
                 }
@@ -1290,7 +1290,7 @@
                 }
             });
 
-            $('#qtyImmigrationExpedite@(increment)').focusout(function () {                
+            $('#qtyImmigrationExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyImmigrationExpedite@(increment)').val()) > 0 && !$('#qtyImmigrationRegular@(increment)').val()) {
                     $('#qtyImmigration@(increment)').val(parseInt($('#qtyImmigrationExpedite@(increment)').val()))
                 }
@@ -1298,7 +1298,7 @@
                     $('#qtyImmigration@(increment)').val(parseInt($('#qtyImmigrationExpedite@(increment)').val()) + parseInt($('#qtyImmigrationRegular@(increment)').val()))
                 }
             });
-            $('#qtyImmigrationRegular@(increment)').focusout(function () {                
+            $('#qtyImmigrationRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyImmigrationRegular@(increment)').val()) > 0 && !$('#qtyImmigrationExpedite@(increment)').val()) {
                     $('#qtyImmigration@(increment)').val(parseInt($('#qtyImmigrationRegular@(increment)').val()))
                 }
@@ -1307,7 +1307,7 @@
                 }
             });
 
-            $('#qtyDSWDClearanceExpedite@(increment)').focusout(function () {                
+            $('#qtyDSWDClearanceExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyDSWDClearanceExpedite@(increment)').val()) > 0 && !$('#qtyDSWDClearanceRegular@(increment)').val()) {
                     $('#qtyDSWDClearance@(increment)').val(parseInt($('#qtyDSWDClearanceExpedite@(increment)').val()))
                 }
@@ -1315,7 +1315,7 @@
                     $('#qtyDSWDClearance@(increment)').val(parseInt($('#qtyDSWDClearanceExpedite@(increment)').val()) + parseInt($('#qtyDSWDClearanceRegular@(increment)').val()))
                 }
             });
-            $('#qtyDSWDClearanceRegular@(increment)').focusout(function () {                
+            $('#qtyDSWDClearanceRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyDSWDClearanceRegular@(increment)').val()) > 0 && !$('#qtyDSWDClearanceExpedite@(increment)').val()) {
                     $('#qtyDSWDClearance@(increment)').val(parseInt($('#qtyDSWDClearanceRegular@(increment)').val()))
                 }
@@ -1324,7 +1324,7 @@
                 }
             });
 
-            $('#qtyPoliceClearanceExpedite@(increment)').focusout(function () {                
+            $('#qtyPoliceClearanceExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyPoliceClearanceExpedite@(increment)').val()) > 0 && !$('#qtyPoliceClearanceRegular@(increment)').val()) {
                     $('#qtyPoliceClearance@(increment)').val(parseInt($('#qtyPoliceClearanceExpedite@(increment)').val()))
                 }
@@ -1332,7 +1332,7 @@
                     $('#qtyPoliceClearance@(increment)').val(parseInt($('#qtyPoliceClearanceExpedite@(increment)').val()) + parseInt($('#qtyPoliceClearanceRegular@(increment)').val()))
                 }
             });
-            $('#qtyPoliceClearanceRegular@(increment)').focusout(function () {                
+            $('#qtyPoliceClearanceRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyPoliceClearanceRegular@(increment)').val()) > 0 && !$('#qtyPoliceClearanceExpedite@(increment)').val()) {
                     $('#qtyPoliceClearance@(increment)').val(parseInt($('#qtyPoliceClearanceRegular@(increment)').val()))
                 }
@@ -1341,7 +1341,7 @@
                 }
             });
 
-            $('#qtyBusinessRegistrationExpedite@(increment)').focusout(function () {                
+            $('#qtyBusinessRegistrationExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyBusinessRegistrationExpedite@(increment)').val()) > 0 && !$('#qtyBusinessRegistrationRegular@(increment)').val()) {
                     $('#qtyBusinessRegistration@(increment)').val(parseInt($('#qtyBusinessRegistrationExpedite@(increment)').val()))
                 }
@@ -1349,7 +1349,7 @@
                     $('#qtyBusinessRegistration@(increment)').val(parseInt($('#qtyBusinessRegistrationExpedite@(increment)').val()) + parseInt($('#qtyBusinessRegistrationRegular@(increment)').val()))
                 }
             });
-            $('#qtyBusinessRegistrationRegular@(increment)').focusout(function () {                
+            $('#qtyBusinessRegistrationRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyBusinessRegistrationRegular@(increment)').val()) > 0 && !$('#qtyBusinessRegistrationExpedite@(increment)').val()) {
                     $('#qtyBusinessRegistration@(increment)').val(parseInt($('#qtyBusinessRegistrationRegular@(increment)').val()))
                 }
@@ -1358,7 +1358,7 @@
                 }
             });
 
-            $('#qtyBarangayClearanceExpedite@(increment)').focusout(function () {                
+            $('#qtyBarangayClearanceExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyBarangayClearanceExpedite@(increment)').val()) > 0 && !$('#qtyBarangayClearanceRegular@(increment)').val()) {
                     $('#qtyBarangayClearance@(increment)').val(parseInt($('#qtyBarangayClearanceExpedite@(increment)').val()))
                 }
@@ -1366,7 +1366,7 @@
                     $('#qtyBarangayClearance@(increment)').val(parseInt($('#qtyBarangayClearanceExpedite@(increment)').val()) + parseInt($('#qtyBarangayClearanceRegular@(increment)').val()))
                 }
             });
-            $('#qtyBarangayClearanceRegular@(increment)').focusout(function () {                
+            $('#qtyBarangayClearanceRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyBarangayClearanceRegular@(increment)').val()) > 0 && !$('#qtyBarangayClearanceExpedite@(increment)').val()) {
                     $('#qtyBarangayClearance@(increment)').val(parseInt($('#qtyBarangayClearanceRegular@(increment)').val()))
                 }
@@ -1375,7 +1375,7 @@
                 }
             });
 
-            $('#qtyExportDocumentsExpedite@(increment)').focusout(function () {                
+            $('#qtyExportDocumentsExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyExportDocumentsExpedite@(increment)').val()) > 0 && !$('#qtyExportDocumentsRegular@(increment)').val()) {
                     $('#qtyExportDocuments@(increment)').val(parseInt($('#qtyExportDocumentsExpedite@(increment)').val()))
                 }
@@ -1383,7 +1383,7 @@
                     $('#qtyExportDocuments@(increment)').val(parseInt($('#qtyExportDocumentsExpedite@(increment)').val()) + parseInt($('#qtyExportDocumentsRegular@(increment)').val()))
                 }
             });
-            $('#qtyExportDocumentsRegular@(increment)').focusout(function () {                
+            $('#qtyExportDocumentsRegular@(increment)').focusout(function () {
                 if (parseInt($('#qtyExportDocumentsRegular@(increment)').val()) > 0 && !$('#qtyExportDocumentsExpedite@(increment)').val()) {
                     $('#qtyExportDocuments@(increment)').val(parseInt($('#qtyExportDocumentsRegular@(increment)').val()))
                 }
@@ -1957,12 +1957,19 @@
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
                 $('#LblPayment-@(increment)').text('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));
                 $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));
-                var fees = 0;
-                fees += parseInt($('#documentsCount@(increment)').text()) * 100;
-                $('#totalFees').text('PhP'.concat(' ', fees, '.00'));
+                var fees@(increment) = 0;
+                fees@(increment) = parseInt($('#documentsCount@(increment)').text()) * 100;
+                var totalFees = 0;
+                //totalFees += fees@(increment);
+                var docus = $("span[id^='documentsCount']");
+
+                $.each(docus, function (index, value) {
+                    totalFees += parseInt(value.innerText) * 100;
+                });
+                $('#totalFees').text('PhP'.concat(' ', totalFees, '.00'));
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
-
+                //$( "input[name^='news']" ).val( "news here!" );
             });
         });
 

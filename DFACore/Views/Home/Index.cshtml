@@ -809,10 +809,10 @@
                         </div>
                         <div class="col-md-8 col-sm-12 font-weight-bold">
                             <span id="LblPayment-@i"> PhP 0.00</span>
-                            <input asp-for="Records[@i].Fees" type="hidden" />
+                            <input asp-for="Records[i].Fees" type="hidden" />
                         </div>
                     </div>
-                    <input asp-for="Records[@i].Fees" type="hidden" />
+                    <input asp-for="Records[i].Fees" type="hidden" />
                     <hr />
                 }
                 <div class="row">
@@ -2364,7 +2364,7 @@
                 $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
-
+                console.log($("span[id^='LblPayment-']").text());
             });
 
 
