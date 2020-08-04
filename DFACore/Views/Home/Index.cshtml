@@ -96,6 +96,7 @@
         @{
             int applicants = (int)ViewData["ApplicantCount"];
             <p id="applicantCount" style="display:none;">@applicants</p>
+
             if (applicants == 0)
             {
 
@@ -777,8 +778,9 @@
                 for (var i = 0; i < @applicants; i++)
                 {
                     <div class="font-weight-bold">
-                        <input value="@ViewData[$"ApplicationCode{i}"]" asp-for="Records[@i].ApplicationCode" type="hidden" />
+
                         @{var appcodeIndex = i + 1;}
+                        <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" />
                         <span id="LblAppointmentCode-@i">@ViewData["ApplicationCode"]</span><span>-@appcodeIndex</span>
                         @*<span id="LblAppointmentCode-@i"></span>*@
                     </div>
@@ -2119,8 +2121,8 @@
                     //console.log(partial);
                 }
             }
-            //function insertAtIndex(i,html) {
-            //if(i == 0) {
+
+
             //    $("#documentOwners").prepend(html);
             //    return;
             //}
@@ -2166,14 +2168,20 @@
                 $("#step-three").hide();
             });
             $("#stepOneNextBtn").click(function () {
-                //|| $('#Nationality').val() == ""
-                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
+                //|| $('#Nationality').val() == "" fNamePartial
+                if ($('.fNamePartial').val() == "" ||$('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
                     || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
 
                     //if ($('#Title').val() == "")
                     //    $('.title').text('This field is required.');
                     //else
                     //    $('.title').text('');
+                    if ($('.fNamePartial').val() == "") {
+                        alert('test');
+                        $('.fNamePartialValidation').text('This field is required.');
+                    }
+                    else
+                        $('.fNamePartialValidation').text('');
 
                     if ($('#FirstName').val() == "")
                         $('.fname').text('This field is required.');

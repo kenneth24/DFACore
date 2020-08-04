@@ -11,9 +11,10 @@
         font-weight: 500;
     }
 </style>
-<div>
+<div dat-worth="@increment">
     @*<h1>@increment</h1>
-    <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
+        <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
+    @*<input asp-for="Records[increment].ApplicationCode" value="" class="form-control" />*@
     <div id="applicants-container" class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px; border: 1px solid #a0a0a0; border-radius: 5px; margin-bottom: 25px;">
         @{ var documentOwnerNo = 1;
             documentOwnerNo += increment;
@@ -24,8 +25,8 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <label asp-for="Records[increment].FirstName">First Name <span class="red">*</span></label>
-                    <input asp-for="Records[increment].FirstName" class="form-control" />
-                    <span asp-validation-for="Records[increment].FirstName" class="text-danger fname"></span>
+                    <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
+                    <span asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
                 </div>
 
                 <div class="col-md-3 col-sm-12">
