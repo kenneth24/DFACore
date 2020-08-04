@@ -25,8 +25,8 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <label asp-for="Records[increment].FirstName">First Name <span class="red">*</span></label>
-                    <input asp-for="Records[increment].FirstName" class="form-control" />
-                    <span asp-validation-for="Records[increment].FirstName" class="text-danger fname"></span>
+                    <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
+                    <span asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
                 </div>
 
                 <div class="col-md-3 col-sm-12">

@@ -2145,14 +2145,20 @@
                 $("#step-three").hide();
             });
             $("#stepOneNextBtn").click(function () {
-                //|| $('#Nationality').val() == ""
-                if ($('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
+                //|| $('#Nationality').val() == "" fNamePartial
+                if ($('.fNamePartial').val() == "" ||$('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
                     || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "") {
 
                     //if ($('#Title').val() == "")
                     //    $('.title').text('This field is required.');
                     //else
                     //    $('.title').text('');
+                    if ($('.fNamePartial').val() == "") {
+                        alert('test');
+                        $('.fNamePartialValidation').text('This field is required.');
+                    }
+                    else
+                        $('.fNamePartialValidation').text('');
 
                     if ($('#FirstName').val() == "")
                         $('.fname').text('This field is required.');
