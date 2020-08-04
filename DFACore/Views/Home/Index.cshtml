@@ -2217,7 +2217,7 @@
                 $("#step-three").show();
                 $('#stepThreeBtn').click();
 
-                $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase() + ' ' + $('#Suffix').val().toUpperCase());
+                $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
 
                 var docuType = JSON.parse($('#apostileData').val());
                 var lbldocuType = $('#LblTypeOfDocument');
@@ -2226,22 +2226,22 @@
                     var Quantity = v.Quantity;
                     var DocuName = v.Name;
                     var Transaction = v.Transaction;
-                    lbldocuType.append('(' + Quantity + ') ' + DocuName + '<br />');
+                    lbldocuType.append('(' + Quantity + ') ' + DocuName + ' '+ Transaction + '<br />');
 
                 });
 
 
                 console.log(docuType);
                 //$('#LblTypeOfDocument').text($('#apostileData').val());
-                $('#LblAddress').text($('#Address').val());
-                $('#LblAddress').text($('#Address').val());
-                $('#LblContactNumber').text($('#ContactNumber').val());
-                $('#LblAuthorizeRepresentative').text($('#NameOfRepresentative').val());
-                $('#LblRepresentativeContactNumber').text($('#RepresentativeContactNumber').val());
-                $('#LblCompany').text($('#CompanyName').val());
+                $('#LblAddress').text($('#Record_Address').val());
+                $('#LblAddress').text($('#Record_Address').val());
+                $('#LblContactNumber').text($('#Record_ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#Record_NameOfRepresentative').val());
+                $('#LblRepresentativeContactNumber').text($('#Record_RepresentativeContactNumber').val());
+                $('#LblCompany').text($('#Record_CompanyName').val());
 
 
-                $('#LblCountryDestination').text($('#CountryDestination').val());
+                $('#LblCountryDestination').text($('#Record_CountryDestination').val());
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());

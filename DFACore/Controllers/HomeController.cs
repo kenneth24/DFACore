@@ -68,7 +68,7 @@ namespace DFACore.Controllers
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
-            if (model.Records.Count == 0)
+            if ( model.Records == null)
             {
                 var applicantRecord = new ApplicantRecord
                 {
@@ -139,7 +139,7 @@ namespace DFACore.Controllers
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
                     attachments.ToArray());
-
+            ViewData["ApplicantCount"] = model.ApplicantCount;
             return RedirectToAction("Success");
         }
 
