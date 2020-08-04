@@ -68,7 +68,7 @@ namespace DFACore.Controllers
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
-            if (model.Records is null)
+            if ( model.Records == null)
             {
                 var applicantRecord = new ApplicantRecord
                 {
@@ -139,7 +139,7 @@ namespace DFACore.Controllers
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
                     attachments.ToArray());
-
+            ViewData["ApplicantCount"] = model.ApplicantCount;
             return RedirectToAction("Success");
         }
 
@@ -218,11 +218,11 @@ namespace DFACore.Controllers
             return RedirectToAction("Success");
         }
 
-        public IActionResult PartialApplicant(int i, string applicantCode)
+        public IActionResult PartialApplicant(int i)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-            ViewData[$"ApplicationCode{i}"] = $"{applicantCode}-{i + 1}";
+            ViewData[$"ApplicationCode{i}"] = GetApplicantCode();
             ViewBag.Increment = i;
             return View();
         }

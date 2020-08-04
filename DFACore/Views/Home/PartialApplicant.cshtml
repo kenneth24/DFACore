@@ -1135,7 +1135,50 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="viewMinorReminder-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true" style="margin-top: 200px;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header primary"></div>
+            <div class="modal-body">
+                <div class="form-group container">
+                    <p class="black-text-bold text-center" style="font-size:14px;">
+                        REMINDER FOR MINOR APPLICANTS
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        For applications / documents involving Minor (age below 18 years old), the following additional documents
+                        must be presented if the applicant / representative processing the authentication / Apostille is:
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        <strong>Any of the parent as reflected on Birth Certificate:</strong> proof of filiation such as Birth Certificate.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        <strong>Any representative other than the parent as reflected on Birth Certificate:</strong> notarized Special Power of Attorney
+                        executed by any of the parent of the minor as reflected on Birth Certificate.
+                    </p>
+                    <p class="black-text" style="font-size:12px;">
+                        <strong>NOTE:</strong> If the child is not acknowledged by the father, then any  representative (even if he is the biological father) who
+                        is NOT the mother of the minor applicant must present a notarized Special Power of Attorney executed by the mother.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-md-4 col-sm-12"> </div>
 
+                        <button id="declaration-agree"
+                                type="button"
+                                class="button-secondary text-white col-md-4 col-sm-12"
+                                data-dismiss="modal"
+                                style="height:30px;">
+                            CLOSE
+                        </button>
+
+                        <div class="col-md-4 col-sm-12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script>
 
@@ -1745,7 +1788,15 @@
                 //documentObject@(increment) = [];
 
             });
-            
+            $('#Records_@(increment)__DateOfBirth').focusout(function () {
+                var bdate = new Date($('#Records_@(increment)__DateOfBirth').val());
+                var dateToday = new Date();
+                var age = dateToday.getFullYear() - bdate.getFullYear();
+                console.log(age);
+                if (age < 18) {
+                    $('#viewMinorReminder-modal').modal('show');
+                }
+            });
                 $('#appointmentSchedule').change(function () {
                 $("#errSchedDate").hide();
                 $('#schedLoader').show();
@@ -1788,7 +1839,7 @@
                 $("#step-three").show();
                 $('#stepThreeBtn').click();
 
-                $('#LblNameOfApplicant').text($('#FirstName').val().toUpperCase() + ' ' + $('#MiddleName').val().toUpperCase() + ' ' + $('#LastName').val().toUpperCase() + ' ' + $('#Suffix').val().toUpperCase());
+                $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
 
                 var docuType@(increment) = JSON.parse($('#apostileData@(increment)').val());
                 var lbldocuType@(increment) = $('#LblTypeOfDocument-@(increment)');
@@ -1809,11 +1860,11 @@
                 console.log(docuType@(increment));
                 //$('#LblTypeOfDocument').text($('#apostileData').val());
 
-                $('#LblAddress').text($('#Address').val());
-                $('#LblContactNumber').text($('#ContactNumber').val());
-                $('#LblAuthorizeRepresentative').text($('#NameOfRepresentative').val());
+                $('#LblAddress').text($('#Record_Address').val());
+                $('#LblContactNumber').text($('#Record_ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#Record_NameOfRepresentative').val());
                 //$('#LblRepresentativeContactNumber').text($('#RepresentativeContactNumber').val());
-                $('#LblRepresentativeContactNumber').text($('#LblNameOfApplicant').text());
+                $('#LblRepresentativeContactNumber').text($('#Record_LblNameOfApplicant').text());
                 //$('#LblCompany').text($('#CompanyName').val());
 
 
