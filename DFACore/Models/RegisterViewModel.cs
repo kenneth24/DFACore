@@ -24,6 +24,8 @@ namespace DFACore.Models
 
         [Display(Name = "Suffix")]
         public string Suffix { get; set; }
+        [Display(Name = "PhoneNumber")]
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Gender")]

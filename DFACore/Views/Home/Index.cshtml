@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.ApplicantRecordViewModel
+@model DFACore.Models.ApplicantsViewModel
 @{
     ViewData["Title"] = "Home Page";
 
@@ -118,28 +118,28 @@
                                         <span asp-validation-for="Title" class="text-danger title"></span>
                                     </div>*@
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="FirstName" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                                    <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
+                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="MiddleName"></label>
-                                    <input asp-for="MiddleName" class="form-control" />
-                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                    <label asp-for="Record.MiddleName"></label>
+                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="LastName" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger lname"></span>
+                                    <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
+                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="Suffix"></label>
+                                    <label asp-for="Record.Suffix"></label>
                                     @*<input asp-for="Suffix" class="form-control" />*@
-                                    <select asp-for="Suffix" class="form-control">
+                                    <select asp-for="Record.Suffix" class="form-control">
                                         <option value="N/A">N/A</option>
                                         <option value="JR.">JR.</option>
                                         <option value="SR.">SR.</option>
@@ -159,7 +159,7 @@
                                         <option value="XIV">XIV</option>
                                         <option value="XV">XV</option>
                                     </select>
-                                    <span asp-validation-for="Suffix" class="text-danger"></span>
+                                    <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -222,22 +222,22 @@
                                     </div>*@
 
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="DateOfBirth"></label>
-                                    <input type="date" asp-for="DateOfBirth" class="form-control" />
-                                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                    <label asp-for="Record.DateOfBirth"></label>
+                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" />
+                                    <span asp-validation-for="Record.DateOfBirth" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="ContactNumber" class="form-control" type="number" min="1" />
-                                    <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+                                    <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
+                                    <input asp-for="Record.ContactNumber" class="form-control" type="number" min="1" />
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+                                    <label asp-for="Record.CountryDestination">Country of Destination <span class="red">*</span></label>
 
-                                    <select asp-for="CountryDestination" class="form-control">
+                                    <select asp-for="Record.CountryDestination" class="form-control">
                                         <partial name="_CountriesPartial" />
                                     </select>
-                                    <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                    <span asp-validation-for="Record.CountryDestination" class="text-danger countrydestination"></span>
                                 </div>
                             </div>
                         </div>
@@ -305,8 +305,8 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
-                            <span asp-validation-for="ApostileData" class="text-danger apostiledata"></span>
+                            <input asp-for="Record.ApostileData" id="apostileData" class="form-control" hidden />
+                            <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata"></span>
                         </div>
 
                     </div>
@@ -346,27 +346,27 @@
                                         <span asp-validation-for="Title" class="text-danger title"></span>
                                     </div>*@
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="FirstName" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                                    <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
+                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="MiddleName"></label>
-                                    <input asp-for="MiddleName" class="form-control" />
-                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                    <label asp-for="Record.MiddleName"></label>
+                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="LastName" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger lname"></span>
+                                    <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
+                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
 
                                 <div class="col-md-3 col-sm-12">
-                                    <label asp-for="Suffix"></label>
-                                    <select asp-for="Suffix" class="form-control">
+                                    <label asp-for="Record.Suffix"></label>
+                                    <select asp-for="Record.Suffix" class="form-control">
                                         <option value="N/A">N/A</option>
                                         <option value="JR.">JR.</option>
                                         <option value="SR.">SR.</option>
@@ -386,7 +386,7 @@
                                         <option value="XIV">XIV</option>
                                         <option value="XV">XV</option>
                                     </select>
-                                    <span asp-validation-for="Suffix" class="text-danger"></span>
+                                    <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -441,9 +441,9 @@
                             <div class="row">
 
                                 <div class="col-md-6 col-sm-12">
-                                    <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="ContactNumber" class="form-control" type="number" min="1" />
-                                    <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+                                    <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
+                                    <input asp-for="Record.ContactNumber" class="form-control" type="number" min="1" />
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
                                         <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
@@ -614,13 +614,13 @@
                 <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 3: Schedule an Appointment</p>
             </div>
             <div class="row col-12">
-                <label asp-for="ProcessingSite"></label>
-                <input asp-for="ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
+                <label asp-for="Record.ProcessingSite"></label>
+                <input asp-for="Record.ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
             </div>
             <div class="row col-12">
-                <label asp-for="ProcessingSiteAddress"></label>
-                <input asp-for="ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
-            </div>           
+                <label asp-for="Record.ProcessingSiteAddress"></label>
+                <input asp-for="Record.ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
+            </div>
             <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:20px;margin-top:5px;">View Map</button>
             <hr />
             <div class="row col-12" style="margin-top:10px;">
@@ -687,7 +687,7 @@
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
                         <p>Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
-                        <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
+                        <input asp-for="Record.ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
                         <p id="appointmentDate" style="display:none;"></p>
                         <p id="appointmentScheduleTime" style="display:none;"></p>
                         <div id="schedLoader" class="text-center" style="display:none;">
@@ -727,7 +727,7 @@
                 <div class="col-md-3 col-sm-12">
                     <p class="appointmentHeader">Application Code</p>
                     <div class="font-weight-bold">
-                        <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                        <input value="@ViewData["ApplicationCode"]" asp-for="Record.ApplicationCode" type="hidden" />
                         <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
                     </div>
                 </div>
@@ -872,7 +872,7 @@
                     </div>*@
                 <div class="col-md-8 col-sm-12 font-weight-bold">
                     <span id="LblPayment"> PhP 0.00</span>
-                    <input asp-for="Fees" type="hidden" />
+                    <input asp-for="Record.Fees" type="hidden" />
                 </div>
             </div>
             @*<div class="step-three-field col-md-4 col-sm-12">
@@ -2000,7 +2000,7 @@
                 </button>
                 <div class="modal-body">
                     <div class="mapouter">
-                        
+
                         <div class="gmap_canvas">
                             <iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Aseana%20Business%20Park%20Estate%20Association%2C%20Incorporated&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                             </iframe>
@@ -2018,7 +2018,7 @@
     <script>
         var canConfirm = false;
         $(document).ready(function () {
-            
+
 
             //if ($("#IsUserAgreed").text() !== "Agreed") {
             //    $("#declaration-modal").modal({

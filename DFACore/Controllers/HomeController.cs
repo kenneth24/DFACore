@@ -59,50 +59,86 @@ namespace DFACore.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(ApplicantRecordViewModel record, string returnUrl = null)
+        public async Task<IActionResult> Index(ApplicantsViewModel model, string returnUrl = null)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View();
+            //}
+            var applicantRecords = new List<ApplicantRecord>();
+            var attachments = new List<Attachment>();
 
-            var applicantRecord = new ApplicantRecord
+            if (model.Records.Count == 0)
             {
-                Title = record.Title?.ToUpper(),
-                FirstName = record.FirstName?.ToUpper(),
-                MiddleName = record.MiddleName?.ToUpper(),
-                LastName = record.LastName?.ToUpper(),
-                Suffix = record.Suffix?.ToUpper(),
-                Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
-                Nationality = record.Nationality?.ToUpper(),
-                ContactNumber = record.ContactNumber,
-                CompanyName = record.CompanyName?.ToUpper(),
-                CountryDestination = record.CountryDestination?.ToUpper(),
-                NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
-                RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
-                ApostileData = record.ApostileData,
-                ProcessingSite = record.ProcessingSite?.ToUpper(),
-                ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
-                ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+                var applicantRecord = new ApplicantRecord
+                {
+
+                    FirstName = model.Record.FirstName?.ToUpper(),
+                    MiddleName = model.Record.MiddleName?.ToUpper(),
+                    LastName = model.Record.LastName?.ToUpper(),
+                    Suffix = model.Record.Suffix?.ToUpper(),
+                    ContactNumber = model.Record.ContactNumber,
+                    CountryDestination = model.Record.CountryDestination?.ToUpper(),
+                    ApostileData = model.Record.ApostileData,
+                    ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
+                    ScheduleDate = DateTime.ParseExact(model.Record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
-                ApplicationCode = record.ApplicationCode,
-                CreatedBy = new Guid(_userManager.GetUserId(User)),
-                Fees = record.Fees
+                    ApplicationCode = model.Record.ApplicationCode,
+                    CreatedBy = new Guid(_userManager.GetUserId(User)),
+                    Fees = model.Record.Fees,
+                    Type = 0
+                };
+                applicantRecords.Add(applicantRecord);
+                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(model.Record), new MimeKit.ContentType("application", "pdf")));
+
+            }
+            else
+            {
+                foreach (var record in model.Records)
+                {
+                    var applicantRecord = new ApplicantRecord
+                    {
+                        FirstName = record.FirstName?.ToUpper(),
+                        MiddleName = record.MiddleName?.ToUpper(),
+                        LastName = record.LastName?.ToUpper(),
+                        Suffix = record.Suffix?.ToUpper(),
+                        //Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
+                        //Nationality = record.Nationality?.ToUpper(),
+                        ContactNumber = record.ContactNumber,
+                        //CompanyName = record.CompanyName?.ToUpper(),
+                        CountryDestination = record.CountryDestination?.ToUpper(),
+                        NameOfRepresentative = $"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}",
+                        RepresentativeContactNumber = model.Record.ContactNumber,
+                        ApostileData = record.ApostileData,
+                        ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
+                        ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
+                        ScheduleDate = DateTime.ParseExact(model.Record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
+                                           System.Globalization.CultureInfo.InvariantCulture),
+                        ApplicationCode = Guid.NewGuid().ToString(), //record.ApplicationCode,
+                        CreatedBy = new Guid(_userManager.GetUserId(User)),
+                        Fees = record.Fees,
+                        Type = 1
+                    };
+
+                    applicantRecords.Add(applicantRecord);
+                    attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
+                }
+                
             };
-
-
-            var result = _applicantRepo.Add(applicantRecord);
+            
+            var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
                 ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
-            var attachment = new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
+            //var attachment = new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
-                    attachment);
+                    attachments.ToArray());
 
             return RedirectToAction("Success");
         }

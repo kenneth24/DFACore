@@ -25,7 +25,7 @@ namespace DFACore.Models
         public string LastName { get; set; }
         [StringLength(100)]
         public string Suffix { get; set; }
-        [Required]
+        //[Required]
         public string Address { get; set; }
         //[Required]
         public string Nationality { get; set; }
@@ -51,13 +51,13 @@ namespace DFACore.Models
         public string ProcessingSiteAddress { get; set; }
         [Required]
         public DateTime ScheduleDate { get; set; }
-        [Required]
+        //[Required]
         public string ApplicationCode { get; set; }
         public string Fees { get; set; }
         public DateTime DateCreated { get; set; }
         public Guid CreatedBy { get; set; }
         public long Type { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
     }
 }

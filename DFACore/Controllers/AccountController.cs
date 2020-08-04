@@ -84,6 +84,7 @@ namespace DFACore.Controllers
                     MiddleName = model.MiddleName,
                     LastName = model.LastName,
                     Suffix = model.Suffix,
+                    PhoneNumber = model.PhoneNumber,
                     Gender = model.Gender,
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,

@@ -59,18 +59,17 @@ namespace DFACore.Models
         public string RepresentativeContactNumber { get; set; }
         //[Required]
         public string ApostileData { get; set; }
-        [Required]
+       
         [Display(Name = "Processing Site")]
         public string ProcessingSite { get; set; }
-        [Required]
+        
         [Display(Name = "Address")]
         public string ProcessingSiteAddress { get; set; }
-        [Required]
+
         public string ScheduleDate { get; set; }
-        [Required]
+
         public string ApplicationCode { get; set; }
         public string Fees { get; set; }
-        public List<ApplicantRecord> Applicants { get; set; }
         //public DateTime? DateOfBirth { get; set; }
 
         //public List<ApostilleDocumentModel> Documents { get; set; }
