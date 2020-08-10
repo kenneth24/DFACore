@@ -331,7 +331,7 @@
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-md-4 col-sm-12"></div>
                         <div class="col-md-4 col-sm-12">
-                            <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                            <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
                         </div>
                         <div class="col-md-4 col-sm-12"></div>
                     </div>
@@ -625,12 +625,12 @@
                 <label asp-for="Record.ProcessingSiteAddress"></label>
                 <input asp-for="Record.ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" />
             </div>
-            <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:20px;margin-top:5px;">View Map</button>
+            <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:16px;margin-top:5px;">View Map</button>
             <hr />
             <div class="row col-12" style="margin-top:10px;">
                 <div class="col-lg-6 col-md-12 col-sm-12" style="margin-bottom: 10px">
                     <div style="border:1px solid #b7b7b7;padding: 10px;">
-                        <label>Select Available Schedule</label>
+                        <label class="black-text">Select Available Schedule</label>
                         @*<input class="form-control" type="date" />*@
                         @*<div id="datetimepicker"></div>*@
                         @*@Html.Partial("_CalendarPartial")*@
@@ -639,19 +639,19 @@
                 </div>
                 <div class="col-lg-2 col-md-12 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:5px;margin-bottom: 10px">
-                        <label>Select Time</label>
+                        <label class="black-text">Select Time</label>
                         <div class="row">
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                             <div class="col-lg-8 col-md-12 col-sm-12">
-                                <label><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
-                                <label><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
-                                <label><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
-                                <label><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
-                                <label><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
-                                <label><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
-                                <label><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
-                                <label><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
-                                <label><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
                             </div>
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                         </div>
@@ -689,7 +689,7 @@
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:10px;">
-                        <p>Selected Date and Time</p>
+                        <p class="black-text">Selected Date and Time</p>
                         @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                         <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
                         <p id="appointmentDate" style="display:none;"></p>
@@ -705,16 +705,16 @@
                         <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose your preferred date and time.</p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
-                        <p id="siteAndAddress" class="font-weight-bold"></p>
+                        <p id="siteAndAddress" class="font-weight"></p>
                         <div class="row">
                             <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
-                                <button id="backToStepOne" type="button" class="btn btn-secondary  col-md-12 col-sm-12" style="background: white;color: blue;border: 1px solid darkgray;">Back</button>
+                                <button id="backToStepOne" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
 
                             </div>
                             <div class="col-md-5 col-sm-5">
-                                <button id="stepTwoNextBtn" type="button" class="btn col-md-12 col-sm-12 " style="background-color:#217ff3;color:white;">Confirm</button>
+                                <button id="stepTwoNextBtn" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -723,7 +723,7 @@
         </div>
         <div id="step-three" style="display:none" class="tabcontent">
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Generate an Appointment Letter</p>
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Appointment Letter</p>
             </div>
             <div id="editor"></div>
             <h4 class="font-weight-bold text-center">Summary of Application</h4>
@@ -734,25 +734,25 @@
                     <p class="appointmentHeader">Application Code</p>
                     <div class="font-weight-bold">
                         <input value="@ViewData["ApplicationCode"]" asp-for="Record.ApplicationCode" type="hidden" />
-                        <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                        <span class="black-text" id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                     <p class="appointmentHeader">Application Date</p>
                     <div class="font-weight-bold">
-                        <span id="LblDateOfAppointment"></span>
+                        <span class="black-text" id="LblDateOfAppointment"></span>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                     <p class="appointmentHeader">Application Date</p>
                     <div class="font-weight-bold">
-                        <span id="LblTimeOfAppointment"></span>
+                        <span class="black-text" id="LblTimeOfAppointment"></span>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12">
                     <p class="appointmentHeader">Processing Site</p>
                     <div class="font-weight-bold">
-                        <span id="LblProcessingSite"></span>
+                        <span class="black-text" id="LblProcessingSite"></span>
                     </div>
                 </div>
             </div>
@@ -765,7 +765,7 @@
                         <span>Authorize Representative: </span>
                     </div>
                     <div class="col-md-8 col-sm-12">
-                        <span id="LblNameOfApplicant"></span>
+                        <span class="black-text" id="LblNameOfApplicant"></span>
                     </div>
                 </div>
 
@@ -774,7 +774,7 @@
                         <span>Contact No: </span>
                     </div>
                     <div class="col-md-8 col-sm-12">
-                        <span id="LblContactNumber"></span>
+                        <span class="black-text" id="LblContactNumber"></span>
                     </div>
                 </div>
                 <hr />
@@ -792,7 +792,7 @@
                             <span>Document Owner: </span>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                            <span id="documentOwner-@i"></span>
+                            <span class="black-text"  id="documentOwner-@i"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -800,7 +800,7 @@
                             <span>Country of Destination: </span>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                            <span id="LblCountryDestination-@i"></span>
+                            <span class="black-text" id="LblCountryDestination-@i"></span>
                         </div>
                     </div>
 
@@ -809,7 +809,7 @@
                             <span>Type of Document to be Apostillized: </span>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                            <span id="LblTypeOfDocument-@i"></span>
+                            <span class="black-text" id="LblTypeOfDocument-@i"></span>
                         </div>
                     </div>
 
@@ -818,7 +818,7 @@
                             <span>Sub-Total:</span>
                         </div>
                         <div class="col-md-8 col-sm-12 font-weight-bold">
-                            <span id="LblPayment-@i"> PhP 0.00</span>
+                            <span class="black-text" id="LblPayment-@i"> PhP 0.00</span>
                             <input asp-for="Records[i].Fees" type="hidden" />
                         </div>
                     </div>
@@ -830,7 +830,7 @@
                         <span>TOTAL FEES:</span>
                     </div>
                     <div class="col-md-8 col-sm-12 font-weight-bold">
-                        <span id="totalFees"> PhP 0.00</span>
+                        <span class="black-text" id="totalFees"> PhP 0.00</span>
                         <input type="hidden" />
                     </div>
                 </div>
@@ -842,7 +842,7 @@
                         <span>Document Owner: </span>
                     </div>
                     <div class="col-md-8 col-sm-12">
-                        <span id="LblNameOfApplicant"></span>
+                        <span class="black-text" id="LblNameOfApplicant"></span>
                     </div>
 
                 </div>
@@ -896,7 +896,7 @@
                             <span>: </span>
                         </div>*@
                     <div class="col-md-8 col-sm-12">
-                        <span id="LblCountryDestination"></span>
+                        <span class="black-text" id="LblCountryDestination"></span>
                     </div>
                 </div>
 
@@ -908,7 +908,7 @@
                             <span>: </span>
                         </div>*@
                     <div class="col-md-8 col-sm-12">
-                        <span id="LblTypeOfDocument"></span>
+                        <span class="black-text" id="LblTypeOfDocument"></span>
                     </div>
                 </div>
 
@@ -942,7 +942,7 @@
                             <span>: </span>
                         </div>*@
                     <div class="col-md-8 col-sm-12 font-weight-bold">
-                        <span id="LblPayment"> PhP 0.00</span>
+                        <span class="black-text" id="LblPayment"> PhP 0.00</span>
                         <input asp-for="Record.Fees" type="hidden" />
                     </div>
                 </div>
@@ -981,7 +981,7 @@
 
                 </div>
                 <div class="col-md-3 col-sm-12">
-                    <button type="submit" class="btn col-md-12 col-sm-12 float-right" style="background-color:#217ff3;color:white;" id="sendPdfToEmail">Send to Email</button>
+                    <button type="submit" class="btn button-primary col-md-12 col-sm-12 float-right" style="color:white;" id="sendPdfToEmail">Send to Email</button>
                 </div>
                 <div class="col-md-2 col-sm-1">
 
@@ -1866,9 +1866,9 @@
                 <div class="modal-footer">
                     <div class="row" style="width: 100%;">
                         <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Back</button></div>
-                        <div class="col-md-2 col-sm-2">
+                        <div class="col-md-2 col-sm-2" style="margin-top:10px;">
                         </div>
-                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"><button id="selectDocumentsBtn" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" data-dismiss="modal">Select</button></div>
+                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"><button id="selectDocumentsBtn" type="button" class="btn button-primary col-md-12 col-sm-12" style="color:white;" data-dismiss="modal">Select</button></div>
                     </div>
 
 

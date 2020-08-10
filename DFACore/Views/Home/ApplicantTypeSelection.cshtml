@@ -53,18 +53,18 @@
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
     </div>
-    <div id="insert-applicants-number" class="row" style="display:none;margin-top:2%;">
+    <div id="insert-applicants-number" class="row" style="display:none;" >
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
-        <div class="col-sm-12 col-md-8 col-lg-8 text-center">
+        <div class="col-sm-12 col-md-8 col-lg-8 text-center" style="margin-top:70px">
             <form action="@Url.Action("Index", "Home")">
                 <h4 class="black-text-bold text-center">INSERT NUMBER OF APPLICANTS</h4>
                 <input id="applicantsCount"
-                       type="number"
+                       type="text"
                        min="1"
                        value="1"
                        name="applicantsCount"
-                       class="black-text-bold "
+                       class="black-text-bold numberInput"
                        style="height: 70px;
                     width: 60px;
                     font-size: 60px;
@@ -72,17 +72,17 @@
                     border: none;
                     background-color: #ddd;" />
                 <p class="black-text text-center">
-                    If you are applying for Apostille, please include yourself in the number of apostille.
+                    Please include yourself in the number of applicants if you are applying for Apostille.
                 </p>
-                <div class="row" style="width: 100%;">
-                    <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-12">Back</button></div>
-                    <div class="col-md-2 col-sm-2">
+                <div class="row form-group">
+                    <div class="col-lg-5 col-md-5 col-sm-5"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-5">Back</button></div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top: 10px;">
                     </div>
-                    <div class="col-md-5 col-sm-5">
+                    <div class="col-lg-5 col-md-5 col-sm-5">
                         <button id="show-step-one-authorized"
                                 type="submit"
-                                class="btn btn-primary col-md-12 col-sm-12"
-                                style="color:white;background-color:#217ff3;z-index:-1;"
+                                class="btn button-primary col-md-12 col-sm-5"
+                                style="color:white;z-index:-1;"
                                 data-dismiss="modal">
                             OK
                         </button>
@@ -168,7 +168,10 @@
             //    $("#step-one").show();
             //    $(".choose-user-container").hide();
             //});
-        $("#applicantsCount").val(1);
+        $('.numberInput').keyup(function () {
+                this.value = this.value.replace(/[^0-9\.]/g,'');
+            });
+        //$("#applicantsCount").val(1);
         $("#show-step-one-authorized").css("z-index", "1");
             $("#show-authorized-representative").click(function () {
                 $("#insert-applicants-number").show();
