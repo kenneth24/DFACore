@@ -498,6 +498,33 @@ namespace DFACore.Controllers
 
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ValidateAccount([FromBody]LoginViewModel model)
+        {
+
+            if (!ModelState.IsValid)
+                return Ok(false);
+            
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user))
+                    return Ok(false);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignOutAsync();
+                return Ok(true);
+            }
+            
+
+            return Ok(false);
+        }
+
 
         //[HttpPost]
         ///[ValidateAntiForgeryToken]

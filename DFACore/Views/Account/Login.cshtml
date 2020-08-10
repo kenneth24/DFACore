@@ -58,7 +58,7 @@
     <div class="col-md-6 col-sm-12">
 
         <section class="loginSection" style="border: 1px solid #b7b7b7;height:auto;margin-top: -55px;">
-            <form id="account" method="post">
+            <form id="account" method="post" asp-action="login" asp-controller="account">
                 <div style="background-color: #217ff3;color: white;height: 35px;">
                     <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
                 </div>
@@ -81,8 +81,9 @@
                                 </label>
                             </div>
                         </div>*@
+
                     <div class="form-group col-md-12 col-sm-12">
-                        <button id="login-button" type="button" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12" data-toggle="modal" data-target="#declaration-modal" data-backdrop="static" data-keyboard="false">Log In</button>
+                        <button id="login-button" type="button" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">Log In</button>
                     </div>
                     <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
                         <h6>
@@ -94,10 +95,12 @@
                             <span style="color:#656565">to register</span>
                         </p>
                     </div>
+
                 </div>
 
 
             </form>
+
         </section>
 
     </div>
@@ -178,8 +181,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="terms-and-conditions-modal" tabindex="-1" role="dialog" aria-labelledby="termsAndConditionsModallLabel" aria-hidden="true"
-     >
+<div class="modal fade" id="terms-and-conditions-modal" tabindex="-1" role="dialog" aria-labelledby="termsAndConditionsModallLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -247,7 +249,31 @@
 <script>
     $(document).ready(function () {
         $("#login-button").click(function () {
-            $("#declaration-modal").modal('show');
+            
+            var model = {
+                Email: $("#Email").val(),
+                Password: $("#Password").val(),
+                RememberMe: false
+            };
+
+            var url = "@Url.Action("ValidateAccount", "Account")";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(model),
+                success: function (result) {
+                    if (result == true) 
+                        $("#declaration-modal").modal('show');
+                    else
+                        $("#account").submit();
+                },
+                error: function () {
+                    $("#account").submit();
+                }
+
+            });
+            //$("#declaration-modal").modal('show');
         });
         $("#declaration-agree").click(function () {
             $("#declaration-modal").modal('hide');
