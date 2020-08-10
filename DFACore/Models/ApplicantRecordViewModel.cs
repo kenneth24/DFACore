@@ -26,6 +26,8 @@ namespace DFACore.Models
         public string LastName { get; set; }
         [StringLength(100)]
         public string Suffix { get; set; }
+
+        [Display(Name = "Date of Birth")]
         public DateTime DateOfBirth { get; set; }
         //[Required]
         public string Barangay { get; set; }
