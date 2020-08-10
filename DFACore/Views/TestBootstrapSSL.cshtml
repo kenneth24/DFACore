@@ -3,6 +3,7 @@
     Layout = null;
     var sched = Model.ScheduleDate;
     var docuData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(Model.ApostileData);
+    var suffix = Model.Suffix != "N/A" ? Model.Suffix : "";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +66,7 @@
             </div>
             <div class="row">
                 <p>
-                    Dear <span style="font-weight:bold">@Model.Title @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @Model.Suffix</span>, <br />
+                    Dear <span style="font-weight:bold">@Model.Title @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</span>, <br />
                     Your application has been successfully confirmed.
                 </p>
 
@@ -109,7 +110,7 @@
                     <tbody>
                         <tr>
                             <td>Document Owner:</td>
-                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @Model.Suffix</td>
+                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</td>
                         </tr>
                         @*<tr>
                             <td>Address:</td>
