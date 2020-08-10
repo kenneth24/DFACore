@@ -1,7 +1,7 @@
 ﻿@*@model DFACore.Models.DTO.ApplicantModelDTO*@
 <div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
         padding: 20px;
-        height: auto;">
+        height: auto;min-height:450px;">
     <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
         <span class="float-left font-weight-bold">
             @User.Identity.Name
@@ -23,27 +23,27 @@
     <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
         <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
     </div>
-    <div class="row choose-user-container" style="margin-top:2%">
+    <div class="row choose-user-container" style="margin-top:70px">
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
         <div class="col-sm-12 col-md-8 col-lg-8 text-center">
             <h4 class="black-text-bold">PLEASE CHOOSE ONE:</h4>
             <p class="grey-text">I am the</p>
             <div class="row">
-                <a id="show-document-owner" href="@Url.Action("Index", "Home")" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;font-weight:bold;">DOCUMENT OWNER</a>
-                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 10px;"></div>
-                <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size:14px;font-weight:bold;">
+                <a id="show-document-owner" href="@Url.Action("Index", "Home")" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;">DOCUMENT OWNER</a>
+                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 30px;"></div>
+                <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size:14px;">
                     AUTHORIZED REPRESENTATIVE
                     <br />
                     (for filing/claiming)
                 </a>
             </div>
-            <a class="blue-text-bold text-right d-none d-lg-block"
+            <a class="blue-text text-right d-none d-lg-block"
                style="font-size:14px;cursor:pointer;margin-right:10%;"
                data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
                 View requirements
             </a>
-            <a class="blue-text-bold text-center d-lg-none"
+            <a class="blue-text text-center d-lg-none"
                style="font-size:14px;cursor:pointer;"
                data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
                 View requirements
