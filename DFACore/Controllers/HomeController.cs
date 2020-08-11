@@ -43,7 +43,10 @@ namespace DFACore.Controllers
             _generatePdf = generatePdf;
             _env = env;
         }
-
+        public IActionResult ApplicantTypeSelection()
+        {
+            return View();
+        }
         public async Task<IActionResult> Index(int applicantsCount = 0)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
@@ -51,13 +54,10 @@ namespace DFACore.Controllers
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             ViewData["ApplicantCount"] = applicantsCount;
-            ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
+            //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             return View();
         }
-        public IActionResult ApplicantTypeSelection()
-        {
-            return View();
-        }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ApplicantsViewModel model, string returnUrl = null)
