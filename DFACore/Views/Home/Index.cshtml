@@ -2,7 +2,8 @@
 @model DFACore.Models.ApplicantsViewModel
 @{
     ViewData["Title"] = "Home Page";
-    var currentUser = (ApplicationUser)ViewBag.User;
+    //var currentUser = (ApplicationUser)ViewBag.User;
+    //var suffix = string.IsNullOrEmpty(currentUser.Suffix) ? "N/A" : currentUser.Suffix;
 
 }
 <style>
@@ -131,38 +132,40 @@
                         <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
+
                         <div class="form-group">
-                            <p>
+                            <p class="d-none d-lg-block">
                                 <span style="font-weight: bold">Document Owner</span>
                                 <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
                             </p>
+                            <p class="d-lg-none text-left" style="font-weight: bold">
+                                Document Owner
+                            </p>
+                            <p class="d-lg-none text-left">
+                                <i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i>
+                            </p>
+
+                        </div>
+
+
+                        <div class="form-group">
 
                             <div class="row">
-                                @*<div class="col-md-2 col-sm-12">
-                                        <label asp-for="Title">Title <span class="red">*</span></label>
-                                        <select asp-for="Title" class="form-control">
-                                            <option value=""></option>
-                                            <option value="MR">MR.</option>
-                                            <option value="MRS">MRS.</option>
-                                            <option value="MRS">MS.</option>
-                                        </select>
-                                        <span asp-validation-for="Title" class="text-danger title"></span>
-                                    </div>*@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="Record.FirstName" class="form-control" value="@currentUser.FirstName" />
+                                    <input asp-for="Record.FirstName" class="form-control" />
                                     <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.MiddleName"></label>
-                                    <input asp-for="Record.MiddleName" class="form-control" value="@currentUser.MiddleName" />
+                                    <input asp-for="Record.MiddleName" class="form-control" />
                                     <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="Record.LastName" class="form-control" value="@currentUser.LastName" />
+                                    <input asp-for="Record.LastName" class="form-control" />
                                     <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
@@ -171,79 +174,43 @@
                                     <label asp-for="Record.Suffix"></label>
                                     @*<input asp-for="Suffix" class="form-control" />*@
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="@currentUser.Suffix">@currentUser.Suffix</option>
+                                        <option value="N/A">N/A</option>
+                                        <option value="JR.">JR.</option>
+                                        <option value="SR.">SR.</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                        <option value="VI">VI</option>
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                        <option value="X">X</option>
+                                        <option value="XI">XI</option>
+                                        <option value="XII">XII</option>
+                                        <option value="XIII">XIII</option>
+                                        <option value="XIV">XIV</option>
+                                        <option value="XV">XV</option>
 
                                     </select>
+
                                     <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        @*<div class="form-group">
-                                <h6>Address</h6>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-12">
-                                        <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                                        <input asp-for="Barangay" class="form-control" />
-                                        <span asp-validation-for="Barangay" class="text-danger address"></span>
-                                    </div>
 
-
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Region">Region/Province <span class="red">*</span></label>
-                                        <select asp-for="Region" class="form-control">
-                                            <option value=""></option>
-                                            @foreach (var item in ViewData["GetMunicipality"] as List<string>)
-                                            {
-                                                <option value="@item">@item</option>
-                                            }
-                                        </select>
-                                        <span asp-validation-for="Region" class="text-danger nationality"></span>
-                                    </div>
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                                        <select asp-for="City" class="form-control">
-                                            <option value=""></option>
-                                            <option value="Caloocan">Caloocan</option>
-                                            <option value="Las Piñas">Las Piñas</option>
-                                            <option value="Makati">Makati</option>
-                                            <option value="Malabon">Malabon</option>
-                                            <option value="Mandaluyong">Mandaluyong</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Marikina">Marikina</option>
-                                            <option value="Muntinlupa">Muntinlupa</option>
-                                            <option value="Navotas">Navotas</option>
-                                            <option value="Parañaque">Parañaque</option>
-                                            <option value="Pasay">Pasay</option>
-                                            <option value="Pasig">Pasig</option>
-                                            <option value="Pateros">Pateros</option>
-                                            <option value="Quezon City">Quezon City</option>
-                                            <option value="San Juan">San Juan</option>
-                                            <option value="Taguig">Taguig</option>
-                                            <option value="Valenzuela">Valenzuela</option>
-                                        </select>
-                                        <span asp-validation-for="City" class="text-danger nationality"></span>
-                                    </div>
-                                </div>
-                            </div>*@
                         <div class="form-group">
                             <div class="row">
-                                @*<div class="col-md-6 col-sm-12">
-                                        <label asp-for="Nationality">Nationality <span class="red">*</span></label>
-                                        <select asp-for="Nationality" class="form-control">
-                                            <option value=""></option>
-                                            <partial name="_CountriesPartial" />
-                                        </select>
-                                        <span asp-validation-for="Nationality" class="text-danger nationality"></span>
-                                    </div>*@
 
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.DateOfBirth"></label>
-                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" value="@currentUser.DateOfBirth" />
+                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" />
                                     <span asp-validation-for="Record.DateOfBirth" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" value="@currentUser.PhoneNumber" type="tel" min="1" />
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="tel" min="1" />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
@@ -290,7 +257,7 @@
                     </div>
 
 
-                    <div  style="margin-top: 20px;">
+                    <div style="margin-top: 20px;">
                         <div class="col-12">
                             @*<label class="form-check-label">*@
                             @*<a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
@@ -300,8 +267,8 @@
                             @*</label>*@
                         </div>
                     </div>
-                    <div >
-                        <div >
+                    <div>
+                        <div>
                             <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
                                 (+) ADD DOCUMENT/S 
                             </a>
@@ -309,7 +276,12 @@
                             <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
                                 <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
                             </div>
-                            <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;position: relative;top: 10px;">
+                            <div id="documentList" style="        border: 1px solid #b7b7b7;
+        padding: 10px;
+        height: 150px;
+        overflow: scroll;
+        position: relative;
+        top: 10px;">
 
                                 <table class="table " id="documentsTable">
                                     <tr>
@@ -368,19 +340,19 @@
                                     </div>*@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="Record.FirstName" class="form-control" value="@currentUser.FirstName" />
+                                    <input asp-for="Record.FirstName" class="form-control" />
                                     <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.MiddleName"></label>
-                                    <input asp-for="Record.MiddleName" class="form-control" value="@currentUser.MiddleName" />
+                                    <input asp-for="Record.MiddleName" class="form-control" />
                                     <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="Record.LastName" class="form-control" value="@currentUser.LastName" />
+                                    <input asp-for="Record.LastName" class="form-control" />
                                     <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
@@ -388,7 +360,24 @@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.Suffix"></label>
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="@currentUser.Suffix">@currentUser.Suffix</option>
+                                        <option value="N/A">N/A</option>
+                                        <option value="JR.">JR.</option>
+                                        <option value="SR.">SR.</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                        <option value="VI">VI</option>
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                        <option value="X">X</option>
+                                        <option value="XI">XI</option>
+                                        <option value="XII">XII</option>
+                                        <option value="XIII">XIII</option>
+                                        <option value="XIV">XIV</option>
+                                        <option value="XV">XV</option>
                                     </select>
                                     <span asp-validation-for="Record.Suffix" class="text-danger"></span>
                                 </div>
@@ -446,7 +435,7 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" value="@currentUser.PhoneNumber" type="number" min="1" />
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
@@ -792,7 +781,7 @@
                             <span>Document Owner: </span>
                         </div>
                         <div class="col-md-8 col-sm-12">
-                            <span class="black-text"  id="documentOwner-@i"></span>
+                            <span class="black-text" id="documentOwner-@i"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -3696,6 +3685,20 @@
                 }
                 else {
                     $('#qtyExportDocuments').val(parseInt($('#qtyExportDocumentsExpedite').val()) + parseInt($('#qtyExportDocumentsRegular').val()))
+                }
+            });
+
+            $('.modal').on('show.bs.modal', function () {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+            });
+
+            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
                 }
             });
 
