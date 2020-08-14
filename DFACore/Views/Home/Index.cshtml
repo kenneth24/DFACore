@@ -205,7 +205,7 @@
 
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.DateOfBirth"></label>
-                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control" />
+                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control dateOfBirthOwner" />
                                     <span asp-validation-for="Record.DateOfBirth" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
@@ -249,7 +249,7 @@
                                     </div>
                                     <div class="col-md-5 col-sm-12">
                                         <label asp-for="RepresentativeContactNumber"></label>
-                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" />
+                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
                                         <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -270,7 +270,7 @@
                     <div>
                         <div>
                             <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
-                                (+) ADD DOCUMENT/S 
+                                (+) ADD DOCUMENT/S
                             </a>
                             @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
                             <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
@@ -435,7 +435,7 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" disabled />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
@@ -457,7 +457,7 @@
                                     </div>
                                     <div class="col-md-5 col-sm-12">
                                         <label asp-for="RepresentativeContactNumber"></label>
-                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" />
+                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
                                         <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -1016,17 +1016,17 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyNbiClearanceExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyNbiClearanceExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyNbiClearanceRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyNbiClearanceRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyNbiClearance" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyNbiClearance" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1050,17 +1050,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyBirthCertificateExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBirthCertificateExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyBirthCertificateRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBirthCertificateRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyBirthCertificate" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBirthCertificate" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1069,17 +1069,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyMarriageCertificateExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMarriageCertificateExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyMarriageCertificateRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMarriageCertificateRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyMarriageCertificate" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMarriageCertificate" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1088,17 +1088,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyDeathCertificateExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDeathCertificateExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyDeathCertificateRegular" style="width: 15%;height: 30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDeathCertificateRegular" style="width: 15%;height: 30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyDeathCertificate" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDeathCertificate" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1107,17 +1107,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyCenomarExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCenomarExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCenomarRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCenomarRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCenomar" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCenomar" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1144,17 +1144,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyElementaryAndHighschoolExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyElementaryAndHighschoolExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyElementaryAndHighschoolRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyElementaryAndHighschoolRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyElementaryAndHighschool" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyElementaryAndHighschool" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1171,17 +1171,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyTechVochExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyTechVochRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyTechVoch" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVoch" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1198,17 +1198,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyStateCollegesAndUniversitiesExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyStateCollegesAndUniversitiesRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1224,17 +1224,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyPrivateOrLocalCollegesExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyPrivateOrLocalCollegesRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1251,17 +1251,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyPRCExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyPRCRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyPRC" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRC" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1278,17 +1278,17 @@
                                         </div>
                                         <div class="form-group">
 
-                                            <input type="number" min="1" class="small" id="qtyMedCertsExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyMedCertsRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyMedCerts" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCerts" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -1306,17 +1306,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyCAAPExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCAAPRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCAAP" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAP" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -1334,17 +1334,17 @@
                                         </div>
                                         <div class="form-group">
 
-                                            <input type="number" min="1" class="small" id="qtyDriverLicenseExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyDriverLicenseRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyDriverLicense" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicense" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1363,17 +1363,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyCOEExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOEExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCOERegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOERegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCOE" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOE" style="width: 15%;height:30px;">
                                             <span> Total</span>
 
                                         </div>
@@ -1383,17 +1383,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyInvitationLetterExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyInvitationLetterRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyInvitationLetter" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetter" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1402,17 +1402,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyTrainingsExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyTrainingsRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyTrainings" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainings" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1421,17 +1421,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyBaptismalCertExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyBaptismalCertRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyBaptismalCert" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCert" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                         <div class="form-check">
@@ -1440,17 +1440,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyPrivateIssuedOtherDocuExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyPrivateIssuedOtherDocuRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
                                     </td>
@@ -1471,17 +1471,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtySpecialPowerOfAttorneyExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtySpecialPowerOfAttorneyRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1491,17 +1491,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyMOAExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOAExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyMOARegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOARegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyMOA" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOA" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1511,17 +1511,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyMOUExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOUExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyMOURegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOURegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyMOU" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOU" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1531,17 +1531,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyAnyContractExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyAnyContractRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyAnyContract" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContract" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1551,17 +1551,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyAffidavitOfConsentExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyAffidavitOfConsentRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1571,17 +1571,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyJointAffidavitExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyJointAffidavitRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyJointAffidavit" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavit" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1591,17 +1591,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyOtherAffidavitExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyOtherAffidavitRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right: 10px "> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1622,17 +1622,17 @@
                                         </div>
                                         <div class="form-group">
 
-                                            <input type="number" min="1" class="small" id="qtyCourtDecisionExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCourtDecisionRegular" style="width: 15%; height: 30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionRegular" style="width: 15%; height: 30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCourtDecision" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecision" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1643,17 +1643,17 @@
                                         </div>
                                         <div class="form-group">
 
-                                            <input type="number" min="1" class="small" id="qtyCourtResolutionExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCourtResolutionRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCourtResolution" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolution" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1663,17 +1663,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyCourtOtherDocumentExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyCourtOtherDocumentRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1690,17 +1690,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyImmigrationExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyImmigrationRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyImmigration" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigration" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -1717,17 +1717,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyDSWDClearanceExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyDSWDClearanceRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyDSWDClearance" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearance" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -1744,17 +1744,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyPoliceClearanceExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyPoliceClearanceRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyPoliceClearance" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearance" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1773,17 +1773,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyBusinessRegistrationExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyBusinessRegistrationRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyBusinessRegistration" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistration" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -1801,17 +1801,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyBarangayClearanceExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyBarangayClearanceRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyBarangayClearance" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearance" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                         </div>
 
@@ -1829,17 +1829,17 @@
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" min="1" class="small" id="qtyExportDocumentsExpedite" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsExpedite" style="width: 15%;height:30px;">
                                             <span> Expedite</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" class="small" id="qtyExportDocumentsRegular" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsRegular" style="width: 15%;height:30px;">
                                             <span style="margin-right:10px"> Regular</span>
                                             <div class="d-block d-lg-none">
                                                 <br />
                                             </div>
-                                            <input type="number" min="1" disabled class="small" id="qtyExportDocuments" style="width: 15%;height:30px;">
+                                            <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocuments" style="width: 15%;height:30px;">
                                             <span> Total</span>
                                             @*<label for="qtyPRC"></label>*@
                                         </div>
@@ -2297,9 +2297,9 @@
     <div class="modal fade" id="viewMinorReminder-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true" style="margin-top: 200px;">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button>*@
                 <div class="modal-header primary"></div>
                 <div class="modal-body">
                     <div class="form-group container">
@@ -2353,6 +2353,37 @@
             var canConfirm = true;
             $('.numberInput').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g,'');
+            });
+
+            $('.dateOfBirthOwner').focusout(function () {
+                var bdate = new Date($('.dateOfBirthOwner').val());
+                var dateToday = new Date();
+                var age = dateToday.getFullYear() - bdate.getFullYear();
+                console.log(age);
+                if (age < 18) {
+                    $('#viewMinorReminder-modal').modal('show');
+                }
+            });
+            $('.transactionQuantity').keypress(function (e) {
+                if (this.value.length == 0 && e.which == 48) {
+                    return false;
+                }
+            });
+            $(".form-check-input").on("click", function () {
+                var getId = $(this).attr('id');
+                var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
+                var expediteId = '#qty' + formatId + 'Expedite';
+                var regularId = '#qty' + formatId + 'Regular';
+
+                if ($(this).is(':checked') == true) {
+                    console.log(formatId);
+                    $(expediteId).removeAttr("disabled");
+                    $(regularId).removeAttr("disabled");
+                }
+                else {
+                    $(expediteId).attr("disabled", true);
+                    $(regularId).attr("disabled", true);
+                }
             });
             //if ($("#IsUserAgreed").text() !== "Agreed") {
             //    $("#declaration-modal").modal({
@@ -2548,11 +2579,18 @@
                 var docuType = JSON.parse($('#apostileData').val());
                 var lbldocuType = $('#LblTypeOfDocument');
 
+                var subtotal = 0;
                 docuType.forEach(function (v) {
                     var Quantity = v.Quantity;
                     var DocuName = v.Name;
                     var Transaction = v.Transaction;
-                    lbldocuType.append('(' + Quantity + ') ' + DocuName + ' '+ Transaction + '<br />');
+                    lbldocuType.append('(' + Quantity + ') ' + DocuName + ' ' + Transaction + '<br />');
+                    if (Transaction == "Expedite") {
+                        subtotal += (200 * parseInt(Quantity));
+                    }
+                    else {
+                        subtotal += (100 * parseInt(Quantity));
+                    }
 
                 });
 
@@ -2571,8 +2609,10 @@
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
                 $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
-                $('#LblPayment').text('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
-                $('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                //$('#LblPayment').text('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#LblPayment').text('PhP'.concat(' ', subtotal, '.00'));
+                //$('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#Fees').val('PhP'.concat(' ', subtotal, '.00'));
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
                 console.log($("span[id^='LblPayment-']").text());
@@ -2610,432 +2650,472 @@
             //});
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
+            //    $(".form-check-input").on("click", function () {
+            //    var getId = $(this).attr('id');
+            //    var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
+            //    var expediteId = '#qty' + formatId + 'Expedite';
+            //    var regularId = '#qty' + formatId + 'Regular';
+
+            //    if ($(this).is(':checked') == true) {
+            //        console.log(formatId);
+            //        $(expediteId).removeAttr("disabled");
+            //        $(regularId).removeAttr("disabled");
+            //    }
+            //    else {
+            //        $(expediteId).attr("disabled", true);
+            //        $(regularId).attr("disabled", true);
+            //    }
+            //});
                 $(':checkbox:checked').each(function (i) {
-                    if ($(this).val() == "NBI Clearance") {
-                        if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Birth Certificate") {
-                        if (parseInt($('#qtyBirthCertificateExpedite').val()) > 0 && !$('#qtyBirthCertificateRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyBirthCertificateRegular').val()) > 0 && !$('#qtyBirthCertificateExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Marriage Certificate") {
-                        if (parseInt($('#qtyMarriageCertificateExpedite').val()) > 0 && !$('#qtyMarriageCertificateRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyMarriageCertificateRegular').val()) > 0 && !$('#qtyMarriageCertificateExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Death Certificate") {
-                        if (parseInt($('#qtyDeathCertificateExpedite').val()) > 0 && !$('#qtyDeathCertificateRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyDeathCertificateRegular').val()) > 0 && !$('#qtyDeathCertificateExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Certificate of No Marriage Record") {
-                        if (parseInt($('#qtyCenomarExpedite').val()) > 0 && !$('#qtyCenomarRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCenomarRegular').val()) > 0 && !$('#qtyCenomarExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Form 137 & Diploma") {
-                       if (parseInt($('#qtyElementaryAndHighschoolExpedite').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyElementaryAndHighschoolRegular').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "TOR & Diploma/National Certificate") {
-                        if (parseInt($('#qtyTechVochExpedite').val()) > 0 && !$('#qtyTechVochRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyTechVochRegular').val()) > 0 && !$('#qtyTechVochExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
-                        if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
-                        if (parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "PRC Document/s") {
-                        if (parseInt($('#qtyPRCExpedite').val()) > 0 && !$('#qtyPRCRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyPRCRegular').val()) > 0 && !$('#qtyPRCExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Medical Certificates") {
-                        if (parseInt($('#qtyMedCertsExpedite').val()) > 0 && !$('#qtyMedCertsRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyMedCertsRegular').val()) > 0 && !$('#qtyMedCertsExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "CAAP Documents") {
-                        if (parseInt($('#qtyCAAPExpedite').val()) > 0 && !$('#qtyCAAPRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCAAPRegular').val()) > 0 && !$('#qtyCAAPExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Driver's License") {
-                        if (parseInt($('#qtyDriverLicenseExpedite').val()) > 0 && !$('#qtyDriverLicenseRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyDriverLicenseRegular').val()) > 0 && !$('#qtyDriverLicenseExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Certificate of Employment") {
-                        if (parseInt($('#qtyCOEExpedite').val()) > 0 && !$('#qtyCOERegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCOERegular').val()) > 0 && !$('#qtyCOEExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Invitation Letter") {
-                        if (parseInt($('#qtyInvitationLetterExpedite').val()) > 0 && !$('#qtyInvitationLetterRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyInvitationLetterRegular').val()) > 0 && !$('#qtyInvitationLetterExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Trainings") {
-                        if (parseInt($('#qtyTrainingsExpedite').val()) > 0 && !$('#qtyTrainingsRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyTrainingsRegular').val()) > 0 && !$('#qtyTrainingsExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Baptismal Certificate") {
-                        if (parseInt($('#qtyBaptismalCertExpedite').val()) > 0 && !$('#qtyBaptismalCertRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyBaptismalCertRegular').val()) > 0 && !$('#qtyBaptismalCertExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Other Document (Private Entity)") {
-                        if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Special Power of Attorney") {
-                        if (parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Memorandum of Agreement") {
-                        if (parseInt($('#qtyMOAExpedite').val()) > 0 && !$('#qtyMOARegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyMOARegular').val()) > 0 && !$('#qtyMOAExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Memorandum of Understanding") {
-                        if (parseInt($('#qtyMOUExpedite').val()) > 0 && !$('#qtyMOURegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyMOURegular').val()) > 0 && !$('#qtyMOUExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Contract") {
-                        if (parseInt($('#qtyAnyContractExpedite').val()) > 0 && !$('#qtyAnyContractRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyAnyContractRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Affidavit of Consent/Advice") {
-                        if (parseInt($('#qtyAffidavitOfConsentExpedite').val()) > 0 && !$('#qtyAffidavitOfConsentRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyAffidavitOfConsentRegular').val()) > 0 && !$('#qtyAffidavitOfConsentExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Joint Affidavit") {
-                        if (parseInt($('#qtyJointAffidavitExpedite').val()) > 0 && !$('#qtyJointAffidavitRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyJointAffidavitRegular').val()) > 0 && !$('#qtyJointAffidavitExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Other Affidavit") {
-                        if (parseInt($('#qtyOtherAffidavitExpedite').val()) > 0 && !$('#qtyOtherAffidavitRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyOtherAffidavitRegular').val()) > 0 && !$('#qtyOtherAffidavitExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Court Decision") {
-                        if (parseInt($('#qtyCourtDecisionExpedite').val()) > 0 && !$('#qtyCourtDecisionRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCourtDecisionRegular').val()) > 0 && !$('#qtyCourtDecisionExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Court Resolution/Order") {
-                        if (parseInt($('#qtyCourtResolutionExpedite').val()) > 0 && !$('#qtyCourtResolutionRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCourtResolutionRegular').val()) > 0 && !$('#qtyCourtResolutionExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Court Other Document") {
-                        if (parseInt($('#qtyCourtOtherDocumentExpedite').val()) > 0 && !$('#qtyCourtOtherDocumentRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyCourtOtherDocumentRegular').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Immigration Record/s") {
-                        if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "DSWD Clearance") {
-                        if (parseInt($('#qtyDSWDClearanceExpedite').val()) > 0 && !$('#qtyDSWDClearanceRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyDSWDClearanceRegular').val()) > 0 && !$('#qtyDSWDClearanceExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Police Clearance") {
-                        if (parseInt($('#qtyPoliceClearanceExpedite').val()) > 0 && !$('#qtyPoliceClearanceRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyPoliceClearanceRegular').val()) > 0 && !$('#qtyPoliceClearanceExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
-                        if (parseInt($('#qtyBusinessRegistrationExpedite').val()) > 0 && !$('#qtyBusinessRegistrationRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyBusinessRegistrationRegular').val()) > 0 && !$('#qtyBusinessRegistrationExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else if ($(this).val() == "Barangay Clearance/Certifcate") {
-                        if (parseInt($('#qtyBarangayClearanceExpedite').val()) > 0 && !$('#qtyBarangayClearanceRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyBarangayClearanceRegular').val()) > 0 && !$('#qtyBarangayClearanceExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    else /*if ($(this).val() == "Export Document/s")*/ {
-                        if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && !$('#qtyExportDocumentsRegular').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()) , Transaction: "Expedite"});
-                        }
-                        else if (parseInt($('#qtyExportDocumentsRegular').val()) > 0 && !$('#qtyExportDocumentsExpedite').val()) {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()) , Transaction: "Regular"});
-                        }
-                        else {
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
-                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
-                        }
-                    }
-                    //else {
-                    //    documentObject.push({ Name: $(this).val(), Quantity: 1 });
-                    //}
+                    var getId = $(this).attr('id');
+                    var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
+                    var expediteId = '#qty' + formatId + 'Expedite';
+                    var regularId = '#qty' + formatId + 'Regular';
+
+                    if (parseInt($(expediteId).val()) > 0 && !$(regularId).val()) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($(regularId).val()) > 0 && !$(expediteId).val()) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()) , Transaction: "Regular"});
+                        }
+                        else if (parseInt($(expediteId).val()) > 0 && parseInt($(regularId).val()) > 0) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()), Transaction: "Regular" });
+                        }
+                        else { return; }
                 });
+                //$(':checkbox:checked').each(function (i) {
+                //    if ($(this).val() == "NBI Clearance") {
+                //        if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Birth Certificate") {
+                //        if (parseInt($('#qtyBirthCertificateExpedite').val()) > 0 && !$('#qtyBirthCertificateRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyBirthCertificateRegular').val()) > 0 && !$('#qtyBirthCertificateExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Marriage Certificate") {
+                //        if (parseInt($('#qtyMarriageCertificateExpedite').val()) > 0 && !$('#qtyMarriageCertificateRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyMarriageCertificateRegular').val()) > 0 && !$('#qtyMarriageCertificateExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Death Certificate") {
+                //        if (parseInt($('#qtyDeathCertificateExpedite').val()) > 0 && !$('#qtyDeathCertificateRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyDeathCertificateRegular').val()) > 0 && !$('#qtyDeathCertificateExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Certificate of No Marriage Record") {
+                //        if (parseInt($('#qtyCenomarExpedite').val()) > 0 && !$('#qtyCenomarRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCenomarRegular').val()) > 0 && !$('#qtyCenomarExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Form 137 & Diploma") {
+                //       if (parseInt($('#qtyElementaryAndHighschoolExpedite').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyElementaryAndHighschoolRegular').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "TOR & Diploma/National Certificate") {
+                //        if (parseInt($('#qtyTechVochExpedite').val()) > 0 && !$('#qtyTechVochRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyTechVochRegular').val()) > 0 && !$('#qtyTechVochExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
+                //        if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
+                //        if (parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "PRC Document/s") {
+                //        if (parseInt($('#qtyPRCExpedite').val()) > 0 && !$('#qtyPRCRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyPRCRegular').val()) > 0 && !$('#qtyPRCExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Medical Certificates") {
+                //        if (parseInt($('#qtyMedCertsExpedite').val()) > 0 && !$('#qtyMedCertsRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyMedCertsRegular').val()) > 0 && !$('#qtyMedCertsExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "CAAP Documents") {
+                //        if (parseInt($('#qtyCAAPExpedite').val()) > 0 && !$('#qtyCAAPRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCAAPRegular').val()) > 0 && !$('#qtyCAAPExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Driver's License") {
+                //        if (parseInt($('#qtyDriverLicenseExpedite').val()) > 0 && !$('#qtyDriverLicenseRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyDriverLicenseRegular').val()) > 0 && !$('#qtyDriverLicenseExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Certificate of Employment") {
+                //        if (parseInt($('#qtyCOEExpedite').val()) > 0 && !$('#qtyCOERegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCOERegular').val()) > 0 && !$('#qtyCOEExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Invitation Letter") {
+                //        if (parseInt($('#qtyInvitationLetterExpedite').val()) > 0 && !$('#qtyInvitationLetterRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyInvitationLetterRegular').val()) > 0 && !$('#qtyInvitationLetterExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Trainings") {
+                //        if (parseInt($('#qtyTrainingsExpedite').val()) > 0 && !$('#qtyTrainingsRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyTrainingsRegular').val()) > 0 && !$('#qtyTrainingsExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Baptismal Certificate") {
+                //        if (parseInt($('#qtyBaptismalCertExpedite').val()) > 0 && !$('#qtyBaptismalCertRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyBaptismalCertRegular').val()) > 0 && !$('#qtyBaptismalCertExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Other Document (Private Entity)") {
+                //        if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Special Power of Attorney") {
+                //        if (parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Memorandum of Agreement") {
+                //        if (parseInt($('#qtyMOAExpedite').val()) > 0 && !$('#qtyMOARegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyMOARegular').val()) > 0 && !$('#qtyMOAExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Memorandum of Understanding") {
+                //        if (parseInt($('#qtyMOUExpedite').val()) > 0 && !$('#qtyMOURegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyMOURegular').val()) > 0 && !$('#qtyMOUExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Contract") {
+                //        if (parseInt($('#qtyAnyContractExpedite').val()) > 0 && !$('#qtyAnyContractRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyAnyContractRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Affidavit of Consent/Advice") {
+                //        if (parseInt($('#qtyAffidavitOfConsentExpedite').val()) > 0 && !$('#qtyAffidavitOfConsentRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyAffidavitOfConsentRegular').val()) > 0 && !$('#qtyAffidavitOfConsentExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Joint Affidavit") {
+                //        if (parseInt($('#qtyJointAffidavitExpedite').val()) > 0 && !$('#qtyJointAffidavitRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyJointAffidavitRegular').val()) > 0 && !$('#qtyJointAffidavitExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Other Affidavit") {
+                //        if (parseInt($('#qtyOtherAffidavitExpedite').val()) > 0 && !$('#qtyOtherAffidavitRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyOtherAffidavitRegular').val()) > 0 && !$('#qtyOtherAffidavitExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Court Decision") {
+                //        if (parseInt($('#qtyCourtDecisionExpedite').val()) > 0 && !$('#qtyCourtDecisionRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCourtDecisionRegular').val()) > 0 && !$('#qtyCourtDecisionExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Court Resolution/Order") {
+                //        if (parseInt($('#qtyCourtResolutionExpedite').val()) > 0 && !$('#qtyCourtResolutionRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCourtResolutionRegular').val()) > 0 && !$('#qtyCourtResolutionExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Court Other Document") {
+                //        if (parseInt($('#qtyCourtOtherDocumentExpedite').val()) > 0 && !$('#qtyCourtOtherDocumentRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyCourtOtherDocumentRegular').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Immigration Record/s") {
+                //        if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "DSWD Clearance") {
+                //        if (parseInt($('#qtyDSWDClearanceExpedite').val()) > 0 && !$('#qtyDSWDClearanceRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyDSWDClearanceRegular').val()) > 0 && !$('#qtyDSWDClearanceExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Police Clearance") {
+                //        if (parseInt($('#qtyPoliceClearanceExpedite').val()) > 0 && !$('#qtyPoliceClearanceRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyPoliceClearanceRegular').val()) > 0 && !$('#qtyPoliceClearanceExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
+                //        if (parseInt($('#qtyBusinessRegistrationExpedite').val()) > 0 && !$('#qtyBusinessRegistrationRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyBusinessRegistrationRegular').val()) > 0 && !$('#qtyBusinessRegistrationExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else if ($(this).val() == "Barangay Clearance/Certifcate") {
+                //        if (parseInt($('#qtyBarangayClearanceExpedite').val()) > 0 && !$('#qtyBarangayClearanceRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()) , Transaction: "Expedite"});
+                //        }
+                //        else if (parseInt($('#qtyBarangayClearanceRegular').val()) > 0 && !$('#qtyBarangayClearanceExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()) , Transaction: "Regular"});
+                //        }
+                //        else {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()), Transaction: "Regular" });
+                //        }
+                //    }
+                //    else /*if ($(this).val() == "Export Document/s")*/ {
+                //        if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && !$('#qtyExportDocumentsRegular').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
+                //        }
+                //        else if (parseInt($('#qtyExportDocumentsRegular').val()) > 0 && !$('#qtyExportDocumentsExpedite').val()) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
+                //        }
+                //        else if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && parseInt($('#qtyExportDocumentsRegular').val()) > 0) {
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
+                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
+                //        }
+                //        else { return;}
+                //    }
+                //    //else {
+                //    //    documentObject.push({ Name: $(this).val(), Quantity: 1 });
+                //    //}
+                //});
                 $("#documentsTable tbody > tr").empty();
-                $("#documentsTable").append('<tr><th>Quantity</th><th>Document</th><th>Transaction</th></tr>');
+                $("#documentsTable").append('<tr><th>Document</th><th>Document</th><th>Transaction</th></tr>');
                 //var tbodyContent = '';
                 var numberOfDocuments = 0;
+                var newDocument = [];
                 $.each(documentObject, function (index, value) {
-                    $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>',value.Transaction, '</td></tr>'));
-                    numberOfDocuments += value.Quantity;
+                    var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+                    if (isExists == undefined) {
+                        $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+                        numberOfDocuments += value.Quantity;
+                        newDocument.push(value);
+                    }
                 });
                 //console.log(tbodyContent);
                 //$('#documentsTable tbody').append(tbodyContent);
                 $('#documentsCount').text(numberOfDocuments);
-                $('#apostileData').val(JSON.stringify(documentObject));
-                console.log(JSON.stringify(documentObject));
+                $('#apostileData').val(JSON.stringify(newDocument));
+                console.log(JSON.stringify(newDocument));
             });
 
             $('#appointmentScheduleTime').text('08:00 AM')
