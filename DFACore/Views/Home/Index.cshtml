@@ -210,8 +210,8 @@
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="tel" min="1" />
-                                    <span asp-validation-for="Record.ContactNumber" class="text-danger"></span>
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput " type="tel" min="1" />
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.CountryDestination">Country of Destination <span class="red">*</span></label>
@@ -2470,8 +2470,8 @@
             });
             $("#stepOneNextBtn").click(function () {
                 //|| $('#Nationality').val() == "" fNamePartial
-                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#FirstName').val() == "" || $('#LastName').val() == "" || $('#Address').val() == ""
-                    || $('#ContactNumber').val() == "" || $('#CountryDestination').val() == "" || $('#apostileData').val() == "" || $('.apostiledataPartial').val() == ""
+                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == "" || $('#Address').val() == ""
+                    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('.apostiledataPartial').val() == ""
                     || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == ""
                 ) {
 
@@ -2509,12 +2509,12 @@
                     else
                         $('.countrydestinationPartialValidation').text('');
 
-                    if ($('#FirstName').val() == "")
+                    if ($('#Record_FirstName').val() == "")
                         $('.fname').text('This field is required.');
                     else
                         $('.fname').text('');
 
-                    if ($('#LastName').val() == "")
+                    if ($('#Record_LastName').val() == "")
                         $('.lname').text('This field is required.');
                     else
                         $('.lname').text('');
@@ -2529,12 +2529,12 @@
                     //else
                     //    $('.nationality').text('');
 
-                    if ($('#ContactNumber').val() == "")
+                    if ($('#Record_ContactNumber').val() == "")
                         $('.contactnumber').text('This field is required.');
                     else
                         $('.contactnumber').text('');
 
-                    if ($('#CountryDestination').val() == "")
+                    if ($('#Record_CountryDestination').val() == "")
                         $('.countrydestination').text('This field is required.');
                     else
                         $('.countrydestination').text('');
