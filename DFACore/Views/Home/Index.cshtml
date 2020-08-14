@@ -174,7 +174,7 @@
                                     <label asp-for="Record.Suffix"></label>
                                     @*<input asp-for="Suffix" class="form-control" />*@
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="N/A">N/A</option>
+                                        <option value="">N/A</option>
                                         <option value="JR.">JR.</option>
                                         <option value="SR.">SR.</option>
                                         <option value="I">I</option>
@@ -360,7 +360,7 @@
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.Suffix"></label>
                                     <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="N/A">N/A</option>
+                                        <option value="">N/A</option>
                                         <option value="JR.">JR.</option>
                                         <option value="SR.">SR.</option>
                                         <option value="I">I</option>
@@ -435,7 +435,7 @@
 
                                 <div class="col-md-6 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" disabled />
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
@@ -772,7 +772,7 @@
                     <div class="font-weight-bold">
 
                         @{var appcodeIndex = i + 1;}
-                        <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" />
+                        <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" hidden />
                         <span id="LblAppointmentCode-@i">@ViewData["ApplicationCode"]</span><span>-@appcodeIndex</span>
                         @*<span id="LblAppointmentCode-@i"></span>*@
                     </div>
@@ -2347,7 +2347,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
-
+        var total = 0;
         $(document).ready(function () {
             $('#loading').hide();
             var canConfirm = true;
