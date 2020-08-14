@@ -1021,7 +1021,7 @@
             //    this.value = this.value.replace(0,"");
             //});
             //$('.transactionQuantity@(increment)').focusout(function () {
-            //    if (this.value < 1) { 
+            //    if (this.value < 1) {
             //        this.value = this.value.replace(0, "");
             //        alert('Quantity cannot be zero');
             //    }
@@ -2190,7 +2190,7 @@
                 var lbldocuType@(increment) = $('#LblTypeOfDocument-@(increment)');
 
                 var subtotal@(increment) = 0;
-                
+
                 docuType@(increment).forEach(function (v) {
                     var Quantity = v.Quantity;
                     var DocuName = v.Name;
@@ -2202,7 +2202,7 @@
                     else {
                         subtotal@(increment) += (100 * parseInt(Quantity));
                     }
-                    
+
                 });
                 console.log(subtotal@(increment));
                 @*@{ var appCode = ViewData[$"ApplicationCode{increment}"] as string;}
@@ -2230,6 +2230,7 @@
                 @*$('#LblPayment-@(increment)').text('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));*@
                 $('#LblPayment-@(increment)').text('PhP'.concat(' ', subtotal@(increment), '.00'));
                 $('#Fees').val('PhP'.concat(' ', subtotal@(increment), '.00'));
+                $('#Records_@(increment)__Fees').val(subtotal@(increment));
                 @*var fees@(increment) = 0;
                 fees@(increment) = parseInt($('#documentsCount@(increment)').text()) * 100;
                 var totalFees = 0;
