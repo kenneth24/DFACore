@@ -99,7 +99,7 @@
 
                 (+) ADD DOCUMENT/S
             </a>
-            <span asp-validation-for="Records[increment].ApostileData" class="text-danger apostiledataPartialValidation"></span>
+            <span  class="text-danger apostiledataPartialValidation" style="position: relative;top: 20px;left: 10px;"></span>
             @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
             <div style="background-color: #217ff3;
         color: white;
@@ -1640,6 +1640,24 @@
             $('#selectDocumentsBtn@(increment)').click(function () {
                 var documentObject@(increment) = [];
                 $(':checkbox:checked').each(function (i) {
+                    var getId = $(this).attr('id');
+                    var formatId = (getId.charAt(0).toUpperCase() + getId.slice(1)).slice(0,-1);
+                    var expediteId = '#qty' + formatId + 'Expedite' +@(increment);
+                    var regularId = '#qty' + formatId + 'Regular' + @(increment);
+
+                    if (parseInt($(expediteId).val()) > 0 && !$(regularId).val()) {
+                            documentObject@(increment).push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($(regularId).val()) > 0 && !$(expediteId).val()) {
+                            documentObject@(increment).push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()) , Transaction: "Regular"});
+                        }
+                        else if (parseInt($(expediteId).val()) > 0 && parseInt($(regularId).val()) > 0) {
+                            documentObject@(increment).push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()), Transaction: "Expedite" });
+                            documentObject@(increment).push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()), Transaction: "Regular" });
+                        }
+                        else { return; }
+                });
+                @*$(':checkbox:checked').each(function (i) {
                     if ($(this).val() == "NBI Clearance") {
                         if (parseInt($('#qtyNbiClearanceExpedite@(increment)').val()) > 0 && !$('#qtyNbiClearanceRegular@(increment)').val()) {
                             documentObject@(increment).push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite@(increment)').val()), Transaction: "Expedite" });
@@ -2090,7 +2108,7 @@
                     //else {
                     //    documentObject.push({ Name: $(this).val(), Quantity: 1 });
                     //}
-                });
+                });*@
                 $("#documentsTable@(increment) tbody > tr").empty();
                 $("#documentsTable@(increment)").append('<tr><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
                 //var tbodyContent = '';

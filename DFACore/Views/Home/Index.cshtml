@@ -272,16 +272,18 @@
                             <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
                                 (+) ADD DOCUMENT/S
                             </a>
+                            <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata" style="position: relative;top: 20px;left: 10px;"></span>
                             @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
                             <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
                                 <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
                             </div>
-                            <div id="documentList" style="        border: 1px solid #b7b7b7;
-        padding: 10px;
-        height: 150px;
-        overflow: scroll;
-        position: relative;
-        top: 10px;">
+                            <div id="documentList" style="
+                            border: 1px solid #b7b7b7;
+                            padding: 10px;
+                            height: 150px;
+                            overflow: scroll;
+                            position: relative;
+                            top: 10px;">
 
                                 <table class="table " id="documentsTable">
                                     <tr>
@@ -296,7 +298,7 @@
                         </div>
                         <div>
                             <input asp-for="Record.ApostileData" id="apostileData" class="form-control" hidden />
-                            <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata"></span>
+                            
                         </div>
 
                     </div>
@@ -2538,7 +2540,7 @@
                         $('.countrydestination').text('');
 
                     if ($('#apostileData').val() == "")
-                        $('.apostiledata').text('This field is required.');
+                        $('.apostiledata').text('Please select document/s.');
                     else
                         $('.apostiledata').text('');
 
@@ -2640,32 +2642,8 @@
                 $("#step-three").hide();
             });
             $('#documentsCount').text(0);
-            //$("#qtyNbiClearanceExpedite").focusout(function () {
-            //   var totalNbiClearance = parseInt($("#qtyNbiClearanceExpedite").val()) + (!$("#qtyNbiClearanceRegular").val() ? 0 : parseInt($("#qtyNbiClearanceRegular").val()));
-            //    $("#qtyNbiClearance").val(totalNbiClearance);
-            //});
-            //$("#qtyNbiClearanceExpedite").focusout(function () {
-            //   var totalNbiClearance = parseInt($("#qtyNbiClearanceExpedite").val()) + (!$("#qtyNbiClearanceRegular").val() ? 0 : parseInt($("#qtyNbiClearanceRegular").val()));
-            //    $("#qtyNbiClearance").val(totalNbiClearance);
-            //});
             $('#selectDocumentsBtn').click(function () {
                 var documentObject = [];
-            //    $(".form-check-input").on("click", function () {
-            //    var getId = $(this).attr('id');
-            //    var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
-            //    var expediteId = '#qty' + formatId + 'Expedite';
-            //    var regularId = '#qty' + formatId + 'Regular';
-
-            //    if ($(this).is(':checked') == true) {
-            //        console.log(formatId);
-            //        $(expediteId).removeAttr("disabled");
-            //        $(regularId).removeAttr("disabled");
-            //    }
-            //    else {
-            //        $(expediteId).attr("disabled", true);
-            //        $(regularId).attr("disabled", true);
-            //    }
-            //});
                 $(':checkbox:checked').each(function (i) {
                     var getId = $(this).attr('id');
                     var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
@@ -3195,7 +3173,7 @@
             //});
 
 
-
+            
             $('#qtyNbiClearanceExpedite').focusout(function () {
                 if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
                     $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceExpedite').val()))
