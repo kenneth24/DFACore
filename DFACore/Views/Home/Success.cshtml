@@ -23,7 +23,8 @@
                 <div class="row">
                     <div class="col-md-2 col-sm-1"></div>
                     <div class="col-md-8 col-sm-10">
-                        <button type="button" class="btn button-secondary col-md-12 col-sm-12" >@Html.ActionLink("Back", "Login", "Account")</button>
+                        <button type="button" class="btn button-secondary col-md-12 col-sm-12" onclick="location.href='@Url.Action("Login", "Account")'" >@Html.ActionLink("Back", "Login", "Account")</button>
+                        @*<div class="col-md-12 col-sm-12">@Html.ActionLink("Back", "Login", "Account",null, new { @class= "button-secondary"})</div>*@
                     </div>
                     <div class="col-md-2 col-sm-1"></div>
                 </div>

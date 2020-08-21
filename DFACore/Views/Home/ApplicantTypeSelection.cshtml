@@ -3,7 +3,7 @@
         padding: 20px;
         height: auto;min-height:450px;">
     <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
-        <span class="float-left font-weight-bold">
+        <span class="float-left grey-text-bold font-weight-bold">
             @User.Identity.Name
         </span>
         <span class="float-right">
@@ -15,7 +15,7 @@
     </p>
     <div class="d-sm-none">
         <p>
-            <span>@User.Identity.Name</span>
+            <span class="grey-text-bold">@User.Identity.Name</span>
             <span class="float-right"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></span>
         </p>
         <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
@@ -72,7 +72,7 @@
                     border: none;
                     background-color: #ddd;" />
                 <p class="black-text text-center">
-                    Please include yourself in the number of applicants if you are applying for Apostille.
+                    Please include yourself in the number of applicants if you are also applying for an Apostille.
                 </p>
                 <div class="row form-group">
                     <div class="col-lg-5 col-md-5 col-sm-5"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-5">Back</button></div>

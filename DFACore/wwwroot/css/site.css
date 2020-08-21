@@ -1,105 +1,116 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    font-family:Arial, Helvetica, sans-serif;
-    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
 }
+
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
+
 @font-face {
     font-family: 'Trajan Pro Regular';
     font-style: normal;
     font-weight: normal;
     src: url("../lib/fonts/trajanpro-regular.woff") format('woff');
 }
+
 @font-face {
     font-family: 'Trajan Pro Bold';
     font-style: normal;
     font-weight: normal;
     src: url("../lib/fonts/trajanpro-bold.woff") format('woff');
 }
+
 #dfa-banner, #dfa-title {
     font-family: 'Trajan Pro Bold';
 }
+
 div.pageContainers {
     margin-top: 150px !important;
 }
+
 .black-text {
     color: #000000 !important;
-    font-family:Arial;
-    font-weight:normal;
+    font-family: Arial;
+    font-weight: normal;
 }
+
 .black-text-bold {
     color: #000000 !important;
     font-family: Arial;
     font-weight: bold;
 }
+
 .grey-text {
     color: #808080 !important;
     font-family: Arial;
@@ -111,6 +122,7 @@ div.pageContainers {
     font-family: Arial;
     font-weight: bold;
 }
+
 .red-text {
     color: #FF0000 !important;
     font-family: Arial;
@@ -122,6 +134,7 @@ div.pageContainers {
     font-family: Arial;
     font-weight: bold;
 }
+
 .blue-text {
     color: #217FF3 !important;
     font-family: Arial;
@@ -133,30 +146,76 @@ div.pageContainers {
     font-family: Arial;
     font-weight: bold;
 }
+
 .button-primary {
     background-color: #1B6EC2 !important;
     border: 1px solid #217FF3;
     border-radius: 5px;
 }
+
 .primary {
     background-color: #217FF3 !important;
     border: 1px solid #217FF3;
 }
+
 .button-secondary {
     background-color: #838E9E !important;
     border: 1px solid #838E9E;
     border-radius: 5px;
 }
+
 .secondary {
     background-color: #838E9E !important;
     border: 1px solid #838E9E;
 }
+
 .button-other {
     background-color: #FA4646 !important;
     border: 1px solid #FA4646;
     border-radius: 5px;
 }
+
 .secondary {
     background-color: #FA4646 !important;
     border: 1px solid #FA4646;
 }
+
+/*For medium screens and below*/
+@media only screen and (max-width: 1000px) {
+    .transactionQuantity {
+        width: 50px !important;
+        height: 30px !important;
+    }
+    #documentOwners {
+        width: 104.5% !important;
+        margin-left: -2.3% !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #documentOwners {
+        width: 110.5% !important;
+        margin-left: -5.3% !important;
+    }
+}
+/*@media only screen and (min-width: 401px) {
+    #documentOwners {
+        width: 108.4% !important;
+        margin-left: -4.3% !important;
+    }
+}*/
+@media only screen and (max-width: 600px) {
+    #documentOwners {
+        width: 108.4% !important;
+        margin-left: -4.3% !important;
+    }
+}
+.red {
+    color: red;
+}
+/*width: 106.7%;
+margin-left: -3.3%;*/
+
+
+
+

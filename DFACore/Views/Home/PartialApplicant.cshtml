@@ -11,7 +11,7 @@
         font-weight: 500;
     }
 </style>
-<div dat-worth="@increment">
+<div dat-worth="@increment" style="margin-bottom:40px !important;">
     @*<h1>@increment</h1>
         <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
     @*<input asp-for="Records[increment].ApplicationCode" value="" class="form-control" />*@
@@ -73,7 +73,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-                    <label asp-for="Records[increment].DateOfBirth">Date Birth <span class="red">*</span></label>
+                    <label asp-for="Records[increment].DateOfBirth">Date of Birth <span class="red">*</span></label>
                     <input type="date" asp-for="Records[increment].DateOfBirth" class="datepicker form-control dateOfbirthPartial" />
                     <span asp-validation-for="Records[increment].CountryDestination" class="text-danger dateOfbirthPartialValidation"></span>
                 </div>
@@ -2207,7 +2207,7 @@
                 console.log(subtotal@(increment));
                 @*@{ var appCode = ViewData[$"ApplicationCode{increment}"] as string;}
                 $('#LblAppointmentCode-@(increment)').text(@appCode);*@
-                $('#documentOwner-@(increment)').text($('#Records_@(increment)__FirstName').val().toUpperCase() + ' ' + $('#Records_@(increment)__MiddleName').val().toUpperCase() + ' ' + $('#Records_@(increment)__LastName').val().toUpperCase());
+                $('#documentOwner-@(increment)').text($('#Records_@(increment)__FirstName').val().toUpperCase() + ' ' + $('#Records_@(increment)__MiddleName').val().toUpperCase() + ' ' + $('#Records_@(increment)__LastName').val().toUpperCase() + ' '+ $('#Records_@(increment)__Suffix').val().toUpperCase());
                 $('#dateofBirth-@(increment)').text($('#Records_@(increment)__DateOfBirth').val());
                 $('#LblCountryDestination-@(increment)').text($('#Records_@(increment)__CountryDestination').val());
                 //console.log($('#Records_@(increment)__FirstName').val());
