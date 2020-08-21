@@ -216,6 +216,11 @@ div.pageContainers {
 /*width: 106.7%;
 margin-left: -3.3%;*/
 
-
+@supports (-webkit-touch-callout: none) {
+    /* CSS specific to iOS devices */
+    #applicantsCount {
+        font-size: 45px !important;
+    }
+}
 
 
