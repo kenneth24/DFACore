@@ -691,7 +691,7 @@
                             <input asp-for="Records[i].Fees" type="hidden" />
                         </div>
                     </div>
-                    <input asp-for="Records[i].Fees" type="hidden" />
+                    @*<input asp-for="Records[i].Fees" type="hidden" />*@
                     <hr />
                 }
                 <div class="row">
@@ -2493,6 +2493,7 @@
                 $('#LblPayment').text('PhP'.concat(' ', subtotal, '.00'));
                 //$('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
                 $('#Fees').val('PhP'.concat(' ', subtotal, '.00'));
+                $('#Record_Fees').val(subtotal);
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
                 console.log($("span[id^='LblPayment-']").text());
