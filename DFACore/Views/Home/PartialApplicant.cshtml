@@ -1026,6 +1026,21 @@
             //        alert('Quantity cannot be zero');
             //    }
             //});
+            $('.modal').on('show.bs.modal', function () {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+            });
+
+            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                }
+            });
+
+
             $('.transactionQuantity@(increment)').keypress(function (e) {
                 if (this.value.length == 0 && e.which == 48) {
                     return false;

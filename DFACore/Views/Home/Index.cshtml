@@ -128,7 +128,9 @@
 
                 <div id="step-one" class="tabcontent">
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 3: Apostille Application</p>
+
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
 
@@ -205,7 +207,7 @@
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.DateOfBirth"></label>
                                     <input type="date" asp-for="Record.DateOfBirth" class="form-control dateOfBirthOwner" />
-                                    <span asp-validation-for="Record.DateOfBirth" class="text-danger"></span>
+                                    <span asp-validation-for="Record.DateOfBirth" class="text-danger dateofbirth"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
@@ -484,7 +486,8 @@
         }
         <div id="step-two" style="display:none" class="tabcontent">
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 3: Schedule an Appointment</p>
+                <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 3: Schedule an Appointment</p>
+                <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 3: Schedule an Appointment</p>
             </div>
             <div class="row col-12">
                 <label asp-for="Record.ProcessingSite"></label>
@@ -2174,7 +2177,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="viewMinorReminder-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true" style="margin-top: 200px;">
+    <div class="modal fade" id="viewMinorReminder-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true" style="margin-top: 100px;">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
@@ -2203,7 +2206,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
+                        <div class="row" style="width: 100%;margin:auto">
                             <div class="col-md-4 col-sm-12"> </div>
 
                             <button id="declaration-agree"
@@ -2336,9 +2339,9 @@
                 });
             });
 
-            $("#Region").val('NCR');
+            //$("#Region").val('NCR');
 
-
+            //console.log('dob=' + $('#Record_DateOfBirth').val());
 
             $("#backToStepOne").click(function () {
                 $('#stepOneBtn').click();
@@ -2347,10 +2350,10 @@
                 $("#step-three").hide();
             });
             $("#stepOneNextBtn").click(function () {
-                //|| $('#Nationality').val() == "" fNamePartial
-                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == "" || $('#Address').val() == ""
+                //|| $('#Nationality').val() == "" fNamePartial  || $('#Address').val() == ""
+                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
                     || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('.apostiledataPartial').val() == ""
-                    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == ""
+                    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
                 ) {
 
                     //if ($('#Title').val() == "")
@@ -2396,6 +2399,12 @@
                         $('.lname').text('This field is required.');
                     else
                         $('.lname').text('');
+
+
+                    if ($('#Record_DateOfBirth').val() == "")
+                        $('.dateofbirth').text('This field is required.');
+                    else
+                        $('.dateofbirth').text('');
 
                     //if ($('#Address').val() == "")
                     //    $('.address').text('This field is required.');
