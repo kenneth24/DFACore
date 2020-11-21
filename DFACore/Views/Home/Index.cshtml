@@ -318,167 +318,167 @@
             else
             {
                 @*<form method="post" id="application-form">*@
-    <div id="step-one-authorized" class="tabcontent">
-        <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
-            <div class="form-group">
-                <p>
-                    <span style="font-weight: bold">Name of the Authorized Representative</span>
-                    <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                </p>
-                <div class="row">
-                    @*<div class="col-md-2 col-sm-12">
-                        <label asp-for="Title">Title <span class="red">*</span></label>
-                        <select asp-for="Title" class="form-control">
-                            <option value=""></option>
-                            <option value="MR">MR.</option>
-                            <option value="MRS">MRS.</option>
-                            <option value="MRS">MS.</option>
-                        </select>
-                        <span asp-validation-for="Title" class="text-danger title"></span>
-                    </div>*@
-                    <div class="col-lg-3 col-md-12 col-sm-12">
-                        <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                        <input asp-for="Record.FirstName" class="form-control" />
-                        <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
+                <div id="step-one-authorized" class="tabcontent">
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
+                        <div class="form-group">
+                            <p>
+                                <span style="font-weight: bold">Name of the Authorized Representative</span>
+                                <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
+                            </p>
+                            <div class="row">
+                                @*<div class="col-md-2 col-sm-12">
+                                        <label asp-for="Title">Title <span class="red">*</span></label>
+                                        <select asp-for="Title" class="form-control">
+                                            <option value=""></option>
+                                            <option value="MR">MR.</option>
+                                            <option value="MRS">MRS.</option>
+                                            <option value="MRS">MS.</option>
+                                        </select>
+                                        <span asp-validation-for="Title" class="text-danger title"></span>
+                                    </div>*@
+                                <div class="col-lg-3 col-md-12 col-sm-12">
+                                    <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
+                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
+                                </div>
+
+                                <div class="col-lg-3 col-md-12 col-sm-12">
+                                    <label asp-for="Record.MiddleName"></label>
+                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-lg-3 col-md-12 col-sm-12">
+                                    <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
+                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
+                                </div>
+
+
+                                <div class="col-lg-3 col-md-12 col-sm-12">
+                                    <label asp-for="Record.Suffix"></label>
+                                    <select asp-for="Record.Suffix" class="form-control">
+                                        <option value="">N/A</option>
+                                        <option value="JR.">JR.</option>
+                                        <option value="SR.">SR.</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                        <option value="VI">VI</option>
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                        <option value="X">X</option>
+                                        <option value="XI">XI</option>
+                                        <option value="XII">XII</option>
+                                        <option value="XIII">XIII</option>
+                                        <option value="XIV">XIV</option>
+                                        <option value="XV">XV</option>
+                                    </select>
+                                    <span asp-validation-for="Record.Suffix" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <h6>Address</h6>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
+                                    <input asp-for="Barangay" class="form-control" />
+                                    <span asp-validation-for="Barangay" class="text-danger address"></span>
+                                </div>
+
+
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Region">Region/Province <span class="red">*</span></label>
+                                    <select asp-for="Region" class="form-control">
+                                        <option value=""></option>*@
+                        @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                            {
+                                <option value="@item">@item</option>
+                            }*@
+                        @*</select>
+                                        <span asp-validation-for="Region" class="text-danger nationality"></span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-12">
+                                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                                        <select asp-for="City" class="form-control">
+                                            <option value=""></option>
+                                            <option value="Caloocan">Caloocan</option>
+                                            <option value="Las Piñas">Las Piñas</option>
+                                            <option value="Makati">Makati</option>
+                                            <option value="Malabon">Malabon</option>
+                                            <option value="Mandaluyong">Mandaluyong</option>
+                                            <option value="Manila">Manila</option>
+                                            <option value="Marikina">Marikina</option>
+                                            <option value="Muntinlupa">Muntinlupa</option>
+                                            <option value="Navotas">Navotas</option>
+                                            <option value="Parañaque">Parañaque</option>
+                                            <option value="Pasay">Pasay</option>
+                                            <option value="Pasig">Pasig</option>
+                                            <option value="Pateros">Pateros</option>
+                                            <option value="Quezon City">Quezon City</option>
+                                            <option value="San Juan">San Juan</option>
+                                            <option value="Taguig">Taguig</option>
+                                            <option value="Valenzuela">Valenzuela</option>
+                                        </select>
+                                        <span asp-validation-for="City" class="text-danger nationality"></span>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-12">
+                                    <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
+                                </div>
+                                @*<div class="col-md-6 col-sm-12">
+                                        <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                        <select asp-for="CountryDestination" class="form-control">
+                                            <partial name="_CountriesPartial" />
+                                        </select>
+                                        <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                    </div>*@
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-12">
+                                        <label asp-for="NameOfRepresentative"></label>
+                                        <input asp-for="NameOfRepresentative" class="form-control" />
+                                        <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-5 col-sm-12">
+                                        <label asp-for="RepresentativeContactNumber"></label>
+                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
+                                        <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div>
+                    <div id="documentOwners" style="margin-top:10px;margin-bottom:10px;width: 102.5%; margin-left: -1.3%;">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12"></div>
+                        <div class="col-md-4 col-sm-12">
+                            <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                        </div>
+                        <div class="col-md-4 col-sm-12"></div>
                     </div>
 
-                    <div class="col-lg-3 col-md-12 col-sm-12">
-                        <label asp-for="Record.MiddleName"></label>
-                        <input asp-for="Record.MiddleName" class="form-control" />
-                        <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
-                    </div>
-
-                    <div class="col-lg-3 col-md-12 col-sm-12">
-                        <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                        <input asp-for="Record.LastName" class="form-control" />
-                        <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
-                    </div>
+                    @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
 
 
-                    <div class="col-lg-3 col-md-12 col-sm-12">
-                        <label asp-for="Record.Suffix"></label>
-                        <select asp-for="Record.Suffix" class="form-control">
-                            <option value="">N/A</option>
-                            <option value="JR.">JR.</option>
-                            <option value="SR.">SR.</option>
-                            <option value="I">I</option>
-                            <option value="II">II</option>
-                            <option value="III">III</option>
-                            <option value="IV">IV</option>
-                            <option value="V">V</option>
-                            <option value="VI">VI</option>
-                            <option value="VII">VII</option>
-                            <option value="VIII">VIII</option>
-                            <option value="IX">IX</option>
-                            <option value="X">X</option>
-                            <option value="XI">XI</option>
-                            <option value="XII">XII</option>
-                            <option value="XIII">XIII</option>
-                            <option value="XIV">XIV</option>
-                            <option value="XV">XV</option>
-                        </select>
-                        <span asp-validation-for="Record.Suffix" class="text-danger"></span>
-                    </div>
+
                 </div>
-            </div>
-            @*<div class="form-group">
-            <h6>Address</h6>
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                    <input asp-for="Barangay" class="form-control" />
-                    <span asp-validation-for="Barangay" class="text-danger address"></span>
-                </div>
-
-
-                <div class="col-md-3 col-sm-12">
-                    <label asp-for="Region">Region/Province <span class="red">*</span></label>
-                    <select asp-for="Region" class="form-control">
-                        <option value=""></option>*@
-            @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
-            {
-                <option value="@item">@item</option>
-            }*@
-            @*</select>
-                        <span asp-validation-for="Region" class="text-danger nationality"></span>
-                    </div>
-                    <div class="col-md-3 col-sm-12">
-                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                        <select asp-for="City" class="form-control">
-                            <option value=""></option>
-                            <option value="Caloocan">Caloocan</option>
-                            <option value="Las Piñas">Las Piñas</option>
-                            <option value="Makati">Makati</option>
-                            <option value="Malabon">Malabon</option>
-                            <option value="Mandaluyong">Mandaluyong</option>
-                            <option value="Manila">Manila</option>
-                            <option value="Marikina">Marikina</option>
-                            <option value="Muntinlupa">Muntinlupa</option>
-                            <option value="Navotas">Navotas</option>
-                            <option value="Parañaque">Parañaque</option>
-                            <option value="Pasay">Pasay</option>
-                            <option value="Pasig">Pasig</option>
-                            <option value="Pateros">Pateros</option>
-                            <option value="Quezon City">Quezon City</option>
-                            <option value="San Juan">San Juan</option>
-                            <option value="Taguig">Taguig</option>
-                            <option value="Valenzuela">Valenzuela</option>
-                        </select>
-                        <span asp-validation-for="City" class="text-danger nationality"></span>
-                    </div>
-                </div>
-            </div>*@
-            <div class="form-group">
-                <div class="row">
-
-                    <div class="col-md-6 col-sm-12">
-                        <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                        <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
-                        <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
-                    </div>
-                    @*<div class="col-md-6 col-sm-12">
-                        <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
-
-                        <select asp-for="CountryDestination" class="form-control">
-                            <partial name="_CountriesPartial" />
-                        </select>
-                        <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                    </div>*@
-                </div>
-            </div>
-            @*<div class="form-group">
-                <div class="row">
-                    <div class="col-md-7 col-sm-12">
-                        <label asp-for="NameOfRepresentative"></label>
-                        <input asp-for="NameOfRepresentative" class="form-control" />
-                        <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-5 col-sm-12">
-                        <label asp-for="RepresentativeContactNumber"></label>
-                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
-                        <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>*@
-        </div>
-        <div id="documentOwners"  style="margin-top:10px;margin-bottom:10px;width: 102.5%; margin-left: -1.3%;">
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-12"></div>
-            <div class="col-md-4 col-sm-12">
-                <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
-            </div>
-            <div class="col-md-4 col-sm-12"></div>
-        </div>
-
-        @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
-
-
-
-    </div>
                 @*</form>*@
             }
         }
@@ -2274,26 +2274,27 @@
             var applicants = parseInt($("#applicantCount").text());
             if (applicants != 0) {
                 for (i = 0; i < applicants; i++) {
-                    //console.log(i);
+                    console.log(i);
                     //var partial = [];
                     $.ajax({
                             url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
                             cache: false,
                         success: function (html) {
                             //partial.push(html);
-                                $("#documentOwners").append(html).insertAfter("#documentOwners"); // initial load
+                                 // initial load
                                 //insertAtIndex(i, html);
                                 //$("#documentOwners").prepend(html);
 
-                                //if (i == 0) {
-                                //    $("#documentOwners").append(html).insertAfter("#documentOwners");
+                                if (i == 0) {
+                                    $("#documentOwners").append(html);
 
-                                //} else {
-                                //$("#documentOwners > div.container:last").after(html);
-                                //}
+                                } else {
+                                    $("#documentOwners").append(html).insertAfter('documentOwner-'+ i - 1);
+                                }
 
 
-                        }
+                        },
+                        async: false
 
                     });
                     //$("#documentOwners").append(partial[i]);
