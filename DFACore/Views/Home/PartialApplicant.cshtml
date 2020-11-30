@@ -95,20 +95,20 @@
     </div>
     <div>
         <div>
-            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal@(increment)" id="documentsSelectionBtn@(increment)" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
+            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal@(increment)" id="documentsSelectionBtn@(increment)" style="font-size: 18px;padding: 8px;position: relative;top: -10px;">
 
-                (+) ADD DOCUMENT/S
+                (+) ADD DOCUMENTS HERE
             </a>
-            <span  class="text-danger apostiledataPartialValidation" style="position: relative;top: 20px;left: 10px;"></span>
+            <span  class="text-danger apostiledataPartialValidation" style="position: relative;top: 10px;left: 10px;"></span>
             @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
             <div style="background-color: #217ff3;
         color: white;
         height: auto;
-        position: relative;top: 20px;
+        position: relative;top: 0px;
 ">
                 <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount@(increment)">0</span></p>
             </div>
-            <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;position: relative;top: 10px;">
+            <div id="documentList" style="border: 1px solid #b7b7b7; padding: 10px;height:150px; overflow:scroll;position: relative;top: 0px;">
 
                 <table class="table" id="documentsTable@(increment)">
                     <tr>
@@ -182,6 +182,7 @@
                             <td>
                                 <p>*Original document issued by National Bureau of Investigation (NBI) with dry seal.</p>
                                 <br />
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <a href="#" class="blue-text" data-toggle="modal" data-target="#personalCopyNotValid-modal">*Personal Copy is NOT valid</a>
                                 <br />
                                 <a href="#" class="blue-text" data-toggle="modal" data-target="#nbiSampleCopy-modal">*Sample copy of NBI sundry</a>
@@ -275,11 +276,12 @@
                                 <p>*For newly registered records, Local Civil Registrar (LCR) copy should be certified by PSA.</p>
                                 <p>*Provide an LCR copy of Birth (Form 1A)/ Death (Form 2A)/ Marriage (Form 3A) Certificate if the entries from PSA/NSO are UNCLEAR.</p>
                                 <br />
-                                <a href="#" class="blue-text" data-toggle="modal" data-target="#birthCertificate-modal">*Sample LCR copy of Birth Certificate (From 1A)</a>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <a href="#" class="blue-text" data-toggle="modal" data-target="#birthCertificate-modal">*LCR copy of Birth Certificate (Form 1A)</a>
                                 <br />
-                                <a href="#" class="blue-text" data-toggle="modal" data-target="#deathCertificate-modal">*Sample LCR copy of Death Certificate (From 2A)</a>
+                                <a href="#" class="blue-text" data-toggle="modal" data-target="#deathCertificate-modal">*LCR copy of Death Certificate (Form 2A)</a>
                                 <br />
-                                <a href="#" class="blue-text" data-toggle="modal" data-target="#marriageCertificate-modal">*Sample LCR copy of Marriage Certificate (From 3A)</a>
+                                <a href="#" class="blue-text" data-toggle="modal" data-target="#marriageCertificate-modal">*Marriage Certificate (LCR Copy, 1A, 3A)</a>
                             </td>
                         </tr>
                         <tr>
@@ -308,7 +310,9 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#elementaryAndHighSchoolCAV-modal">*Certified True Copies from school; and Certification, Authentication and Verification (CAV) from DepEd Regional Office.</a></p>
+                                <p>*Certified True Copies from school</p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#elementaryAndHighSchoolCAV-modal">*Certification, Authentication and Verification (CAV) from DepEd Regional Office.</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -334,7 +338,9 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#techVocCAV-modal">*Certified True Copies from school; and Certification, Authentication and Verification (CAV) from Technical and Skills Development Authority (TESDA).</a></p>
+                                <p>*Certified True Copies from school</p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#techVocCAV-modal">*Certification, Authentication and Verification (CAV) from Technical and Skills Development Authority (TESDA).</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -360,7 +366,9 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#SCandUnivCAV-modal">*Certified True Copies from school; and Certification, Authentication and Verification (CAV) from the school.</a></p>
+                                <p>*Certified True Copies from school</p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#SCandUnivCAV-modal">*Certification, Authentication and Verification (CAV) from the school.</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -386,7 +394,9 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#chedCOV-modal">Certified True Copies from school; and Certification, Authentication and Verification (CAV) from Commission on Higher Education (CHED). </a></p>
+                                <p>*Certified True Copies from school</p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#chedCOV-modal">*Certification, Authentication and Verification (CAV) from Commission on Higher Education (CHED). </a></p>
                             </td>
                         </tr>
                         <tr>
@@ -412,7 +422,8 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#prcCTC-modal">*Certified True Copies from PRC.</a></p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#prcCTC-modal">*Originally-signed and/or certified true copies from PRC.</a></p>
                             </td>
                         </tr>
                         <tr>
@@ -440,6 +451,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohStamp-modal">*For employement: DOH Stamp per document.</a></p>
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohMedCert-modal">*For other purpose: Certification issued by the DOH with attached Medical Certificate.</a></p>
                             </td>
@@ -468,6 +480,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#caapCert-modal">*Certificate by CAAP.</a></p>
                             </td>
                         </tr>
@@ -495,6 +508,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#ltoCert-modal">*Certification from Land Transportation Office (LTO Main Branch Only).</a></p>
                             </td>
                         </tr>
@@ -601,7 +615,8 @@
                                 </div>
                             </td>
                             <td>
-                                <p>*Notarized Affidavit stating financial circumstances and indicating certificate/s as attachments.</p>
+                                <p>*Notarized Affidavit stating necessary factual circumstances and indicating certificate/s as attachments. </p>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
                                 <p>*Copy of Notarial Commission is not the same as Certificate of Authority for a Notarial Act.</p>
                             </td>
@@ -753,6 +768,7 @@
 
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
                             </td>
                         </tr>
@@ -825,6 +841,7 @@
 
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#courtDocuCTC-modal">*Certified True Copies from the Court.</a></p>
                             </td>
                         </tr>
@@ -852,6 +869,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#immigrationDocu-modal">*Certified by Bureau of Immigration.</a></p>
                             </td>
                         </tr>
@@ -879,7 +897,8 @@
                                 </div>
                             </td>
                             <td>
-                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dswdClearance-modal">*Original document issued by Department of Social Welfare and Development.</a></p>
+                                <i class="text-bold">For sample document click here</i> <br />
+                                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dswdClearance-modal">*Original or certified true copies issued by the Department of Social Welfare and Development. </a></p>
                             </td>
                         </tr>
                         <tr>
@@ -906,6 +925,7 @@
 
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpCert-modal">*Original document issued by Philippine National Police (PNP).</a></p>
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpSundry-modal">*Sample copy of PNP Sundry.</a></p>
                             </td>
@@ -935,6 +955,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#govtCTC-modal">*Certified true copy/ies from the issuing office.</a></p>
                             </td>
                         </tr>
@@ -963,6 +984,7 @@
 
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#mayorCert-modal">*Mayor's certification/clearance which has a jurisdiction over the Barangay.</a></p>
                             </td>
                         </tr>
@@ -991,6 +1013,7 @@
                                 </div>
                             </td>
                             <td>
+                                <i class="text-bold">For sample document click here</i> <br />
                                 <p><a href="#" class="blue-text" data-toggle="modal" data-target="#exportDocu-modal">*Certified by Philippine Chamber of Commerce (PCCI), Department Of Health (DOH), Department of Agriculture (DA) or by the Food and Drug Administration (FDA) depending on the nature of the document.</a></p>
                             </td>
                         </tr>

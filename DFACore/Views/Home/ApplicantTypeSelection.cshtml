@@ -53,7 +53,7 @@
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
     </div>
-    <div id="insert-applicants-number" class="row" style="display:none;" >
+    <div id="insert-applicants-number" class="row" style="display:none;">
         <div class="col-sm-12 col-md-2 col-lg-2">
         </div>
         <div class="col-sm-12 col-md-8 col-lg-8 text-center" style="margin-top:70px">
@@ -62,6 +62,7 @@
                 <input id="applicantsCount"
                        type="text"
                        min="1"
+                       max="10"
                        value="1"
                        name="applicantsCount"
                        class="black-text-bold numberInput"
@@ -71,9 +72,9 @@
                     text-align: center;
                     border: none;
                     background-color: #ddd;" />
-                <p class="black-text text-center">
-                    Please include yourself in the number of applicants if you are also applying for an Apostille.
-                </p>
+                @*<p class="black-text text-center">
+                        Please include yourself in the number of applicants if you are also applying for an Apostille.
+                    </p>*@
                 <div class="row form-group">
                     <div class="col-lg-5 col-md-5 col-sm-5"> <button id="back-to-choose-user" type="button" class="btn button-secondary text-white col-md-12 col-sm-5">Back</button></div>
                     <div class="col-lg-2 col-md-2 col-sm-2" style="margin-top: 10px;">
@@ -104,23 +105,17 @@
                         </p>
                         <p class="black-text" style="font-size:12px;">
                             1. Authorization letter from the owner. For Minor Applicants - Original Special Power
-                            of Attorney executed by parent/s.
-                        </p>
-                        <p class="black-text" style="font-size:12px;">
-                            2. Photocopy of the owner's ID bearing his/her signature.
-                        </p>
-                        <p class="black-text" style="font-size:12px;">
-                            3. Photocopy and original copy of representative's ID.
+                            of Attorney executed by parent/s. <br />
+                            2. Photocopy of the owner's ID bearing his/her signature. <br />
+                            3. Photocopy and original copy of representative's ID. br
                         </p>
                         <p class="black-text-bold" style="font-size:12px;">
-                            List of Acceptable IDs:
+                            Acceptable IDs:
                         </p>
                         <p class="black-text" style="font-size:12px;">
-                            *All digitized Philippines government-issued IDs bearing the signature of the applicant.
-                        </p>
-                        <p class="black-text" style="font-size:12px;">
-                            *Other acceptable IDs: Senior Citizens ID, Solo Parent ID, PWD ID, Voter's ID, Voter's Certification,
-                            Seaman's Book and Alumni ID or Student ID (1 year upon graduation).
+                            *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card. <br />
+                            *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID . <br />
+                            *Digital Student ID (valid for the duration of his studies up to 1 year upon graduation)
                         </p>
                         <p class="black-text-bold text-center" style="font-size:14px;">
                             REMINDER FOR MINOR APPLICANTS
@@ -183,8 +178,15 @@
             });
         $("#applicantsCount").change(function () {
             if (parseInt($("#applicantsCount").val()) >= 1) {
-                $("#show-step-one-authorized").css("z-index", "1");
+                if (parseInt($("#applicantsCount").val()) >= 10) {
+                    alert("Cannot input more than 10.");
+                    $("#applicantsCount").val(10);
                 }
+                else {
+                $("#show-step-one-authorized").css("z-index", "1");
+                    $("#applicantsCount").val(1);
+                }
+            }
         });
             @*$("#show-step-one-authorized").click(function () {
                 //$("#step-one-authorized").show();
