@@ -47,6 +47,8 @@
     button a {
         color: white;
     }
+
+    
 </style>
 <div id="dfa-title" class="jumbotron pageContainers" style="background-color: white;">
     <h5 class="text-center bannerDetails black-text">WELCOME TO</h5>
@@ -108,11 +110,32 @@
     <div class="col-md-3 col-sm-0">
     </div>
     <div class="col-md-10 offset-md-1" style="margin-top:35px;">
-        <h3 class="red-text-bold text-center">NOTICE TO THE PUBLIC</h3>
+        <h3 class="red-text-bold text-center blinking">NOTICE TO THE PUBLIC</h3>
+        @*<p class="black-text" style="color:#217ff3;font-size:15px;">
+                Please be advised that the DFA Apostille Online Application & Appointment System is temporarily available for processing of Apostille at DFA - Office of the Consular Affairs. (Bradco Avenue corner Macapagal Boulevard, Aseana Business Park,
+                Parañaque, 1714 Metro Manila). Please check the DFA website www.dfa.gov.ph for further announcements.
+            </p>*@
         <p class="black-text" style="color:#217ff3;font-size:15px;">
-            Please be advised that the DFA Apostille Online Application & Appointment System is temporarily available for processing of Apostille at DFA - Office of the Consular Affairs. (Bradco Avenue corner Macapagal Boulevard, Aseana Business Park,
-            Parañaque, 1714 Metro Manila). Please check the DFA website www.dfa.gov.ph for further announcements.
+            The DFA Apostille Online Application & Appointment System is available for processing of Apostille ONLY at the
+            DFA - Office of the Consular Affairs. (Bradco Avenue corner Macapagal Boulevard, Aseana Business Park, Parañaque, 1714 Metro Manila)
+            at the moment. If you wish to set an appointment with the any of the following Consular Offices, you can email them at:
+
         </p>
+
+        <div class="row" style="font-size:14px;" >
+            <div class="col-lg-3 col-md-1 col-sm-12"></div>
+            <div class="col-lg-6 col-md-10 col-sm-12">
+                CO Northeast (Ali Mall Cubao) - <a href="#">ncrnortheast.so@dfa.gov.ph</a> <br />
+                CO West (SM Manila) - <a href="#">nerwest.so@dfa.gov.ph</a> <br />
+                CO East (SM Megamall) - <a href="#">ncreast.so@dfa.gov.ph</a> <br />
+                CO South (Metro Gaisano, Alabang) - <a href="#">dfancrsouth@gmail.com</a> <br />
+                Pampanga -  
+                <a href="#">pampanga.rco@dfa.gov.ph</a> / <a href="#">rcopampanga@yahoo.com</a><br />
+                Cebu - cebu.rco@dfa.gov.ph Davao - <a href="#">davao.rco@dfa.gov.ph</a> <br />
+            </div>
+            <div class="col-lg-3 col-md-1 col-sm-12"></div>
+
+        </div>
     </div>
 </div>
 <div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
@@ -214,12 +237,12 @@
                         application. Misrepresentation of the user supplying inaccurate information may be considered
                         grounds for refusal / cancellation / forfeiture of authentication / Apostille application.
                     </p>
-                    <p class="black-text" style="font-size:14px;">
+                    @*<p class="black-text" style="font-size:14px;">
                         All fees are non-refundable. Fees shall be forfeited for applicants who fail to show up on their
                         confirmed appointment, applicants who cancel their appointment, applicants whose application
                         was rejected due to inconsistency and/or incorrect information, and applicants who present
                         discrepant, fake or spurious documents.
-                    </p>
+                    </p>*@
                     <p class="black-text-bold" style="font-size:14px;">
                         <i>
                             By proceeding with this application, I understand that I am signifying my unequivocal
@@ -263,7 +286,7 @@
                 contentType: 'application/json',
                 data: JSON.stringify(model),
                 success: function (result) {
-                    if (result == true) 
+                    if (result == true)
                         $("#declaration-modal").modal('show');
                     else
                         $("#account").submit();
