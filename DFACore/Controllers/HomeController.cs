@@ -47,7 +47,7 @@ namespace DFACore.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Index(int applicantsCount = 0)
+        public  IActionResult Index(int applicantsCount = 0)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
@@ -89,7 +89,8 @@ namespace DFACore.Controllers
                     ApplicationCode = model.Record.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = model.Record.Fees,
-                    Type = 0
+                    Type = 0,
+                    DateCreated = DateTime.UtcNow
                 };
                 applicantRecords.Add(applicantRecord);
                 attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
@@ -121,7 +122,8 @@ namespace DFACore.Controllers
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
-                        Type = 1
+                        Type = 1,
+                        DateCreated = DateTime.UtcNow
                     };
 
                     applicantRecords.Add(applicantRecord);
@@ -302,6 +304,16 @@ namespace DFACore.Controllers
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
             var result = _applicantRepo.ValidateScheduleDate(date);
+
+            return Json(result);
+        }
+
+        public ActionResult ValidateScheduleDate(string scheduleDate, int applicationCount, int type)
+        {
+            var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, type);
 
             return Json(result);
         }

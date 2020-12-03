@@ -18,5 +18,7 @@ namespace DFACore.Data
         public DbSet<Models.ApplicantRecord> ApplicantRecords { get; set; }
         public DbSet<Models.ActivityLog> ActivityLogs { get; set; }
         public DbSet<Models.DisabledDate> DisabledDates { get; set; }
+
+        public DbSet<Models.ScheduleCapacity> ScheduleCapacities { get; set; }
     }
 }

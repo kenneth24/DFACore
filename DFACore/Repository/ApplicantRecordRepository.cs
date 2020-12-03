@@ -28,9 +28,18 @@ namespace DFACore.Repository
 
         public bool AddRange(IEnumerable<ApplicantRecord> applicantRecords)
         {
+            var scheduleTime = new List<DateTime>()
+            { 
+                new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
+            };
+            
             foreach (var applicantRecord in applicantRecords)
             {
-                applicantRecord.DateCreated = DateTime.UtcNow;
+                if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
+                {
+
+                }
+                ValidateScheduleDate(applicantRecord.ScheduleDate);
             }
             //applicantRecord.DateCreated = DateTime.UtcNow;
 
@@ -71,6 +80,23 @@ namespace DFACore.Repository
                 return false;
             else
                 return true;
+        }
+
+        public bool ValidateScheduleDate(DateTime date, int applicationCount, int type)
+        {
+            var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
+            var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
+
+            if (scheduleCapacity != null)
+            {
+                if (totalCount > scheduleCapacity.Capacity)
+                    return false;
+                else
+                    return true;
+            }
+            else
+                return false;
+
         }
 
         public List<AvailableDAtes> GenerateListOfDates(DateTime start)

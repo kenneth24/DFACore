@@ -13,4 +13,5 @@ namespace DFACore.Models.Enums
         Title1 = 1,
         Title2 = 2
     }
+
 }
