@@ -445,5 +445,35 @@ namespace DFACore.Controllers
             return (int)ViewData["ApplicationCount"];
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> PDFViewer()
+        {
+            
+            var options = new ConvertOptions
+            {
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 20,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var data = new TestData
+            {
+                Text = "This is a test",
+                Number = 123456
+            };
+
+            var pdf = await _generatePdf.GetByteArray("Views/PowerOfAttorney.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
     }
 }
