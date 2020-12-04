@@ -69,6 +69,9 @@ namespace DFACore.Controllers
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
+            bool generatePowerOfAttorney = false;
+            bool generateAuthLetter = false;
+
             if ( model.Records == null)
             {
                 var applicantRecord = new ApplicantRecord
@@ -94,6 +97,12 @@ namespace DFACore.Controllers
                 };
                 applicantRecords.Add(applicantRecord);
                 attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                if (age < 18)
+                    generatePowerOfAttorney = true;
+                else
+                    generateAuthLetter = true;
 
             }
             else
@@ -128,6 +137,12 @@ namespace DFACore.Controllers
 
                     applicantRecords.Add(applicantRecord);
                     attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                    var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                    if (age < 18)
+                        generatePowerOfAttorney = true;
+                    else
+                        generateAuthLetter = true;
                 }
                 
             };
@@ -140,6 +155,17 @@ namespace DFACore.Controllers
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
             //var attachment = new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf"));
+
+            if (generatePowerOfAttorney)
+            {
+                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            }
+
+            if (generateAuthLetter)
+            {
+                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            }
+
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     $"Download the attachment and present to the selected branch.",
@@ -293,6 +319,70 @@ namespace DFACore.Controllers
             //};
 
             var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
+
+        public async Task<MemoryStream> GeneratePowerOfAttorneyPDF(TestData data)
+        {
+            //var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            //var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                //HeaderHtml = header,
+                //FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 20,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/PowerOfAttorney.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
+
+        public async Task<MemoryStream> GenerateAuthorizationLetterPDF(TestData data)
+        {
+            //var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            //var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                //HeaderHtml = header,
+                //FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 20,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/AuthorizationLetter.cshtml", data);
             var pdfStream = new System.IO.MemoryStream();
             pdfStream.Write(pdf, 0, pdf.Length);
             pdfStream.Position = 0;
