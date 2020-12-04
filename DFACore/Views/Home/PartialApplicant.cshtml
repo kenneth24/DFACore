@@ -2180,7 +2180,8 @@
                     $('#viewMinorReminder-modal').modal('show');
                 }
             });
-                $('#appointmentSchedule').change(function () {
+
+                @*$('#appointmentSchedule').change(function () {
                 $("#errSchedDate").hide();
                 $('#schedLoader').show();
                 $.ajax({
@@ -2210,7 +2211,9 @@
 
                 });
 
-                });
+                });*@
+
+
             $("#stepTwoNextBtn").click(function () {
                 if (canConfirm == false) {
                     $("#errSchedDate").show();

@@ -308,12 +308,12 @@ namespace DFACore.Controllers
             return Json(result);
         }
 
-        public ActionResult ValidateScheduleDate(string scheduleDate, int applicationCount, int type)
+        public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount)
         {
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
-            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, type);
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount);
 
             return Json(result);
         }

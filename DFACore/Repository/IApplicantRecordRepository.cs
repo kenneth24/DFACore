@@ -14,6 +14,6 @@ namespace DFACore.Repository
         bool Update(ApplicantRecord applicantRecord);
         bool Delete(long id);
         bool ValidateScheduleDate(DateTime date);
-        bool ValidateScheduleDate(DateTime date, int applicationCount, int type);
+        bool ValidateScheduleDate(DateTime date, int applicationCount);
     }
 }

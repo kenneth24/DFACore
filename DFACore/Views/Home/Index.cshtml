@@ -3060,10 +3060,10 @@
                 $("#errSchedDate").hide();
                 $('#schedLoader').show();
                 $.ajax({
-                    url: '@Url.Action("ValidateScheduleDate")',
+                    url: '@Url.Action("ValidateScheduleDate2")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
-                    data: { scheduleDate: $('#appointmentSchedule').val()},
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: applicants },
                     success: function (result) {
                         console.log('success');
                         $('#schedLoader').hide();

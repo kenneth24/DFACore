@@ -82,8 +82,30 @@ namespace DFACore.Repository
                 return true;
         }
 
-        public bool ValidateScheduleDate(DateTime date, int applicationCount, int type)
+        public bool ValidateScheduleDate(DateTime date, int applicationCount)
         {
+            int type = 0;
+
+            TimeSpan timeSpan = date.TimeOfDay;
+            TimeSpan TodayTime2 = new TimeSpan(8, 0, 0);
+
+            if (timeSpan == new TimeSpan(8, 0, 0))
+                type = 1;
+            else if (timeSpan == new TimeSpan(9, 0, 0))
+                type = 2;
+            else if (timeSpan == new TimeSpan(10, 0, 0))
+                type = 3;
+            else if (timeSpan == new TimeSpan(11, 0, 0))
+                type = 4;
+            else if (timeSpan == new TimeSpan(12, 0, 0))
+                type = 5;
+            else if (timeSpan == new TimeSpan(13, 0, 0))
+                type = 6;
+            else if (timeSpan == new TimeSpan(14, 0, 0))
+                type = 7;
+            else if (timeSpan == new TimeSpan(15, 0, 0))
+                type = 8;
+
             var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
             var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
 
