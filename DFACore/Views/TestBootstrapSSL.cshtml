@@ -51,6 +51,7 @@
         .padding30 {
             padding-left: 30px !important;
         }
+
         p {
             margin-top: 0;
             margin-bottom: 0;
@@ -103,55 +104,71 @@
             </div>
 
             <div class="row">
-                <p class="text-center" style="font-weight:bold;font-size:22px;">Application Summary</p>
-            </div>
-            <div class="row">
-                <table class="borderless">
-                    <tbody>
-                        <tr>
-                            <td>Document Owner:</td>
-                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</td>
-                        </tr>
-                        @*<tr>
-                            <td>Address:</td>
-                            <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
-                        </tr>*@
-                        <tr>
-                            <td>Contact No.:</td>
-                            <td class="padding30">@Model.ContactNumber</td>
-                        </tr>
-                        <tr>
-                            <td>Authorized Representative:</td>
-                            <td class="padding30">@Model.NameOfRepresentative?.ToUpper()</td>
-                        </tr>
-                        <tr>
-                            <td>Contact No.:</td>
-                            <td class="padding30">@Model.RepresentativeContactNumber?.ToUpper()</td>
-                        </tr>
-                        @*<tr>
-                            <td>Company/Office:</td>
-                            <td class="padding30">@Model.CompanyName?.ToUpper()</td>
-                        </tr>*@
-                        <tr>
-                            <td>Country of Destination:</td>
-                            <td class="padding30">@Model.CountryDestination?.ToUpper()</td>
-                        </tr>
-                        <tr>
-                            <td>Type of Document/s:</td>
-                            <td class="padding30">
-                                @foreach (var item in docuData)
-                                {
-                                    <span>(@item.Quantity)</span> <span>@item.Name</span> <br />
-                                }
 
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-center" style="font-weight:bold;font-size:22px;">Application Summary</p>
+                    <table class="borderless">
+                        <tr>
+                            <td colspan="8">
+                                <table class="borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td>Document Owner:</td>
+                                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</td>
+                                        </tr>
+                                        @*<tr>
+                                                <td>Address:</td>
+                                                <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
+                                            </tr>*@
+                                        <tr>
+                                            <td>Contact No.:</td>
+                                            <td class="padding30">@Model.ContactNumber</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Authorized Representative:</td>
+                                            <td class="padding30">@Model.NameOfRepresentative?.ToUpper()</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Contact No.:</td>
+                                            <td class="padding30">@Model.RepresentativeContactNumber?.ToUpper()</td>
+                                        </tr>
+                                        @*<tr>
+                                                <td>Company/Office:</td>
+                                                <td class="padding30">@Model.CompanyName?.ToUpper()</td>
+                                            </tr>*@
+                                        <tr>
+                                            <td>Country of Destination:</td>
+                                            <td class="padding30">@Model.CountryDestination?.ToUpper()</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Type of Document/s:</td>
+                                            <td class="padding30">
+                                                @foreach (var item in docuData)
+                                                {
+                                                    <span>(@item.Quantity)</span> <span>@item.Name</span> <br />
+                                                }
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Fees:</td>
+                                            <td class="padding30">@Model.Fees?.ToUpper()</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+
+                                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.QRCode))" height="150" width="150 " style="margin-left:150px;" />
                             </td>
                         </tr>
-                        <tr>
-                            <td>Total Fees:</td>
-                            <td class="padding30">@Model.Fees?.ToUpper()</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                    </table>
+
+                </div>
             </div>
             <div class="row">
                 <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Processing of Documents</p>

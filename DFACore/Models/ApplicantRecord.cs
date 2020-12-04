@@ -59,5 +59,8 @@ namespace DFACore.Models
         public long Type { get; set; }
         public DateTime DateOfBirth { get; set; }
 
+        [NotMapped]
+        public Byte[] QRCode { get; set; }
+
     }
 }

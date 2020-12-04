@@ -47,7 +47,7 @@ namespace DFACore.Controllers
         {
             return View();
         }
-        public  IActionResult Index(int applicantsCount = 0)
+        public IActionResult Index(int applicantsCount = 0)
         {
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
@@ -57,7 +57,7 @@ namespace DFACore.Controllers
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ApplicantsViewModel model, string returnUrl = null)
@@ -72,7 +72,9 @@ namespace DFACore.Controllers
             bool generatePowerOfAttorney = false;
             bool generateAuthLetter = false;
 
-            if ( model.Records == null)
+            var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+
+            if (model.Records == null)
             {
                 var applicantRecord = new ApplicantRecord
                 {
@@ -93,7 +95,10 @@ namespace DFACore.Controllers
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = model.Record.Fees,
                     Type = 0,
-                    DateCreated = DateTime.UtcNow
+                    DateCreated = DateTime.UtcNow,
+                    QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
                 attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
@@ -126,13 +131,15 @@ namespace DFACore.Controllers
                         ApostileData = record.ApostileData,
                         ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
                         ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
-                        ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-                                           System.Globalization.CultureInfo.InvariantCulture),
+                        ScheduleDate = dateTimeSched,
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
                         Type = 1,
-                        DateCreated = DateTime.UtcNow
+                        DateCreated = DateTime.UtcNow,
+                        QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
                     };
 
                     applicantRecords.Add(applicantRecord);
@@ -144,9 +151,9 @@ namespace DFACore.Controllers
                     else
                         generateAuthLetter = true;
                 }
-                
+
             };
-            
+
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
@@ -434,7 +441,7 @@ namespace DFACore.Controllers
             var result = _applicantRepo.GetCity().Where(a => a.city == city).Select(a => a.municipality).ToList();//_applicantRepo.GetUnAvailableDates();
             return Json(result);
         }
-        
+
         public int SetNumberOfApplicants(int applicantsCount)
         {
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
@@ -448,7 +455,7 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PDFViewer()
         {
-            
+
             var options = new ConvertOptions
             {
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,

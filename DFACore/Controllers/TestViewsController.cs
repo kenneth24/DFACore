@@ -8,6 +8,7 @@ using DFACore.Models;
 using Wkhtmltopdf.NetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using DFACore.Repository;
 
 namespace DFACore.Controllers
 {
@@ -18,27 +19,27 @@ namespace DFACore.Controllers
     {
         readonly IGeneratePdf _generatePdf;
         private readonly IWebHostEnvironment _env;
+        private readonly ApplicantRecordRepository _applicantRepo;
         public TestViewsController(IGeneratePdf generatePdf,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env,
+             ApplicantRecordRepository applicantRepo)
         {
             _generatePdf = generatePdf;
             _env = env;
+            _applicantRepo = applicantRepo;
         }
 
         [HttpGet]
         [Route("TestViewer")]
         public async Task<IActionResult> TestViewer()
         {
-            var model = new ApplicantRecordViewModel
+            var model = new ApplicantRecord
             {
                 Title = "MR.",
                 FirstName = "KENNETH",
                 MiddleName = "MAGCALAS",
                 LastName = "VILLAFUERTE",
                 Suffix = "",
-                Barangay = "SAN ISIDRO ST CAMARIN",
-                City = "CALOOCAN CITY",
-                Region = "NCR",
                 Nationality = "FILIPINO",
                 ContactNumber = "09777639853",
                 CompanyName = "BASECAMP TECHNOLOGY",
@@ -47,8 +48,9 @@ namespace DFACore.Controllers
                 RepresentativeContactNumber = "09876543210",
                 ApostileData = "[{\"Name\":\"NBI Clearance/Sundry\",\"Quantity\":1},{\"Name\":\"Birth Certificate\",\"Quantity\":1},{\"Name\":\"Marriage Certificate\",\"Quantity\":1},{\"Name\":\"Death Certificate\",\"Quantity\":1},{\"Name\":\"Certificate of No Marriage Record\",\"Quantity\":1}]",
                 ProcessingSite = "DFA - Office of Consular Affairs",
-                ScheduleDate = DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm tt"),
-                ApplicationCode = "MNL-420001415004"
+                ScheduleDate = DateTime.UtcNow,
+                ApplicationCode = "MNL-420001415004",
+                QRCode = _applicantRepo.GenerateQRCode($"Kenneth Villafuerte {Environment.NewLine} 0212124 {Environment.NewLine} May 24, 2020 {Environment.NewLine} 10am {Environment.NewLine} DFA-OCA")
             };
 
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
