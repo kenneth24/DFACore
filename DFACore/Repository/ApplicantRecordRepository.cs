@@ -3,6 +3,7 @@ using DFACore.Models;
 using DFACore.Models.DTO;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -78,15 +79,14 @@ namespace DFACore.Repository
 
         public bool ValidateScheduleDate(DateTime date)
         {
-            var count = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count();
-            if (count >= 50)
-                return false;
-            else
-                return true;
-        }
+            var totalCount = 0;
+            var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date).ToList();
+            foreach (var applicantRecord in applicantRecords)
+            {
+                var apostileData = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+                totalCount += apostileData.Count;
+            }
 
-        public bool ValidateScheduleDate(DateTime date, int applicationCount)
-        {
             int type = 0;
 
             TimeSpan timeSpan = date.TimeOfDay;
@@ -109,7 +109,66 @@ namespace DFACore.Repository
             else if (timeSpan == new TimeSpan(15, 0, 0))
                 type = 8;
 
-            var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
+            //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
+            var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
+
+            if (scheduleCapacity != null)
+            {
+                if (totalCount > scheduleCapacity.Capacity)
+                    return false;
+                else
+                    return true;
+            }
+            else
+                return false;
+        }
+
+        public bool ValidateScheduleDate(DateTime date, int applicationCount)
+        {
+            if (applicationCount == 0)
+                applicationCount = 1;
+
+
+            var totalCount = applicationCount;
+            var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date).ToList();
+            if (applicantRecords.Count != 0)
+            {
+                foreach (var applicantRecord in applicantRecords)
+                {
+                    var apostileDataList = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+                    foreach (var apostileData in apostileDataList)
+                    {
+                        totalCount += apostileData.Quantity;
+                    }
+                }
+            }
+            
+
+            int type = 0;
+
+            TimeSpan timeSpan = date.TimeOfDay;
+            TimeSpan TodayTime2 = new TimeSpan(8, 0, 0);
+
+            if (timeSpan == new TimeSpan(7, 0, 0))
+                type = 1;
+            else if (timeSpan == new TimeSpan(8, 0, 0))
+                type = 2;
+            else if (timeSpan == new TimeSpan(9, 0, 0))
+                type = 3;
+            else if (timeSpan == new TimeSpan(10, 0, 0))
+                type = 4;
+            else if (timeSpan == new TimeSpan(11, 0, 0))
+                type = 5;
+            else if (timeSpan == new TimeSpan(12, 0, 0))
+                type = 6;
+            else if (timeSpan == new TimeSpan(13, 0, 0))
+                type = 7;
+            else if (timeSpan == new TimeSpan(14, 0, 0))
+                type = 8;
+            else if (timeSpan == new TimeSpan(15, 0, 0))
+                type = 9;
+
+            //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
             var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
 
             if (scheduleCapacity != null)
@@ -128,42 +187,73 @@ namespace DFACore.Repository
         {
             var end = start.AddDays(30);
             var dates = new List<AvailableDAtes>();
+            var unAvailable = GetUnAvailableDates();
 
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
                 if (dt.DayOfWeek != DayOfWeek.Saturday && dt.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    var x = new AvailableDAtes
+                    AvailableDAtes av;
+                    var isExist = unAvailable.Any(d => d.Date == dt.Date);
+                    if (isExist)
                     {
-                        title = "Available",
-                        start = dt.ToString("yyyy-MM-dd")
-                    };
-                    dates.Add(x);
+                        av = new AvailableDAtes
+                        {
+                            title = "N/A",
+                            start = dt.ToString("yyyy-MM-dd"),
+                            color = "#ff9f89"
+                        };
+                    }
+                    else
+                    {
+                        av = new AvailableDAtes
+                        {
+                            title = "Available",
+                            start = dt.ToString("yyyy-MM-dd"),
+                            //color = "#257e4a"
+                        };
+                    }
+                    
+                    dates.Add(av);
                 }
             }
+
+            //var result = dates.Select(a => new AvailableDAtes()
+            //{
+
+            //});
+            //dates.RemoveAll(x => unAvailable.Contains(DateTime.ParseExact(x.start, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)));
+
             return dates;
         }
 
         public List<DateTime> GetUnAvailableDates()
         {
+            var raw = _context.Set<UnavailableDate>().FromSqlRaw("Select* from " +
+                "(Select " +
+                "count(distinct(Id)) as ApplicantCount, " +
+                "count(Id) as DocuTypes, " +
+                "CAST(ScheduleDate as Date) as ScheduleDate, " +
+                "sum(dataCount.Quantity) as DocuCount " +
+                "from " +
+                "(select Id, ScheduleDate, ApostileData " +
+                "from ApplicantRecords " +
+                "where CAST(ScheduleDate as Date) >= {0}) ApplicantRecords " +
+                "CROSS APPLY OPENJSON (ApostileData) " +
+                "WITH " +
+                "(Quantity int) " +
+                "AS dataCount " +
+                "group by " +
+                "CAST(ScheduleDate as Date)) a " +
+                "where a.DocuCount >= 800", DateTime.Now).ToList();
 
-            using (var context = _context)
-            {
-                var commandText = "SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
-                "GROUP BY ScheduleDate HAVING COUNT(*) = 1";
-                context.Database.ExecuteSqlCommand(commandText);
+            var result = raw.Select(a => a.ScheduleDate).ToList();
 
-            }
 
-            
-            var result = _context.Set<ApplicantModelDTO>();
-
-            // use Database.ExecuteSqlCommand
-
-            var x = result.FromSqlRaw("SELECT ScheduleDate, COUNT(*) as Number FROM ApplicantRecords WHERE ScheduleDate >= GETDATE() " +
-                "GROUP BY ScheduleDate HAVING COUNT(*) = 1", "").ToList();
-            return default;
+            return result;
         }
+
+
 
         public List<City> GetCity()
         {
@@ -1826,6 +1916,36 @@ namespace DFACore.Repository
                 return stream.ToArray();
             }
         }
-
     }
 }
+
+
+
+
+
+
+
+
+
+//select* from
+//    (Select
+//         count(distinct(Id)) as ApplicantCount,
+//		 count(Id) as DocuTypes,
+//		 CAST(ScheduleDate as Date) as ScheduleDate,
+//		 sum(dataCount.Quantity) as DocuCount
+
+//    from
+//        (select Id, ScheduleDate, ApostileData
+
+//            from ApplicantRecords
+
+//            where CAST(ScheduleDate as Date) >= '2020-01-04') ApplicantRecords
+//      CROSS APPLY OPENJSON (ApostileData)
+//	WITH
+//        (Quantity int)
+
+//        AS dataCount
+
+//	group by
+//		 CAST(ScheduleDate as Date)) a
+//where a.DocuCount > 100

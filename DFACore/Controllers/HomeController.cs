@@ -49,6 +49,9 @@ namespace DFACore.Controllers
         }
         public IActionResult Index(int applicantsCount = 0)
         {
+            if (applicantsCount > 10)
+                applicantsCount = 10;
+            
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
@@ -106,8 +109,8 @@ namespace DFACore.Controllers
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
                     generatePowerOfAttorney = true;
-                else
-                    generateAuthLetter = true;
+                //else
+                //    generateAuthLetter = true;
 
             }
             else
@@ -137,8 +140,8 @@ namespace DFACore.Controllers
                         Fees = record.Fees,
                         Type = 1,
                         DateCreated = DateTime.UtcNow,
-                        QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
-                            $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                        QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
                             $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
                     };
 
@@ -174,15 +177,16 @@ namespace DFACore.Controllers
             }
 
 
-            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
-                    $"Download the attachment and present to the selected branch.",
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
+                    HtmlTemplate(),
                     attachments.ToArray());
             ViewData["ApplicantCount"] = model.ApplicantCount;
             return RedirectToAction("Success");
         }
 
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        //[
+        //AntiForgeryToken]
         //public async Task<IActionResult> Index(IEnumerable<ApplicantRecordViewModel> records, string returnUrl = null)
         //{
         //    if (!ModelState.IsValid)
@@ -343,8 +347,8 @@ namespace DFACore.Controllers
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
                 PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
                 {
-                    Top = 20,
-                    Bottom = 20,
+                    Top = 9,
+                    Bottom = 9,
                     Right = 15,
                     Left = 15
                 }
@@ -375,8 +379,8 @@ namespace DFACore.Controllers
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
                 PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
                 {
-                    Top = 20,
-                    Bottom = 20,
+                    Top = 15,
+                    Bottom = 15,
                     Right = 15,
                     Left = 15
                 }
@@ -407,6 +411,7 @@ namespace DFACore.Controllers
 
         public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount)
         {
+            
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
@@ -461,8 +466,8 @@ namespace DFACore.Controllers
                 PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
                 PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
                 {
-                    Top = 20,
-                    Bottom = 20,
+                    Top = 15,
+                    Bottom = 15,
                     Right = 15,
                     Left = 15
                 }
@@ -475,11 +480,21 @@ namespace DFACore.Controllers
                 Number = 123456
             };
 
-            var pdf = await _generatePdf.GetByteArray("Views/PowerOfAttorney.cshtml", data);
+            var pdf = await _generatePdf.GetByteArray("Views/AuthorizationLetter.cshtml", data);
             var pdfStream = new System.IO.MemoryStream();
             pdfStream.Write(pdf, 0, pdf.Length);
             pdfStream.Position = 0;
             return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+        public string HtmlTemplate()
+        {
+            using (StreamReader SourceReader = System.IO.File.OpenText(_env.WebRootFileProvider.GetFileInfo("template.html")?.PhysicalPath))
+            {
+
+                return SourceReader.ReadToEnd();
+            }
+
         }
 
     }

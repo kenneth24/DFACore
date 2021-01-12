@@ -329,10 +329,15 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;margin-bottom: 45px;">
                         <div class="form-group">
-                            <p>
-                                <span style="font-weight: bold">Name of the Authorized Representative</span>
-                                <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                            </p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p style="margin-bottom:30px;">
+                                        <span style="font-weight: bold">Name of the Authorized Representative</span>
+                                        <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
+                                    </p>
+                                </div>
+                            </div>
+                           
                             <div class="row">
                                 @*<div class="col-md-2 col-sm-12">
                                         <label asp-for="Title">Title <span class="red">*</span></label>
@@ -494,7 +499,7 @@
             </div>
             <div class="row col-12">
                 <label asp-for="Record.ProcessingSite"></label>
-                <input asp-for="Record.ProcessingSite" id="site" class="form-control" value="DFA - Office of the Consular Affairs" />
+                <input asp-for="Record.ProcessingSite" id="site" class="form-control" value="DFA - Office of Consular Affairs (ASEANA)" />
             </div>
             <div class="row col-12">
                 <label asp-for="Record.ProcessingSiteAddress"></label>
@@ -518,15 +523,15 @@
                         <div class="row">
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                             <div class="col-lg-8 col-md-12 col-sm-12">
-                                <label class="black-text"><input type="radio" name="option1" value="08:00 AM" checked /> 8AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="09:00 AM" /> 9AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="10:00 AM" /> 10AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="11:00 AM" /> 11AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="12:00 PM" /> 12PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="01:00 PM" /> 1PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="02:00 PM" /> 2PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="03:00 PM" /> 3PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="04:00 PM" /> 4PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="07:00 AM" checked /> 7-8AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="08:00 AM" /> 8-9AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="09:00 AM" /> 9-10AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="10:00 AM" /> 10-11AM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="11:00 AM" /> 11-12PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="12:00 PM" /> 12-1PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="01:00 PM" /> 1-2PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="02:00 PM" /> 2-3PM</label>
+                                <label class="black-text"><input type="radio" name="option1" value="03:00 PM" /> 3-4PM</label>
                             </div>
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                         </div>
@@ -576,8 +581,8 @@
                         </div>
 
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
-                        <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Schedule unavailable</p>
-                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose your preferred date and time.</p>
+                        <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose available time slot.</p>
+                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;"></p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight"></p>
@@ -843,7 +848,7 @@
                     </div>*@
             }
 
-            <p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of the Consular Affairs for the processing of your Apostille.</p>
+            <p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>
 
             <div class="row">
                 <div class="col-md-2 col-sm-1">
@@ -1569,7 +1574,7 @@
 
                                         <div class="form-check">
                                             <label class="form-check-label ">
-                                                <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Court Other Document"> Other Court Documents
+                                                <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Other Court Documents"> Other Court Documents
                                             </label>
                                         </div>
                                         <div class="form-group">
@@ -1597,7 +1602,7 @@
                                     <td>
                                         <div class="form-check">
                                             <label class="form-check-label font-weight-bold">
-                                                <input type="checkbox" class="form-check-input" id="immigrationRecords" value="Immigration Record/s"> 11. Immigration Record/s
+                                                <input type="checkbox" class="form-check-input" id="Immigration" value="Immigration Record/s"> 11. Immigration Record/s
                                             </label>
                                         </div>
                                         <div class="form-group">
@@ -1774,7 +1779,7 @@
                         <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Back</button></div>
                         <div class="col-md-2 col-sm-2" style="margin-top:10px;">
                         </div>
-                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"><button id="selectDocumentsBtn" type="button" class="btn button-primary col-md-12 col-sm-12" style="color:white;" data-dismiss="modal">Select</button></div>
+                        <div class="col-md-5 col-sm-5" style="margin-left: -15px;"><button id="selectDocumentsBtn" type="button" class="btn button-primary col-md-12 col-sm-12" style="color:white;">Select</button></div>
                     </div>
 
 
@@ -1819,13 +1824,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                        <div class="row" style="width: 100%;margin:auto;">
+                            <div class="col-md-12 col-sm-12" style="margin-bottom: 15px;">
                                 <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#nbiSampleCopy-carousel').carousel('prev')">Previous</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
                             </div>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
                                 <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#nbiSampleCopy-carousel').carousel('next')">Next</button>
                             </div>
                         </div>
@@ -2040,13 +2045,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                        <div class="row" style="width: 100%;margin:auto;">
+                            <div class="col-md-12 col-sm-12" style="margin-bottom: 15px;">
                                 <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#dswdClearance-carousel').carousel('prev')">Previous</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
                             </div>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
                                 <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#dswdClearance-carousel').carousel('next')">Next</button>
                             </div>
                         </div>
@@ -2089,13 +2094,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                        <div class="row" style="width: 100%;margin:auto;">
+                            <div class="col-md-12 col-sm-12" style="margin-bottom: 15px;">
                                 <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#pnpSundry-carousel').carousel('prev')">Previous</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
                             </div>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
                                 <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#pnpSundry-carousel').carousel('next')">Next</button>
                             </div>
                         </div>
@@ -2126,13 +2131,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                        <div class="row" style="width: 100%;margin:auto;">
+                            <div class="col-md-12 col-sm-12" style="margin-bottom: 15px;">
                                 <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#govtCTC-carousel').carousel('prev')">Previous</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
                             </div>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
                                 <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color: white; background-color: #217ff3;" onclick="$('#govtCTC-carousel').carousel('next')">Next</button>
                             </div>
                         </div>
@@ -2174,13 +2179,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="row" style="width: 100%;">
-                            <div class="col-md-5 col-sm-5" style="margin-left: -15px;">
+                        <div class="row" style="width: 100%;margin:auto;">
+                            <div class="col-md-12 col-sm-12" style="margin-bottom: 15px;">
                                 <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" onclick="$('#exportDocu-carousel').carousel('prev')">Previous</button>
                             </div>
                             <div class="col-md-2 col-sm-2">
                             </div>
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-12 col-sm-12">
                                 <button type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;" onclick="$('#exportDocu-carousel').carousel('next')">Next</button>
                             </div>
                         </div>
@@ -2214,7 +2219,11 @@
                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
                         <span aria-hidden="true">&times;</span>
                     </button>*@
-                <div class="modal-header primary"></div>
+                <div class="modal-header primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end;/* margin-right: 5px; *//* padding-top: 0!important; *//* padding-bottom: 0!important; *//* margin-top: 1px; */">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <div class="form-group container">
                         <p class="black-text-bold text-center" style="font-size:14px;">
@@ -2262,9 +2271,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
         var total = 0;
+        var docuTotalCount = 0;
+        var canConfirm = true;
         $(document).ready(function () {
             $('#loading').hide();
-            var canConfirm = true;
+
             $('.numberInput').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g,'');
             });
@@ -2291,7 +2302,7 @@
 
                 if ($(this).is(':checked') == true) {
                     console.log(formatId);
-                    $(expediteId).removeAttr("disabled");
+                    //$(expediteId).removeAttr("disabled");
                     $(regularId).removeAttr("disabled");
                 }
                 else {
@@ -2376,12 +2387,14 @@
             //console.log('dob=' + $('#Record_DateOfBirth').val());
 
             $("#backToStepOne").click(function () {
-                $('#stepOneBtn').click();
+                //$('#stepOneBtn').click();
                 $("#step-one").show();
+                $("#step-one-authorized").show();
                 $("#step-two").hide();
                 $("#step-three").hide();
             });
             $("#stepOneNextBtn").click(function () {
+                docuTotalCount = 0;
                 //|| $('#Nationality').val() == "" fNamePartial  || $('#Address').val() == ""
                 if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
                     || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('.apostiledataPartial').val() == ""
@@ -2416,11 +2429,14 @@
                     else
                         $('.countrydestinationPartialValidation').text('');
 
-                    if ($('.apostiledataPartial').val() == "") {
-                        $('.apostiledataPartialValidation').text('Please select document/s.');
+                    if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
+                        $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
+                    }
+                    else if ($('.apostiledataPartial').val() == "[]"){
+                        $('.apostiledataPartialValidation').text('Please insert document quantity.');
                     }
                     else
-                        $('.countrydestinationPartialValidation').text('');
+                        $('.apostiledataPartialValidation').text('');
 
                     if ($('#Record_FirstName').val() == "")
                         $('.fname').text('This field is required.');
@@ -2459,7 +2475,9 @@
                         $('.countrydestination').text('');
 
                     if ($('#apostileData').val() == "")
-                        $('.apostiledata').text('Please select document/s.');
+                        $('.apostiledata').text('Please add documents for apostillization.');
+                    else if ($('#apostileData').val() == "[]")
+                        $('.apostiledata').text('Please insert document quantity.');
                     else
                         $('.apostiledata').text('');
 
@@ -2477,11 +2495,21 @@
                     $('.apostiledata').text('');
                 }
 
-
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").show();
                 $("#step-three").hide();
+
+                if (applicants == 0) {
+                    if ($('#apostileData').val() !== '' || $('#apostileData').val() !== null) {
+                        var docuType = JSON.parse($('#apostileData').val());
+                        var docuCount = 0;
+                        docuType.forEach(function (v) {
+                            docuCount += parseInt(v.Quantity);
+                        });
+                        docuTotalCount += docuCount
+                    }
+                }
                 //$('#stepTwoBtn').click();
             });
             $("#stepTwoNextBtn").click(function () {
@@ -2489,6 +2517,7 @@
                     $("#errSchedDate").show();
                     return;
                 }
+                
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").hide();
@@ -2496,27 +2525,30 @@
                 $('#stepThreeBtn').click();
 
                 $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
-
-                var docuType = JSON.parse($('#apostileData').val());
-                var lbldocuType = $('#LblTypeOfDocument');
-
+                total = 0;
                 var subtotal = 0;
-                docuType.forEach(function (v) {
-                    var Quantity = v.Quantity;
-                    var DocuName = v.Name;
-                    var Transaction = v.Transaction;
-                    lbldocuType.append('(' + Quantity + ') ' + DocuName + ' ' + Transaction + '<br />');
-                    if (Transaction == "Expedite") {
-                        subtotal += (200 * parseInt(Quantity));
-                    }
-                    else {
-                        subtotal += (100 * parseInt(Quantity));
-                    }
+                if (applicants == 0) {
+                    var docuType = JSON.parse($('#apostileData').val());
+                    var lbldocuType = $('#LblTypeOfDocument');
+                    lbldocuType.empty();
+                    docuType.forEach(function (v) {
+                        var Quantity = v.Quantity;
+                        var DocuName = v.Name;
+                        var Transaction = v.Transaction;
+                        lbldocuType.append('(' + Quantity + ') ' + '(' + Transaction +  ') ' + DocuName + ' ' + '<br />');
+                        if (Transaction == "Expedite") {
+                            subtotal += (200 * parseInt(Quantity));
+                        }
+                        else {
+                            subtotal += (100 * parseInt(Quantity));
+                        }
 
-                });
+                    });
+                }
 
 
-                console.log(docuType);
+
+                //console.log(docuType);
                 //$('#LblTypeOfDocument').text($('#apostileData').val());
                 $('#LblAddress').text($('#Record_Address').val());
                 $('#LblAddress').text($('#Record_Address').val());
@@ -2582,420 +2614,7 @@
                         }
                         else { return; }
                 });
-                //$(':checkbox:checked').each(function (i) {
-                //    if ($(this).val() == "NBI Clearance") {
-                //        if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyNbiClearanceRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Birth Certificate") {
-                //        if (parseInt($('#qtyBirthCertificateExpedite').val()) > 0 && !$('#qtyBirthCertificateRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyBirthCertificateRegular').val()) > 0 && !$('#qtyBirthCertificateExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBirthCertificateRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Marriage Certificate") {
-                //        if (parseInt($('#qtyMarriageCertificateExpedite').val()) > 0 && !$('#qtyMarriageCertificateRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyMarriageCertificateRegular').val()) > 0 && !$('#qtyMarriageCertificateExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMarriageCertificateRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Death Certificate") {
-                //        if (parseInt($('#qtyDeathCertificateExpedite').val()) > 0 && !$('#qtyDeathCertificateRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyDeathCertificateRegular').val()) > 0 && !$('#qtyDeathCertificateExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDeathCertificateRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Certificate of No Marriage Record") {
-                //        if (parseInt($('#qtyCenomarExpedite').val()) > 0 && !$('#qtyCenomarRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCenomarRegular').val()) > 0 && !$('#qtyCenomarExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCenomarRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Form 137 & Diploma") {
-                //       if (parseInt($('#qtyElementaryAndHighschoolExpedite').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyElementaryAndHighschoolRegular').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyElementaryAndHighschoolRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "TOR & Diploma/National Certificate") {
-                //        if (parseInt($('#qtyTechVochExpedite').val()) > 0 && !$('#qtyTechVochRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyTechVochRegular').val()) > 0 && !$('#qtyTechVochExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTechVochRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "State Colleges and Universities TOR & Diploma") {
-                //        if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Private/Local Colleges and Universities TOR & Diploma") {
-                //        if (parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateOrLocalCollegesRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "PRC Document/s") {
-                //        if (parseInt($('#qtyPRCExpedite').val()) > 0 && !$('#qtyPRCRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyPRCRegular').val()) > 0 && !$('#qtyPRCExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPRCRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Medical Certificates") {
-                //        if (parseInt($('#qtyMedCertsExpedite').val()) > 0 && !$('#qtyMedCertsRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyMedCertsRegular').val()) > 0 && !$('#qtyMedCertsExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMedCertsRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "CAAP Documents") {
-                //        if (parseInt($('#qtyCAAPExpedite').val()) > 0 && !$('#qtyCAAPRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCAAPRegular').val()) > 0 && !$('#qtyCAAPExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCAAPRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Driver's License") {
-                //        if (parseInt($('#qtyDriverLicenseExpedite').val()) > 0 && !$('#qtyDriverLicenseRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyDriverLicenseRegular').val()) > 0 && !$('#qtyDriverLicenseExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDriverLicenseRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Certificate of Employment") {
-                //        if (parseInt($('#qtyCOEExpedite').val()) > 0 && !$('#qtyCOERegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCOERegular').val()) > 0 && !$('#qtyCOEExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOEExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCOERegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Invitation Letter") {
-                //        if (parseInt($('#qtyInvitationLetterExpedite').val()) > 0 && !$('#qtyInvitationLetterRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyInvitationLetterRegular').val()) > 0 && !$('#qtyInvitationLetterExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyInvitationLetterRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Trainings") {
-                //        if (parseInt($('#qtyTrainingsExpedite').val()) > 0 && !$('#qtyTrainingsRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyTrainingsRegular').val()) > 0 && !$('#qtyTrainingsExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyTrainingsRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Baptismal Certificate") {
-                //        if (parseInt($('#qtyBaptismalCertExpedite').val()) > 0 && !$('#qtyBaptismalCertRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyBaptismalCertRegular').val()) > 0 && !$('#qtyBaptismalCertExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBaptismalCertRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Other Document (Private Entity)") {
-                //        if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Special Power of Attorney") {
-                //        if (parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtySpecialPowerOfAttorneyRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Memorandum of Agreement") {
-                //        if (parseInt($('#qtyMOAExpedite').val()) > 0 && !$('#qtyMOARegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyMOARegular').val()) > 0 && !$('#qtyMOAExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOAExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOARegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Memorandum of Understanding") {
-                //        if (parseInt($('#qtyMOUExpedite').val()) > 0 && !$('#qtyMOURegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyMOURegular').val()) > 0 && !$('#qtyMOUExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOUExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyMOURegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Contract") {
-                //        if (parseInt($('#qtyAnyContractExpedite').val()) > 0 && !$('#qtyAnyContractRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyAnyContractRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAnyContractRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Affidavit of Consent/Advice") {
-                //        if (parseInt($('#qtyAffidavitOfConsentExpedite').val()) > 0 && !$('#qtyAffidavitOfConsentRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyAffidavitOfConsentRegular').val()) > 0 && !$('#qtyAffidavitOfConsentExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyAffidavitOfConsentRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Joint Affidavit") {
-                //        if (parseInt($('#qtyJointAffidavitExpedite').val()) > 0 && !$('#qtyJointAffidavitRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyJointAffidavitRegular').val()) > 0 && !$('#qtyJointAffidavitExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyJointAffidavitRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Other Affidavit") {
-                //        if (parseInt($('#qtyOtherAffidavitExpedite').val()) > 0 && !$('#qtyOtherAffidavitRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyOtherAffidavitRegular').val()) > 0 && !$('#qtyOtherAffidavitExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyOtherAffidavitRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Court Decision") {
-                //        if (parseInt($('#qtyCourtDecisionExpedite').val()) > 0 && !$('#qtyCourtDecisionRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCourtDecisionRegular').val()) > 0 && !$('#qtyCourtDecisionExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtDecisionRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Court Resolution/Order") {
-                //        if (parseInt($('#qtyCourtResolutionExpedite').val()) > 0 && !$('#qtyCourtResolutionRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCourtResolutionRegular').val()) > 0 && !$('#qtyCourtResolutionExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtResolutionRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Court Other Document") {
-                //        if (parseInt($('#qtyCourtOtherDocumentExpedite').val()) > 0 && !$('#qtyCourtOtherDocumentRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyCourtOtherDocumentRegular').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyCourtOtherDocumentRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Immigration Record/s") {
-                //        if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyImmigrationExpedite').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "DSWD Clearance") {
-                //        if (parseInt($('#qtyDSWDClearanceExpedite').val()) > 0 && !$('#qtyDSWDClearanceRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyDSWDClearanceRegular').val()) > 0 && !$('#qtyDSWDClearanceExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyDSWDClearanceRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Police Clearance") {
-                //        if (parseInt($('#qtyPoliceClearanceExpedite').val()) > 0 && !$('#qtyPoliceClearanceRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyPoliceClearanceRegular').val()) > 0 && !$('#qtyPoliceClearanceExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyPoliceClearanceRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Business Registration & Other Documents issued by a Government Agency") {
-                //        if (parseInt($('#qtyBusinessRegistrationExpedite').val()) > 0 && !$('#qtyBusinessRegistrationRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyBusinessRegistrationRegular').val()) > 0 && !$('#qtyBusinessRegistrationExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBusinessRegistrationRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else if ($(this).val() == "Barangay Clearance/Certifcate") {
-                //        if (parseInt($('#qtyBarangayClearanceExpedite').val()) > 0 && !$('#qtyBarangayClearanceRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()) , Transaction: "Expedite"});
-                //        }
-                //        else if (parseInt($('#qtyBarangayClearanceRegular').val()) > 0 && !$('#qtyBarangayClearanceExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()) , Transaction: "Regular"});
-                //        }
-                //        else {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyBarangayClearanceRegular').val()), Transaction: "Regular" });
-                //        }
-                //    }
-                //    else /*if ($(this).val() == "Export Document/s")*/ {
-                //        if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && !$('#qtyExportDocumentsRegular').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
-                //        }
-                //        else if (parseInt($('#qtyExportDocumentsRegular').val()) > 0 && !$('#qtyExportDocumentsExpedite').val()) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
-                //        }
-                //        else if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && parseInt($('#qtyExportDocumentsRegular').val()) > 0) {
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsExpedite').val()), Transaction: "Expedite" });
-                //            documentObject.push({ Name: $(this).val(), Quantity: parseInt($('#qtyExportDocumentsRegular').val()), Transaction: "Regular" });
-                //        }
-                //        else { return;}
-                //    }
-                //    //else {
-                //    //    documentObject.push({ Name: $(this).val(), Quantity: 1 });
-                //    //}
-                //});
+                
                 $("#documentsTable tbody > tr").empty();
                 $("#documentsTable").append('<tr><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
                 //var tbodyContent = '';
@@ -3014,9 +2633,15 @@
                 $('#documentsCount').text(numberOfDocuments);
                 $('#apostileData').val(JSON.stringify(newDocument));
                 console.log(JSON.stringify(newDocument));
+                console.log(documentObject);
+                if (documentObject.length === 0)
+                    alert('Please ADD and/or INSERT number of documents.');
+                else
+                    $('.modal').modal('hide');//$("#apostileModal .close").click()//$('#apostileModal').modal('hide');
+
             });
 
-            $('#appointmentScheduleTime').text('08:00 AM')
+            $('#appointmentScheduleTime').text('07:00 AM')
             $("input[type*='radio']").click(function () {
 
                 console.log($(this).val());
@@ -3063,18 +2688,20 @@
                     url: '@Url.Action("ValidateScheduleDate2")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
-                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: applicants },
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount },
                     success: function (result) {
                         console.log('success');
                         $('#schedLoader').hide();
                         if (result) {
                             $('#availableSchedMessage').show();
-                            $('#unavailableSchedMessage').hide();
+                            $('#unAvailableSchedMessage').hide();
+                            $('#errSchedDate').hide();
                             canConfirm = true;
                         }
                         else {
                             $('#availableSchedMessage').hide();
-                            $('#unavailableSchedMessage').show();
+                            $('#unAvailableSchedMessage').show();
+                            $('#errSchedDate').show();
                             canConfirm = false;
                         }
                     },

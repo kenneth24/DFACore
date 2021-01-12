@@ -36,9 +36,9 @@ namespace DFACore.Controllers
             var model = new ApplicantRecord
             {
                 Title = "MR.",
-                FirstName = "KENNETH",
+                FirstName = "KENNETH ASADFA",
                 MiddleName = "MAGCALAS",
-                LastName = "VILLAFUERTE",
+                LastName = "VILLAFUERTE ADSFA",
                 Suffix = "",
                 Nationality = "FILIPINO",
                 ContactNumber = "09777639853",
@@ -46,7 +46,11 @@ namespace DFACore.Controllers
                 CountryDestination = "UNITED STATES OF AMERICA",
                 NameOfRepresentative = "John S. Doe",
                 RepresentativeContactNumber = "09876543210",
-                ApostileData = "[{\"Name\":\"NBI Clearance/Sundry\",\"Quantity\":1},{\"Name\":\"Birth Certificate\",\"Quantity\":1},{\"Name\":\"Marriage Certificate\",\"Quantity\":1},{\"Name\":\"Death Certificate\",\"Quantity\":1},{\"Name\":\"Certificate of No Marriage Record\",\"Quantity\":1}]",
+                ApostileData = "[{\"Name\":\"NBI Clearance/Sundry\",\"Quantity\":1,\"Transaction\":\"Regular\"}," +
+                "{\"Name\":\"Birth Certificate\",\"Quantity\":1,\"Transaction\":\"Regular\"}," +
+                "{\"Name\":\"Marriage Certificate\",\"Quantity\":1,\"Transaction\":\"Regular\"}," +
+                "{\"Name\":\"Death Certificate\",\"Quantity\":1,\"Transaction\":\"Regular\"}," +
+                "{\"Name\":\"Certificate of No Marriage Record\",\"Quantity\":1,\"Transaction\":\"Regular\"}]",
                 ProcessingSite = "DFA - Office of Consular Affairs",
                 ScheduleDate = DateTime.UtcNow,
                 ApplicationCode = "MNL-420001415004",

@@ -49,7 +49,7 @@
         }
 
         .padding30 {
-            padding-left: 30px !important;
+            padding-left: 10px !important;
         }
 
         p {
@@ -108,25 +108,30 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-12">
-                    <p class="text-center" style="font-weight:bold;font-size:22px;">Application Summary</p>
+                <div>
+                    <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:20px;">Application Summary</p>
                     <table class="borderless">
+                        
                         <tr>
-                            <td colspan="8">
+                            <td colspan="3">
                                 <table class="borderless">
                                     <tbody>
                                         <tr>
-                                            <td>Document Owner:</td>
-                                            <td class="padding30"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</td>
+                                            <td style="width:200px!important;">Document Owner:</td>
+                                            <td class="padding30" style="width:500px;"> @Model.FirstName?.ToUpper() @Model.MiddleName?.ToUpper() @Model.LastName?.ToUpper() @suffix</td>
                                         </tr>
                                         @*<tr>
-                                                <td>Address:</td>
-                                                <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
-                                            </tr>*@
-                                        <tr>
-                                            <td>Contact No.:</td>
-                                            <td class="padding30">@Model.ContactNumber</td>
-                                        </tr>
+                                        <td>Address:</td>
+                                        <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
+                                    </tr>*@
+                                        @if (!string.IsNullOrEmpty(Model.ContactNumber))
+                                        {
+                                            <tr>
+                                                <td>Contact No.:</td>
+                                                <td class="padding30">@Model.ContactNumber</td>
+                                            </tr>
+                                        }
+
                                         <tr>
                                             <td>Authorized Representative:</td>
                                             <td class="padding30">@Model.NameOfRepresentative?.ToUpper()</td>
@@ -136,9 +141,9 @@
                                             <td class="padding30">@Model.RepresentativeContactNumber?.ToUpper()</td>
                                         </tr>
                                         @*<tr>
-                                                <td>Company/Office:</td>
-                                                <td class="padding30">@Model.CompanyName?.ToUpper()</td>
-                                            </tr>*@
+                                        <td>Company/Office:</td>
+                                        <td class="padding30">@Model.CompanyName?.ToUpper()</td>
+                                    </tr>*@
                                         <tr>
                                             <td>Country of Destination:</td>
                                             <td class="padding30">@Model.CountryDestination?.ToUpper()</td>
@@ -148,21 +153,21 @@
                                             <td class="padding30">
                                                 @foreach (var item in docuData)
                                                 {
-                                                    <span>(@item.Quantity)</span> <span>@item.Name</span> <br />
+                                                    <span>(@item.Quantity)</span> <span>(</span><span>@item.Transaction</span><span>)</span> <span>@item.Name</span> <br />
                                                 }
 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Total Fees:</td>
-                                            <td class="padding30">@Model.Fees?.ToUpper()</td>
+                                            <td class="padding30">PhP @Model.Fees?.ToUpper()<span>.00</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </td>
                             <td>
 
-                                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.QRCode))" height="150" width="150 " style="margin-left:150px;" />
+                                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.QRCode))" height="180" width="180" />
                             </td>
                         </tr>
 
@@ -170,120 +175,123 @@
 
                 </div>
             </div>
-            <div class="row">
-                <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Processing of Documents</p>
-            </div>
-            <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Applicant/Representative)</p>
-            <p style="margin-left:10px;">This if to certify that I read the conditions below and fully understand it's consequence:</p>
-            <p>
-                1. Submission of a
-                <span class="font-italic"> Falsified </span> or
-                <span class="font-italic"> Forged </span> document is
-                <span class="font-weight-bold">PUNISHABLE BY LAW</span> and will be dealt accordingly;
-            </p>
-            <p>
-                2. That I am aware of the condition of my document/s submitted;
-            </p>
-            <p>
-                3.
-                <span class="font-weight-bold">
-                    In case my document/s will be submitted to a country where the Apostille Convention does not apply, I
-                    undertake to contract and/or present the said document/s to the concerned foreign Embassy/Consulate in the Philippines for legalization;
-                </span>
-            </p>
-            <p>
-                4. The DFA assumes no responsibility with the Apostillized document if the same will not be accepted by the receiving country; and
-            </p>
-            <p>
-                5. The DFA assumes no responsibility for any delay, delivery error, loss or damage to the document once it has
-                been released to my authorized representative/courier company.
-            </p>
-            <p style="margin-top:20px;">
-                <span style="margin-left: 100px;">
-                    __________________________________
-                </span>
-                <span style="margin-left:50px;">
-                    ________________________
-                </span>
-            </p>
-            <p style="margin-top:0;">
-                <span style="margin-left:160px;">
-                    Signature over Printed Name
-                </span>
-                <span style="margin-left:180px;">
-                    Date
-                </span>
-            </p>
-            <p style="margin-bottom:10px;">
-                <span style="margin-left:170px;margin-top:-20px;">
-                    (Applicant/Representative)
-                </span>
-            </p>
-            <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Processor)</p>
-            <p class="font-weight-bold">
-                <span>Total Number of Document/s __________</span>
-                <span style="margin-left:10px;"> Releasing Processor ________________________________</span>
-            </p>
-            <input type="checkbox" name="verification" />
-            <label for="verification" class="font-weight-bold">FOR VERIFICATION (Please specify)______________________________________________________</label>
-            <br />
-            <input type="checkbox" name="verification" />
-            <label for="verification" class="font-weight-bold">FOR ENCODING UNIT__________________________________________________________________</label>
-            <br />
-            <p class="font-weight-bold" style="margin-left:20px;">
-                OTHER REMARKS ____________________________________________________________________
-            </p>
-            <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Releasing of Documents</p>
+
+
+            @*<div class="row">
+            <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Processing of Documents</p>
+        </div>
+        <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Applicant/Representative)</p>
+        <p style="margin-left:10px;">This if to certify that I read the conditions below and fully understand it's consequence:</p>
+        <p>
+            1. Submission of a
+            <span class="font-italic"> Falsified </span> or
+            <span class="font-italic"> Forged </span> document is
+            <span class="font-weight-bold">PUNISHABLE BY LAW</span> and will be dealt accordingly;
+        </p>
+        <p>
+            2. That I am aware of the condition of my document/s submitted;
+        </p>
+        <p>
+            3.
+            <span class="font-weight-bold">
+                In case my document/s will be submitted to a country where the Apostille Convention does not apply, I
+                undertake to contract and/or present the said document/s to the concerned foreign Embassy/Consulate in the Philippines for legalization;
+            </span>
+        </p>
+        <p>
+            4. The DFA assumes no responsibility with the Apostillized document if the same will not be accepted by the receiving country; and
+        </p>
+        <p>
+            5. The DFA assumes no responsibility for any delay, delivery error, loss or damage to the document once it has
+            been released to my authorized representative/courier company.
+        </p>
+        <p style="margin-top:20px;">
+            <span style="margin-left: 100px;">
+                __________________________________
+            </span>
+            <span style="margin-left:50px;">
+                ________________________
+            </span>
+        </p>
+        <p style="margin-top:0;">
+            <span style="margin-left:160px;">
+                Signature over Printed Name
+            </span>
+            <span style="margin-left:180px;">
+                Date
+            </span>
+        </p>
+        <p style="margin-bottom:10px;">
+            <span style="margin-left:170px;margin-top:-20px;">
+                (Applicant/Representative)
+            </span>
+        </p>
+        <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Processor)</p>
+        <p class="font-weight-bold">
+            <span>Total Number of Document/s __________</span>
+            <span style="margin-left:10px;"> Releasing Processor ________________________________</span>
+        </p>
+        <input type="checkbox" name="verification" />
+        <label for="verification" class="font-weight-bold">FOR VERIFICATION (Please specify)______________________________________________________</label>
+        <br />
+        <input type="checkbox" name="verification" />
+        <label for="verification" class="font-weight-bold">FOR ENCODING UNIT__________________________________________________________________</label>
+        <br />
+        <p class="font-weight-bold" style="margin-left:20px;">
+            OTHER REMARKS ____________________________________________________________________
+        </p>
+        <p class="text-center" style="font-weight:bold;font-size:22px;margin-top:15px;">Releasing of Documents</p>
 
 
 
-            <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Releasing Personnel upon release)</p>
-            <p class="font-weight-bold">Total Number of Released Document/s:______</p>
-            <p class="font-weight-bold">
-                <span>Remarks:________________________</span>
-                <span style="margin-left:20px;"> Releasing Personnel:________________________</span>
-            </p>
+        <p class="font-italic font-weight-bold" style="text-decoration:underline">(To be filled-out by Releasing Personnel upon release)</p>
+        <p class="font-weight-bold">Total Number of Released Document/s:______</p>
+        <p class="font-weight-bold">
+            <span>Remarks:________________________</span>
+            <span style="margin-left:20px;"> Releasing Personnel:________________________</span>
+        </p>
 
-            <p class="font-italic font-weight-bold" style="text-decoration:underline">
-                (To be filled-out by Applicant/Representative upon release)
-            </p>
-            <p>
-                1. This is to certify that I received the Apostillized document/s and the entries therein are correct based on the
-                submitted documents;
+        <p class="font-italic font-weight-bold" style="text-decoration:underline">
+            (To be filled-out by Applicant/Representative upon release)
+        </p>
+        <p>
+            1. This is to certify that I received the Apostillized document/s and the entries therein are correct based on the
+            submitted documents;
 
-            </p>
-            <p>
-                2. I received a total of __________ document/s.
-            </p>
-            <br />
-            <br />
-            <p>
-                <span style="margin-left:100px;">
-                    __________________________________
-                </span>
-                <span style="margin-left:50px;">
-                    ________________________
-                </span>
-            </p>
-            <p style="margin-top:0;">
-                <span style="margin-left:160px;">
-                    Signature over Printed Name
-                </span>
-                <span style="margin-left:180px;">
-                    Date
-                </span>
-            </p>
-            <p style="margin-top:10px;">
-                <span style="margin-left:170px;margin-top:-20px;">
-                    (Applicant/Representative)
-                </span>
-            </p>
-            <br />
-            <p class="font-italic " style="font-size:14px;color:gray;">
-                Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.
-            </p>
-            <hr />
-            <p class="font-weight-bold">Procedures for Application</p>
+        </p>
+        <p>
+            2. I received a total of __________ document/s.
+        </p>
+        <br />
+        <br />
+        <p>
+            <span style="margin-left:100px;">
+                __________________________________
+            </span>
+            <span style="margin-left:50px;">
+                ________________________
+            </span>
+        </p>
+        <p style="margin-top:0;">
+            <span style="margin-left:160px;">
+                Signature over Printed Name
+            </span>
+            <span style="margin-left:180px;">
+                Date
+            </span>
+        </p>
+        <p style="margin-top:10px;">
+            <span style="margin-left:170px;margin-top:-20px;">
+                (Applicant/Representative)
+            </span>
+        </p>
+        <br />
+        <p class="font-italic " style="font-size:14px;color:gray;">
+            Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.
+        </p>
+        <hr />*@
+
+            <p class="font-weight-bold" style="margin-top:20px;">Procedures for Application</p>
             <p>
                 1. Present your confirmed appointment letter to the Appointment Verification Counter.
             </p>
@@ -300,7 +308,7 @@
                 5. Bring your original ID and the official receipt to claim the document on the scheduled date and time of release.
             </p>
 
-            <p class="font-weight-bold">Filing/Claiming Apostille applications via Authorized Representative</p>
+            <p class="font-weight-bold" style="margin-top:20px;">Filing/Claiming Apostille applications via Authorized Representative</p>
             <p>
                 1. Authorization letter from the owner; (For minor applicants - Original Special Power of Attorney executed by parents).
             </p>
@@ -312,13 +320,16 @@
             </p>
 
             <p>
-                List of acceptable ID's:
+                Acceptable IDs:
             </p>
             <p>
-                *All digitized Philippine government-issued ID's bearing the signature of the applicant.
+                *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card.
             </p>
             <p>
-                *Other acceptable ID's: Senior Citizen's ID, Solo Parent ID, PWD ID, Voter's ID, Voter's Certification.
+                *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID.
+            </p>
+            <p>
+                *Digitized Student ID (valid for the duration of his studies up to 1 year upon graduation)
             </p>
             <hr />
 

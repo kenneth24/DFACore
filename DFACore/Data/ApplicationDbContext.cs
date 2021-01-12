@@ -20,5 +20,15 @@ namespace DFACore.Data
         public DbSet<Models.DisabledDate> DisabledDates { get; set; }
 
         public DbSet<Models.ScheduleCapacity> ScheduleCapacities { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<UnavailableDate>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+        }
     }
 }

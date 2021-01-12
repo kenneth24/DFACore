@@ -29,25 +29,29 @@
         <div class="col-sm-12 col-md-8 col-lg-8 text-center">
             <h4 class="black-text-bold">PLEASE CHOOSE ONE:</h4>
             <p class="grey-text">I am the</p>
-            <div class="row">
-                <a id="show-document-owner" href="@Url.Action("Index", "Home")" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;">DOCUMENT OWNER</a>
-                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 30px;"></div>
-                <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size:14px;">
+            <div class="row justify-content-center">
+                <a id="show-document-owner" href="@Url.Action("Index", "Home")" class="col-sm-12 col-md-12 col-lg-5 button-primary text-white" style="font-size: 14px;line-height: 40px;margin-bottom:15px;">DOCUMENT OWNER</a>
+                
+            </div>
+            <div class="row justify-content-center">
+                <a id="show-authorized-representative" href="#" class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="font-size: 14px;margin-bottom: 15px;">
                     AUTHORIZED REPRESENTATIVE
                     <br />
                     (for filing/claiming)
                 </a>
             </div>
-            <a class="blue-text text-right d-none d-lg-block"
-               style="font-size:14px;cursor:pointer;margin-right:10%;"
-               data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
-                View requirements
-            </a>
-            <a class="blue-text text-center d-lg-none"
-               style="font-size:14px;cursor:pointer;"
-               data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
-                View requirements
-            </a>
+            <div class="row justify-content-center">
+                <a class="button-primary text-white col-sm-12 col-md-12 col-lg-5" style="margin-bottom: 15px; font-size: 14px; line-height: 40px; background-color: #6c757d !important; border: 1px solid #6c757d !important;"
+                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                    VIEW REQUIREMENTS
+                </a>
+                @*<a class="blue-text text-center d-lg-none"
+                   style="font-size:14px;cursor:pointer;"
+                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                    View requirements
+                </a>*@
+            </div>
+            
 
         </div>
         <div class="col-sm-12 col-md-2 col-lg-2">
@@ -66,12 +70,13 @@
                        value="1"
                        name="applicantsCount"
                        class="black-text-bold numberInput"
-                       style="height: 70px;
-                    width: 100px;
-                    font-size: 60px;
-                    text-align: center;
-                    border: none;
-                    background-color: #ddd;" />
+                       style="        height: 70px;
+                        width: 100px;
+                        font-size: 60px;
+                        text-align: center;
+                        border: none;
+                        background-color: #ddd;
+                        margin-bottom: 13px;" />
                 @*<p class="black-text text-center">
                         Please include yourself in the number of applicants if you are also applying for an Apostille.
                     </p>*@
@@ -107,7 +112,7 @@
                             1. Authorization letter from the owner. For Minor Applicants - Original Special Power
                             of Attorney executed by parent/s. <br />
                             2. Photocopy of the owner's ID bearing his/her signature. <br />
-                            3. Photocopy and original copy of representative's ID. br
+                            3. Photocopy and original copy of representative's ID.
                         </p>
                         <p class="black-text-bold" style="font-size:12px;">
                             Acceptable IDs:
@@ -182,10 +187,10 @@
                     alert("Cannot input more than 10.");
                     $("#applicantsCount").val(10);
                 }
-                else {
-                $("#show-step-one-authorized").css("z-index", "1");
-                    $("#applicantsCount").val(1);
-                }
+                //else {
+                //$("#show-step-one-authorized").css("z-index", "1");
+                //    $("#applicantsCount").val(1);
+                //}
             }
         });
             @*$("#show-step-one-authorized").click(function () {
