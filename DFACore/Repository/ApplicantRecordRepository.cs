@@ -128,6 +128,10 @@ namespace DFACore.Repository
             if (applicationCount == 0)
                 applicationCount = 1;
 
+            if (date < DateTime.UtcNow.ToLocalTime())
+            {
+                return false;
+            }
 
             var totalCount = applicationCount;
             var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date).ToList();
@@ -185,6 +189,11 @@ namespace DFACore.Repository
 
         public List<AvailableDAtes> GenerateListOfDates(DateTime start)
         {
+            var now = DateTime.UtcNow.ToLocalTime();
+            var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
+            if (start >= toCompare)
+                start = start.AddDays(1);
+            
             var end = start.AddDays(30);
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates();
@@ -1916,6 +1925,8 @@ namespace DFACore.Repository
                 return stream.ToArray();
             }
         }
+
+
     }
 }
 

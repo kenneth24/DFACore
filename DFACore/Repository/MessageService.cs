@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace DFACore.Repository
 {
     public class MessageService : IMessageService
     {
+
         public async Task SendEmailAsync(
             string toName,
             string toEmailAddress,
@@ -18,7 +20,7 @@ namespace DFACore.Repository
             params Attachment[] attachments)
         {
             var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("DFA.NPO", "dfa.npo2019@gmail.com"));
+            email.From.Add(new MailboxAddress("DFA.NPO", "oca.authentication@dfa.gov.ph"));
             email.To.Add(new MailboxAddress(toName, toEmailAddress));
             email.Subject = subject;
 
@@ -42,15 +44,10 @@ namespace DFACore.Repository
             //body.Attachments.Add(@"D:\test\testing.txt");
 
             email.Body = body.ToMessageBody();
-
             using (var client = new SmtpClient())
             {
-                //client.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
-                //client.AuthenticationMechanisms.Remove("XOAUTH2");
-
-                // Start of provider specific settings
                 await client.ConnectAsync("smtp-relay.sendinblue.com", 587, false).ConfigureAwait(false);
-                await client.AuthenticateAsync("dfa.npo2019@gmail.com", "k5W2DMZLc1Tb3s7X").ConfigureAwait(false);
+                await client.AuthenticateAsync("oca.authentication@dfa.gov.ph", "tU52Yr8cBGjAROpb").ConfigureAwait(false);
                 // End of provider specific settings
 
                 await client.SendAsync(email).ConfigureAwait(false);
@@ -72,5 +69,19 @@ namespace DFACore.Repository
                 return memoryStream.ToArray();
             }
         }
+
+        public void ConnectToPDF(string key)
+        {
+
+
+        }
+
+        public bool IsAuthenticate()
+        {
+            return true;
+        }
+
+
+
     }
 }

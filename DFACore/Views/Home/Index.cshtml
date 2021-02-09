@@ -582,7 +582,7 @@
 
                         <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
                         <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose available time slot.</p>
-                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;"></p>
+                        <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please select schedule date.</p>
                         <p style="margin-top:10px;">Processing Site</p>
                         @*<p class="font-weight-bold">(Site and Address)</p>*@
                         <p id="siteAndAddress" class="font-weight"></p>
@@ -2272,7 +2272,7 @@
     <script>
         var total = 0;
         var docuTotalCount = 0;
-        var canConfirm = true;
+        var canConfirm = false;
         $(document).ready(function () {
             $('#loading').hide();
 
@@ -2695,13 +2695,13 @@
                         if (result) {
                             $('#availableSchedMessage').show();
                             $('#unAvailableSchedMessage').hide();
-                            $('#errSchedDate').hide();
+                            //$('#errSchedDate').hide();
                             canConfirm = true;
                         }
                         else {
                             $('#availableSchedMessage').hide();
                             $('#unAvailableSchedMessage').show();
-                            $('#errSchedDate').show();
+                            //$('#errSchedDate').show();
                             canConfirm = false;
                         }
                     },
