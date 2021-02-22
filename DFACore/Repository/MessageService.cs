@@ -20,7 +20,7 @@ namespace DFACore.Repository
             params Attachment[] attachments)
         {
             var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("DFA.NPO", "oca.authentication@dfa.gov.ph"));
+            email.From.Add(new MailboxAddress("Apostille Appointment", "oca.authentication@dfa.gov.ph"));
             email.To.Add(new MailboxAddress(toName, toEmailAddress));
             email.Subject = subject;
 

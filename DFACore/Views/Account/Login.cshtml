@@ -18,6 +18,10 @@
         #dfa-title {
             margin-top: 100px !important;
         }
+
+        .loginTitleVisible2 {
+            display: none;
+        }
     }
 
     /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
@@ -26,9 +30,23 @@
             margin-top: 40px !important;
         }
 
+        .loginTitleVisible {
+            display: none;
+        }
+
         .bannerDetails {
             font-size: 12px;
         }
+    }
+
+    @@font-face {
+        font-family: 'BEBAS';
+        src: url('../font/bebas/BEBAS.woff') format('woff');
+        src: local('BEBAS'), url('../font/bebas/BEBAS.woff') format('woff'), url('../font/bebas/BEBAS.ttf') format('truetype');
+    }
+
+    .loginTitle {
+        font-family: 'BEBAS' !important;
     }
 
     /*@@media only screen and (max-width: 600px) {
@@ -48,11 +66,12 @@
         color: white;
     }
 
-    
+
 </style>
 <div id="dfa-title" class="jumbotron pageContainers" style="background-color: white;">
     <h5 class="text-center bannerDetails black-text">WELCOME TO</h5>
-    <h3 class="text-center bannerDetails black-text-bold" style="color: #858585">APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h3>
+    <h2 class="text-center bannerDetails black-text-bold loginTitle loginTitleVisible" style="color: #858585">APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h2>
+    <h1 class="text-center bannerDetails black-text-bold loginTitle loginTitleVisible2" style="color: #858585; font-size:20px">APOSTILLE APPLICATION &<br>APPOINTMENT SYSTEM</h1>
 </div>
 <div class="row">
     <div class="col-md-3 col-sm-0">

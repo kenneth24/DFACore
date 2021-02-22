@@ -90,8 +90,8 @@ namespace DFACore.Controllers
                     ContactNumber = model.Record.ContactNumber,
                     CountryDestination = model.Record.CountryDestination?.ToUpper(),
                     ApostileData = model.Record.ApostileData,
-                    ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
-                    ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
+                    ProcessingSite = "DFA - Office of Consular Affairs (ASEANA)", //model.Record.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = "Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City", //model.Record.ProcessingSiteAddress?.ToUpper(),
                     ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture),
                     ApplicationCode = model.Record.ApplicationCode,
@@ -101,10 +101,10 @@ namespace DFACore.Controllers
                     DateCreated = DateTime.UtcNow,
                     QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
-                attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+                attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
@@ -132,8 +132,8 @@ namespace DFACore.Controllers
                         NameOfRepresentative = $"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}",
                         RepresentativeContactNumber = model.Record.ContactNumber,
                         ApostileData = record.ApostileData,
-                        ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
-                        ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
+                        ProcessingSite = "DFA - Office of Consular Affairs (ASEANA)", //model.Record.ProcessingSite?.ToUpper(),
+                        ProcessingSiteAddress = "Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City", //model.Record.ProcessingSiteAddress?.ToUpper(),
                         ScheduleDate = dateTimeSched,
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -142,11 +142,11 @@ namespace DFACore.Controllers
                         DateCreated = DateTime.UtcNow,
                         QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
                     };
 
                     applicantRecords.Add(applicantRecord);
-                    attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+                    attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                     var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                     if (age < 18)

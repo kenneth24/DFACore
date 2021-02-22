@@ -193,10 +193,42 @@ namespace DFACore.Repository
             var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
             if (start >= toCompare)
                 start = start.AddDays(1);
-            
-            var end = start.AddDays(30);
+
+            var end = start.AddYears(1); //.AddDays(30);
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates();
+
+            //==== 
+            var holidays = new List<DateTime> 
+            {
+                new DateTime(2021, 02, 11, 0, 0, 0),
+                new DateTime(2021, 02, 12, 0, 0, 0),
+                new DateTime(2021, 02, 13, 0, 0, 0),
+                new DateTime(2021, 02, 14, 0, 0, 0),
+                new DateTime(2021, 02, 15, 0, 0, 0),
+                new DateTime(2021, 02, 16, 0, 0, 0),
+                new DateTime(2021, 02, 17, 0, 0, 0),
+                new DateTime(2021, 02, 25, 0, 0, 0),
+                new DateTime(2021, 04, 01, 0, 0, 0),
+                new DateTime(2021, 04, 02, 0, 0, 0),
+                new DateTime(2021, 04, 03, 0, 0, 0),
+                new DateTime(2021, 04, 09, 0, 0, 0),
+                new DateTime(2021, 05, 01, 0, 0, 0),
+                new DateTime(2021, 06, 12, 0, 0, 0),
+                new DateTime(2021, 08, 21, 0, 0, 0),
+                new DateTime(2021, 08, 30, 0, 0, 0),
+                new DateTime(2021, 11, 01, 0, 0, 0),
+                new DateTime(2021, 11, 02, 0, 0, 0),
+                new DateTime(2021, 11, 30, 0, 0, 0),
+                new DateTime(2021, 12, 25, 0, 0, 0),
+                new DateTime(2021, 12, 08, 0, 0, 0),
+                new DateTime(2021, 12, 24, 0, 0, 0),
+                new DateTime(2021, 12, 30, 0, 0, 0),
+                new DateTime(2021, 12, 31, 0, 0, 0),
+            };
+
+            unAvailable.AddRange(holidays);
+
 
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
