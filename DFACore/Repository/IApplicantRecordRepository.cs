@@ -8,7 +8,7 @@ namespace DFACore.Repository
 {
     public interface IApplicantRecordRepository
     {
-        bool Get(long id);
+        
         IEnumerable<ApplicantRecord> GetAll();
         bool Add(ApplicantRecord applicantRecord);
         bool Update(ApplicantRecord applicantRecord);

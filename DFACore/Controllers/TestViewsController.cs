@@ -57,6 +57,32 @@ namespace DFACore.Controllers
                 QRCode = _applicantRepo.GenerateQRCode($"Kenneth Villafuerte {Environment.NewLine} 0212124 {Environment.NewLine} May 24, 2020 {Environment.NewLine} 10am {Environment.NewLine} DFA-OCA")
             };
 
+            var get = _applicantRepo.Get(44732);
+
+            var model2 = new ApplicantRecord
+            {
+                Title = get.Title,
+                FirstName = get.FirstName,
+                MiddleName = get.MiddleName,
+                LastName = get.LastName,
+                Suffix = get.Suffix,
+                Nationality = get.Nationality,
+                ContactNumber = get.ContactNumber,
+                CompanyName = get.CompanyName,
+                CountryDestination = get.CountryDestination,
+                NameOfRepresentative = get.NameOfRepresentative,
+                RepresentativeContactNumber = get.RepresentativeContactNumber,
+                ApostileData = get.ApostileData,
+                ProcessingSite = get.ProcessingSite,
+                ScheduleDate = get.ScheduleDate,
+                ApplicationCode = get.ApplicationCode,
+                QRCode = _applicantRepo.GenerateQRCode($"{get.FirstName?.ToUpper()} {get.MiddleName?.ToUpper()} {get.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{get.ApplicationCode}{Environment.NewLine}{get.ScheduleDate.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{get.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}"),
+                Fees = get.Fees
+            };
+
+
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
@@ -74,7 +100,7 @@ namespace DFACore.Controllers
             };
             _generatePdf.SetConvertOptions(options);
 
-            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model);
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model2);
             var pdfStream = new System.IO.MemoryStream();
             pdfStream.Write(pdf, 0, pdf.Length);
             pdfStream.Position = 0;

@@ -30,26 +30,69 @@ namespace DFACore.Repository
             return true;
         }
 
-        public bool AddRange(IEnumerable<ApplicantRecord> applicantRecords)
+        public bool AddActivityLog(ActivityLog activityLog)
         {
-            var scheduleTime = new List<DateTime>()
-            { 
-                new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
-            };
-            
-            foreach (var applicantRecord in applicantRecords)
-            {
-                if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
-                {
-
-                }
-                ValidateScheduleDate(applicantRecord.ScheduleDate);
-            }
-            //applicantRecord.DateCreated = DateTime.UtcNow;
-
-            _context.ApplicantRecords.AddRange(applicantRecords);
+            activityLog.CreatedDate = DateTime.UtcNow;
+            _context.ActivityLogs.Add(activityLog);
             _context.SaveChanges();
             return true;
+        }
+
+        public bool AddRange(IEnumerable<ApplicantRecord> applicantRecords)
+        {
+            try
+            {
+                var newObject = applicantRecords.Select(model => new ApplicantRecord {
+                    FirstName = model.FirstName,
+                    MiddleName = model.MiddleName,
+                    LastName = model.LastName,
+                    Suffix = model.Suffix,
+                    DateOfBirth = model.DateOfBirth,
+                    ContactNumber = model.ContactNumber,
+                    CountryDestination = model.CountryDestination?.ToUpper(),
+                    ApostileData = model.ApostileData,
+                    ProcessingSite = model.ProcessingSite,
+                    ProcessingSiteAddress = model.ProcessingSiteAddress,
+                    ScheduleDate = model.ScheduleDate, 
+                    ApplicationCode = model.ApplicationCode,
+                    CreatedBy = model.CreatedBy,
+                    Fees = model.Fees,
+                    Type = model.Type,
+                    DateCreated = DateTime.UtcNow,
+                });
+                var act = new ActivityLog
+                {
+                    UserId = 1,
+                    IpAddress = applicantRecords.FirstOrDefault().CreatedBy.ToString(),
+                    OS = JsonConvert.SerializeObject(newObject)
+                };
+
+                AddActivityLog(act);
+
+                _context.ApplicantRecords.AddRange(applicantRecords);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            //var scheduleTime = new List<DateTime>()
+            //{ 
+            //    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
+            //};
+            
+            //foreach (var applicantRecord in applicantRecords)
+            //{
+            //    if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
+            //    {
+
+            //    }
+            //    ValidateScheduleDate(applicantRecord.ScheduleDate);
+            //}
+            //applicantRecord.DateCreated = DateTime.UtcNow;
+
+            
         }
 
         public bool Delete(long id)
@@ -57,9 +100,10 @@ namespace DFACore.Repository
             throw new NotImplementedException();
         }
 
-        public bool Get(long id)
+        public ApplicantRecord Get(long id)
         {
-            return true;
+            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).FirstOrDefault();
+            return applicant;
         }
 
         public IEnumerable<ApplicantRecord> GetAll()
@@ -92,22 +136,24 @@ namespace DFACore.Repository
             TimeSpan timeSpan = date.TimeOfDay;
             TimeSpan TodayTime2 = new TimeSpan(8, 0, 0);
 
-            if (timeSpan == new TimeSpan(8, 0, 0))
+            if (timeSpan == new TimeSpan(7, 0, 0))
                 type = 1;
-            else if (timeSpan == new TimeSpan(9, 0, 0))
+            else if (timeSpan == new TimeSpan(8, 0, 0))
                 type = 2;
-            else if (timeSpan == new TimeSpan(10, 0, 0))
+            else if (timeSpan == new TimeSpan(9, 0, 0))
                 type = 3;
-            else if (timeSpan == new TimeSpan(11, 0, 0))
+            else if (timeSpan == new TimeSpan(10, 0, 0))
                 type = 4;
-            else if (timeSpan == new TimeSpan(12, 0, 0))
+            else if (timeSpan == new TimeSpan(11, 0, 0))
                 type = 5;
-            else if (timeSpan == new TimeSpan(13, 0, 0))
+            else if (timeSpan == new TimeSpan(12, 0, 0))
                 type = 6;
-            else if (timeSpan == new TimeSpan(14, 0, 0))
+            else if (timeSpan == new TimeSpan(13, 0, 0))
                 type = 7;
-            else if (timeSpan == new TimeSpan(15, 0, 0))
+            else if (timeSpan == new TimeSpan(14, 0, 0))
                 type = 8;
+            else if (timeSpan == new TimeSpan(15, 0, 0))
+                type = 9;
 
             //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
             var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
@@ -198,34 +244,36 @@ namespace DFACore.Repository
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates();
 
+
+            var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year).Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
             //==== 
-            var holidays = new List<DateTime> 
-            {
-                new DateTime(2021, 02, 11, 0, 0, 0),
-                new DateTime(2021, 02, 12, 0, 0, 0),
-                new DateTime(2021, 02, 13, 0, 0, 0),
-                new DateTime(2021, 02, 14, 0, 0, 0),
-                new DateTime(2021, 02, 15, 0, 0, 0),
-                new DateTime(2021, 02, 16, 0, 0, 0),
-                new DateTime(2021, 02, 17, 0, 0, 0),
-                new DateTime(2021, 02, 25, 0, 0, 0),
-                new DateTime(2021, 04, 01, 0, 0, 0),
-                new DateTime(2021, 04, 02, 0, 0, 0),
-                new DateTime(2021, 04, 03, 0, 0, 0),
-                new DateTime(2021, 04, 09, 0, 0, 0),
-                new DateTime(2021, 05, 01, 0, 0, 0),
-                new DateTime(2021, 06, 12, 0, 0, 0),
-                new DateTime(2021, 08, 21, 0, 0, 0),
-                new DateTime(2021, 08, 30, 0, 0, 0),
-                new DateTime(2021, 11, 01, 0, 0, 0),
-                new DateTime(2021, 11, 02, 0, 0, 0),
-                new DateTime(2021, 11, 30, 0, 0, 0),
-                new DateTime(2021, 12, 25, 0, 0, 0),
-                new DateTime(2021, 12, 08, 0, 0, 0),
-                new DateTime(2021, 12, 24, 0, 0, 0),
-                new DateTime(2021, 12, 30, 0, 0, 0),
-                new DateTime(2021, 12, 31, 0, 0, 0),
-            };
+            //var holidays = new List<DateTime> 
+            //{
+            //    new DateTime(2021, 02, 11, 0, 0, 0),
+            //    new DateTime(2021, 02, 12, 0, 0, 0),
+            //    new DateTime(2021, 02, 13, 0, 0, 0),
+            //    new DateTime(2021, 02, 14, 0, 0, 0),
+            //    new DateTime(2021, 02, 15, 0, 0, 0),
+            //    new DateTime(2021, 02, 16, 0, 0, 0),
+            //    new DateTime(2021, 02, 17, 0, 0, 0),
+            //    new DateTime(2021, 02, 25, 0, 0, 0),
+            //    new DateTime(2021, 04, 01, 0, 0, 0),
+            //    new DateTime(2021, 04, 02, 0, 0, 0),
+            //    new DateTime(2021, 04, 03, 0, 0, 0),
+            //    new DateTime(2021, 04, 09, 0, 0, 0),
+            //    new DateTime(2021, 05, 01, 0, 0, 0),
+            //    new DateTime(2021, 06, 12, 0, 0, 0),
+            //    new DateTime(2021, 08, 21, 0, 0, 0),
+            //    new DateTime(2021, 08, 30, 0, 0, 0),
+            //    new DateTime(2021, 11, 01, 0, 0, 0),
+            //    new DateTime(2021, 11, 02, 0, 0, 0),
+            //    new DateTime(2021, 11, 30, 0, 0, 0),
+            //    new DateTime(2021, 12, 25, 0, 0, 0),
+            //    new DateTime(2021, 12, 08, 0, 0, 0),
+            //    new DateTime(2021, 12, 24, 0, 0, 0),
+            //    new DateTime(2021, 12, 30, 0, 0, 0),
+            //    new DateTime(2021, 12, 31, 0, 0, 0),
+            //};
 
             unAvailable.AddRange(holidays);
 
@@ -240,7 +288,7 @@ namespace DFACore.Repository
                     {
                         av = new AvailableDAtes
                         {
-                            title = "N/A",
+                            title = "Not Available",
                             start = dt.ToString("yyyy-MM-dd"),
                             color = "#ff9f89"
                         };
@@ -286,7 +334,7 @@ namespace DFACore.Repository
                 "AS dataCount " +
                 "group by " +
                 "CAST(ScheduleDate as Date)) a " +
-                "where a.DocuCount >= 800", DateTime.Now).ToList();
+                "where a.DocuCount >= 800", DateTime.Now.Date).ToList();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 

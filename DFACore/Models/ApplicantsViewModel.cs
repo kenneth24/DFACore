@@ -11,5 +11,6 @@ namespace DFACore.Models
         public List<ApplicantRecordViewModel> Records { get; set; }
         public string ScheduleDate { get; set; }
         public int ApplicantCount { get; set; }
+        public string Token { get; set; }
     }
 }

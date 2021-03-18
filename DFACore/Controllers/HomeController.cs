@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using Wkhtmltopdf.NetCore;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using shortid;
+using shortid.Configuration;
 
 namespace DFACore.Controllers
 {
@@ -26,6 +28,7 @@ namespace DFACore.Controllers
         private readonly IMessageService _messageService;
         private readonly IGeneratePdf _generatePdf;
         private readonly IWebHostEnvironment _env;
+        private readonly GoogleCaptchaService _googleCaptchaService;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -33,7 +36,8 @@ namespace DFACore.Controllers
             ApplicantRecordRepository applicantRepo,
             IMessageService messageService,
             IGeneratePdf generatePdf,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env,
+            GoogleCaptchaService googleCaptchaService)
         {
             _logger = logger;
             _userManager = userManager;
@@ -42,6 +46,7 @@ namespace DFACore.Controllers
             _messageService = messageService;
             _generatePdf = generatePdf;
             _env = env;
+            _googleCaptchaService = googleCaptchaService;
         }
         public IActionResult ApplicantTypeSelection()
         {
@@ -51,7 +56,7 @@ namespace DFACore.Controllers
         {
             if (applicantsCount > 10)
                 applicantsCount = 10;
-            
+
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
@@ -65,10 +70,14 @@ namespace DFACore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ApplicantsViewModel model, string returnUrl = null)
         {
-            //if (!ModelState.IsValid)
+            //var googleReCaptcha = _googleCaptchaService.VerifyReCaptcha(model.Token);
+            //if (!googleReCaptcha.Result.success && googleReCaptcha.Result.score <= 0.5)
             //{
-            //    return View();
+            //    throw new Exception("Invalid attempt.");
+            //    //ModelState.AddModelError(string.Empty, "Invalid attempt.");
+            //    //return View();
             //}
+
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
@@ -79,6 +88,15 @@ namespace DFACore.Controllers
 
             if (model.Records == null)
             {
+                //if (model.Record.ApostileData == "[]")
+                //{
+                //    return RedirectToAction("Error");
+                //}
+
+                //var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.Record.ApostileData);
+                //var validate = ValidateScheduleDate3(model.ScheduleDate, data.Count());
+                //if (validate)
+                //{
                 var applicantRecord = new ApplicantRecord
                 {
 
@@ -92,16 +110,15 @@ namespace DFACore.Controllers
                     ApostileData = model.Record.ApostileData,
                     ProcessingSite = "DFA - Office of Consular Affairs (ASEANA)", //model.Record.ProcessingSite?.ToUpper(),
                     ProcessingSiteAddress = "Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City", //model.Record.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-                                       System.Globalization.CultureInfo.InvariantCulture),
+                    ScheduleDate = dateTimeSched, //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture),
                     ApplicationCode = model.Record.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = model.Record.Fees,
                     Type = 0,
                     DateCreated = DateTime.UtcNow,
                     QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
-                            $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
+                        $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
                 attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
@@ -109,14 +126,25 @@ namespace DFACore.Controllers
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
                     generatePowerOfAttorney = true;
+                //}
                 //else
-                //    generateAuthLetter = true;
+                //{
+                //    return RedirectToAction("Error");
+                //}
 
             }
             else
             {
+                int data = 0;
                 foreach (var record in model.Records)
                 {
+                    //if (record.ApostileData == "[]")
+                    //{
+                    //    return RedirectToAction("Error");
+                    //}
+
+                    //data += JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(record.ApostileData).Count;
+
                     var applicantRecord = new ApplicantRecord
                     {
                         FirstName = record.FirstName?.ToUpper(),
@@ -155,12 +183,19 @@ namespace DFACore.Controllers
                         generateAuthLetter = true;
                 }
 
+
+                //var validate = ValidateScheduleDate3(model.ScheduleDate, data);
+                //if (!validate)
+                //{
+                //    return RedirectToAction("Error");
+                //}
+
             };
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
-                ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+                return RedirectToAction("Error");  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
 
@@ -182,6 +217,8 @@ namespace DFACore.Controllers
                     attachments.ToArray());
             ViewData["ApplicantCount"] = model.ApplicantCount;
             return RedirectToAction("Success");
+
+
         }
 
         //[HttpPost]
@@ -288,17 +325,25 @@ namespace DFACore.Controllers
 
         public static string GetApplicantCode()
         {
-            int length = 4;
-            var random = new Random();
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var result = new string(
-                Enumerable.Repeat(chars, length)
-                          .Select(s => s[random.Next(s.Length)])
-                          .ToArray());
+            var options = new GenerationOptions
+            {
+                UseNumbers = true,
+                UseSpecialCharacters = false,
+                Length = 8
+            };
+            string id = ShortId.Generate(options);
 
-            Random r = new Random();
+            //int length = 4;
+            //var random = new Random();
+            //var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            //var result = new string(
+            //    Enumerable.Repeat(chars, length)
+            //              .Select(s => s[random.Next(s.Length)])
+            //              .ToArray());
+
+            //Random r = new Random();
             var date = DateTime.Now;
-            var applicantCode = $"{date.ToString("hhmmss")}-{date.ToString("ddd").Substring(0, 2)}{result}-{date.ToString("MMdd")}".ToUpper();
+            var applicantCode = $"{date.ToString("hhmmss")}-{date.ToString("yy").Substring(0, 2)}{id}-{date.ToString("MMdd")}".ToUpper();
 
             return applicantCode;
         }
@@ -411,13 +456,24 @@ namespace DFACore.Controllers
 
         public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount)
         {
-            
+
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var result = _applicantRepo.ValidateScheduleDate(date, applicationCount);
 
             return Json(result);
+        }
+
+        public bool ValidateScheduleDate3(string scheduleDate, int applicationCount)
+        {
+
+            var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount);
+
+            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

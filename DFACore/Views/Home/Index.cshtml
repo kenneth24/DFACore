@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model DFACore.Models.ApplicantsViewModel
+@using Microsoft.Extensions.Options
+@*@inject IOptions<DFACore.Models.ReCAPTCHASetting>  GoogleRecaptcha*@
+
 @{
     ViewData["Title"] = "Home Page";
     //var currentUser = (ApplicationUser)ViewBag.User;
@@ -88,6 +91,7 @@
     #loading-image {
         margin: auto;
     }
+
     .img-fluid {
         width: 100% !important;
     }
@@ -102,7 +106,8 @@
             <span id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></span>
         </div>
     </div>
-    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <p style=" margin-bottom: 3rem;" class="d-none d-md-block">
         <span class="float-left font-weight-bold grey-text-bold">
             @User.Identity.Name
         </span>
@@ -121,7 +126,7 @@
         <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
     </div>
 
-    <form method="post" id="application-form">
+    <form method="post" id="application-form" onsubmit="submitbutton.disabled = true; stepthreebackbutton.disabled = true; return true;" style="margin-top:10px;">
         @{
             int applicants = (int)ViewData["ApplicantCount"];
             <p id="applicantCount" style="display:none;">@applicants</p>
@@ -337,7 +342,7 @@
                                     </p>
                                 </div>
                             </div>
-                           
+
                             <div class="row">
                                 @*<div class="col-md-2 col-sm-12">
                                         <label asp-for="Title">Title <span class="red">*</span></label>
@@ -603,11 +608,18 @@
         </div>
         <div id="step-three" style="display:none" class="tabcontent">
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Appointment Letter</p>
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 3: Generate Appointment Letter</p>
             </div>
             <div id="editor"></div>
             <h4 class="font-weight-bold text-center">Summary of Application</h4>
             <hr />
+            <div class="alert alert-secondary" role="alert">
+                <p class="text-center">
+                    Please ensure that all the information/details are correct before clicking the <strong>GENERATE APPOINTMENT</strong> box. <br />
+                    Kindly <strong>PRINT</strong> and present your Appointment Letter when you visit the selected Consular Office for the processing of your Apostille.
+                </p>
+            </div>
+            
             <p class="red font-weight-bold text-center">IMPORTANT REMINDER: <strong class="black-text">Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</strong></p>
             <div class="row">
                 <div class="col-md-3 col-sm-12">
@@ -727,54 +739,54 @@
 
                 </div>
                 @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Address: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblAddress"></span>
-                        </div>
-                    </div>*@
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Address: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblAddress"></span>
+                </div>
+            </div>*@
                 @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Contact No: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblContactNumber"></span>
-                        </div>
-                    </div>*@
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Contact No: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblContactNumber"></span>
+                </div>
+            </div>*@
                 @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Authorize Representative: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblAuthorizeRepresentative"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Contact No: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblRepresentativeContactNumber"></span>
-                        </div>
-                    </div>*@
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Authorize Representative: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblAuthorizeRepresentative"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Contact No: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblRepresentativeContactNumber"></span>
+                </div>
+            </div>*@
 
                 @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Company/ Office: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblCompany"></span>
-                        </div>
-                    </div>*@
+                <div class="step-three-field col-md-3 col-sm-12">
+                    <span>Company/ Office: </span>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <span id="LblCompany"></span>
+                </div>
+            </div>*@
 
                 <div class="row">
                     <div class="step-three-field col-md-3 col-sm-12">
                         <span>Country of Destination: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>*@
+                    <span>: </span>
+                </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span class="black-text" id="LblCountryDestination"></span>
                     </div>
@@ -785,8 +797,8 @@
                         <span>Type of Document to be Apostillized: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>*@
+                    <span>: </span>
+                </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span class="black-text" id="LblTypeOfDocument"></span>
                     </div>
@@ -794,24 +806,24 @@
 
 
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                            <span>Date of Appointment</span>
-                        </div>
-                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>
-                        <div class="col-md-7 col-sm-12 font-weight-bold">
-                            <span id="LblDateOfAppointment"></span>
-                        </div>
+                    <span>Date of Appointment</span>
+                </div>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <span id="LblDateOfAppointment"></span>
+                </div>
 
-                    <div class="step-three-field col-md-4 col-sm-12">
-                        <span>Time</span>
-                    </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <span id="LblTimeOfAppointment"></span>
-                    </div>*@
+            <div class="step-three-field col-md-4 col-sm-12">
+                <span>Time</span>
+            </div>
+            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                <span>: </span>
+            </div>
+            <div class="col-md-7 col-sm-12 font-weight-bold">
+                <span id="LblTimeOfAppointment"></span>
+            </div>*@
 
 
                 <div class="row">
@@ -819,49 +831,49 @@
                         <span>Total Fees:</span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>*@
+                    <span>: </span>
+                </div>*@
                     <div class="col-md-8 col-sm-12 font-weight-bold">
                         <span class="black-text" id="LblPayment"> PhP 0.00</span>
                         <input asp-for="Record.Fees" type="hidden" />
                     </div>
                 </div>
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                            <span>Appointment Code</span>
-                        </div>
-                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>
-                        <div class="col-md-7 col-sm-12 font-weight-bold">
-                            <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                            <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                        </div>
+                    <span>Appointment Code</span>
+                </div>
+                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                    <span>: </span>
+                </div>
+                <div class="col-md-7 col-sm-12 font-weight-bold">
+                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                </div>
 
-                    <div class="step-three-field col-md-4 col-sm-12">
-                        <span>Processing Site</span>
-                    </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <span id="LblProcessingSite"></span>
-                    </div>*@
+            <div class="step-three-field col-md-4 col-sm-12">
+                <span>Processing Site</span>
+            </div>
+            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                <span>: </span>
+            </div>
+            <div class="col-md-7 col-sm-12 font-weight-bold">
+                <span id="LblProcessingSite"></span>
+            </div>*@
             }
 
-            <p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>
+            @*<p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>*@
 
             <div class="row">
                 <div class="col-md-2 col-sm-1">
 
                 </div>
                 <div class="col-md-3 col-sm-12" style="margin-bottom: 10px;">
-                    <button type="button" id="stepThreeBackBtn" class=" btn button-secondary text-white col-md-12 col-sm-12">Back</button>
+                    <button type="button" name="stepthreebackbutton" id="stepThreeBackBtn" class=" btn button-secondary text-white col-md-12 col-sm-12">Back</button>
                 </div>
                 <div class="col-md-2 col-sm-1">
 
                 </div>
                 <div class="col-md-3 col-sm-12">
-                    <button type="submit" class="btn button-primary col-md-12 col-sm-12 float-right" style="color:white;" id="sendPdfToEmail">Send to Email</button>
+                    <button onclick="return onSubmit();" type="submit" name="submitbutton" class="btn button-primary col-md-12 col-sm-12 float-right" style="color:white;" id="sendPdfToEmail">Generate Appointment</button>
                 </div>
                 <div class="col-md-2 col-sm-1">
 
@@ -869,7 +881,10 @@
             </div>
             @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
         </div>
+
+        <input id="Token" asp-for="Token" type="hidden" />
     </form>
+
 
     <!-- Modal -->
     <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
@@ -2264,20 +2279,104 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="onSubmit-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="margin-top: 100px;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
+            <span aria-hidden="true">&times;</span>
+        </button>*@
+                <div class="modal-header">
+                    <h5 class="modal-title">Schedule Unavailable</h5>
+                    <button type="button" class="close unAvailableModal" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p style="color:red;">The date and time slot you have selected is already filled-up. Please click RETURN TO CALENDAR to select another date and time slot. Thank you!</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn unAvailableModal" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section Scripts {
 
-
+    @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
+
+        function onSubmit() {
+            console.log('onsubmit');
+            var valid = false;
+            var x = $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate2")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount },
+                    success: function (result) {
+                        console.log('success');
+                        if (result) {
+                            valid = true;
+                        }
+                        else {
+                            valid = false;
+                            $('#onSubmit-modal').modal({
+                                backdrop: 'static',
+                                keyboard: false,
+                                show: true
+                            });
+                        }
+                    },
+                    error: function () {
+                        valid =  false;
+                        alert('Something went wrong!');
+                },
+                async: false
+
+            });
+            console.log(valid);
+            return valid;
+            //if (valid) {
+            //    alert('True: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+            //else {
+            //    alert('False: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+        }
+
+        @*grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+                console.log(token);
+                $('#Token').val(token);
+            });
+        });*@
+
         var total = 0;
         var docuTotalCount = 0;
         var canConfirm = false;
         $(document).ready(function () {
+
+            $(".unAvailableModal").click(function () {
+                console.log("unavailable modal");
+
+                $("#stepThreeBackBtn").click();
+            });
+
+            $("#testSubmit").click(function () {
+                console.log("testform");
+                $("#application-form").submit();
+            });
+
+
             $('#loading').hide();
 
             $('.numberInput').keyup(function () {
-                this.value = this.value.replace(/[^0-9\.]/g,'');
+                this.value = this.value.replace(/[^0-9\.]/g, '');
             });
 
             $('.dateOfBirthOwner').focusout(function () {
@@ -2322,20 +2421,20 @@
                     console.log(i);
                     //var partial = [];
                     $.ajax({
-                            url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
-                            cache: false,
+                        url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
+                        cache: false,
                         success: function (html) {
                             //partial.push(html);
-                                 // initial load
-                                //insertAtIndex(i, html);
-                                //$("#documentOwners").prepend(html);
+                            // initial load
+                            //insertAtIndex(i, html);
+                            //$("#documentOwners").prepend(html);
 
-                                if (i == 0) {
-                                    $("#documentOwners").append(html);
+                            if (i == 0) {
+                                $("#documentOwners").append(html);
 
-                                } else {
-                                    $("#documentOwners").append(html).insertAfter('documentOwner-'+ i - 1);
-                                }
+                            } else {
+                                $("#documentOwners").append(html).insertAfter('documentOwner-' + i - 1);
+                            }
 
 
                         },
@@ -2358,7 +2457,7 @@
                     url: '@Url.Action("GetCity")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
-                    data: { municipality : $('#Region').val()},
+                    data: { municipality: $('#Region').val() },
                     success: function (result) {
                         console.log(result);
                         $('#City').html("");
@@ -2397,7 +2496,7 @@
                 docuTotalCount = 0;
                 //|| $('#Nationality').val() == "" fNamePartial  || $('#Address').val() == ""
                 if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
-                    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('.apostiledataPartial').val() == ""
+                    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
                     || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
                 ) {
 
@@ -2432,7 +2531,7 @@
                     if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
                         $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
                     }
-                    else if ($('.apostiledataPartial').val() == "[]"){
+                    else if ($('.apostiledataPartial').val() == "[]") {
                         $('.apostiledataPartialValidation').text('Please insert document quantity.');
                     }
                     else
@@ -2495,6 +2594,27 @@
                     $('.apostiledata').text('');
                 }
 
+                //var apostiledataPartialValidation = true;
+                //$.each($('.apostiledataPartial'), function () {
+                //    if ($(this).val() == '' || $(this).val() == '[]') {
+                //        alert('Please check all documents and insert value.');
+                //        apostiledataPartialValidation = false;
+                //        return;
+                //    }
+                //});
+
+                var reqlength = $('.apostiledataPartial').length;
+                console.log(reqlength);
+                var value = $('.apostiledataPartial').filter(function () {
+                    return this.value != '';
+                });
+
+                if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
+                    alert('Please fill out all required fields.');
+                    $('.apostiledataPartialValidation').text('Please insert document quantity.');
+                    return;
+                }
+
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").show();
@@ -2517,7 +2637,7 @@
                     $("#errSchedDate").show();
                     return;
                 }
-                
+
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").hide();
@@ -2587,7 +2707,10 @@
             //    $('#stepTwoBtn').click();
             //});
             $('#stepThreeBackBtn').click(function () {
-                //$('#stepOneBtn').click();
+                //$('#stepOneBtn').click(); 
+                canConfirm = false;
+                $('#appointmentSchedule').val('');
+                $('#availableSchedMessage').hide();
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").show();
@@ -2614,7 +2737,7 @@
                         }
                         else { return; }
                 });
-                
+
                 $("#documentsTable tbody > tr").empty();
                 $("#documentsTable").append('<tr><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
                 //var tbodyContent = '';

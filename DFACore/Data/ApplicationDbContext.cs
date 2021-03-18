@@ -20,10 +20,15 @@ namespace DFACore.Data
         public DbSet<Models.DisabledDate> DisabledDates { get; set; }
 
         public DbSet<Models.ScheduleCapacity> ScheduleCapacities { get; set; }
+        public DbSet<Models.Holiday> Holidays { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Models.ApplicantRecord>()
+            .HasIndex(u => u.ApplicationCode)
+            .IsUnique();
+
             builder.Entity<UnavailableDate>(e =>
             {
                 e.HasNoKey();
