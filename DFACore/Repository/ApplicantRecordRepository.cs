@@ -1988,6 +1988,41 @@ namespace DFACore.Repository
             return cities;
         }
 
+        public List<Branch> GetBranches()
+        {
+            var raw = _context.Branches.Where(a => a.IsActive).ToList();
+
+            return raw;
+        }
+
+        public BranchModel GetBranch(string branch)
+        {
+            var raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+            var availableDates = GenerateListOfDates(DateTime.Now);
+
+            DateTime dtFrom = DateTime.Parse(raw.StartTime);
+            DateTime dtTo = DateTime.Parse(raw.EndTime);
+
+            var dates = new List<AvailableHour>();
+            for (var dt = dtFrom; dt <= dtTo; dt = dt.AddHours(1))
+            {
+                dates.Add(new AvailableHour { 
+                    Caption = $"{dt.ToString("%h")}-{dt.AddHours(1).ToString("h tt")}",
+                    Value = dt.ToString("hh:mm tt")
+                });
+            }
+
+            var result = new BranchModel
+            {
+                Id = raw.Id,
+                BranchName = raw.BranchName,
+                BranchAddress = raw.BranchAddress,
+                AvailableDates = JsonConvert.SerializeObject(availableDates),
+                AvailableHours = dates
+            };
+            return result;
+        }
+
         public byte[] GenerateQRCode(string plainText)
         {
             QRCodeGenerator _qrCode = new QRCodeGenerator();
@@ -2012,6 +2047,8 @@ namespace DFACore.Repository
 
 
 
+// View Maps
+// Custom Capacity Per Branch
 
 
 

@@ -5,6 +5,8 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    List<Branch> branches = (List<Branch>)ViewData["Branches"];
+    var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
     //var currentUser = (ApplicationUser)ViewBag.User;
     //var suffix = string.IsNullOrEmpty(currentUser.Suffix) ? "N/A" : currentUser.Suffix;
 
@@ -504,11 +506,22 @@
             </div>
             <div class="row col-12">
                 <label asp-for="Record.ProcessingSite"></label>
-                <input asp-for="Record.ProcessingSite" id="site" class="form-control" value="DFA - Office of Consular Affairs (ASEANA)" disabled />
+                <select asp-for="Record.ProcessingSite" id="site" class="form-control">
+
+                    @foreach (var item in ViewData["Branches"] as List<Branch>)
+                    {
+                        <option value="@item.BranchName">@item.BranchName</option>
+                    }
+                    @*<option selected value="DFA">DFA - Office of Consular Affairs (ASEANA)</option>
+                        <option value="DFA2">DFA2</option>
+                        <option value="DFA2">DFA3</option>*@
+                </select>
+                @*<input asp-for="Record.ProcessingSite" id="site" class="form-control" value="DFA - Office of Consular Affairs (ASEANA)" disabled />*@
             </div>
             <div class="row col-12">
                 <label asp-for="Record.ProcessingSiteAddress"></label>
-                <input asp-for="Record.ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" disabled />
+                <input id="lblProcessingSiteAddress" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" disabled />
+                <input asp-for="Record.ProcessingSiteAddress" id="address" class="form-control" value="Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City" style="display:none" />
             </div>
             <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:16px;margin-top:5px;">View Map</button>
             <hr />
@@ -527,16 +540,20 @@
                         <label class="black-text">Select Time</label>
                         <div class="row">
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
-                            <div class="col-lg-8 col-md-12 col-sm-12">
-                                <label class="black-text"><input type="radio" name="option1" value="07:00 AM" checked /> 7-8AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="08:00 AM" /> 8-9AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="09:00 AM" /> 9-10AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="10:00 AM" /> 10-11AM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="11:00 AM" /> 11-12PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="12:00 PM" /> 12-1PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="01:00 PM" /> 1-2PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="02:00 PM" /> 2-3PM</label>
-                                <label class="black-text"><input type="radio" name="option1" value="03:00 PM" /> 3-4PM</label>
+                            <div id="AvailableTime" class="col-lg-8 col-md-12 col-sm-12">
+                                @foreach (var hour in defaultBranch.AvailableHours)
+                                {
+                                    <label class="black-text"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
+                                }
+                                @*<label class="black-text"><input type="radio" class="option1" name="option1" value="07:00 AM" checked /> 7-8 AM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="08:00 AM" /> 8-9 AM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="09:00 AM" /> 9-10 AM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="10:00 AM" /> 10-11 AM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="11:00 AM" /> 11-12 PM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="12:00 PM" /> 12-1 PM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="01:00 PM" /> 1-2 PM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="02:00 PM" /> 2-3 PM</label>
+                                <label class="black-text"><input type="radio" class="option1" name="option1" value="03:00 PM" /> 3-4 PM</label>*@
                             </div>
                             <div class="col-lg-2 col-md-12 col-sm-12"></div>
                         </div>
@@ -619,7 +636,7 @@
                     Kindly <strong>PRINT</strong> and present your Appointment Letter when you visit the selected Consular Office for the processing of your Apostille.
                 </p>
             </div>
-            
+
             <p class="red font-weight-bold text-center">IMPORTANT REMINDER: <strong class="black-text">Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</strong></p>
             <div class="row">
                 <div class="col-md-3 col-sm-12">
@@ -739,54 +756,54 @@
 
                 </div>
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Address: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAddress"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Address: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblAddress"></span>
+                        </div>
+                    </div>*@
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblContactNumber"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Contact No: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblContactNumber"></span>
+                        </div>
+                    </div>*@
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Authorize Representative: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblAuthorizeRepresentative"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Contact No: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblRepresentativeContactNumber"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Authorize Representative: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblAuthorizeRepresentative"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Contact No: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblRepresentativeContactNumber"></span>
+                        </div>
+                    </div>*@
 
                 @*<div class="row">
-                <div class="step-three-field col-md-3 col-sm-12">
-                    <span>Company/ Office: </span>
-                </div>
-                <div class="col-md-8 col-sm-12">
-                    <span id="LblCompany"></span>
-                </div>
-            </div>*@
+                        <div class="step-three-field col-md-3 col-sm-12">
+                            <span>Company/ Office: </span>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <span id="LblCompany"></span>
+                        </div>
+                    </div>*@
 
                 <div class="row">
                     <div class="step-three-field col-md-3 col-sm-12">
                         <span>Country of Destination: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span class="black-text" id="LblCountryDestination"></span>
                     </div>
@@ -797,8 +814,8 @@
                         <span>Type of Document to be Apostillized: </span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12">
                         <span class="black-text" id="LblTypeOfDocument"></span>
                     </div>
@@ -806,24 +823,24 @@
 
 
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                    <span>Date of Appointment</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <span id="LblDateOfAppointment"></span>
-                </div>
+                            <span>Date of Appointment</span>
+                        </div>
+                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                            <span>: </span>
+                        </div>
+                        <div class="col-md-7 col-sm-12 font-weight-bold">
+                            <span id="LblDateOfAppointment"></span>
+                        </div>
 
-            <div class="step-three-field col-md-4 col-sm-12">
-                <span>Time</span>
-            </div>
-            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                <span>: </span>
-            </div>
-            <div class="col-md-7 col-sm-12 font-weight-bold">
-                <span id="LblTimeOfAppointment"></span>
-            </div>*@
+                    <div class="step-three-field col-md-4 col-sm-12">
+                        <span>Time</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <span id="LblTimeOfAppointment"></span>
+                    </div>*@
 
 
                 <div class="row">
@@ -831,33 +848,33 @@
                         <span>Total Fees:</span>
                     </div>
                     @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>*@
+                            <span>: </span>
+                        </div>*@
                     <div class="col-md-8 col-sm-12 font-weight-bold">
                         <span class="black-text" id="LblPayment"> PhP 0.00</span>
                         <input asp-for="Record.Fees" type="hidden" />
                     </div>
                 </div>
                 @*<div class="step-three-field col-md-4 col-sm-12">
-                    <span>Appointment Code</span>
-                </div>
-                <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                    <span>: </span>
-                </div>
-                <div class="col-md-7 col-sm-12 font-weight-bold">
-                    <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                    <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                </div>
+                            <span>Appointment Code</span>
+                        </div>
+                        <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                            <span>: </span>
+                        </div>
+                        <div class="col-md-7 col-sm-12 font-weight-bold">
+                            <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                            <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                        </div>
 
-            <div class="step-three-field col-md-4 col-sm-12">
-                <span>Processing Site</span>
-            </div>
-            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                <span>: </span>
-            </div>
-            <div class="col-md-7 col-sm-12 font-weight-bold">
-                <span id="LblProcessingSite"></span>
-            </div>*@
+                    <div class="step-three-field col-md-4 col-sm-12">
+                        <span>Processing Site</span>
+                    </div>
+                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                        <span>: </span>
+                    </div>
+                    <div class="col-md-7 col-sm-12 font-weight-bold">
+                        <span id="LblProcessingSite"></span>
+                    </div>*@
             }
 
             @*<p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>*@
@@ -2219,7 +2236,7 @@
                 <div class="modal-body">
                     <div class="mapouter">
 
-                        <div class="gmap_canvas">
+                        <div id="MapDiv" class="gmap_canvas">
                             <iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Department%20of%20Foreign%20Affairs%20-%20Office%20of%20Consular%20Affairs&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                             </iframe>
                         </div>
@@ -2284,8 +2301,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align: end; margin-right: 5px;">
-            <span aria-hidden="true">&times;</span>
-        </button>*@
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
                 <div class="modal-header">
                     <h5 class="modal-title">Schedule Unavailable</h5>
                     <button type="button" class="close unAvailableModal" data-dismiss="modal" aria-label="Close">
@@ -2307,6 +2324,12 @@
     @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
     <script>
+
+
+        var calendar;
+        var total = 0;
+        var docuTotalCount = 0;
+        var canConfirm = false;
 
         function onSubmit() {
             console.log('onsubmit');
@@ -2349,6 +2372,48 @@
             //}
         }
 
+        $("#site").on("change", function (branchName) {
+
+            var value = $(this).val().toLowerCase();
+            $.ajax({
+                    url: '@Url.Action("GetBranch")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { branch: value },
+                    success: function (result) {
+                        $("#address").val(result.branchAddress);
+                        $('#lblProcessingSiteAddress').val(result.branchAddress);
+                        calendar.removeAllEvents();
+                        calendar.addEventSource(JSON.parse(result.availableDates));
+                        calendar.refetchEvents();
+                        $('#AvailableTime').empty();
+                        $(result.availableHours).each(function (i, elem) {
+                            $('#AvailableTime').append('<label class="black-text"><input type="radio" class="option1" name="option1" value="' + elem.value + '" /> ' + elem.caption + ' </label>')
+                        });
+                        $("#AvailableTime input:radio:first").attr('checked', true);
+                        $('#appointmentScheduleTime').text($('input[name="option1"]:checked').val());
+                        canConfirm = false;
+                        $('#selectTimeContainer').css('z-index', '-1');
+                        $('#selectTimeContainer').css('opacity', '0.5');
+                        $('#appointmentSchedule').val("");
+                        $('#availableSchedMessage').hide();
+                        $('#unAvailableSchedMessage').hide();
+                        $('#siteAndAddress').text(result.branchName + ' - ' + result.branchAddress);
+                        //$('#gmap_canvas').attr('src', 'https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed');
+                        //document.getElementById('gmap_canvas').src = document.getElementById('gmap_canvas').src
+                        $('#MapDiv').empty();
+                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+                        //<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Department%20of%20Foreign%20Affairs%20-%20Office%20of%20Consular%20Affairs&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >
+                    },
+                    error: function () {
+                        alert('Something went wrong!');
+                },
+            });
+            //alert(value);
+        });
+
+
+
         @*grecaptcha.ready(function () {
             grecaptcha.execute('@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
                 console.log(token);
@@ -2356,9 +2421,6 @@
             });
         });*@
 
-        var total = 0;
-        var docuTotalCount = 0;
-        var canConfirm = false;
         $(document).ready(function () {
 
             $(".unAvailableModal").click(function () {
@@ -2452,6 +2514,26 @@
             //}
             //$("#documentOwners > div:nth-child(" + (i) + ")").after(html);
             //}
+            $.ajax({
+                    url: '@Url.Action("GetBranches")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        //console.log(result.branchName);
+                        $('#site').html("");
+                        $.each(result, function (index, val) {
+                            console.log(val.branchName);
+                            $('#site').append(
+                                $('<option></option>').val(val.branchName).html(val.branchName)
+                            );
+                        });
+                    },
+                    error: function () {
+
+                        alert('Something went wrong!');
+                    }
+
+            });
             $("#Region").change(function () {
                 $.ajax({
                     url: '@Url.Action("GetCity")',
@@ -2695,7 +2777,7 @@
 
 
             $('#stepOneBtn').click();
-            $('#siteAndAddress').text($('#site').val().concat(' ', $('#address').val()));
+            $('#siteAndAddress').text($('#site').val().concat(' - ', $('#address').val()));
 
             //$('.backBtn').click(function () {
             //    $('#stepOneBtn').click();
@@ -2707,7 +2789,7 @@
             //    $('#stepTwoBtn').click();
             //});
             $('#stepThreeBackBtn').click(function () {
-                //$('#stepOneBtn').click(); 
+                //$('#stepOneBtn').click();
                 canConfirm = false;
                 $('#appointmentSchedule').val('');
                 $('#availableSchedMessage').hide();
@@ -2764,15 +2846,23 @@
 
             });
 
-            $('#appointmentScheduleTime').text('07:00 AM')
-            $("input[type*='radio']").click(function () {
+            $("#AvailableTime input:radio:first").attr('checked', true);
+            $('#appointmentScheduleTime').text($('input[name="option1"]:checked').val());
 
+            $(document).on('change', '.option1', function () {
                 console.log($(this).val());
-                //$('#appointmentSchedule').val('');
                 $('#appointmentScheduleTime').text($(this).val());
                 $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
                 $('#appointmentSchedule').change();
             });
+            //$('#appointmentScheduleTime').text('07:00 AM')
+                // $("input[type*='radio']").click(function () {
+
+                //    console.log($(this).val());
+                //    $('#appointmentScheduleTime').text($(this).val());
+                //    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                //    $('#appointmentSchedule').change();
+                //});
 
             @*var doc = new jsPDF();
 

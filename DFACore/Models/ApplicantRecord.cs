@@ -62,5 +62,7 @@ namespace DFACore.Models
         [NotMapped]
         public Byte[] QRCode { get; set; }
 
+        public long BranchId { get; set; }
+
     }
 }

@@ -63,6 +63,8 @@ namespace DFACore.Controllers
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             ViewData["ApplicantCount"] = applicantsCount;
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
+            ViewData["DefaultBranch"] = _applicantRepo.GetBranch("DFA - Office of Consular Affairs (ASEANA)");
+            ViewData["Branches"] = _applicantRepo.GetBranches();
             return View();
         }
 
@@ -86,8 +88,11 @@ namespace DFACore.Controllers
 
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
 
+            
             if (model.Records == null)
             {
+                var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
+                
                 //if (model.Record.ApostileData == "[]")
                 //{
                 //    return RedirectToAction("Error");
@@ -99,7 +104,7 @@ namespace DFACore.Controllers
                 //{
                 var applicantRecord = new ApplicantRecord
                 {
-
+                    BranchId = branch != null? branch.Id : 0,
                     FirstName = model.Record.FirstName?.ToUpper(),
                     MiddleName = model.Record.MiddleName?.ToUpper(),
                     LastName = model.Record.LastName?.ToUpper(),
@@ -108,8 +113,8 @@ namespace DFACore.Controllers
                     ContactNumber = model.Record.ContactNumber,
                     CountryDestination = model.Record.CountryDestination?.ToUpper(),
                     ApostileData = model.Record.ApostileData,
-                    ProcessingSite = "DFA - Office of Consular Affairs (ASEANA)", //model.Record.ProcessingSite?.ToUpper(),
-                    ProcessingSiteAddress = "Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City", //model.Record.ProcessingSiteAddress?.ToUpper(),
+                    ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
                     ScheduleDate = dateTimeSched, //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture),
                     ApplicationCode = model.Record.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -118,7 +123,7 @@ namespace DFACore.Controllers
                     DateCreated = DateTime.UtcNow,
                     QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
                         $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
+                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
                 attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
@@ -135,7 +140,7 @@ namespace DFACore.Controllers
             }
             else
             {
-                int data = 0;
+                //int data = 0;
                 foreach (var record in model.Records)
                 {
                     //if (record.ApostileData == "[]")
@@ -145,8 +150,11 @@ namespace DFACore.Controllers
 
                     //data += JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(record.ApostileData).Count;
 
+                    var branch = _applicantRepo.GetBranch(model.Records.FirstOrDefault().ProcessingSite);
+
                     var applicantRecord = new ApplicantRecord
                     {
+                        BranchId = branch != null ? branch.Id : 0,
                         FirstName = record.FirstName?.ToUpper(),
                         MiddleName = record.MiddleName?.ToUpper(),
                         LastName = record.LastName?.ToUpper(),
@@ -160,8 +168,8 @@ namespace DFACore.Controllers
                         NameOfRepresentative = $"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}",
                         RepresentativeContactNumber = model.Record.ContactNumber,
                         ApostileData = record.ApostileData,
-                        ProcessingSite = "DFA - Office of Consular Affairs (ASEANA)", //model.Record.ProcessingSite?.ToUpper(),
-                        ProcessingSiteAddress = "Bradco Avenue, cor. Macapagal Blvd. ASEANA Business Park, Paranaque City", //model.Record.ProcessingSiteAddress?.ToUpper(),
+                        ProcessingSite = model.Record.ProcessingSite?.ToUpper(),
+                        ProcessingSiteAddress = model.Record.ProcessingSiteAddress?.ToUpper(),
                         ScheduleDate = dateTimeSched,
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -170,7 +178,7 @@ namespace DFACore.Controllers
                         DateCreated = DateTime.UtcNow,
                         QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}")
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
                     };
 
                     applicantRecords.Add(applicantRecord);
@@ -502,6 +510,29 @@ namespace DFACore.Controllers
             var result = _applicantRepo.GetCity().Where(a => a.city == city).Select(a => a.municipality).ToList();//_applicantRepo.GetUnAvailableDates();
             return Json(result);
         }
+
+        [AllowAnonymous]
+        public ActionResult GetBranches()
+        {
+            var result = _applicantRepo.GetBranches();
+            return Json(result);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GetBranch(string branch)
+        {
+            var result = _applicantRepo.GetBranch(branch);
+            return Json(result);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GetAvailableDatesByBranch(string branch)
+        {
+            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            return Json(stringify);
+        }
+
+        
 
         public int SetNumberOfApplicants(int applicantsCount)
         {
