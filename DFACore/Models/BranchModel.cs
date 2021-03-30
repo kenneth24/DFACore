@@ -15,6 +15,7 @@ namespace DFACore.Models
         //public List<string> AvailableHours { get; set; }
         public string AvailableDates { get; set; }
         public List<AvailableHour> AvailableHours { get; set; }
+        public string MapAddress { get; set; }
 
     }
 

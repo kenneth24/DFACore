@@ -57,13 +57,14 @@ namespace DFACore.Controllers
             if (applicantsCount > 10)
                 applicantsCount = 10;
 
-            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            var defaultBranch = _applicantRepo.GetBranch("DFA - Office of Consular Affairs (ASEANA)");
+            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             ViewData["ApplicantCount"] = applicantsCount;
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
-            ViewData["DefaultBranch"] = _applicantRepo.GetBranch("DFA - Office of Consular Affairs (ASEANA)");
+            ViewData["DefaultBranch"] = defaultBranch;
             ViewData["Branches"] = _applicantRepo.GetBranches();
             return View();
         }
@@ -88,11 +89,9 @@ namespace DFACore.Controllers
 
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
 
-            
+            var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
             if (model.Records == null)
             {
-                var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
-                
                 //if (model.Record.ApostileData == "[]")
                 //{
                 //    return RedirectToAction("Error");
@@ -140,7 +139,6 @@ namespace DFACore.Controllers
             }
             else
             {
-                //int data = 0;
                 foreach (var record in model.Records)
                 {
                     //if (record.ApostileData == "[]")
@@ -150,7 +148,7 @@ namespace DFACore.Controllers
 
                     //data += JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(record.ApostileData).Count;
 
-                    var branch = _applicantRepo.GetBranch(model.Records.FirstOrDefault().ProcessingSite);
+                    
 
                     var applicantRecord = new ApplicantRecord
                     {
@@ -284,30 +282,30 @@ namespace DFACore.Controllers
         //}
 
 
-        public IActionResult Authorized()
-        {
-            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
-            ViewData["AvailableDates"] = stringify;
-            ViewData["ApplicationCode"] = GetApplicantCode();
-            ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-            return View();
-        }
+        //public IActionResult Authorized()
+        //{
+        //    var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+        //    ViewData["AvailableDates"] = stringify;
+        //    ViewData["ApplicationCode"] = GetApplicantCode();
+        //    ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Authorized(ApplicantsViewModel record, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Authorized(ApplicantsViewModel record, string returnUrl = null)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View();
+        //    }
 
-            return RedirectToAction("Success");
-        }
+        //    return RedirectToAction("Success");
+        //}
 
         public IActionResult PartialApplicant(int i)
         {
-            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             //ViewData[$"ApplicationCode{i}"] = applicationCode + (i + 1);
             ViewBag.Increment = i;
@@ -462,24 +460,24 @@ namespace DFACore.Controllers
             return Json(result);
         }
 
-        public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount)
+        public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount, long branchId)
         {
 
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
-            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount);
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
 
             return Json(result);
         }
 
-        public bool ValidateScheduleDate3(string scheduleDate, int applicationCount)
+        public bool ValidateScheduleDate3(string scheduleDate, int applicationCount, long branchId)
         {
 
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
-            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount);
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
 
             return result;
         }
@@ -493,8 +491,8 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public ActionResult Test()
         {
-            var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
-            return Json(result);
+            //var result = _applicantRepo.GenerateListOfDates(DateTime.Now);//_applicantRepo.GetUnAvailableDates();
+            return Json("");
         }
 
         [AllowAnonymous]
@@ -528,8 +526,8 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public ActionResult GetAvailableDatesByBranch(string branch)
         {
-            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
-            return Json(stringify);
+            //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
+            return Json("");
         }
 
         

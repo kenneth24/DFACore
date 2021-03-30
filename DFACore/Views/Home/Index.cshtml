@@ -2330,6 +2330,7 @@
         var total = 0;
         var docuTotalCount = 0;
         var canConfirm = false;
+        var branchId = 0;
 
         function onSubmit() {
             console.log('onsubmit');
@@ -2338,7 +2339,7 @@
                     url: '@Url.Action("ValidateScheduleDate2")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
-                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount },
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
                     success: function (result) {
                         console.log('success');
                         if (result) {
@@ -2381,6 +2382,7 @@
                     contentType: 'application/json; charset=utf-8',
                     data: { branch: value },
                     success: function (result) {
+                        branchId = result.id;
                         $("#address").val(result.branchAddress);
                         $('#lblProcessingSiteAddress').val(result.branchAddress);
                         calendar.removeAllEvents();
@@ -2402,7 +2404,7 @@
                         //$('#gmap_canvas').attr('src', 'https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed');
                         //document.getElementById('gmap_canvas').src = document.getElementById('gmap_canvas').src
                         $('#MapDiv').empty();
-                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
                         //<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Department%20of%20Foreign%20Affairs%20-%20Office%20of%20Consular%20Affairs&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >
                     },
                     error: function () {
@@ -2423,6 +2425,7 @@
 
         $(document).ready(function () {
 
+            branchId = @defaultBranch.Id;
             $(".unAvailableModal").click(function () {
                 console.log("unavailable modal");
 
@@ -2901,7 +2904,7 @@
                     url: '@Url.Action("ValidateScheduleDate2")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
-                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount },
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
                     success: function (result) {
                         console.log('success');
                         $('#schedLoader').hide();

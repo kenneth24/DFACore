@@ -14,5 +14,6 @@ namespace DFACore.Models
         public bool IsActive { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public string MapAddress { get; set; }
     }
 }

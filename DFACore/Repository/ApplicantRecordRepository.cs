@@ -169,7 +169,7 @@ namespace DFACore.Repository
                 return false;
         }
 
-        public bool ValidateScheduleDate(DateTime date, int applicationCount)
+        public bool ValidateScheduleDate(DateTime date, int applicationCount, long branchId)
         {
             if (applicationCount == 0)
                 applicationCount = 1;
@@ -180,7 +180,7 @@ namespace DFACore.Repository
             }
 
             var totalCount = applicationCount;
-            var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date).ToList();
+            var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date && a.BranchId == branchId).ToList();
             if (applicantRecords.Count != 0)
             {
                 foreach (var applicantRecord in applicantRecords)
@@ -219,7 +219,8 @@ namespace DFACore.Repository
                 type = 9;
 
             //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
-            var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.Type.Equals(type)).FirstOrDefault();
+            var a = $"{date.ToString("hh tt")}";
+            var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.BranchId == branchId && c.Name == $"{date.ToString("hh tt")}").FirstOrDefault();
 
             if (scheduleCapacity != null)
             {
@@ -233,50 +234,22 @@ namespace DFACore.Repository
 
         }
 
-        public List<AvailableDAtes> GenerateListOfDates(DateTime start)
+        public List<AvailableDAtes> GenerateListOfDates(DateTime start, long branchId)
         {
             var now = DateTime.UtcNow.ToLocalTime();
             var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
             if (start >= toCompare)
                 start = start.AddDays(1);
 
-            var end = start.AddYears(1); //.AddDays(30);
+            var end = new DateTime(2021, 06, 01); //start.AddYears(1); //.AddDays(30);
             var dates = new List<AvailableDAtes>();
-            var unAvailable = GetUnAvailableDates();
+            var unAvailable = GetUnAvailableDates(branchId);
 
-
-            var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year).Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
-            //==== 
-            //var holidays = new List<DateTime> 
-            //{
-            //    new DateTime(2021, 02, 11, 0, 0, 0),
-            //    new DateTime(2021, 02, 12, 0, 0, 0),
-            //    new DateTime(2021, 02, 13, 0, 0, 0),
-            //    new DateTime(2021, 02, 14, 0, 0, 0),
-            //    new DateTime(2021, 02, 15, 0, 0, 0),
-            //    new DateTime(2021, 02, 16, 0, 0, 0),
-            //    new DateTime(2021, 02, 17, 0, 0, 0),
-            //    new DateTime(2021, 02, 25, 0, 0, 0),
-            //    new DateTime(2021, 04, 01, 0, 0, 0),
-            //    new DateTime(2021, 04, 02, 0, 0, 0),
-            //    new DateTime(2021, 04, 03, 0, 0, 0),
-            //    new DateTime(2021, 04, 09, 0, 0, 0),
-            //    new DateTime(2021, 05, 01, 0, 0, 0),
-            //    new DateTime(2021, 06, 12, 0, 0, 0),
-            //    new DateTime(2021, 08, 21, 0, 0, 0),
-            //    new DateTime(2021, 08, 30, 0, 0, 0),
-            //    new DateTime(2021, 11, 01, 0, 0, 0),
-            //    new DateTime(2021, 11, 02, 0, 0, 0),
-            //    new DateTime(2021, 11, 30, 0, 0, 0),
-            //    new DateTime(2021, 12, 25, 0, 0, 0),
-            //    new DateTime(2021, 12, 08, 0, 0, 0),
-            //    new DateTime(2021, 12, 24, 0, 0, 0),
-            //    new DateTime(2021, 12, 30, 0, 0, 0),
-            //    new DateTime(2021, 12, 31, 0, 0, 0),
-            //};
+            //this should be optimize by date between now and end of date you want
+            var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year && (h.BranchId == null || h.BranchId == branchId))
+                .Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
 
             unAvailable.AddRange(holidays);
-
 
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
@@ -316,7 +289,7 @@ namespace DFACore.Repository
             return dates;
         }
 
-        public List<DateTime> GetUnAvailableDates()
+        public List<DateTime> GetUnAvailableDates(long branchId)
         {
             var raw = _context.Set<UnavailableDate>().FromSqlRaw("Select* from " +
                 "(Select " +
@@ -327,14 +300,14 @@ namespace DFACore.Repository
                 "from " +
                 "(select Id, ScheduleDate, ApostileData " +
                 "from ApplicantRecords " +
-                "where CAST(ScheduleDate as Date) >= {0}) ApplicantRecords " +
+                "where CAST(ScheduleDate as Date) >= {0} and BranchId={1}) ApplicantRecords " +
                 "CROSS APPLY OPENJSON (ApostileData) " +
                 "WITH " +
                 "(Quantity int) " +
                 "AS dataCount " +
                 "group by " +
                 "CAST(ScheduleDate as Date)) a " +
-                "where a.DocuCount >= 800", DateTime.Now.Date).ToList();
+                "where a.DocuCount >= 800", DateTime.Now.Date, branchId).ToList();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 
@@ -1998,19 +1971,27 @@ namespace DFACore.Repository
         public BranchModel GetBranch(string branch)
         {
             var raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
-            var availableDates = GenerateListOfDates(DateTime.Now);
+            var availableDates = GenerateListOfDates(DateTime.Now, raw.Id);
 
             DateTime dtFrom = DateTime.Parse(raw.StartTime);
             DateTime dtTo = DateTime.Parse(raw.EndTime);
 
-            var dates = new List<AvailableHour>();
-            for (var dt = dtFrom; dt <= dtTo; dt = dt.AddHours(1))
-            {
-                dates.Add(new AvailableHour { 
-                    Caption = $"{dt.ToString("%h")}-{dt.AddHours(1).ToString("h tt")}",
-                    Value = dt.ToString("hh:mm tt")
-                });
-            }
+            //var dates = new List<AvailableHour>();
+            //for (var dt = dtFrom; dt <= dtTo; dt = dt.AddHours(1))
+            //{
+            //    dates.Add(new AvailableHour { 
+            //        Caption = $"{dt.ToString("%h")}-{dt.AddHours(1).ToString("h tt")}",
+            //        Value = dt.ToString("hh:mm tt")
+            //    });
+            //}
+
+            var availTime = _context.ScheduleCapacities.Where(a => a.BranchId == raw.Id && a.Capacity != 0)
+                .OrderBy(a => a.Id)
+                .Select(a => new AvailableHour
+                {
+                    Caption = $"{DateTime.Parse(a.Name).ToString("%h")}-{DateTime.Parse(a.Name).AddHours(1).ToString("h tt")}",
+                    Value = $"{DateTime.Parse(a.Name).ToString("hh:mm tt")}"
+                }).ToList();
 
             var result = new BranchModel
             {
@@ -2018,7 +1999,8 @@ namespace DFACore.Repository
                 BranchName = raw.BranchName,
                 BranchAddress = raw.BranchAddress,
                 AvailableDates = JsonConvert.SerializeObject(availableDates),
-                AvailableHours = dates
+                AvailableHours = availTime, //dates,
+                MapAddress = raw.MapAddress
             };
             return result;
         }

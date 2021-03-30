@@ -334,9 +334,21 @@
             </button>*@
             </div>
             <div class="modal-body">
-                <video id="instruction-video" controls="controls" style="width:100%;height:auto;">
-                    <source src="~/video/0-02-08-22d690c3e33acbe75d2391db7f6b0187ea573c4acfc44c1c65d523593186144e_7c099f.mp4" type="video/mp4" />
-                </video>
+                <label>Language</label>
+                <select id="videoLanguage" class="form-control" aria-label="Default select" style="margin-bottom:20px;">
+                    <option value="1" selected>English</option>
+                    <option value="2">Tagalog</option>
+                </select>
+                <div id="englishVid">
+                    <video id="instruction-video-english" controls="controls" style="width:100%;height:auto;">
+                        <source src="~/video/0-02-08-22d690c3e33acbe75d2391db7f6b0187ea573c4acfc44c1c65d523593186144e_7c099f.mp4" type="video/mp4" />
+                    </video>
+                </div>
+                <div id="tagalogVid" style="display:none;">
+                    <video id="instruction-video-tagalog" controls="controls" style="width:100%;height:auto;">
+                        <source src="~/video/APOSTILLE_TAGALOG.mp4" type="video/mp4" />
+                    </video>
+                </div>
             </div>
 
             <div class="container" style="padding:10px">
@@ -363,6 +375,23 @@
     </div>
 </div>
 <script>
+
+    $("#videoLanguage").on("change", function (branchName) {
+        console.log($(this).val());
+        if ($(this).val() == 1) {
+            $('#englishVid').show();
+            $('#tagalogVid').hide();
+        }
+        else {
+            $('#tagalogVid').show();
+            $('#englishVid').hide();
+        }
+        var vidEnglish = document.getElementById("instruction-video-english");
+        vidEnglish.pause();
+        var vidTagalog = document.getElementById("instruction-video-tagalog");
+        vidTagalog.pause();
+    });
+
     $(document).ready(function () {
 
         $("#btnVideo").click(function () {
@@ -417,8 +446,10 @@
             if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
                 $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
             }
-            var vid = document.getElementById("instruction-video");
-            vid.pause();
+            var vidEnglish = document.getElementById("instruction-video-english");
+            vidEnglish.pause();
+            var vidTagalog = document.getElementById("instruction-video-tagalog");
+            vidTagalog.pause();
         });
 
         $(document).on('click', '.toggle-password', function () {

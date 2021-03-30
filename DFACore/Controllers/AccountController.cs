@@ -215,6 +215,10 @@ namespace DFACore.Controllers
 
 
             var user = await _userManager.FindByEmailAsync(model.Email);
+
+            //await _userManager.SetLockoutEnabledAsync(user, true);
+            //await _userManager.SetLockoutEndDateAsync(user, DateTime.Today.AddYears(100));
+
             if (user != null)
             {
                 if (!await _userManager.IsEmailConfirmedAsync(user))
