@@ -106,7 +106,7 @@ namespace DFACore
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Initial}/");
                 endpoints.MapRazorPages();
             });
         }

@@ -262,7 +262,10 @@ namespace DFACore.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                ModelState.AddModelError("", "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website.");
+                return View(model);
+
+                //return View("Lockout");
             }
             else if (result.RequiresTwoFactor)
             {

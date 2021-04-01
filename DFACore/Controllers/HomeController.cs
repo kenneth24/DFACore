@@ -52,6 +52,11 @@ namespace DFACore.Controllers
         {
             return View();
         }
+
+        public IActionResult Initial()
+        {
+            return RedirectToAction("Login", "Account");
+        }
         public IActionResult Index(int applicantsCount = 0)
         {
             if (applicantsCount > 10)

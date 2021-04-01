@@ -240,7 +240,7 @@ namespace DFACore.Repository
             if (start >= toCompare)
                 start = start.AddDays(1);
 
-            var end = start.AddYears(1); //.AddDays(30);
+            var end = new DateTime(2021, 05, 01); //start.AddYears(1); //.AddDays(30);
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates();
 
