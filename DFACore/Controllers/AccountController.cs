@@ -214,13 +214,22 @@ namespace DFACore.Controllers
             }
 
 
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            //var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = _userManager.Users.Where(a => a.Email == model.Email).FirstOrDefault();
+
+            
 
             //await _userManager.SetLockoutEnabledAsync(user, true);
             //await _userManager.SetLockoutEndDateAsync(user, DateTime.Today.AddYears(100));
 
             if (user != null)
             {
+                if (user.Type != 0)
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                    return View(model);
+                }
+
                 if (!await _userManager.IsEmailConfirmedAsync(user))
                 {
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");

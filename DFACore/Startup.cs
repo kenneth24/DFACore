@@ -38,6 +38,7 @@ namespace DFACore
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -63,30 +64,31 @@ namespace DFACore
             services.Configure<ReCAPTCHASetting>(Configuration.GetSection("GoogleReCAPTCHA"));
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();
+            services.AddTransient<AdministrationRepository>();
             services.AddWkhtmltopdf();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseDatabaseErrorPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            //    app.UseHsts();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
 
 
             //app.UseDeveloperExceptionPage();
             //app.UseDatabaseErrorPage();
 
-            app.UseExceptionHandler("/Home/Error");
-            app.UseHsts();
+            //app.UseExceptionHandler("/Home/Error");
+            //app.UseHsts();
 
 
             app.UseHttpsRedirection();

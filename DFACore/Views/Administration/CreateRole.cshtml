@@ -1,0 +1,70 @@
+﻿
+@model DFACore.Models.CreateRoleViewModel;
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Create New Role";
+}
+<style>
+    #registrationForm label, #registrationForm input {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9a9a9a;
+    }
+
+
+    #reg-account input {
+        text-transform: none !important;
+    }
+
+    .form-group {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    button a {
+        color: white;
+    }
+
+    label {
+        color: #000000 !important;
+        font-family: Arial;
+        font-weight: normal;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
+    <div class="col-lg-6 col-md-10 col-sm-10">
+        <form id="registrationForm" method="post" style="        border: 1px solid #b7b7b7;
+        height: auto;
+">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Create Role</p>
+            </div>
+            <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
+            @*<p class="form-group" style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></p>*@
+            <div>
+                <div id="reg-info">
+                    <div class="form-group ">
+                        <label class="black-text" asp-for="RoleName">Role Name <span class="red">*</span></label>
+                        <input asp-for="RoleName" class="form-control black-text" />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                    
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">CreateRole</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

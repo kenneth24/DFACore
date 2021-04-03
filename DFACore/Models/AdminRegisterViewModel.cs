@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DFACore.Models
 {
-    public class RegisterViewModel
+    public class AdminRegisterViewModel
     {
         [Required]
         [StringLength(100)]
@@ -50,10 +49,13 @@ namespace DFACore.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        [Required]
-        public string Token { get; set; }
+
         //[MinLength(1, ErrorMessage = "You must agree to Terms and Conditions.")]
         public bool IsTermsAndConditionChecked { get; set; }
+
+        public int Type { get; set; }
+
+        public string Role { get; set; }
 
     }
 }

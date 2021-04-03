@@ -1,0 +1,166 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model PaginatedList<DFACore.Models.ApplicantRecord>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Administrator Homepage";
+}
+<div>
+    <h2>Index</h2>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <form asp-action="Index" method="get" style="margin-bottom:20px;">
+        <div class="form-row align-items-center">
+            @*<div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">CO</label>
+                    <input type="text" class="form-control" id="inlineFormInputName" placeholder="CO Aseana">
+                </div>*@
+            <div class="col-sm-3 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter Name or Appt. Code here">
+                </div>
+            </div>
+            <div class="col-sm-2 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="From">
+                </div>
+            </div>
+            <div class="col-sm-2 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="To">
+                </div>
+            </div>
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Search</button> |
+                <a asp-action="Index">Refresh</a>
+            </div>
+        </div>
+    </form>
+    <table class="table" style="font-size:12px;">
+        <thead>
+            @*<th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Scheduled Date</a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
+                </th>*@
+            <tr style="background-color: #217ff3 !important; color: white;">
+                <th>
+                    Appt. Code
+                </th>
+                <th>
+                    Scheduled Date
+                </th>
+                <th>
+                    Document Owner
+                </th>
+                <th>
+                    Contact No.
+                </th>
+                <th>
+                    Authorized Rep.
+                </th>
+                <th>
+                    Contact No.
+                </th>
+                <th>
+                    Country of Des.
+                </th>
+                <th>
+                    Documents
+                </th>
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                //@{
+                var documents = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(item.ApostileData);
+                //}
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScheduleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameOfRepresentative)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RepresentativeContactNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountryDestination)
+                    </td>
+                    <td>
+
+                        <table class="table table-borderless">
+
+                            @foreach (var document in documents)
+                            {
+                                <tr>
+                                    @*//var doc = $"{document.Name} ({document.Quantity}) {document.Transaction}"; //@document.Name @document.Quantity @document.Transaction*@
+                                    <td style="padding: 0 10px 0 0;">
+                                        @document.Name
+                                    </td>
+                                    <td style="padding: 0 10px 0 0;">
+                                        @document.Quantity
+                                    </td>
+                                    <td style="padding: 0 10px 0 0;">
+                                        @document.Transaction
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
