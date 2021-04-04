@@ -42,7 +42,8 @@ namespace DFACore.Repository
         {
             try
             {
-                var newObject = applicantRecords.Select(model => new ApplicantRecord {
+                var newObject = applicantRecords.Select(model => new ApplicantRecord
+                {
                     FirstName = model.FirstName,
                     MiddleName = model.MiddleName,
                     LastName = model.LastName,
@@ -53,7 +54,7 @@ namespace DFACore.Repository
                     ApostileData = model.ApostileData,
                     ProcessingSite = model.ProcessingSite,
                     ProcessingSiteAddress = model.ProcessingSiteAddress,
-                    ScheduleDate = model.ScheduleDate, 
+                    ScheduleDate = model.ScheduleDate,
                     ApplicationCode = model.ApplicationCode,
                     CreatedBy = model.CreatedBy,
                     Fees = model.Fees,
@@ -81,7 +82,7 @@ namespace DFACore.Repository
             //{ 
             //    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             //};
-            
+
             //foreach (var applicantRecord in applicantRecords)
             //{
             //    if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
@@ -92,7 +93,7 @@ namespace DFACore.Repository
             //}
             //applicantRecord.DateCreated = DateTime.UtcNow;
 
-            
+
         }
 
         public bool Delete(long id)
@@ -192,7 +193,7 @@ namespace DFACore.Repository
                     }
                 }
             }
-            
+
 
             int type = 0;
 
@@ -235,45 +236,49 @@ namespace DFACore.Repository
 
         public List<AvailableDAtes> GenerateListOfDates(DateTime start)
         {
+            var range = _context.CalendarRange.Where(a => a.BranchAddress == 1).FirstOrDefault();
             var now = DateTime.UtcNow.ToLocalTime();
-            var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
-            if (start >= toCompare)
-                start = start.AddDays(1);
+            DateTime end;
 
-            var end = new DateTime(2021, 05, 01); //start.AddYears(1); //.AddDays(30);
+            if (range == null)
+            {
+
+                var toCompare = new DateTime(now.Year, now.Month, now.Day, 15, 0, 0);
+                if (start >= toCompare)
+                    start = start.AddDays(1);
+                end = start.AddMonths(3);
+            }
+            else
+            {
+                if (range.DateFrom != null)
+                {
+                    start = range.DateFrom;
+                }
+                else
+                {
+                    start = now;
+                }
+
+                if (range.DateTo != null)
+                {
+                    end = range.DateTo;
+                }
+                else
+                {
+                    end = start.AddMonths(3);
+                }
+            }
+
+
+
+
+            //start = new DateTime(2021, 05, 24);
+            //end = new DateTime(2021, 06, 30); //start.AddYears(1); //.AddDays(30);
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates();
 
 
             var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year).Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
-            //==== 
-            //var holidays = new List<DateTime> 
-            //{
-            //    new DateTime(2021, 02, 11, 0, 0, 0),
-            //    new DateTime(2021, 02, 12, 0, 0, 0),
-            //    new DateTime(2021, 02, 13, 0, 0, 0),
-            //    new DateTime(2021, 02, 14, 0, 0, 0),
-            //    new DateTime(2021, 02, 15, 0, 0, 0),
-            //    new DateTime(2021, 02, 16, 0, 0, 0),
-            //    new DateTime(2021, 02, 17, 0, 0, 0),
-            //    new DateTime(2021, 02, 25, 0, 0, 0),
-            //    new DateTime(2021, 04, 01, 0, 0, 0),
-            //    new DateTime(2021, 04, 02, 0, 0, 0),
-            //    new DateTime(2021, 04, 03, 0, 0, 0),
-            //    new DateTime(2021, 04, 09, 0, 0, 0),
-            //    new DateTime(2021, 05, 01, 0, 0, 0),
-            //    new DateTime(2021, 06, 12, 0, 0, 0),
-            //    new DateTime(2021, 08, 21, 0, 0, 0),
-            //    new DateTime(2021, 08, 30, 0, 0, 0),
-            //    new DateTime(2021, 11, 01, 0, 0, 0),
-            //    new DateTime(2021, 11, 02, 0, 0, 0),
-            //    new DateTime(2021, 11, 30, 0, 0, 0),
-            //    new DateTime(2021, 12, 25, 0, 0, 0),
-            //    new DateTime(2021, 12, 08, 0, 0, 0),
-            //    new DateTime(2021, 12, 24, 0, 0, 0),
-            //    new DateTime(2021, 12, 30, 0, 0, 0),
-            //    new DateTime(2021, 12, 31, 0, 0, 0),
-            //};
 
             unAvailable.AddRange(holidays);
 
@@ -302,7 +307,7 @@ namespace DFACore.Repository
                             //color = "#257e4a"
                         };
                     }
-                    
+
                     dates.Add(av);
                 }
             }
@@ -1513,7 +1518,7 @@ namespace DFACore.Repository
                 new City { municipality = "Nueva Vizcaya", city = "Sta. Fe" },
                 new City { municipality = "Nueva Vizcaya", city = "Solano" },
                 new City { municipality = "Nueva Vizcaya", city = "Villaverde" },
- 
+
                 new City { municipality = "Occidental Mindoro", city = "Abra de Ilog" },
                 new City { municipality = "Occidental Mindoro", city = "Calintaan" },
                 new City { municipality = "Occidental Mindoro", city = "Looc" },

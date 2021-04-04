@@ -21,6 +21,7 @@ namespace DFACore.Data
 
         public DbSet<Models.ScheduleCapacity> ScheduleCapacities { get; set; }
         public DbSet<Models.Holiday> Holidays { get; set; }
+        public DbSet<Models.CalendarRange> CalendarRange { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
