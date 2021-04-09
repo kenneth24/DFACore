@@ -1,0 +1,132 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model DFACore.Models.EditBranchViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Modify Branch";
+}
+
+<div class="row justify-content-center" style="margin-top:50px;">
+
+
+    <div class="col-md-10 col-sm-10">
+        <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7;height: auto;">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Update Consular Office</p>
+            </div>
+            <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
+            <div style="padding:10px;">
+                <div id="reg-info" style="margin-top: 20px;">
+                    <div class="form-group " hidden>
+                        <label class="black-text" asp-for="Id"></label>
+                        <input asp-for="Id" class="form-control black-text" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="BranchName"></label>
+                        <label class="form-control black-text">@Model.BranchName</label>
+                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text" hidden>
+                        <label class="black-text" asp-for="BranchName"></label>
+                        <input asp-for="BranchName" class="form-control black-text" />
+                        <span asp-validation-for="BranchName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="BranchAddress"></label>
+                        <input asp-for="BranchAddress" class="form-control black-text" />
+                        <span asp-validation-for="BranchAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="ContactNumber"></label>
+                        <input asp-for="ContactNumber" class="form-control black-text" />
+                        <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control black-text" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="OfficeHours"></label>
+                        <input asp-for="OfficeHours" class="form-control black-text" />
+                        <span asp-validation-for="OfficeHours" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group black-text" hidden>
+                        <label class="black-text" asp-for="DateCreated"></label>
+                        <input asp-for="DateCreated" class="form-control black-text" />
+                        <span asp-validation-for="DateCreated" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text" hidden>
+                        <label class="black-text" asp-for="MapAddress"></label>
+                        <input asp-for="MapAddress" class="form-control black-text" />
+                        <span asp-validation-for="MapAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="IsActive" style="margin-right:10px;"></label>
+                        <input asp-for="IsActive" style="transform: scale(1.5);" />
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="HasExpidite" style="margin-right:10px;"></label>
+                        <input asp-for="HasExpidite" style="transform: scale(1.5);" />
+                        <span asp-validation-for="HasExpidite" class="text-danger"></span>
+                    </div>
+                    <p><span style="font-weight:bold">Capacity per hour</span>(Note: 0 in capacity means schedule hour is disable.)</p>
+                    @for (var i = 0; i < Model.ScheduleCapacities.Count; i++)
+                    {
+                        @Html.HiddenFor(model => model.ScheduleCapacities[i].Id)
+                        @Html.HiddenFor(model => model.ScheduleCapacities[i].Type)
+                        @Html.HiddenFor(model => model.ScheduleCapacities[i].Name)
+
+                        <div class="form-group black-text">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12">
+                                    <p><span style="font-weight:bold">Time:</span> @Html.DisplayFor(model => model.ScheduleCapacities[i].Name)</p> 
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <span style="font-weight:bold">Capacity:</span> @Html.EditorFor(model => model.ScheduleCapacities[i].Capacity)
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+
+
+
+
+                        @Html.HiddenFor(model => model.ScheduleCapacities[i].BranchId)
+                    }
+
+
+                    <div class="row form-group">
+                        <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Branch", "Administration")</button></div>
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Update</button></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

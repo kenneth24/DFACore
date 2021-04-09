@@ -36,6 +36,12 @@ namespace DFACore.Data
                 e.HasNoKey();
                 e.ToView(null);
             });
+
+            builder.Entity<AdminAccountViewModel>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
         }
     }
 }

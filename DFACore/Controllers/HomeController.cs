@@ -57,7 +57,7 @@ namespace DFACore.Controllers
             if (applicantsCount > 10)
                 applicantsCount = 10;
 
-            var defaultBranch = _applicantRepo.GetBranch("DFA - Office of Consular Affairs (ASEANA)");
+            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
             var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
             ViewData["AvailableDates"] = stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();

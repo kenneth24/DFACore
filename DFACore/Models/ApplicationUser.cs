@@ -33,5 +33,7 @@ namespace DFACore.Models
         [Required]
         public DateTime CreatedDate { get; set; }
 
+        public long? BranchId { get; set; }
+
     }
 }

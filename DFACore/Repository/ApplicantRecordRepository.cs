@@ -1973,8 +1973,8 @@ namespace DFACore.Repository
             var raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
             var availableDates = GenerateListOfDates(DateTime.Now, raw.Id);
 
-            DateTime dtFrom = DateTime.Parse(raw.StartTime);
-            DateTime dtTo = DateTime.Parse(raw.EndTime);
+            //DateTime dtFrom = DateTime.Parse(raw.StartTime);
+            //DateTime dtTo = DateTime.Parse(raw.EndTime);
 
             //var dates = new List<AvailableHour>();
             //for (var dt = dtFrom; dt <= dtTo; dt = dt.AddHours(1))
@@ -2000,7 +2000,11 @@ namespace DFACore.Repository
                 BranchAddress = raw.BranchAddress,
                 AvailableDates = JsonConvert.SerializeObject(availableDates),
                 AvailableHours = availTime, //dates,
-                MapAddress = raw.MapAddress
+                MapAddress = raw.MapAddress,
+                OfficeHours = raw.OfficeHours,
+                ContactNumber = raw.ContactNumber,
+                Email = raw.Email,
+                HasExpidite = raw.HasExpidite
             };
             return result;
         }

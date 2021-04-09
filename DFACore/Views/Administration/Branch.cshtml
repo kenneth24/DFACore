@@ -1,0 +1,77 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model PaginatedList<DFACore.Models.Branch>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Branches";
+}
+
+<h3 style="margin-top:50px;">Consular Offices</h3>
+
+<table class="table" style="font-size:12px;">
+    <thead>
+        <tr style="background-color: #217ff3 !important; color: white;">
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                IsActive
+            </th>
+            <th>
+                Contact No.
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                OfficeHours
+            </th>
+            <th>
+                HasExpidite
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchAddress)
+            </td>
+            <td>
+                @item.IsActive
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeHours)
+            </td>
+            <td>
+                @item.HasExpidite
+            </td>
+            <td>
+                <a asp-action="EditBranch" asp-route-branchId="@item.Id">Edit</a> |
+                <a asp-action="DeleteBranch" asp-route-branchId="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

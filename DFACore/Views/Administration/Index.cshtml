@@ -6,12 +6,12 @@
     Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
     ViewData["Title"] = "Administrator Homepage";
 }
-<div>
-    <h2>Index</h2>
+<div style="margin-top:50px;">
+    
 
-    <p>
+    @*<p>
         <a asp-action="Create">Create New</a>
-    </p>
+    </p>*@
 
     <form asp-action="Index" method="get" style="margin-bottom:20px;">
         <div class="form-row align-items-center">
@@ -117,7 +117,7 @@
                             {
                                 <tr>
                                     @*//var doc = $"{document.Name} ({document.Quantity}) {document.Transaction}"; //@document.Name @document.Quantity @document.Transaction*@
-                                    <td style="padding: 0 10px 0 0;">
+                                    <td style="padding: 0 10px 0 0;" width="300">
                                         @document.Name
                                     </td>
                                     <td style="padding: 0 10px 0 0;">

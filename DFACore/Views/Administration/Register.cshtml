@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
     ViewData["Title"] = "Register";
     var roles = ViewBag.Roles;
+    var branches = ViewBag.Branches;
 }
 <style>
     #registrationForm label, #registrationForm input {
@@ -118,10 +119,22 @@
                     </div>
 
                     @*<div class="form-group black-text">
-                        <label class="black-text" asp-for="Type">Role <span class="red">*</span></label>
-                        <input asp-for="Type" class="form-control black-text" />
-                        <span asp-validation-for="Type" class="text-danger"></span>
-                    </div>*@
+            <label class="black-text" asp-for="Type">Role <span class="red">*</span></label>
+            <input asp-for="Type" class="form-control black-text" />
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>*@
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="BranchId">Assign Branch: <span class="red">*</span></label>
+                        <select asp-for="BranchId" class="form-control">
+
+                            @foreach (var branch in branches)
+                            {
+                                <option value="@branch.Id">@branch.BranchName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                    </div>
 
                     <div class="form-group black-text">
                         <label class="black-text" asp-for="Role">Role <span class="red">*</span></label>
@@ -135,24 +148,24 @@
                         <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
 
-                    
+
 
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-12 col-sm-12" style="        text-align: center;">
+                <!--<div class="form-group">
+                    <div class="col-md-12 col-sm-12" style="        text-align: center;">-->
                         @*<input asp-for="IsTermsAndConditionChecked" />
                     <label class="form-check-label" for="terms_and_condition">
                         I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
                     </label>*@
-                        <div class="form-check">
+                        <!--<div class="form-check">
                             <label class="form-check-label">
                                 <input asp-for="IsTermsAndConditionChecked" type="checkbox" class="form-check-input">I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
                             </label>
                         </div>
                     </div>
 
-                </div>
+                </div>-->
                 <div class="row form-group">
                     <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("HomePage", "Index", "Administration")</button></div>
                     <div class="col-md-2 col-sm-2">

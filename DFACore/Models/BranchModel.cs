@@ -16,6 +16,10 @@ namespace DFACore.Models
         public string AvailableDates { get; set; }
         public List<AvailableHour> AvailableHours { get; set; }
         public string MapAddress { get; set; }
+        public string OfficeHours { get; set; }
+        public string ContactNumber { get; set; }
+        public string Email { get; set; }
+        public bool HasExpidite { get; set; }
 
     }
 

@@ -63,6 +63,10 @@
         button a {
             color: white;
         }
+        .validation-summary-errors ul {
+           list-style: none;
+           margin-left:-14px;
+        }
 </style>
 <div id="dfa-title" class="jumbotron pageContainers" style="background-color: white;">
     <h5 class="text-center bannerDetails black-text">WELCOME TO</h5>
@@ -189,7 +193,7 @@
                     <div class="row ">
                         <div class="col-md-3 col-sm-5"> </div>
                         <div class="col-md-6 col-sm-2">
-                            <button id="declaration-agree" style="width:100%" type="button" class="button-primary text-white" data-dismiss="modal">I AGREE</button>
+                            <button id="declaration-agree" style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">I AGREE</button>
                         </div>
                         <div class="col-md-3 col-sm-5"></div>
                     </div>
@@ -253,7 +257,7 @@
                     <div class="row ">
                         <div class="col-md-3 col-sm-5"> </div>
                         <div class="col-md-6 col-sm-12">
-                            <button id="terms-and-conditions-agree" style="width:100%" type="submit" class="button-primary text-white">I AGREE</button>
+                            <button id="terms-and-conditions-agree" style="width:100%" type="submit" class="btn button-primary text-white">I AGREE</button>
                         </div>
                         <div class="col-md-3 col-sm-5"></div>
                     </div>
@@ -263,33 +267,25 @@
     </div>
 </div>
 
-<div id="announcement" class="modal" tabindex="-1" role="dialog">
+<div id="announcement" class="modal" tabindex="-1" role="dialog" style="padding-right:0!important;">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" style="font-weight:bold;margin:auto;">NOTICE TO THE PUBLIC</h5>
-                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>*@
+        
             </div>
             <div class="modal-body">
                 <div class="col-md-12 ">
-                    @*<h3 class="red-text-bold text-center blinking">NOTICE TO THE PUBLIC</h3>*@
-                    @*<p class="black-text" style="color:#217ff3;font-size:15px;">
-                    Please be advised that the DFA Apostille Online Application & Appointment System is temporarily available for processing of Apostille at DFA - Office of the Consular Affairs. (Bradco Avenue corner Macapagal Boulevard, Aseana Business Park,
-                    Parañaque, 1714 Metro Manila). Please check the DFA website www.dfa.gov.ph for further announcements.
-                </p>*@
+       
                     <p class="black-text" style="color:#217ff3;font-size:15px;">
-                        The DFA Apostille Online Application & Appointment System is available for processing of Apostille ONLY at the
-                        DFA - Office of Consular Affairs. (Bradco Avenue corner Macapagal Boulevard, Aseana Business Park, Parañaque, 1714 Metro Manila)
-                        at the moment. If you wish to set an appointment with any of the following Consular Offices, you can email them at:
+                        As of April 19, 2021 the Apostille Appointment System is only available/operational at the Office of Consular Affairs (Aseana) and CO Northeast (Ali Mall).
+                        If you wish to set an appointment with any of the following Consular Offices, you can email them at:
 
                     </p>
 
                     <div class="row" style="font-size:14px;">
                         <div class="col-lg-1 col-md-1 col-sm-12"></div>
                         <div class="col-sm-12">
-                            CO Northeast (Ali Mall Cubao) - <a href="#">ncrnortheast.so@dfa.gov.ph</a> <br />
                             CO West (SM Manila) - <a href="#">ncrwest.so@dfa.gov.ph</a> <br />
                             CO East (SM Megamall) - <a href="#">ncreast.so@dfa.gov.ph</a> <br />
                             CO South (Metro Gaisano, Alabang) - <a href="#">dfancrsouth@gmail.com</a> <br />
@@ -302,8 +298,7 @@
                     </div>
 
                     <p class="black-text" style="color:#217ff3;font-size:15px; margin-top:15px">
-                        To stem the transmission of Covid-19 and to comply with IATF mandated protocols, the available
-                        slots are limited and it is possible that your preferred date and time may not always be available. Please bear with us.
+                        To stem the transmission of Covid-19 and to comply with IATF mandated protocols, the available slots are limited and it is possible that your preferred date and time may not always be available. Please bear with us.
                     </p>
                 </div>
 
@@ -314,7 +309,7 @@
                 <div class="row ">
                     <div class="col-md-3 col-sm-5"> </div>
                     <div class="col-md-6 col-sm-12">
-                        <button style="width:100%" type="button" class="button-primary text-white" data-dismiss="modal">Close</button>
+                        <button style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">Close</button>
                     </div>
                     <div class="col-md-3 col-sm-5"></div>
                 </div>

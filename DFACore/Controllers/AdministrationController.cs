@@ -173,6 +173,7 @@ namespace DFACore.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewBag.Roles = _roleManager.Roles;
+            ViewBag.Branches = _administrationRepository.GetBranches();
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -198,8 +199,11 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
                     Email = model.Email,
-                    Type = 1
-                };
+                    Type = 1,
+                    CreatedDate = DateTime.Now,
+                    EmailConfirmed = true,
+                    BranchId = model.BranchId
+            };
 
                 // Store user data in AspNetUsers database table
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -259,10 +263,66 @@ namespace DFACore.Controllers
             return callbackUrl;
         }
 
+        public async Task<ActionResult> Account()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var role = await _userManager.GetRolesAsync(user);
+
+            var accounts = _administrationRepository.AccountList();
+
+            return View(accounts);
+        }
+
         public async Task<ActionResult> LogOff(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+        public async Task<IActionResult> Branch(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var branches = _administrationRepository.GetBranches(sortOrder, searchString);
+
+            int pageSize = 100;
+            return View(await PaginatedList<Branch>.CreateAsync(branches, pageNumber ?? 1, pageSize));
+        }
+
+        [HttpGet]
+        public IActionResult EditBranch(long branchId)
+        {
+            var branch = _administrationRepository.GetBranchForEdit(branchId);
+
+            return View(branch);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditBranch(EditBranchViewModel branch)
+        {
+            
+            var result = await _administrationRepository.UpdateBranch(branch);
+
+            return RedirectToAction("Branch");
+            return View(result);
+        }
+
     }
 }

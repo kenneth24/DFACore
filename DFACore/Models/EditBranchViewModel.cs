@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DFACore.Models
 {
-    public class Branch
+    public class EditBranchViewModel
     {
         public long Id { get; set; }
         public string BranchName { get; set; }
@@ -20,6 +20,6 @@ namespace DFACore.Models
         public string Email { get; set; }
         public bool HasExpidite { get; set; }
 
-        public ICollection<ScheduleCapacity> ScheduleCapacities { get; set; }
+        public List<ScheduleCapacity> ScheduleCapacities { get; set; }
     }
 }

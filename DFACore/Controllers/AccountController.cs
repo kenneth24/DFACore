@@ -89,7 +89,8 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
                     Email = model.Email,
-                    Type = 0
+                    Type = 0,
+                    CreatedDate = DateTime.Now
                 };
 
                 // Store user data in AspNetUsers database table
