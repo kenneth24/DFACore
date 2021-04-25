@@ -1,0 +1,114 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model DFACore.Models.ImageModel
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Upload Image";
+    
+}
+
+
+<div style="margin-top:50px;">
+
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (ViewData["UploadImageMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @ViewData["UploadImageMessage"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-10">
+            <form asp-action="UploadImage" enctype="multipart/form-data" id="priceForm" method="post" style="border: 1px solid #b7b7b7;height: auto;">
+                <div style="background-color: #217ff3;color: white;height: 35px;">
+                    <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Set Price</p>
+                </div>
+                <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
+                <div style="padding:10px;">
+
+                    @*<div class="form-group" hidden>
+            <label class="black-text" asp-for="Name"></label>
+            <input asp-for="Name" class="form-control black-text" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>*@
+                    <div class="form-group">
+                        <label class="black-text" asp-for="Name">Image Name</label>
+                        <select class="form-control" asp-for="Name" id="imageName">
+                            <option selected>1 NBI Personal Copy sample (Not Acceptable).jpg</option>
+                            <option>1 Sample NBI Sundry-1.jpg</option>
+                            <option>1 Sample NBI Sundry-2.jpg</option>
+                            <option>10 Court Document Certified True Copy Stamp.jpg</option>
+                            <option>11 Sample Immigration Documents.jpg</option>
+                            <option>12 Sample DSWD Clearance-1.png</option>
+                            <option>12 Sample DSWD Clearance-2.png</option>
+                            <option>13 Sample PNP Certification.jpg</option>
+                            <option>13 Sample PNP Sundry-1.png</option>
+                            <option>13 Sample PNP Sundry-2.png</option>
+                            <option>14 SEC GIS CERTIFIED TRUE COPY AND SSS CERTIFICATION-1.png</option>
+                            <option>14 SEC GIS CERTIFIED TRUE COPY AND SSS CERTIFICATION-2.png</option>
+                            <option>15 Sample Mayor's Certification.jpg</option>
+                            <option>16 Sample DOH Quarantine Certification and PCCI Certification-1.png</option>
+                            <option>16 Sample DOH Quarantine Certification and PCCI Certification-2.png</option>
+                            <option>2 LCR copy of Birth (Form 1A).jpg</option>
+                            <option>2 LCR copy of Death (Form 2A).jpg</option>
+                            <option>2 LCR copy of Marriage (Form 3A).jpg</option>
+                            <option>3a Sample CAV for Elementary and Highschool Level (Form-137 and Diploma).jpg</option>
+                            <option>3b Sample CAV for Technical and Vocational Courses (TOR and Diploma; National Certificate).jpg</option>
+                            <option>3c Sample CAV for State Colleges and Universities (TOR and Diploma).jpg</option>
+                            <option>3d Sample CAV for Private or Local Colleges and Universities (TOR and Diploma).jpg</option>
+                            <option>4 PRC Certified True Copy Stamp.jpg</option>
+                            <option>5 Sample DOH Certification.jpg</option>
+                            <option>5 Sample DOH stamp.jpg</option>
+                            <option>6 Sample CAAP Certification.jpg</option>
+                            <option>7 Sample LTO Certification.jpg</option>
+                            <option>9 Sample Certificate of Authority for a Notarial Act (CANA).jpg</option>
+                        </select>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="black-text">Current Image</label>
+                        <img class="img-fluid" id="imageSource" src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).jpg">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="black-text">Upload New Image</label> <br/>
+                        <input asp-for="File" accept="image/png,image/jpg" />
+                        <span asp-validation-for="File" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script>
+
+        $("#imageName").on("change", function () {
+            var value = $(this).val();
+            $('#imageSource').attr('src', '/images/documents/' + value);
+        });
+    </script>
+}
+
+    @*@Html.EditorFor(Model => Model.Expedite);
+        @Html.EditorFor(Model => Model.Regular);*@

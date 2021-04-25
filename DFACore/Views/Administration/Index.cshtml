@@ -1,49 +1,102 @@
 ﻿@using Newtonsoft.Json;
 @using System.Collections.Generic;
-@model PaginatedList<DFACore.Models.ApplicantRecord>
+@model PaginatedList<DFACore.Models.AdminApplicantRecordViewModel>
 
 @{
     Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
     ViewData["Title"] = "Administrator Homepage";
 }
 <div style="margin-top:50px;">
-    
 
-    @*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
 
-    <form asp-action="Index" method="get" style="margin-bottom:20px;">
-        <div class="form-row align-items-center">
-            @*<div class="col-sm-3 my-1">
-                    <label class="sr-only" for="inlineFormInputName">CO</label>
-                    <input type="text" class="form-control" id="inlineFormInputName" placeholder="CO Aseana">
-                </div>*@
-            <div class="col-sm-3 my-1">
-                <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter Name or Appt. Code here">
+    @*<div class="row">
+            <div class="col-sm-12">
+
+            </div>
+        </div>*@
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Export</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <form asp-action="Index" method="get" style="margin-bottom:20px;">
+                        <div class="form-row align-items-center">
+                            @*<div class="col-sm-3 my-1">
+                                    <label class="sr-only" for="inlineFormInputName">CO</label>
+                                    <input type="text" class="form-control" id="inlineFormInputName" placeholder="CO Aseana">
+                                </div>*@
+                            <div class="col-sm-3 my-1">
+                                <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter Name, Email or Appt. Code here">
+                                </div>
+                            </div>
+                            <div class="col-auto my-1">
+                                <button type="submit" class="btn btn-primary">Search</button> |
+                                <a asp-action="Index">Refresh</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <form method="post" style="margin-bottom:20px;">
+                        <div class="form-row align-items-center">
+
+                            @if (User.IsInRole("Super Administrator"))
+                            {
+                                <div class="col-sm-2 my-1">
+                                    <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
+                                    <select class="form-control" name="branchId">
+                                        @*<option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>*@
+                                        <option value="0">All</option>
+                                        @foreach (var branch in ViewBag.Branches)
+                                        {
+                                            <option value="@branch.Id">@branch.BranchName</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+
+
+                            <div class="col-sm-2 my-1">
+                                <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateFrom" placeholder="From">
+                                </div>
+                            </div>
+                            <div class="col-sm-2 my-1">
+                                <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateTo" placeholder="To">
+                                </div>
+                            </div>
+
+
+                            <div class="col-auto my-1">
+                                <button type="submit" asp-action="ExportAppointmentToPDF" class="btn btn-danger">Export Summary of Appointment</button>
+                            </div>
+                            <div class="col-auto my-1">
+                                <button type="submit" asp-action="ExportAttendanceToPDF" class="btn btn-danger">Export Summary of Attendance</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-sm-2 my-1">
-                <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="From">
-                </div>
-            </div>
-            <div class="col-sm-2 my-1">
-                <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="To">
-                </div>
-            </div>
-            <div class="col-auto my-1">
-                <button type="submit" class="btn btn-primary">Search</button> |
-                <a asp-action="Index">Refresh</a>
-            </div>
+
         </div>
-    </form>
-    <table class="table" style="font-size:12px;">
+
+    </div>
+
+    <table class="table table-responsive" style="font-size:12px;">
         <thead>
             @*<th>
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Scheduled Date</a>
@@ -56,7 +109,10 @@
                     Appt. Code
                 </th>
                 <th>
-                    Scheduled Date
+                    Schedule
+                </th>
+                <th>
+                    Email
                 </th>
                 <th>
                     Document Owner
@@ -71,14 +127,17 @@
                     Contact No.
                 </th>
                 <th>
-                    Country of Des.
+                    Consular Office
                 </th>
-                <th>
+                <th style="padding-right: 117px;">
                     Documents
                 </th>
-
-
-                <th></th>
+                <th>
+                    Qty
+                </th>
+                <th>
+                    Transaction
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -95,6 +154,9 @@
                         @Html.DisplayFor(modelItem => item.ScheduleDate)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName)
                     </td>
                     <td>
@@ -107,9 +169,9 @@
                         @Html.DisplayFor(modelItem => item.RepresentativeContactNumber)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CountryDestination)
+                        @Html.DisplayFor(modelItem => item.ProcessingSite)
                     </td>
-                    <td>
+                    <td colspan="3">
 
                         <table class="table table-borderless">
 
@@ -117,10 +179,10 @@
                             {
                                 <tr>
                                     @*//var doc = $"{document.Name} ({document.Quantity}) {document.Transaction}"; //@document.Name @document.Quantity @document.Transaction*@
-                                    <td style="padding: 0 10px 0 0;" width="300">
+                                    <td style="padding: 0 10px 0 0;" width="200">
                                         @document.Name
                                     </td>
-                                    <td style="padding: 0 10px 0 0;">
+                                    <td style="padding: 0 10px 0 0;" width="40">
                                         @document.Quantity
                                     </td>
                                     <td style="padding: 0 10px 0 0;">

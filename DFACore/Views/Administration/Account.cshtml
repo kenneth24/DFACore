@@ -12,6 +12,11 @@
 <div class="row">
     <div class="col-12">
         <a class="btn btn-primary pull-right" asp-action="Register">Create New</a>
+        @if (User.IsInRole("Super Administrator"))
+        {
+            <a class="btn btn-primary pull-right" asp-action="UserAccount" style="margin-right:10px;">View Users</a>
+        }
+
     </div>
 </div>
         

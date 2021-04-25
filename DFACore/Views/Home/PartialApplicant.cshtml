@@ -26,7 +26,7 @@
                 <div class="col-md-3 col-sm-12">
                     <label asp-for="Records[increment].FirstName">First Name <span class="red">*</span></label>
                     <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
-                    <span asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
+                    <span id="fnamePartialValidation-@increment" asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
                 </div>
 
                 <div class="col-md-3 col-sm-12">
@@ -1050,22 +1050,6 @@
             //    }
             //});
 
-
-            $('.modal').on('show.bs.modal', function () {
-                var zIndex = 1040 + (10 * $('.modal:visible').length);
-                $(this).css('z-index', zIndex);
-                setTimeout(function () {
-                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
-                }, 0);
-            });
-
-            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
-                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
-                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
-                }
-            });
-
-
             $('.transactionQuantity@(increment)').keypress(function (e) {
                 if (this.value.length == 0 && e.which == 48) {
                     return false;
@@ -1080,6 +1064,9 @@
                 if ($(this).is(':checked') == true) {
                     console.log(formatId);
                     //$(expediteId).removeAttr("disabled");
+                    if (isBranchHasExpidite) {
+                        $(expediteId).removeAttr("disabled");
+                    }
                     $(regularId).removeAttr("disabled");
                 }
                 else {
@@ -1809,10 +1796,10 @@
                     var Transaction = v.Transaction;
                     lbldocuType@(increment).append('(' + Quantity + ') ' + '(' + Transaction + ') ' + DocuName + ' ' + '<br />');
                     if (Transaction == "Expedite") {
-                        subtotal@(increment) += (200 * parseInt(Quantity));
+                        subtotal@(increment) += (expeditePrice * parseInt(Quantity));
                     }
                     else {
-                        subtotal@(increment) += (100 * parseInt(Quantity));
+                        subtotal@(increment) += (regularPrice * parseInt(Quantity));
                     }
                 });
                 console.log(subtotal@(increment));
@@ -1856,6 +1843,36 @@
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
                 //$( "input[name^='news']" ).val( "news here!" );
+            });
+
+
+            //$('.modal').on('show.bs.modal', function () {
+            //    var zIndex = 1040 + (10 * $('.modal:visible').length);
+            //    $(this).css('z-index', zIndex);
+            //    setTimeout(function () {
+            //        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            //    }, 0);
+            //});
+
+            //$('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+            //    if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+            //        $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+            //    }
+            //});
+            $('.modal').on('show.bs.modal', function () {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+                $('.modal-backdrop').css('opacity', '0');
+                //alert("test");
+            });
+
+            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                }
             });
         });
 

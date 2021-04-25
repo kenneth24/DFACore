@@ -17,6 +17,7 @@ using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
 using DFACore.Repository;
 using Wkhtmltopdf.NetCore;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace DFACore
 {
@@ -53,11 +54,17 @@ namespace DFACore
             //    options.IdleTimeout = TimeSpan.FromSeconds(3600);
             //});
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Administration/AccessDenied");
+            });
+
             services.AddControllersWithViews();
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-            services.AddMailKit(config =>{
+            services.AddMailKit(config =>
+            {
                 config.UseMailKit(Configuration.GetSection("Email").Get<MailKitOptions>());
             });
             services.AddTransient<IMessageService, MessageService>();
@@ -65,6 +72,8 @@ namespace DFACore
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();
             services.AddTransient<AdministrationRepository>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddBrowserDetection();
             services.AddWkhtmltopdf();
         }
 
@@ -101,14 +110,15 @@ namespace DFACore
 
             app.UseAuthentication();
             app.UseAuthorization();
-         
-            
+
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    //pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Initial}/");
                 endpoints.MapRazorPages();
             });
         }

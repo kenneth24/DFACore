@@ -23,6 +23,9 @@ namespace DFACore.Data
         public DbSet<Models.Holiday> Holidays { get; set; }
 
         public DbSet<Models.Branch> Branches { get; set; }
+        public DbSet<Models.Price> Prices { get; set; }
+        public DbSet<Models.Notice> Notices { get; set; }
+        public DbSet<Models.tbl_attendance> tbl_attendance { get; set; } // see comments on class
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,6 +41,12 @@ namespace DFACore.Data
             });
 
             builder.Entity<AdminAccountViewModel>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+
+            builder.Entity<UserAccountViewModel>(e =>
             {
                 e.HasNoKey();
                 e.ToView(null);

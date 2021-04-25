@@ -7,6 +7,7 @@
     ViewData["Title"] = "Home Page";
     List<Branch> branches = (List<Branch>)ViewData["Branches"];
     var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
+    var price = (Price)ViewData["Price"];
     //var currentUser = (ApplicationUser)ViewBag.User;
     //var suffix = string.IsNullOrEmpty(currentUser.Suffix) ? "N/A" : currentUser.Suffix;
 
@@ -97,6 +98,15 @@
     .img-fluid {
         width: 100% !important;
     }
+/*    .modal-backdrop.fade {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+
+        .modal-backdrop.fade.in {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }*/
     
 </style>
 
@@ -290,7 +300,7 @@
                             <div class="row">
 
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="Record.DateOfBirth"></label>
+                                    <label asp-for="Record.DateOfBirth">Date of Birth <span class="red">*</span></label>
                                     <input type="date" asp-for="Record.DateOfBirth" class="form-control dateOfBirthOwner" />
                                     <span asp-validation-for="Record.DateOfBirth" class="text-danger dateofbirth"></span>
                                 </div>
@@ -536,7 +546,7 @@
                                 <div class="col-md-6 col-sm-12">
                                     <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
                                     <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
-                                    <span asp-validation-for="Record.ContactNumber" class="text-danger "></span>
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 @*<div class="col-md-6 col-sm-12">
                                         <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
@@ -601,9 +611,8 @@
                 <div class="col-lg-2 col-md-12 col-sm-12" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
                     <div style="border:1px solid #b7b7b7;height:auto;padding:5px;margin-bottom: 10px">
                         <label class="black-text">Select Time</label>
-                        <div class="row">
-                            <div class="col-lg-2 col-md-12 col-sm-12"></div>
-                            <div id="AvailableTime" class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="row justify-content-center">
+                            <div id="AvailableTime" class="col-lg-10 col-md-12 col-sm-12">
                                 @foreach (var hour in defaultBranch.AvailableHours)
                                 {
                                     <label class="black-text"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
@@ -2301,7 +2310,7 @@
                     <div class="mapouter">
 
                         <div id="MapDiv" class="gmap_canvas">
-                            <iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Department%20of%20Foreign%20Affairs%20-%20Office%20of%20Consular%20Affairs&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                            <iframe width="750" height="500" id="gmap_canvas" src="@defaultBranch.MapAddress" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0">
                             </iframe>
                         </div>
                     </div>
@@ -2396,6 +2405,8 @@
         var canConfirm = false;
         var branchId = 0;
         var isBranchHasExpidite = false;
+        var expeditePrice = 0;
+        var regularPrice = 0;
 
         function onSubmit() {
             console.log('onsubmit');
@@ -2483,12 +2494,12 @@
                         else {
                             $('#ExpiditeNotice').show();
                         }
-                        
+
                         //$('#gmap_canvas').attr('src', 'https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed');
                         //document.getElementById('gmap_canvas').src = document.getElementById('gmap_canvas').src
                         $('#MapDiv').empty();
-                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
-                        //<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Department%20of%20Foreign%20Affairs%20-%20Office%20of%20Consular%20Affairs&t=&z=18&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >
+                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="' + result.mapAddress + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+                        //$('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=15&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
                     },
                     error: function () {
                         alert('Something went wrong!');
@@ -2509,6 +2520,9 @@
         $(document).ready(function () {
 
             branchId = @defaultBranch.Id;
+            expeditePrice = @price.Expedite;
+            regularPrice = @price.Regular;
+
             $(".unAvailableModal").click(function () {
                 console.log("unavailable modal");
 
@@ -2797,17 +2811,56 @@
                 //    }
                 //});
 
+                var fnamePartialClassReq = $('.fNamePartial').length;
+                var fnamePartialClass = $('.fNamePartial').filter(function () {
+                    return this.value != '';
+                });
+                if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
+                    //alert('Please fill out all required fields.bbbb');
+                    $('.fNamePartialValidation').text('This field is required.');
+                    return;
+                }
+
+                var lnamePartialClassReq = $('.lNamePartial').length;
+                var lnamePartialClass = $('.lNamePartial').filter(function () {
+                    return this.value != '';
+                });
+                if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
+                    $('.lNamePartialValidation').text('This field is required.');
+                    return;
+                }
+
+                var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
+                var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
+                    return this.value != '';
+                });
+                if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
+                    $('.dateOfbirthPartialValidation').text('This field is required.');
+                    return;
+                }
+
+
+                var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
+                var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
+                    return this.value != '';
+                });
+                if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
+                    $('.countrydestinationPartialValidation').text('This field is required.');
+                    return;
+                }
+
+
                 var reqlength = $('.apostiledataPartial').length;
                 console.log(reqlength);
                 var value = $('.apostiledataPartial').filter(function () {
                     return this.value != '';
                 });
-
                 if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
                     alert('Please fill out all required fields.');
                     $('.apostiledataPartialValidation').text('Please insert document quantity.');
                     return;
                 }
+
 
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
@@ -2853,10 +2906,10 @@
                         var Transaction = v.Transaction;
                         lbldocuType.append('(' + Quantity + ') ' + '(' + Transaction +  ') ' + DocuName + ' ' + '<br />');
                         if (Transaction == "Expedite") {
-                            subtotal += (200 * parseInt(Quantity));
+                            subtotal += (@price.Expedite * parseInt(Quantity));
                         }
                         else {
-                            subtotal += (100 * parseInt(Quantity));
+                            subtotal += (@price.Regular * parseInt(Quantity));
                         }
 
                     });

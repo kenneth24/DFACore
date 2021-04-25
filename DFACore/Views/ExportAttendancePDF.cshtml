@@ -1,0 +1,99 @@
+﻿@model DFACore.Models.ExportPDFViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Apostille Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .centerText {
+            text-align: center;
+        }
+
+        .rightText {
+            text-align: right;
+        }
+
+        .marginTop {
+            margin-top: 40px;
+        }
+
+        .boldText {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+    <p class="centerText">Department of Foreign Affairs<br>Authentication Division</p>
+    <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
+    <h3 class="centerText boldText">Summary of Attendance</h3>
+    <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
+
+    <table>
+        <tr>
+            <th>Appointment Code</th>
+            <th>Schedule</th>
+            <th>Time</th>
+            <th>Email</th>
+            <th>Document Owner</th>
+            <th>Contact No</th>
+            <th>Representative</th>
+            <th>Contact No</th>
+            <th>Consular Office</th>
+            <th>Destination</th>
+            <th>Documents</th>
+            <th>Qty</th>
+            <th>Transaction</th>
+            <th>Attendance</th>
+        </tr>
+        @foreach (var item in Model.ExportTemplates)
+        {
+            <tr>
+                <td>@item.AppointmentCode</td>
+                <td>@item.ScheduleDate.ToString("MM/dd/yyy")</td>
+                <td>@item.ScheduleDate.ToString("hh:mm tt")</td>
+                <td>@item.Email</td>
+                <td>@item.FirstName @item.MiddleName @item.LastName @item.Suffix</td>
+                <td>@item.ContactNumber</td>
+                <td>@item.NameOfRepresentative</td>
+                <td>@item.RepresentativeContactNumber</td>
+                <td>@item.ConsularOffice</td>
+                <td>@item.CountryDestination</td>
+                <td>@Html.Raw(item.Documents)</td>
+                <td>@Html.Raw(item.Quantity)</td>
+                <td>@Html.Raw(item.Transaction)</td>
+                <td>@item.Attendance</td>
+            </tr>
+        }
+
+
+    </table>
+
+    <h3 class="rightText marginTop boldText">TOTAL OF DOCUMENTS: @Model.Sum</h3>
+    <h3 class="rightText boldText">TOTAL OF APPOINTMENT: @Model.ExportTemplates.Count()</h3>
+</body>
+</html>
+

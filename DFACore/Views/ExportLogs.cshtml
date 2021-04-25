@@ -1,0 +1,90 @@
+﻿@model DFACore.Models.ExportPDFViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Apostille Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .centerText {
+            text-align: center;
+        }
+
+        .rightText {
+            text-align: right;
+        }
+
+        .marginTop {
+            margin-top: 40px;
+        }
+
+        .boldText {
+            font-weight: bold
+        }
+    </style>
+</head>
+<body>
+    <p class="centerText">Department of Foreign Affairs<br>Authentication Division</p>
+    <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
+    <h3 class="centerText boldText">Summary of Web Logs</h3>
+    <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
+
+    <table>
+        <tr>
+            <th>CreatedDate</th>
+            <th>Email</th>
+            <th>City</th>
+            <th>Region</th>
+            <th>Country</th>
+            <th>IpAddress</th>
+            <th>Device</th>
+            <th>Browser</th>
+            <th>OS</th>
+            <th>Remarks</th>
+        </tr>
+        @foreach (var item in Model.ActivityLogs)
+        {
+            <tr>
+                <td>@item.CreatedDate</td>
+
+                <td>@item.Email</td>
+                <td>@item.City</td>
+                <td>@item.Region</td>
+                <td>@item.Country</td>
+                <td>@item.IpAddress</td>
+                <td>@item.DeviceType</td>
+                <td>@item.Browser</td>
+                <td>@item.OS</td>
+                <td>@item.Remarks</td>
+            </tr>
+        }
+
+    </table>
+
+    <h3 class="rightText boldText marginTop">TOTAL OF APPOINTMENT: @Model.ActivityLogs.Count()</h3>
+</body>
+</html>
+

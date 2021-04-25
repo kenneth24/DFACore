@@ -20,6 +20,8 @@ namespace DFACore.Models
         public string ContactNumber { get; set; }
         public string Email { get; set; }
         public bool HasExpidite { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
 
     }
 

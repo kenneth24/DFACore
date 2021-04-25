@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DFACore.Repository
@@ -32,10 +33,36 @@ namespace DFACore.Repository
 
         public bool AddActivityLog(ActivityLog activityLog)
         {
-            activityLog.CreatedDate = DateTime.UtcNow;
+            activityLog.CreatedDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(activityLog.IpAddress) || activityLog.IpAddress != "::1")
+            {
+                var getUserCountryByIp = GetUserCountryByIp(activityLog.IpAddress);
+                activityLog.City = getUserCountryByIp.city;
+                activityLog.Region = getUserCountryByIp.region;
+                activityLog.Country = getUserCountryByIp.country;
+            }
             _context.ActivityLogs.Add(activityLog);
             _context.SaveChanges();
             return true;
+        }
+
+        public IpInfo GetUserCountryByIp(string ip)
+        {
+            //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.country = null;
+            }
+
+            return ipInfo;
         }
 
         public bool AddRange(IEnumerable<ApplicantRecord> applicantRecords)
@@ -60,14 +87,14 @@ namespace DFACore.Repository
                     Type = model.Type,
                     DateCreated = DateTime.UtcNow,
                 });
-                var act = new ActivityLog
-                {
-                    UserId = 1,
-                    IpAddress = applicantRecords.FirstOrDefault().CreatedBy.ToString(),
-                    OS = JsonConvert.SerializeObject(newObject)
-                };
+                //var act = new ActivityLog
+                //{
+                //    UserId = 1,
+                //    IpAddress = applicantRecords.FirstOrDefault().CreatedBy.ToString(),
+                //    OS = JsonConvert.SerializeObject(newObject)
+                //};
 
-                AddActivityLog(act);
+                //AddActivityLog(act);
 
                 _context.ApplicantRecords.AddRange(applicantRecords);
                 _context.SaveChanges();
@@ -179,7 +206,7 @@ namespace DFACore.Repository
                 return false;
             }
 
-            var totalCount = applicationCount;
+            var totalCount = 0;
             var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date && a.BranchId == branchId).ToList();
             if (applicantRecords.Count != 0)
             {
@@ -194,29 +221,29 @@ namespace DFACore.Repository
             }
             
 
-            int type = 0;
+            //int type = 0;
 
-            TimeSpan timeSpan = date.TimeOfDay;
-            TimeSpan TodayTime2 = new TimeSpan(8, 0, 0);
+            //TimeSpan timeSpan = date.TimeOfDay;
+            //TimeSpan TodayTime2 = new TimeSpan(8, 0, 0);
 
-            if (timeSpan == new TimeSpan(7, 0, 0))
-                type = 1;
-            else if (timeSpan == new TimeSpan(8, 0, 0))
-                type = 2;
-            else if (timeSpan == new TimeSpan(9, 0, 0))
-                type = 3;
-            else if (timeSpan == new TimeSpan(10, 0, 0))
-                type = 4;
-            else if (timeSpan == new TimeSpan(11, 0, 0))
-                type = 5;
-            else if (timeSpan == new TimeSpan(12, 0, 0))
-                type = 6;
-            else if (timeSpan == new TimeSpan(13, 0, 0))
-                type = 7;
-            else if (timeSpan == new TimeSpan(14, 0, 0))
-                type = 8;
-            else if (timeSpan == new TimeSpan(15, 0, 0))
-                type = 9;
+            //if (timeSpan == new TimeSpan(7, 0, 0))
+            //    type = 1;
+            //else if (timeSpan == new TimeSpan(8, 0, 0))
+            //    type = 2;
+            //else if (timeSpan == new TimeSpan(9, 0, 0))
+            //    type = 3;
+            //else if (timeSpan == new TimeSpan(10, 0, 0))
+            //    type = 4;
+            //else if (timeSpan == new TimeSpan(11, 0, 0))
+            //    type = 5;
+            //else if (timeSpan == new TimeSpan(12, 0, 0))
+            //    type = 6;
+            //else if (timeSpan == new TimeSpan(13, 0, 0))
+            //    type = 7;
+            //else if (timeSpan == new TimeSpan(14, 0, 0))
+            //    type = 8;
+            //else if (timeSpan == new TimeSpan(15, 0, 0))
+            //    type = 9;
 
             //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
             var a = $"{date.ToString("hh tt")}";
@@ -224,7 +251,7 @@ namespace DFACore.Repository
 
             if (scheduleCapacity != null)
             {
-                if (totalCount > scheduleCapacity.Capacity)
+                if (totalCount >= scheduleCapacity.Capacity)
                     return false;
                 else
                     return true;
@@ -236,12 +263,45 @@ namespace DFACore.Repository
 
         public List<AvailableDAtes> GenerateListOfDates(DateTime start, long branchId)
         {
+            var range = _context.Branches.Where(a => a.Id == branchId).FirstOrDefault();
             var now = DateTime.UtcNow.ToLocalTime();
-            var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
-            if (start >= toCompare)
-                start = start.AddDays(1);
+            //var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
+            //if (start >= toCompare)
+            //    start = start.AddDays(1);
 
-            var end = new DateTime(2021, 06, 01); //start.AddYears(1); //.AddDays(30);
+            DateTime end;
+
+            //var end = new DateTime(2021, 06, 01); //start.AddYears(1); //.AddDays(30);
+
+            if (range == null)
+            {
+                var toCompare = new DateTime(now.Year, now.Month, now.Day, 15, 0, 0);
+                if (start >= toCompare)
+                    start = start.AddDays(1);
+                end = start.AddMonths(3);
+            }
+            else
+            {
+                if (range.StartTime != null)
+                {
+                    start = range.StartTime;
+                }
+                else
+                {
+                    start = now;
+                }
+
+                //var end = new DateTime(2021, 05, 01); //start.AddYears(1); //.AddDays(30);
+                if (range.EndTime != null)
+                {
+                    end = range.EndTime;
+                }
+                else
+                {
+                    end = start.AddMonths(3);
+                }
+            }
+
             var dates = new List<AvailableDAtes>();
             var unAvailable = GetUnAvailableDates(branchId);
 
@@ -291,7 +351,8 @@ namespace DFACore.Repository
 
         public List<DateTime> GetUnAvailableDates(long branchId)
         {
-            var raw = _context.Set<UnavailableDate>().FromSqlRaw("Select* from " +
+            var limitPerDay = _context.ScheduleCapacities.Where(s => s.BranchId == branchId).Sum(s => s.Capacity);
+            var raw = _context.Set<UnavailableDate>().FromSqlRaw("Select * from " +
                 "(Select " +
                 "count(distinct(Id)) as ApplicantCount, " +
                 "count(Id) as DocuTypes, " +
@@ -307,7 +368,7 @@ namespace DFACore.Repository
                 "AS dataCount " +
                 "group by " +
                 "CAST(ScheduleDate as Date)) a " +
-                "where a.DocuCount >= 800", DateTime.Now.Date, branchId).ToList();
+                "where a.DocuCount >= {2}", DateTime.Now.Date, branchId, limitPerDay).ToList();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 
@@ -2016,6 +2077,19 @@ namespace DFACore.Repository
             QRCode qrCode = new QRCode(_qrCodeData);
             Bitmap qrCodeImage = qrCode.GetGraphic(20);
             return BitmapToBytesCode(qrCodeImage);
+        }
+
+
+        public Price GetPrice()
+        {
+            var price = _context.Prices.Select(a => a).FirstOrDefault();
+            return price;
+        }
+
+        public Notice GetNotice()
+        {
+            var notice = _context.Notices.Select(a => a).FirstOrDefault();
+            return notice;
         }
 
         private static Byte[] BitmapToBytesCode(Bitmap image)

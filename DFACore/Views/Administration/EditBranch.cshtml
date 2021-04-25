@@ -68,7 +68,7 @@
                         <span asp-validation-for="DateCreated" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group black-text" hidden>
+                    <div class="form-group black-text">
                         <label class="black-text" asp-for="MapAddress"></label>
                         <input asp-for="MapAddress" class="form-control black-text" />
                         <span asp-validation-for="MapAddress" class="text-danger"></span>
@@ -81,11 +81,11 @@
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="HasExpidite" style="margin-right:10px;"></label>
+                        <label class="black-text" style="margin-right:10px;">Has Expedite</label>
                         <input asp-for="HasExpidite" style="transform: scale(1.5);" />
                         <span asp-validation-for="HasExpidite" class="text-danger"></span>
                     </div>
-                    <p><span style="font-weight:bold">Capacity per hour</span>(Note: 0 in capacity means schedule hour is disable.)</p>
+                    <p><span style="font-weight:bold">Document limit per hour</span>(Zero = timeslot will be disabled)</p>
                     @for (var i = 0; i < Model.ScheduleCapacities.Count; i++)
                     {
                         @Html.HiddenFor(model => model.ScheduleCapacities[i].Id)
@@ -95,14 +95,14 @@
                         <div class="form-group black-text">
                             <div class="row">
                                 <div class="col-md-3 col-sm-12">
-                                    <p><span style="font-weight:bold">Time:</span> @Html.DisplayFor(model => model.ScheduleCapacities[i].Name)</p> 
+                                    <p><span style="font-weight:bold">Time:</span> @Html.DisplayFor(model => model.ScheduleCapacities[i].Name)</p>
                                 </div>
                                 <div class="col-md-6 col-sm-12">
                                     <span style="font-weight:bold">Capacity:</span> @Html.EditorFor(model => model.ScheduleCapacities[i].Capacity)
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
 
 
@@ -111,6 +111,27 @@
                         @Html.HiddenFor(model => model.ScheduleCapacities[i].BranchId)
                     }
 
+                    <p style="color:red">FOR TEMPORARY ONLY</p>
+                    <div class="form-group black-text">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <p><span style="font-weight:bold">DateFrom:</span></p>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <span style="font-weight:bold"></span> @Html.EditorFor(model => model.StartTime)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group black-text">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-12">
+                                <p><span style="font-weight:bold">DateTo:</span></p>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <span style="font-weight:bold"></span> @Html.EditorFor(model => model.EndTime)
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row form-group">
                         <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Branch", "Administration")</button></div>

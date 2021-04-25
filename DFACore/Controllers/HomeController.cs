@@ -15,6 +15,9 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using shortid;
 using shortid.Configuration;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Shyjus.BrowserDetection;
+using System.Net;
 
 namespace DFACore.Controllers
 {
@@ -29,6 +32,8 @@ namespace DFACore.Controllers
         private readonly IGeneratePdf _generatePdf;
         private readonly IWebHostEnvironment _env;
         private readonly GoogleCaptchaService _googleCaptchaService;
+        private readonly IActionContextAccessor _accessor;
+        private readonly IBrowserDetector _browserDetector;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -37,7 +42,9 @@ namespace DFACore.Controllers
             IMessageService messageService,
             IGeneratePdf generatePdf,
             IWebHostEnvironment env,
-            GoogleCaptchaService googleCaptchaService)
+            GoogleCaptchaService googleCaptchaService,
+            IActionContextAccessor accessor,
+            IBrowserDetector browserDetector)
         {
             _logger = logger;
             _userManager = userManager;
@@ -47,10 +54,17 @@ namespace DFACore.Controllers
             _generatePdf = generatePdf;
             _env = env;
             _googleCaptchaService = googleCaptchaService;
+            _accessor = accessor;
+            _browserDetector = browserDetector;
         }
         public IActionResult ApplicantTypeSelection()
         {
             return View();
+        }
+
+        public IActionResult Initial()
+        {
+            return RedirectToAction("Login", "Account");
         }
         public IActionResult Index(int applicantsCount = 0)
         {
@@ -66,6 +80,7 @@ namespace DFACore.Controllers
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["DefaultBranch"] = defaultBranch;
             ViewData["Branches"] = _applicantRepo.GetBranches();
+            ViewData["Price"] = _applicantRepo.GetPrice();
             return View();
         }
 
@@ -90,6 +105,9 @@ namespace DFACore.Controllers
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
 
             var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
+
+         
+
             if (model.Records == null)
             {
                 //if (model.Record.ApostileData == "[]")
@@ -190,17 +208,21 @@ namespace DFACore.Controllers
                 }
 
 
-                //var validate = ValidateScheduleDate3(model.ScheduleDate, data);
-                //if (!validate)
-                //{
-                //    return RedirectToAction("Error");
-                //}
+               
 
             };
+
+            var validate = ValidateScheduleDate3(model.ScheduleDate, 0, branch.Id);
+            if (!validate)
+            {
+                ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
+                Log("Generate Appointment but error occured while saving data.", User.Identity.Name);
                 return RedirectToAction("Error");  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
@@ -222,6 +244,7 @@ namespace DFACore.Controllers
                     HtmlTemplate(),
                     attachments.ToArray());
             ViewData["ApplicantCount"] = model.ApplicantCount;
+            Log("Generate Appointment", User.Identity.Name);
             return RedirectToAction("Success");
 
 
@@ -580,6 +603,56 @@ namespace DFACore.Controllers
                 return SourceReader.ReadToEnd();
             }
 
+        }
+
+        [AllowAnonymous]
+        public string GetIP()
+        {
+            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
+            var ip2 = HttpContext.Connection.RemoteIpAddress.ToString();
+
+            GetUserCountryByIp("136.158.28.217");
+            var browser = _browserDetector.Browser;
+            return ip;
+        }
+
+        public IpInfo GetUserCountryByIp(string ip)
+        {
+            //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.country = null;
+            }
+
+            return ipInfo;
+        }
+
+        public void Log(string data, string email = null)
+        {
+            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
+            var browser = _browserDetector.Browser;
+            if (browser != null)
+            {
+                var activity = new ActivityLog
+                {
+                    CreatedDate = DateTime.Now,
+                    IpAddress = ip,
+                    Browser = $"{browser.Name} {browser.Version}",
+                    OS = browser.OS,
+                    DeviceType = browser.DeviceType,
+                    Remarks = data,
+                    Email = email
+                };
+                _applicantRepo.AddActivityLog(activity);
+            }
         }
 
     }

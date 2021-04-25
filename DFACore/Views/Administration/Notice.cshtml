@@ -1,0 +1,59 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model DFACore.Models.Notice
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Notice";
+}
+
+
+<div style="margin-top:50px;">
+
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if (ViewData["UpdateNoticeMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @ViewData["UpdateNoticeMessage"]
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            }
+        </div>
+        
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-10">
+            <form asp-action="Notice" id="priceForm" method="post" style="border: 1px solid #b7b7b7;height: auto;">
+                <div style="background-color: #217ff3;color: white;height: 35px;">
+                    <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Update Announcement</p>
+                </div>
+                <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
+                <div style="padding:10px;">
+                    <p>Note: Announcement message should have html tags.</p>
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        <label class="black-text">Notices</label>
+                        @Html.TextAreaFor(model => model.NoticeMessage, 10, 5, new { @class= "form-control" });
+                        <span asp-validation-for="NoticeMessage" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+
+@*@Html.EditorFor(Model => Model.Expedite);
+    @Html.EditorFor(Model => Model.Regular);*@

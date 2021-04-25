@@ -1,0 +1,184 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model PaginatedList<DFACore.Models.ActivityLog>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Branches";
+}
+
+<h3 style="margin-top:50px;">History</h3>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Export</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form asp-action="ActivityLog" method="get" style="margin-bottom:20px;">
+                    <div class="form-row align-items-center">
+                        @*<div class="col-sm-3 my-1">
+                <label class="sr-only" for="inlineFormInputName">CO</label>
+                <input type="text" class="form-control" id="inlineFormInputName" placeholder="CO Aseana">
+            </div>*@
+                        <div class="col-sm-3 my-1">
+                            <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter Email here">
+                            </div>
+                        </div>
+                        <div class="col-auto my-1">
+                            <button type="submit" class="btn btn-primary">Search</button> |
+                            <a asp-action="ActivityLog">Refresh</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <form method="post" style="margin-bottom:20px;">
+                    <div class="form-row align-items-center">
+
+                        <div class="col-sm-2 my-1">
+                            <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateFrom" placeholder="From">
+                            </div>
+                        </div>
+                        <div class="col-sm-2 my-1">
+                            <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateTo" placeholder="To">
+                            </div>
+                        </div>
+
+                        <div class="col-auto my-1">
+                            <button type="submit" asp-action="ExportLogsToPDF" class="btn btn-danger">Export Summary of Web Logs</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<table class="table" style="font-size:12px;">
+    <thead>
+        <tr style="background-color: #217ff3 !important; color: white;">
+            <th>
+                Id
+            </th>
+            <th>
+                Created Date
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Region
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Ip Address
+            </th>
+            <th>
+                Device Type
+            </th>
+            <th>
+                Browser
+            </th>
+            <th>
+                OS
+            </th>
+            <th>
+                Remarks
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Region)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IpAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeviceType)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Browser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="ActivityLog"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="ActivityLog"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

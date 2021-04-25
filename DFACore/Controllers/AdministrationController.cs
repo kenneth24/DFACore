@@ -1,17 +1,23 @@
-﻿using DFACore.Models;
+﻿using ClosedXML.Excel;
+using DFACore.Models;
 using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
 {
-    [Authorize(Roles = "Super Administrator")]
+    [Authorize(Roles = "Super Administrator, Administrator")]
     public class AdministrationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,20 +25,27 @@ namespace DFACore.Controllers
         private RoleManager<IdentityRole> _roleManager;
         private readonly IEmailService _emailService;
         private readonly AdministrationRepository _administrationRepository;
+        private readonly IWebHostEnvironment _env;
+        private readonly IGeneratePdf _generatePdf;
 
         public AdministrationController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             IEmailService emailService,
-            AdministrationRepository administrationRepository)
+            AdministrationRepository administrationRepository,
+            IWebHostEnvironment env,
+            IGeneratePdf generatePdf)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _emailService = emailService;
             _administrationRepository = administrationRepository;
+            _env = env;
+            _generatePdf = generatePdf;
         }
 
+        [Authorize(Roles = "Super Administrator, Administrator")]
         [HttpGet]
         public async Task<IActionResult> Index(
             string sortOrder,
@@ -42,7 +55,9 @@ namespace DFACore.Controllers
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            
+
+            ViewBag.Branches = _administrationRepository.GetBranches();
+
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -54,10 +69,20 @@ namespace DFACore.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var applicants = _administrationRepository.GetAllApplicantRecord(sortOrder, searchString);
+            IQueryable<AdminApplicantRecordViewModel> applicants;
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            {
+                applicants = _administrationRepository.GetAllApplicantRecordByBranch(currentUser.BranchId, sortOrder, searchString);
+            }
+            else // (await _userManager.IsInRoleAsync(user, "Super Administrator"))
+            {
+                applicants = _administrationRepository.GetAllApplicantRecord(sortOrder, searchString);
+            }
 
             int pageSize = 10;
-            return View(await PaginatedList<ApplicantRecord>.CreateAsync(applicants, pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<AdminApplicantRecordViewModel>.CreateAsync(applicants, pageNumber ?? 1, pageSize));
 
             //return View(await applicants);
             //return View();
@@ -168,7 +193,7 @@ namespace DFACore.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Super Administrator")]
         [HttpGet]
         public IActionResult Register(string returnUrl = null)
         {
@@ -178,6 +203,7 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Super Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(AdminRegisterViewModel model, string returnUrl = null)
@@ -203,7 +229,7 @@ namespace DFACore.Controllers
                     CreatedDate = DateTime.Now,
                     EmailConfirmed = true,
                     BranchId = model.BranchId
-            };
+                };
 
                 // Store user data in AspNetUsers database table
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -263,14 +289,57 @@ namespace DFACore.Controllers
             return callbackUrl;
         }
 
+
         public async Task<ActionResult> Account()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var role = await _userManager.GetRolesAsync(user);
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            var accounts = _administrationRepository.AccountList();
+            List<AdminAccountViewModel> accounts;
+
+            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            {
+                accounts = _administrationRepository.AccountListByBranch(currentUser.BranchId);
+            }
+            else // (await _userManager.IsInRoleAsync(user, "Super Administrator"))
+            {
+                accounts = _administrationRepository.AccountList();
+            }
+
+
 
             return View(accounts);
+        }
+
+        public async Task<ActionResult> UserAccount(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            
+
+            //return View(accounts);
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var accounts = _administrationRepository.UserList(sortOrder, searchString);
+
+            int pageSize = 10;
+            return View(await PaginatedList<UserAccountViewModel>.CreateAsync(accounts, pageNumber ?? 1, pageSize));
+
+
         }
 
         public async Task<ActionResult> LogOff(string returnUrl = null)
@@ -305,6 +374,7 @@ namespace DFACore.Controllers
             return View(await PaginatedList<Branch>.CreateAsync(branches, pageNumber ?? 1, pageSize));
         }
 
+        [Authorize(Roles = "Super Administrator")]
         [HttpGet]
         public IActionResult EditBranch(long branchId)
         {
@@ -313,16 +383,437 @@ namespace DFACore.Controllers
             return View(branch);
         }
 
+        [Authorize(Roles = "Super Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditBranch(EditBranchViewModel branch)
         {
-            
+
             var result = await _administrationRepository.UpdateBranch(branch);
 
             return RedirectToAction("Branch");
+            //return View(result);
+        }
+
+
+        public async Task<IActionResult> Holiday(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString == "0" || searchString is null)
+            {
+                ViewData["CurrentValue"] = "Applied to All";
+            }
+            else
+            {
+                ViewData["CurrentValue"] = _administrationRepository.GetBranchName(Convert.ToInt64(searchString));
+            }
+
+            var holidays = _administrationRepository.GetHoliday(sortOrder, searchString);
+
+            int pageSize = 100;
+            return View(await PaginatedList<Holiday>.CreateAsync(holidays, pageNumber ?? 1, pageSize));
+        }
+
+        [HttpGet]
+        public IActionResult AddHoliday()
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddHoliday(Holiday holiday)
+        {
+            _administrationRepository.AddHoliday(holiday);
+            return RedirectToAction("Holiday");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteHoliday(long holidayId)
+        {
+            _administrationRepository.DeleteHoliday(holidayId);
+            return RedirectToAction("Holiday");
+        }
+
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> ActivityLog(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var activityLogs = _administrationRepository.GetActivityLogs(sortOrder, searchString);
+
+            int pageSize = 20;
+            return View(await PaginatedList<ActivityLog>.CreateAsync(activityLogs, pageNumber ?? 1, pageSize));
+        }
+
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult Price()
+        {
+            var result = _administrationRepository.GetPrice();
+            ViewData["UpdatePriceMessage"] = this.TempData["updatePriceTemp"];
             return View(result);
         }
 
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public IActionResult Price(Price price)
+        {
+            var result = _administrationRepository.UpdatePrice(price);
+            this.TempData["updatePriceTemp"] = "Price successfully saved.";
+            return RedirectToAction("Price");
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult Notice()
+        {
+            var result = _administrationRepository.GetNotice();
+            ViewData["UpdateNoticeMessage"] = this.TempData["updateNoticeTemp"];
+            return View(result);
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public IActionResult Notice(Notice notice)
+        {
+            var result = _administrationRepository.UpdateNotice(notice);
+            this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            return RedirectToAction("Notice");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Super Administrator, Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel(DateTime dateFrom, DateTime dateTo)
+        {
+            //return View();
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[14] {
+                                            new DataColumn("AppointmentCode"),
+                                            new DataColumn("ScheduleDate"),
+                                            new DataColumn("Email"),
+                                            new DataColumn("FirstName"),
+                                            new DataColumn("MiddleName"),
+                                            new DataColumn("LastName"),
+                                            new DataColumn("ContactNumber"),
+                                            new DataColumn("NameOfRepresentative"),
+                                            new DataColumn("RepresentativeContactNumber"),
+                                            new DataColumn("ConsularOffice"),
+                                            new DataColumn("Documents"),
+                                            new DataColumn("Quantity"),
+                                            new DataColumn("Transaction"),
+                                            new DataColumn("TotalDocuments")
+
+            });
+
+            IEnumerable<ExportTemplate> applicants;
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            {
+                applicants = _administrationRepository.ExportApplicantRecordByBranch(currentUser.BranchId.GetValueOrDefault(), dateFrom, dateTo);
+            }
+            else
+            {
+                applicants = _administrationRepository.ExportApplicantRecord(dateFrom, dateTo);
+            }
+
+            var sum = applicants.Sum(a => a.TotalDocuments);
+            //var ieInt = applicants.Select(a => Convert.ToInt32(a.Quantity.Split(System.Environment.NewLine)));
+            //var sum = ieInt.Sum();
+            foreach (var applicant in applicants)
+            {
+                dt.Rows.Add(
+                        applicant.AppointmentCode,
+                        applicant.ScheduleDate,
+                        applicant.Email,
+                        applicant.FirstName,
+                        applicant.MiddleName,
+                        applicant.LastName,
+                        applicant.ContactNumber,
+                        applicant.NameOfRepresentative,
+                        applicant.RepresentativeContactNumber,
+                        applicant.ConsularOffice,
+                        applicant.Documents,
+                        applicant.Quantity,
+                        applicant.Transaction,
+                        applicant.TotalDocuments
+                    );
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                var ws = wb.Worksheets.Add(dt);
+
+
+                //wb.Worksheets.Add(dt);
+                var x = dt.Rows.Count + 3;
+                ws.Cell($"M{x}").Value = "TOTAL DOCUMENTS";
+                ws.Cell($"N{x}").Value = $"{sum}";
+                ws.Cell($"M{x + 1}").Value = "APPLICANTS COUNT";
+                ws.Cell($"N{x + 1}").Value = $"{dt.Rows.Count}";
+
+                ws.Cell($"M{x}").Style.Font.Bold = true;
+                ws.Cell($"M{x + 1}").Style.Font.Bold = true;
+                ws.Cell($"N{x}").Style.Font.Bold = true;
+                ws.Cell($"N{x + 1}").Style.Font.Bold = true;
+                //for (int i = 1; i <= dt.Rows.Count + 1; i++)
+                //{
+                //    for (int j = 1; j <= dt.Columns.Count; j++)
+                //    {
+                //        ws.Cell(i, j).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+                //        ws.Cell(i, j).Style.Alignment.SetVertical(XLAlignmentVerticalValues.Top);
+                //        ws.Cell(i, j).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+                //    }
+                //}
+                ws.Columns().AdjustToContents();  // Adjust column width
+                ws.Rows().AdjustToContents();     // Adjust row heights
+                                                  //wb.Worksheets.FirstOrDefault().RightToLeft = true;
+                                                  //ws.Table(0).ShowAutoFilter = false;
+
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                }
+            }
+        }
+
+        [Authorize(Roles = "Super Administrator, Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ExportAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+           
+            var model = new ExportPDFViewModel();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            {
+                //todo
+                model.ExportTemplates = _administrationRepository.ExportApplicantRecordByBranch(currentUser.BranchId.GetValueOrDefault(), dateFrom, dateTo);
+            }
+            else
+            {
+                model.ExportTemplates = _administrationRepository.ExportAppointmentToPDF(branchId, dateFrom, dateTo);
+            }
+
+            var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+            //ViewBag.Sum = sum;
+
+            
+            model.From = dateFrom;
+            model.To = dateTo;
+            model.Sum = sum;
+
+            var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Landscape,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Right = 10,
+                    Left = 10
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/ExportPDF.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            //return pdfStream;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+        [Authorize(Roles = "Super Administrator, Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ExportAttendanceToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+
+            var model = new ExportPDFViewModel();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            {
+                //todo
+                model.ExportTemplates = _administrationRepository.ExportApplicantRecordByBranch(currentUser.BranchId.GetValueOrDefault(), dateFrom, dateTo);
+            }
+            else
+            {
+                model.ExportTemplates = _administrationRepository.ExportAttendanceToPDF(branchId, dateFrom, dateTo);
+            }
+
+            var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+            //ViewBag.Sum = sum;
+
+
+            model.From = dateFrom;
+            model.To = dateTo;
+            model.Sum = sum;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Landscape,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Right = 10,
+                    Left = 10
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var pdf = await _generatePdf.GetByteArray("Views/ExportAttendancePDF.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ExportLogsToPDF(DateTime dateFrom, DateTime dateTo)
+        {
+
+            var model = new ExportPDFViewModel();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            model.ActivityLogs = _administrationRepository.GetActivityLogs(dateFrom, dateTo).AsEnumerable();
+            
+
+            //var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+            //ViewBag.Sum = sum;
+
+
+            model.From = dateFrom;
+            model.To = dateTo;
+            //model.Sum = sum;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Landscape,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Right = 10,
+                    Left = 10
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var pdf = await _generatePdf.GetByteArray("Views/ExportLogs.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+        [HttpGet]
+        public IActionResult UploadImage()
+        {
+            ViewData["UploadImageMessage"] = this.TempData["UploadImageTemp"];
+            string wwwRootPath = _env.WebRootPath;
+            string path = Path.Combine(wwwRootPath + "/images/documents/");
+            ViewData["Path"] = path;
+            return View();
+        }
+
+
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadImage(ImageModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _env.WebRootPath;
+                string fileName = model.Name;
+
+                string path = Path.Combine(wwwRootPath + "/images/documents/", fileName);
+
+                try
+                {
+                    System.IO.File.Delete(path);
+                }
+                catch (Exception)
+                {
+
+                }
+
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await model.File.CopyToAsync(fileStream);
+                }
+                //model.File.SaveAs(path);
+
+                this.TempData["UploadImageTemp"] = $"{fileName} successfully update.";
+
+                return RedirectToAction("UploadImage");
+            }
+
+            return View();
+        }
     }
 }

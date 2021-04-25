@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.WebUtilities;
 using MimeKit;
 using NETCore.MailKit.Core;
+using Shyjus.BrowserDetection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +29,9 @@ namespace DFACore.Controllers
         private readonly IMessageService _messageService;
         private readonly IGeneratePdf _generatePdf;
         private readonly IWebHostEnvironment _env;
+        private readonly IActionContextAccessor _accessor;
+        private readonly IBrowserDetector _browserDetector;
+        private readonly ApplicantRecordRepository _applicantRepo;
 
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -34,7 +39,10 @@ namespace DFACore.Controllers
             GoogleCaptchaService googleCaptchaService,
             IMessageService messageService,
             IGeneratePdf generatePdf,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env,
+            IActionContextAccessor accessor,
+            IBrowserDetector browserDetector,
+            ApplicantRecordRepository applicantRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +51,9 @@ namespace DFACore.Controllers
             _messageService = messageService;
             _generatePdf = generatePdf;
             _env = env;
+            _accessor = accessor;
+            _browserDetector = browserDetector;
+            _applicantRepo = applicantRepo;
         }
 
         [AllowAnonymous]
@@ -195,12 +206,17 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl = null)
         {
+
             await LogOff();
             ViewBag.ReturnUrl = returnUrl;
+            ViewData["NoticeMessage"] = _applicantRepo.GetNotice();
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
             else
+            {
+                Log("Visited");
                 return View();
+            }
 
         }
 
@@ -214,11 +230,8 @@ namespace DFACore.Controllers
                 return View(model);
             }
 
-
             //var user = await _userManager.FindByEmailAsync(model.Email);
             var user = _userManager.Users.Where(a => a.Email == model.Email).FirstOrDefault();
-
-            
 
             //await _userManager.SetLockoutEnabledAsync(user, true);
             //await _userManager.SetLockoutEndDateAsync(user, DateTime.Today.AddYears(100));
@@ -265,18 +278,23 @@ namespace DFACore.Controllers
                 //}
                 //return View(model);
                 //return RedirectToAction("Index", "Home");
+                Log("Logged In", model.Email);
                 return RedirectToAction("ApplicantTypeSelection", "Home");
             }
 
             if (result.IsNotAllowed)
             {
+                Log("Logged In but email is not activated.", model.Email);
                 ViewBag.errorMessage = "You must have a confirmed email to log on. "
                               + "The confirmation token has been resent to your email account.";
                 return View("Error");
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                //return View("Lockout");
+                Log("Logged In but account is locked.", model.Email);
+                ModelState.AddModelError("", "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website.");
+                return View(model);
             }
             else if (result.RequiresTwoFactor)
             {
@@ -284,6 +302,7 @@ namespace DFACore.Controllers
             }
             else
             {
+                Log("Logged In but invalid username or password.", model.Email);
                 ModelState.AddModelError("", "Invalid username or password.");
                 return View(model);
             }
@@ -548,6 +567,25 @@ namespace DFACore.Controllers
             return RedirectToAction("Login");
         }
 
+        public void Log(string data, string email = null)
+        {
+            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
+            var browser = _browserDetector.Browser;
+            if (browser != null)
+            {
+                var activity = new ActivityLog
+                {
+                    CreatedDate = DateTime.Now,
+                    IpAddress = ip,
+                    Browser = $"{browser.Name} {browser.Version}",
+                    OS = browser.OS,
+                    DeviceType = browser.DeviceType,
+                    Remarks = data,
+                    Email = email
+                };
+                _applicantRepo.AddActivityLog(activity);
+            }
+        }
 
 
     }
