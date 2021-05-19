@@ -8,7 +8,7 @@ namespace DFACore.Models
     public class Price
     {
         public long Id { get; set; }
-        public int Expedite { get; set; }
-        public int Regular { get; set; }
+        public double Expedite { get; set; }
+        public double Regular { get; set; }
     }
 }

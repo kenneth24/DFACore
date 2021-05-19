@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using NETCore.MailKit.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Wkhtmltopdf.NetCore;
 
@@ -227,7 +230,7 @@ namespace DFACore.Controllers
                     Email = model.Email,
                     Type = 1,
                     CreatedDate = DateTime.Now,
-                    EmailConfirmed = true,
+                    //EmailConfirmed = false,
                     BranchId = model.BranchId
                 };
 
@@ -289,6 +292,62 @@ namespace DFACore.Controllers
             return callbackUrl;
         }
 
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return RedirectToPage("/ForgotPasswordConfirmation");
+                }
+
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Action(
+                    "ResetPassword",
+                    "Account",
+                    new { email = model.Email, code },
+                    protocol: Request.Scheme);
+
+                //var callbackUrl2 = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Scheme);
+
+                await _emailService.SendAsync(
+                    model.Email,
+                    "Reset Password",
+                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                //var attachment = new Attachment("test.pdf", await GeneratePDF(), new ContentType("application", "pdf"));
+
+                //await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password",
+                //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
+                //        attachment);
+
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+
+            return View();
+
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
 
         public async Task<ActionResult> Account()
         {
@@ -305,7 +364,7 @@ namespace DFACore.Controllers
                 accounts = _administrationRepository.AccountList();
             }
 
-
+            ViewData["UpdateAccountMessage"] = this.TempData["updateAccountTemp"];
 
             return View(accounts);
         }
@@ -340,6 +399,95 @@ namespace DFACore.Controllers
             return View(await PaginatedList<UserAccountViewModel>.CreateAsync(accounts, pageNumber ?? 1, pageSize));
 
 
+        }
+
+        public async Task<ActionResult> BlackList(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+
+
+            //return View(accounts);
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var accounts = _administrationRepository.Blacklist(sortOrder, searchString);
+
+            int pageSize = 10;
+            return View(await PaginatedList<UserAccountViewModel>.CreateAsync(accounts, pageNumber ?? 1, pageSize));
+
+
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> AddToBlackList(string userId)
+        {
+
+            var result = await _administrationRepository.AddToBlackList(userId);
+
+            return RedirectToAction("UserAccount");
+            //return View(result);
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult EditAccount(string userId)
+        {
+            var model = _administrationRepository.EditAccount(userId);
+            ViewBag.Roles = _roleManager.Roles;
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            var result = new UpdateAccountViewModel
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = model.LastName,
+                Suffix = model.Suffix,
+                PhoneNumber = model.PhoneNumber,
+                Gender = model.Gender,
+                DateOfBirth = model.DateOfBirth,
+                Email = model.Email
+            };
+
+            
+            return View(result);
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> EditAccount(UpdateAccountViewModel model)
+        {
+            // update to repo
+            //var result = await _userManager.UpdateAsync(user);
+            await _administrationRepository.EditAccount(model);
+            this.TempData["updateAccountTemp"] = "Account successfully saved.";
+            return RedirectToAction("Account");
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteAccount(string userId)
+        {
+
+            var result = await _administrationRepository.DeleteAccount(userId);
+
+            return RedirectToAction("Account");
+            //return View(result);
         }
 
         public async Task<ActionResult> LogOff(string returnUrl = null)
@@ -650,6 +798,7 @@ namespace DFACore.Controllers
             model.From = dateFrom;
             model.To = dateTo;
             model.Sum = sum;
+            model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
 
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
@@ -666,6 +815,7 @@ namespace DFACore.Controllers
                 }
             };
             _generatePdf.SetConvertOptions(options);
+            
 
             //var data = new TestData
             //{
@@ -699,13 +849,23 @@ namespace DFACore.Controllers
                 model.ExportTemplates = _administrationRepository.ExportAttendanceToPDF(branchId, dateFrom, dateTo);
             }
 
-            var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+
+            var count = model.ExportTemplates.Where(a => a.Attendance == "Yes").Count();
+
+
+            var sum = model.ExportTemplates.Where(a => a.Attendance == "Yes").Sum(a => a.TotalDocuments);
+            var totalSum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+
             //ViewBag.Sum = sum;
 
 
             model.From = dateFrom;
             model.To = dateTo;
+            model.Count = count;
             model.Sum = sum;
+            model.TotalSum = totalSum;
+            model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
+
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
             {
@@ -745,6 +905,7 @@ namespace DFACore.Controllers
 
             model.From = dateFrom;
             model.To = dateTo;
+            model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
             //model.Sum = sum;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
@@ -796,9 +957,10 @@ namespace DFACore.Controllers
                 {
                     System.IO.File.Delete(path);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
+                    ViewBag.errorMessage = e.Message;
+                    return View("Error");
                 }
 
 
@@ -808,7 +970,7 @@ namespace DFACore.Controllers
                 }
                 //model.File.SaveAs(path);
 
-                this.TempData["UploadImageTemp"] = $"{fileName} successfully update.";
+                this.TempData["UploadImageTemp"] = $"{fileName} successfully updated.";
 
                 return RedirectToAction("UploadImage");
             }

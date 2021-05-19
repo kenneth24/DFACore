@@ -1,6 +1,7 @@
 ﻿@model DFACore.Models.ExportPDFViewModel
 @{
     Layout = null;
+    int i = 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -47,13 +48,28 @@
     </style>
 </head>
 <body>
-    <p class="centerText">Department of Foreign Affairs<br>Authentication Division</p>
-    <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
-    <h3 class="centerText boldText">Summary of Web Logs</h3>
+
+    <table style="border:none;margin-bottom:20px;">
+        <tr>
+            <td style="width:30%; text-align:right; border:none;">
+                <img src="@Model.LogoPath" width="140" height="140" />
+            </td>
+            <td style="width:40%; border:none;">
+                <h4 class="centerText">Department of Foreign Affairs<br>Authentication Division</h4>
+                <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
+                <h3 class="centerText boldText">Summary of Web Logs</h3>
+
+            </td>
+            <td style="width:30%; border:none;">
+            </td>
+        </tr>
+    </table>
+
     <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
 
     <table>
         <tr>
+            <th>No.</th>
             <th>CreatedDate</th>
             <th>Email</th>
             <th>City</th>
@@ -67,10 +83,18 @@
         </tr>
         @foreach (var item in Model.ActivityLogs)
         {
+            i++;
             <tr>
+                <td>@i</td>
                 <td>@item.CreatedDate</td>
-
-                <td>@item.Email</td>
+                @if (!string.IsNullOrEmpty(item.Email))
+                {
+                    <td>@item.Email</td>
+                }
+                else
+                {
+                    <td>Email not available</td>
+                }
                 <td>@item.City</td>
                 <td>@item.Region</td>
                 <td>@item.Country</td>
@@ -84,7 +108,7 @@
 
     </table>
 
-    <h3 class="rightText boldText marginTop">TOTAL OF APPOINTMENT: @Model.ActivityLogs.Count()</h3>
+    <h3 class="rightText boldText marginTop">Total No. of Visits: @Model.ActivityLogs.Count()</h3>
 </body>
 </html>
 

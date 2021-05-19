@@ -12,5 +12,8 @@ namespace DFACore.Models
         public IEnumerable<ExportTemplate> ExportTemplates { get; set; }
         public IEnumerable<ActivityLog> ActivityLogs { get; set; }
         public int Sum { get; set; }
+        public int TotalSum { get; set; }
+        public int Count { get; set; }
+        public string LogoPath { get; set; }
     }
 }

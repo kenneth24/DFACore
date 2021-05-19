@@ -98,7 +98,7 @@
     .img-fluid {
         width: 100% !important;
     }
-/*    .modal-backdrop.fade {
+    /*    .modal-backdrop.fade {
         opacity: 0;
         filter: alpha(opacity=0);
     }
@@ -107,7 +107,7 @@
             opacity: 0.5;
             filter: alpha(opacity=50);
         }*/
-    
+
 </style>
 
 
@@ -153,7 +153,9 @@
                     <h5 style="        text-align: center;
         font-weight: bold;
         margin-bottom: 20px;
-">PLEASE SELECT THE SITE <br> WHERE YOU WISH TO APPLY FOR AN APOSTILLE</h5>
+">
+                        PLEASE SELECT THE SITE <br> WHERE YOU WISH TO APPLY FOR AN APOSTILLE
+                    </h5>
 
                     <div class="row justify-content-center">
                         <div class="col-10" style="padding:0">
@@ -187,24 +189,24 @@
                     </div>
 
                     @*<div class="row">
-                        <div class="col-md-2 col-sm-2">
+                            <div class="col-md-2 col-sm-2">
 
-                        </div>
-                        <div class="col-md-3 col-sm-3" style="margin-bottom: 10px;">
-                            <button id="backToApplicantType" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
-                        </div>
-                        <div class="col-md-2 col-sm-2">
+                            </div>
+                            <div class="col-md-3 col-sm-3" style="margin-bottom: 10px;">
+                                <button id="backToApplicantType" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
 
-                        </div>
-                        <div class="col-md-5 col-sm-5">
-                            <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Next</button>
-                        </div>
-                    </div>*@
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Next</button>
+                            </div>
+                        </div>*@
                     <div class="row justify-content-center">
                         <div class="col-10">
                             <a asp-action="ApplicantTypeSelection" asp-controller="Home" id="backToApplicantType" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</a>
                             <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;margin-top: 20px;">Next</button>
-                           
+
                         </div>
                     </div>
 
@@ -226,7 +228,7 @@
                         <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5: Apostille Application</p>
                         <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 3: Apostille Application</p>
                     </div>
-                    
+
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
 
                         <div class="form-group">
@@ -402,16 +404,16 @@
                         <div class="col-10">
                             <button id="stepOneBackBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</button>
                             <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;margin-top: 20px;">Next</button>
-                           
+
                         </div>
                     </div>
                     @*<div class="row" style="margin-top: 20px;">
-                        <div class="col-md-4 col-sm-12"></div>
-                        <div class="col-md-4 col-sm-12">
-                            <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
-                        </div>
-                        <div class="col-md-4 col-sm-12"></div>
-                    </div>*@
+                            <div class="col-md-4 col-sm-12"></div>
+                            <div class="col-md-4 col-sm-12">
+                                <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
+                            </div>
+                            <div class="col-md-4 col-sm-12"></div>
+                        </div>*@
 
 
 
@@ -422,7 +424,7 @@
             else
             {
                 @*<form method="post" id="application-form">*@
-                <div id="step-one-authorized" style="display:none"  class="tabcontent">
+                <div id="step-one-authorized" style="display:none" class="tabcontent">
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                         <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5: Apostille Application</p>
                     </div>
@@ -735,6 +737,7 @@
                     <p class="appointmentHeader">Processing Site</p>
                     <div class="font-weight-bold">
                         <span class="black-text" id="LblProcessingSite"></span>
+                        <span class="black-text" id="LblProcessingSiteAddress"></span>
                     </div>
                 </div>
             </div>
@@ -990,8 +993,10 @@
                     <div class="primary" style="padding: 10px;min-height: 85px;margin-bottom:10px;">
                         <p class="text-white">
                             <strong>INSTRUCTIONS</strong>: Select the type of Document then insert the number of document/s per transaction (REGULAR -
-                            3 working days, EXPEDITE - 1 working day). <span id="ExpiditeNotice">Please be advised that the EXPEDITE transaction is temporary unavailable for processing.
-                            Please check the DFA website www.dfa.gov.ph for further announcements.</span>
+                            3 working days, EXPEDITE - 1 working day). <span id="ExpiditeNotice">
+                                Please be advised that the EXPEDITE transaction is temporary unavailable for processing.
+                                Please check the DFA website www.dfa.gov.ph for further announcements.
+                            </span>
 
                         </p>
                     </div>
@@ -1902,7 +1907,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -1919,11 +1924,11 @@
                     <div id="nbiSampleCopy-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="img-fluid" src="~/images/documents/1 Sample NBI Sundry-1.jpg" alt="First slide">
+                                <img class="img-fluid" src="~/images/documents/1 Sample NBI Sundry-1.png" alt="First slide">
                                 <p class="text-center grey-text-bold">1 of 2</p>
                             </div>
                             <div class="carousel-item">
-                                <img class="img-fluid" src="~/images/documents/1 Sample NBI Sundry-2.jpg" alt="Second slide">
+                                <img class="img-fluid" src="~/images/documents/1 Sample NBI Sundry-2.png" alt="Second slide">
                                 <p class="text-center grey-text-bold">2 of 2</p>
                             </div>
                         </div>
@@ -1952,7 +1957,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Birth (Form 1A).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Birth (Form 1A).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -1965,7 +1970,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Death (Form 2A).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Death (Form 2A).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -1977,7 +1982,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Marriage (Form 3A).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/2 LCR copy of Marriage (Form 3A).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -1989,7 +1994,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/3a Sample CAV for Elementary and Highschool Level (Form-137 and Diploma).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/3a Sample CAV for Elementary and Highschool Level (Form-137 and Diploma).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2002,7 +2007,7 @@
                 </button>
                 <div class="modal-body">
 
-                    <img class="img-fluid" src="~/images/documents/3b Sample CAV for Technical and Vocational Courses (TOR and Diploma; National Certificate).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/3b Sample CAV for Technical and Vocational Courses (TOR and Diploma; National Certificate).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2015,7 +2020,7 @@
                 </button>
                 <div class="modal-body">
 
-                    <img class="img-fluid" src="~/images/documents/3c Sample CAV for State Colleges and Universities (TOR and Diploma).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/3c Sample CAV for State Colleges and Universities (TOR and Diploma).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2027,7 +2032,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/3d Sample CAV for Private or Local Colleges and Universities (TOR and Diploma).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/3d Sample CAV for Private or Local Colleges and Universities (TOR and Diploma).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2039,7 +2044,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/4 PRC Certified True Copy Stamp.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/4 PRC Certified True Copy Stamp.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2051,7 +2056,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/5 Sample DOH stamp.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/5 Sample DOH stamp.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2063,7 +2068,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/5 Sample DOH Certification.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/5 Sample DOH Certification.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2075,7 +2080,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/6 Sample CAAP Certification.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/6 Sample CAAP Certification.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2087,7 +2092,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/7 Sample LTO Certification.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/7 Sample LTO Certification.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2099,7 +2104,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/9 Sample Certificate of Authority for a Notarial Act (CANA).jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/9 Sample Certificate of Authority for a Notarial Act (CANA).png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2111,7 +2116,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/10 Court Document Certified True Copy Stamp.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/10 Court Document Certified True Copy Stamp.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2123,7 +2128,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/11 Sample Immigration Documents.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/11 Sample Immigration Documents.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2173,7 +2178,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/13 Sample PNP Certification.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/13 Sample PNP Certification.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2259,7 +2264,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <img class="img-fluid" src="~/images/documents/15 Sample Mayor's Certification.jpg" alt="First slide">
+                    <img class="img-fluid" src="~/images/documents/15 Sample Mayor's Certification.png" alt="First slide">
                 </div>
             </div>
         </div>
@@ -2450,7 +2455,7 @@
         }
 
         $("#site").on("change", function (branchName) {
-
+            $('#loading').show();
             var value = $(this).val().toLowerCase();
             $.ajax({
                     url: '@Url.Action("GetBranch")',
@@ -2459,7 +2464,7 @@
                     data: { branch: value },
                     success: function (result) {
                         branchId = result.id;
-                        console.log(result);
+                        //console.log(result);
                         $("#address").val(result.branchAddress);
                         $('#lblProcessingSiteAddress').html(result.branchAddress);
                         $('#lblProcessingSiteOfficeHours').html(result.officeHours);
@@ -2500,8 +2505,11 @@
                         $('#MapDiv').empty();
                         $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="' + result.mapAddress + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
                         //$('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=15&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+
+                        $('#loading').hide();
                     },
                     error: function () {
+                        $('#loading').hide();
                         alert('Something went wrong!');
                 },
             });
@@ -2938,6 +2946,7 @@
                 $('#Record_Fees').val(subtotal);
                 //$('#LblAppointmentCode').text('MNL-20200524');
                 $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
+                $('#LblProcessingSiteAddress').text($('#address').val());
                 console.log($("span[id^='LblPayment-']").text());
             });
 

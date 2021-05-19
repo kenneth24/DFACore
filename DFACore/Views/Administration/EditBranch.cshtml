@@ -25,25 +25,25 @@
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="BranchName"></label>
+                        <label class="black-text">Consular Office</label>
                         <label class="form-control black-text">@Model.BranchName</label>
                         <span asp-validation-for="BranchName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group black-text" hidden>
-                        <label class="black-text" asp-for="BranchName"></label>
+                        <label class="black-text">Consular Office</label>
                         <input asp-for="BranchName" class="form-control black-text" />
                         <span asp-validation-for="BranchName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="BranchAddress"></label>
+                        <label class="black-text">Address</label>
                         <input asp-for="BranchAddress" class="form-control black-text" />
                         <span asp-validation-for="BranchAddress" class="text-danger"></span>
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="ContactNumber"></label>
+                        <label class="black-text">Contact No.</label>
                         <input asp-for="ContactNumber" class="form-control black-text" />
                         <span asp-validation-for="ContactNumber" class="text-danger"></span>
                     </div>
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="OfficeHours"></label>
+                        <label class="black-text">Office Hours</label>
                         <input asp-for="OfficeHours" class="form-control black-text" />
                         <span asp-validation-for="OfficeHours" class="text-danger"></span>
                     </div>
@@ -69,13 +69,13 @@
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="MapAddress"></label>
+                        <label class="black-text">Map Address</label>
                         <input asp-for="MapAddress" class="form-control black-text" />
                         <span asp-validation-for="MapAddress" class="text-danger"></span>
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="IsActive" style="margin-right:10px;"></label>
+                        <label class="black-text" style="margin-right:10px;">Is Active</label>
                         <input asp-for="IsActive" style="transform: scale(1.5);" />
                         <span asp-validation-for="IsActive" class="text-danger"></span>
                     </div>
@@ -111,11 +111,11 @@
                         @Html.HiddenFor(model => model.ScheduleCapacities[i].BranchId)
                     }
 
-                    <p style="color:red">FOR TEMPORARY ONLY</p>
+                    <p style="font-weight:bold;">SET AVAILABLE DATES</p>
                     <div class="form-group black-text">
                         <div class="row">
                             <div class="col-md-3 col-sm-12">
-                                <p><span style="font-weight:bold">DateFrom:</span></p>
+                                <p><span style="font-weight:bold">From:</span></p>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <span style="font-weight:bold"></span> @Html.EditorFor(model => model.StartTime)
@@ -125,7 +125,7 @@
                     <div class="form-group black-text">
                         <div class="row">
                             <div class="col-md-3 col-sm-12">
-                                <p><span style="font-weight:bold">DateTo:</span></p>
+                                <p><span style="font-weight:bold">To:</span></p>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <span style="font-weight:bold"></span> @Html.EditorFor(model => model.EndTime)
@@ -134,7 +134,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Branch", "Administration")</button></div>
+                        <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Branch", "Administration", null, new { @style = "color:white;" })</button></div>
                         <div class="col-md-2 col-sm-2">
                         </div>
                         <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Update</button></div>

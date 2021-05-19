@@ -50,13 +50,25 @@ namespace DFACore
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddSession(options => {
+            //services.AddSession(options =>
+            //{
             //    options.IdleTimeout = TimeSpan.FromSeconds(3600);
+            //});
+
+            //services.AddDistributedMemoryCache();
+
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
             //});
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Administration/AccessDenied");
+                //options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
+                //options.SlidingExpiration = true;
             });
 
             services.AddControllersWithViews();
@@ -110,6 +122,7 @@ namespace DFACore
 
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseSession();
 
 
 

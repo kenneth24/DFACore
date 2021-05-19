@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-12">
-        <a class="btn btn-primary pull-right" asp-action="Register">Create New</a>
+        <a class="btn btn-primary pull-right" asp-action="Register">Create Admin Account</a>
         @if (User.IsInRole("Super Administrator"))
         {
             <a class="btn btn-primary pull-right" asp-action="UserAccount" style="margin-right:10px;">View Users</a>
@@ -19,7 +19,7 @@
 
     </div>
 </div>
-        
+
 
 
 <table class="table" style="font-size:12px;margin-top:10px;">
@@ -68,10 +68,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Roles)
                 </td>
-                <td>
-                    <a asp-action="EditAccount" asp-route-userId="@item.Id">Edit</a> |
-                    <a asp-action="DeleteAccount" asp-route-branchId="@item.Id">Delete</a>
-                </td>
+                @if (item.Roles != "Super Administrator")
+                {
+                    <td>
+                        <a asp-action="EditAccount" asp-route-userId="@item.Id">Edit</a> | 
+                        <a asp-action="DeleteAccount" asp-route-userId="@item.Id">Delete</a>
+                    </td>
+
+                }
+
             </tr>
         }
     </tbody>

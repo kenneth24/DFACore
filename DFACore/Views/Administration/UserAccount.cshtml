@@ -10,6 +10,7 @@
 <h3 style="margin-top:50px;">Users</h3>
 
 <div>
+    <a asp-action="BlackList" class="btn btn-primary pull-right">View BlackListed Users</a>
 
     <form asp-action="UserAccount" method="get" style="margin-bottom:20px;">
         <div class="form-row align-items-center">
@@ -72,6 +73,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    <a asp-action="AddToBlackList" asp-route-userId="@item.Id">Add to Blacklist</a>
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Branch)

@@ -8,6 +8,7 @@ namespace DFACore.Models
 {
     public class AdminRegisterViewModel
     {
+        public string Id { get; set; }
         [Required]
         [StringLength(100)]
         [Display(Name = "First Name")]

@@ -75,21 +75,22 @@
                     <table style="width:100%">
                         <tbody>
                             <tr>
-                                <td>
+                                <td style="vertical-align:top;">
                                     <span class="appointMentTable">Appointment Code</span><br />
                                     <span class="appointMentValue">@Model.ApplicationCode</span>
                                 </td>
-                                <td>
+                                <td style="vertical-align:top;">
                                     <span class="appointMentTable">Appointment Date</span><br />
                                     <span class="appointMentValue">@sched.ToString("MMMM dd, yyyy")</span>
                                 </td>
-                                <td>
+                                <td style="vertical-align:top;">
                                     <span class="appointMentTable">Time</span><br />
                                     <span class="appointMentValue">@sched.ToString("hh:mm tt")</span>
                                 </td>
-                                <td>
+                                <td width="350">
                                     <span class="appointMentTable">Processing Site</span><br />
-                                    <span class="appointMentValue">@Model.ProcessingSite</span>
+                                    <span class="appointMentValue">@Model.ProcessingSite</span><br />
+                                    <span class="appointMentTable">@Model.ProcessingSiteAddress</span>
                                 </td>
                             </tr>
                         </tbody>

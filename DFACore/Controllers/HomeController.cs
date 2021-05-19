@@ -106,8 +106,8 @@ namespace DFACore.Controllers
 
             var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
 
-         
 
+            var total = 0;
             if (model.Records == null)
             {
                 //if (model.Record.ApostileData == "[]")
@@ -153,6 +153,8 @@ namespace DFACore.Controllers
                 //{
                 //    return RedirectToAction("Error");
                 //}
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+                total = data.Sum(a => a.Quantity);
 
             }
             else
@@ -205,6 +207,9 @@ namespace DFACore.Controllers
                         generatePowerOfAttorney = true;
                     else
                         generateAuthLetter = true;
+
+                    var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+                    total += data.Sum(a => a.Quantity);
                 }
 
 
@@ -212,7 +217,7 @@ namespace DFACore.Controllers
 
             };
 
-            var validate = ValidateScheduleDate3(model.ScheduleDate, 0, branch.Id);
+            var validate = ValidateScheduleDate3(model.ScheduleDate, total, branch.Id);
             if (!validate)
             {
                 ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";

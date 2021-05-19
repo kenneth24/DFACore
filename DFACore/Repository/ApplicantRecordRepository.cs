@@ -206,9 +206,9 @@ namespace DFACore.Repository
                 return false;
             }
 
-            var totalCount = 0;
-            var applicantRecords = _context.ApplicantRecords.Where(a => a.ScheduleDate == date && a.BranchId == branchId).ToList();
-            if (applicantRecords.Count != 0)
+            var totalCount = applicationCount;
+            var applicantRecords = _context.ApplicantRecords.Where(a => a.BranchId == branchId && a.ScheduleDate == date).AsEnumerable();
+            if (applicantRecords.Count() != 0)
             {
                 foreach (var applicantRecord in applicantRecords)
                 {
@@ -251,7 +251,7 @@ namespace DFACore.Repository
 
             if (scheduleCapacity != null)
             {
-                if (totalCount >= scheduleCapacity.Capacity)
+                if (totalCount > scheduleCapacity.Capacity)
                     return false;
                 else
                     return true;
@@ -284,7 +284,14 @@ namespace DFACore.Repository
             {
                 if (range.StartTime != null)
                 {
-                    start = range.StartTime;
+                    if (range.StartTime < now)
+                    {
+                        start = now;
+                    }
+                    else
+                    {
+                        start = range.StartTime;
+                    }
                 }
                 else
                 {
@@ -361,14 +368,14 @@ namespace DFACore.Repository
                 "from " +
                 "(select Id, ScheduleDate, ApostileData " +
                 "from ApplicantRecords " +
-                "where CAST(ScheduleDate as Date) >= {0} and BranchId={1}) ApplicantRecords " +
+                "where BranchId={1} and CAST(ScheduleDate as Date) >= {0}) ApplicantRecords " +
                 "CROSS APPLY OPENJSON (ApostileData) " +
                 "WITH " +
                 "(Quantity int) " +
                 "AS dataCount " +
                 "group by " +
                 "CAST(ScheduleDate as Date)) a " +
-                "where a.DocuCount >= {2}", DateTime.Now.Date, branchId, limitPerDay).ToList();
+                "where a.DocuCount >= {2}", DateTime.Now.Date, branchId, limitPerDay).AsEnumerable();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 

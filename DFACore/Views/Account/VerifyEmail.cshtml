@@ -23,9 +23,11 @@
                     <span style="font-weight:bold">REMINDER:</span> Please check you inbox, spam or other folder to view the verification link
                 </p>
                 <p>
-                    If you do not receive it in 2 minutes, click <a href="/Account/ResendEmail?email=@ViewData["Email"]" style="color:#217ff3">SEND AGAIN</a>
+                    If you do not receive it in 2 minutes, click <a asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color:#217ff3">SEND AGAIN</a>
                     @ViewData["Email"]
                 </p>
+
+                @*href="/Account/ResendEmail?email=@ViewData["Email"]"*@
 
 
                 @*<div class="row">

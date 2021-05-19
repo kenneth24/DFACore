@@ -33,6 +33,7 @@ namespace DFACore.Repository
                                  RepresentativeContactNumber = ar.RepresentativeContactNumber,
                                  ProcessingSite = ar.ProcessingSite,
                                  ApostileData = ar.ApostileData,
+                                 CountryDestination = ar.CountryDestination,
                                  Email = u.Email,
                              };
             if (!String.IsNullOrEmpty(searchString))
@@ -79,6 +80,7 @@ namespace DFACore.Repository
                                  RepresentativeContactNumber = ar.RepresentativeContactNumber,
                                  ProcessingSite = ar.ProcessingSite,
                                  ApostileData = ar.ApostileData,
+                                 CountryDestination = ar.CountryDestination,
                                  Email = u.Email,
                              };
             if (!String.IsNullOrEmpty(searchString))
@@ -220,7 +222,7 @@ namespace DFACore.Repository
             var raw = _context.Set<UserAccountViewModel>().FromSqlRaw(
                 "select u.Id, u.Email, u.FirstName, u.MiddleName, u.LastName, u.Suffix, u.Gender, " +
                 "u.DateOfBirth, u.CreatedDate from AspNetUsers u " +
-                "where u.Type = 0");
+                "where u.Type = 0 and u.LockoutEnd is null");
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -242,6 +244,107 @@ namespace DFACore.Repository
 
             //var result = raw.Select(a => a.ScheduleDate).ToList();
             return result;
+        }
+
+        public IQueryable<UserAccountViewModel> Blacklist(string sortOrder, string searchString)
+        {
+            var raw = _context.Set<UserAccountViewModel>().FromSqlRaw(
+                "select u.Id, u.Email, u.FirstName, u.MiddleName, u.LastName, u.Suffix, u.Gender, " +
+                "u.DateOfBirth, u.CreatedDate from AspNetUsers u " +
+                "where u.Type = 0 and u.LockoutEnd is not null");
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                raw = raw.Where(s => s.Email.Contains(searchString)
+                                || s.FirstName.Contains(searchString)
+                                || s.LastName.Contains(searchString));
+
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    raw = raw.OrderByDescending(s => s.Id);
+                    break;
+                default:
+                    raw = raw.OrderByDescending(s => s.CreatedDate);
+                    break;
+            }
+            var result = raw.AsNoTracking();
+
+            //var result = raw.Select(a => a.ScheduleDate).ToList();
+            return result;
+        }
+
+        public async Task<bool> AddToBlackList(string userId)
+        {
+            try
+            {
+                var user = _context.Users.Where(a => a.Id == userId).FirstOrDefault();
+
+                user.LockoutEnd = DateTime.Now.AddYears(50);
+
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Exception("Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+
+        }
+
+        public ApplicationUser EditAccount(string userId)
+        {
+            try
+            {
+                var user = _context.Users.Where(a => a.Id == userId).AsNoTracking().FirstOrDefault();
+                return user;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Exception("Unable to delete. Try again, and if the problem persists, see your system administrator.");
+            }
+        }
+
+        public async Task<UpdateAccountViewModel> EditAccount(UpdateAccountViewModel model)
+        {
+            try
+            {
+                var raw = _context.Users.Where(a => a.Id == model.Id).FirstOrDefault();
+
+                raw.FirstName = model.FirstName;
+                raw.MiddleName = model.MiddleName;
+                raw.LastName = model.LastName;
+                raw.Suffix = model.Suffix;
+                raw.PhoneNumber = model.PhoneNumber;
+                raw.Gender = model.Gender;
+                raw.DateOfBirth = model.DateOfBirth;
+                
+                _context.Users.Update(raw);
+                await _context.SaveChangesAsync();
+                return model;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Exception("Unable to delete. Try again, and if the problem persists, see your system administrator.");
+            }
+        }
+
+        public async Task<bool> DeleteAccount(string userId)
+        {
+            try
+            {
+                var user = _context.Users.Where(a => a.Id == userId).AsNoTracking().FirstOrDefault();
+
+                _context.Users.Remove(user);
+
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                throw new Exception("Unable to delete. Try again, and if the problem persists, see your system administrator.");
+            }
         }
 
         public List<AdminAccountViewModel> AccountListByBranch(long? branchId)
@@ -329,7 +432,7 @@ namespace DFACore.Repository
 
         public IQueryable<ActivityLog> GetActivityLogs(DateTime dateFrom, DateTime dateTo)
         {
-            dateTo.AddDays(1);
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
             var activityLogs = from s in _context.ActivityLogs
                                where s.UserId != "1" && (s.CreatedDate >= dateFrom && s.CreatedDate < dateTo)
                                select s;
@@ -375,7 +478,7 @@ namespace DFACore.Repository
 
         public IEnumerable<ExportTemplate> ExportApplicantRecord(DateTime dateFrom, DateTime dateTo)
         {
-            dateTo.AddDays(1);
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
 
             var raw = from ar in _context.ApplicantRecords where ar.ScheduleDate >= dateFrom && ar.ScheduleDate < dateTo
                              join u in _context.Users on ar.CreatedBy.ToString() equals u.Id
@@ -422,7 +525,7 @@ namespace DFACore.Repository
 
         public IEnumerable<ExportTemplate> ExportApplicantRecordByBranch(long branchId, DateTime dateFrom, DateTime dateTo)
         {
-            dateTo.AddDays(1);
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
 
             var raw = from ar in _context.ApplicantRecords
                       where ar.BranchId == branchId && (ar.ScheduleDate >= dateFrom && ar.ScheduleDate < dateTo)
@@ -467,7 +570,7 @@ namespace DFACore.Repository
         }
         public IEnumerable<ExportTemplate> ExportAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
         {
-            dateTo.AddDays(1);
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
             IQueryable<AdminApplicantRecordViewModel> raw;
 
             if (branchId == default)
@@ -544,7 +647,7 @@ namespace DFACore.Repository
 
         public IEnumerable<ExportTemplate> ExportAttendanceToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
         {
-            dateTo.AddDays(1);
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
 
             IQueryable<AdminApplicantRecordViewModel> raw;
 

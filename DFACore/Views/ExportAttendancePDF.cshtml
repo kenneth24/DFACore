@@ -1,6 +1,7 @@
 ﻿@model DFACore.Models.ExportPDFViewModel
 @{
     Layout = null;
+    int i = 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -47,13 +48,33 @@
     </style>
 </head>
 <body>
-    <p class="centerText">Department of Foreign Affairs<br>Authentication Division</p>
-    <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
-    <h3 class="centerText boldText">Summary of Attendance</h3>
-    <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
 
+    <table style="border:none;margin-bottom:20px;">
+
+        <tr>
+
+            <td style="width:30%; text-align:right; border:none;">
+                <img src="@Model.LogoPath" width="140" height="140" />
+            </td>
+            <td style="width:40%; border:none;">
+                <h4 class="centerText">Department of Foreign Affairs<br>Authentication Division</h4>
+                <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
+                <h3 class="centerText boldText">Summary of Attendance</h3>
+
+            </td>
+            <td style="width:30%; border:none;">
+            </td>
+
+        </tr>
+
+
+    </table>
+
+
+    <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
     <table>
         <tr>
+            <th>No.</th>
             <th>Appointment Code</th>
             <th>Schedule</th>
             <th>Time</th>
@@ -71,7 +92,9 @@
         </tr>
         @foreach (var item in Model.ExportTemplates)
         {
+            i++;
             <tr>
+                <td>@i</td>
                 <td>@item.AppointmentCode</td>
                 <td>@item.ScheduleDate.ToString("MM/dd/yyy")</td>
                 <td>@item.ScheduleDate.ToString("hh:mm tt")</td>
@@ -92,8 +115,8 @@
 
     </table>
 
-    <h3 class="rightText marginTop boldText">TOTAL OF DOCUMENTS: @Model.Sum</h3>
-    <h3 class="rightText boldText">TOTAL OF APPOINTMENT: @Model.ExportTemplates.Count()</h3>
+    <h3 class="rightText marginTop boldText">Total No. of Documents: @Model.Sum/@Model.TotalSum</h3>
+    <h3 class="rightText boldText">Total No. of Attendance: @Model.Count/@Model.ExportTemplates.Count()</h3>
 </body>
 </html>
 

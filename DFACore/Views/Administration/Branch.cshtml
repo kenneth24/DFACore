@@ -68,8 +68,9 @@
                 @item.HasExpidite
             </td>
             <td>
-                <a asp-action="EditBranch" asp-route-branchId="@item.Id">Edit</a> |
-                <a asp-action="DeleteBranch" asp-route-branchId="@item.Id">Delete</a>
+                <a asp-action="EditBranch" asp-route-branchId="@item.Id">Edit</a> 
+                
+                @*<a asp-action="DeleteBranch" asp-route-branchId="@item.Id">Delete</a>*@
             </td>
         </tr>
         }

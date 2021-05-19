@@ -6,54 +6,54 @@
 }
 <style>
 
-        .navbar-toggler {
-            display: none
-        }
+    .navbar-toggler {
+        display: none
+    }
 
-        @@media screen and (min-width: 601px) {
-            /*      .form-group {
+    @@media screen and (min-width: 601px) {
+        /*      .form-group {
                 padding-left: 100px;
                 padding-right: 100px;
             }*/
-            #dfa-title {
-                margin-top: 100px !important;
-            }
-
-            .loginTitleVisible2 {
-                display: none;
-            }
+        #dfa-title {
+            margin-top: 100px !important;
         }
 
-        /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-        @@media screen and (max-width: 600px) {
-            #dfa-title {
-                margin-top: 40px !important;
-            }
+        .loginTitleVisible2 {
+            display: none;
+        }
+    }
 
-            .loginTitleVisible {
-                display: none;
-            }
-
-            .bannerDetails {
-                font-size: 12px;
-            }
+    /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+    @@media screen and (max-width: 600px) {
+        #dfa-title {
+            margin-top: 40px !important;
         }
 
-        .no-border {
-            border: 0;
-            box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+        .loginTitleVisible {
+            display: none;
         }
 
-        .loginTitle {
-            font-family: 'BEBAS' !important;
+        .bannerDetails {
+            font-size: 12px;
         }
+    }
 
-        /*@@media only screen and (max-width: 600px) {
+    .no-border {
+        border: 0;
+        box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    }
+
+    .loginTitle {
+        font-family: 'BEBAS' !important;
+    }
+
+    /*@@media only screen and (max-width: 600px) {
             #BannerLogo {
                 display: none;
             }
         }*/
-        /*#terms-and-conditions-modal {
+    /*#terms-and-conditions-modal {
             margin-top: 10vh !important;
         }
 
@@ -61,13 +61,14 @@
             margin-top: 10vh !important;
         }*/
 
-        button a {
-            color: white;
-        }
-        .validation-summary-errors ul {
-           list-style: none;
-           margin-left:-14px;
-        }
+    button a {
+        color: white;
+    }
+
+    .validation-summary-errors ul {
+        list-style: none;
+        margin-left: -14px;
+    }
 </style>
 <div id="dfa-title" class="jumbotron pageContainers" style="background-color: white;">
     <h5 class="text-center bannerDetails black-text">WELCOME TO</h5>
@@ -82,8 +83,8 @@
         <section class="loginSection" style="height:auto;margin-top: -55px;">
             <form id="account" method="post" asp-action="login" asp-controller="account">
                 @*<div style="background-color: #217ff3;color: white;height: 35px;">
-                    <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
-                </div>*@
+                        <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
+                    </div>*@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div style="padding:10px">
                     <div class="form-group col-md-12 col-sm-12">
@@ -120,7 +121,7 @@
                         </p>
 
                         <button id="btnVideo" type="button" class="btn btn-outline-primary" style="font-size:12px;font-weight:bold;">CLICK HERE TO WATCH INSTRUCTIONAL VIDEO</button>
-                     
+
                     </div>
 
                 </div>
@@ -134,7 +135,7 @@
     <div class="col-md-3 col-sm-0">
     </div>
 
-    
+
 </div>
 <div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -236,11 +237,11 @@
                         grounds for refusal / cancellation / forfeiture of authentication / Apostille application.
                     </p>
                     @*<p class="black-text" style="font-size:14px;">
-                        All fees are non-refundable. Fees shall be forfeited for applicants who fail to show up on their
-                        confirmed appointment, applicants who cancel their appointment, applicants whose application
-                        was rejected due to inconsistency and/or incorrect information, and applicants who present
-                        discrepant, fake or spurious documents.
-                    </p>*@
+                            All fees are non-refundable. Fees shall be forfeited for applicants who fail to show up on their
+                            confirmed appointment, applicants who cancel their appointment, applicants whose application
+                            was rejected due to inconsistency and/or incorrect information, and applicants who present
+                            discrepant, fake or spurious documents.
+                        </p>*@
                     <p class="black-text-bold" style="font-size:14px;">
                         <i>
                             By proceeding with this application, I understand that I am signifying my
@@ -268,36 +269,40 @@
     </div>
 </div>
 
-<div id="announcement" class="modal" tabindex="-1" role="dialog" style="padding-right:0!important;">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" style="font-weight:bold;margin:auto;">NOTICE TO THE PUBLIC</h5>
-        
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12 ">
-                    @Html.Raw(@announcement.NoticeMessage)
-                    
-                    
+@if (announcement != null)
+{
+    <div id="announcement" class="modal" tabindex="-1" role="dialog" style="padding-right:0!important;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:bold;margin:auto;">NOTICE TO THE PUBLIC</h5>
+
                 </div>
+                <div class="modal-body">
+                    <div class="col-md-12 ">
 
+                        @Html.Raw(@announcement.NoticeMessage)
 
-            </div>
-            <div class="container" style="padding:10px">
-                <hr />
-                <div class="row ">
-                    <div class="col-md-3 col-sm-5"> </div>
-                    <div class="col-md-6 col-sm-12">
-                        <button style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">Close</button>
                     </div>
-                    <div class="col-md-3 col-sm-5"></div>
+
+
                 </div>
+                <div class="container" style="padding:10px">
+                    <hr />
+                    <div class="row ">
+                        <div class="col-md-3 col-sm-5"> </div>
+                        <div class="col-md-6 col-sm-12">
+                            <button style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col-md-3 col-sm-5"></div>
+                    </div>
+                </div>
+
             </div>
-            
         </div>
     </div>
-</div>
+}
+
 
 <div id="video-modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -305,8 +310,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" style="font-weight:bold;margin:auto;">INSTRUCTIONAL VIDEO</h5>
                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>*@
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
             </div>
             <div class="modal-body">
                 <label>Language</label>
@@ -337,15 +342,15 @@
                 </div>
             </div>
             @*<div class="modal-footer">
-                <div class="row ">
-                    <div class="col-md-3 col-sm-5"> </div>
-                    <div class="col-md-6 col-sm-12">
-                        <button style="width:100%" type="button" class="button-primary text-white" data-dismiss="modal">Close</button>
+                    <div class="row ">
+                        <div class="col-md-3 col-sm-5"> </div>
+                        <div class="col-md-6 col-sm-12">
+                            <button style="width:100%" type="button" class="button-primary text-white" data-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col-md-3 col-sm-5"></div>
                     </div>
-                    <div class="col-md-3 col-sm-5"></div>
-                </div>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>*@
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>*@
         </div>
     </div>
 </div>

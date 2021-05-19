@@ -40,6 +40,14 @@ namespace DFACore.Data
                 e.ToView(null);
             });
 
+            //NOTE: I manually add index in ApplicantRecords table
+            //create index IX_ApplicantRecords_Branchid_Scheduledate
+            //on ApplicantRecords(branchid, scheduledate);
+
+            //builder.Entity<ApplicantRecord>()
+            //    .HasIndex(u => new { u.BranchId, u.ScheduleDate })
+            //    .IsClustered(false);
+
             builder.Entity<AdminAccountViewModel>(e =>
             {
                 e.HasNoKey();
