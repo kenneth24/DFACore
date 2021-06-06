@@ -72,8 +72,8 @@ namespace DFACore.Controllers
                 applicantsCount = 10;
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
-            var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
-            ViewData["AvailableDates"] = stringify;
+            //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
+            ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             ViewData["ApplicantCount"] = applicantsCount;

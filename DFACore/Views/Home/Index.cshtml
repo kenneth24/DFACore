@@ -2413,108 +2413,9 @@
         var expeditePrice = 0;
         var regularPrice = 0;
 
-        function onSubmit() {
-            console.log('onsubmit');
-            var valid = false;
-            var x = $.ajax({
-                    url: '@Url.Action("ValidateScheduleDate2")',
-                    type: 'GET',
-                    contentType: 'application/json; charset=utf-8',
-                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
-                    success: function (result) {
-                        console.log('success');
-                        if (result) {
-                            valid = true;
-                        }
-                        else {
-                            valid = false;
-                            $('#onSubmit-modal').modal({
-                                backdrop: 'static',
-                                keyboard: false,
-                                show: true
-                            });
-                        }
-                    },
-                    error: function () {
-                        valid =  false;
-                        alert('Something went wrong!');
-                },
-                async: false
 
-            });
-            console.log(valid);
-            return valid;
-            //if (valid) {
-            //    alert('True: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
-            //    return true;
-            //}
-            //else {
-            //    alert('False: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
-            //    return true;
-            //}
-        }
 
-        $("#site").on("change", function (branchName) {
-            $('#loading').show();
-            var value = $(this).val().toLowerCase();
-            $.ajax({
-                    url: '@Url.Action("GetBranch")',
-                    type: 'GET',
-                    contentType: 'application/json; charset=utf-8',
-                    data: { branch: value },
-                    success: function (result) {
-                        branchId = result.id;
-                        //console.log(result);
-                        $("#address").val(result.branchAddress);
-                        $('#lblProcessingSiteAddress').html(result.branchAddress);
-                        $('#lblProcessingSiteOfficeHours').html(result.officeHours);
-                        $('#lblProcessingSiteContactNumber').html(result.contactNumber);
-                        $('#lblProcessingSiteEmail').html(result.email);
-                        calendar.removeAllEvents();
-                        calendar.addEventSource(JSON.parse(result.availableDates));
-                        calendar.refetchEvents();
-                        $('#AvailableTime').empty();
-                        $(result.availableHours).each(function (i, elem) {
-                            $('#AvailableTime').append('<label class="black-text"><input type="radio" class="option1" name="option1" value="' + elem.value + '" /> ' + elem.caption + ' </label>')
-                        });
-                        $("#AvailableTime input:radio:first").attr('checked', true);
-                        $('#appointmentScheduleTime').text($('input[name="option1"]:checked').val());
-                        canConfirm = false;
-                        $('#selectTimeContainer').css('z-index', '-1');
-                        $('#selectTimeContainer').css('opacity', '0.5');
-                        $('#appointmentSchedule').val("");
-                        $('#availableSchedMessage').hide();
-                        $('#unAvailableSchedMessage').hide();
-                        $('#siteAndNameAddress').text(result.branchName);
-                        $('#siteAndAddress').text(result.branchAddress);
-                        isBranchHasExpidite = result.hasExpidite;
-                        $('.form-check-input').prop("checked", false);
-                        $('.transactionQuantity').val('');
-                        $('.transactionQuantity').attr("disabled", true);
-                        $("#documentsTable tbody > tr").empty();
-                        $('#apostileData').val('');
-                        if (result.hasExpidite) {
-                            $('#ExpiditeNotice').hide();
-                        }
-                        else {
-                            $('#ExpiditeNotice').show();
-                        }
 
-                        //$('#gmap_canvas').attr('src', 'https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed');
-                        //document.getElementById('gmap_canvas').src = document.getElementById('gmap_canvas').src
-                        $('#MapDiv').empty();
-                        $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="' + result.mapAddress + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
-                        //$('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=15&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
-
-                        $('#loading').hide();
-                    },
-                    error: function () {
-                        $('#loading').hide();
-                        alert('Something went wrong!');
-                },
-            });
-            //alert(value);
-        });
 
 
 
@@ -2530,6 +2431,111 @@
             branchId = @defaultBranch.Id;
             expeditePrice = @price.Expedite;
             regularPrice = @price.Regular;
+
+            $("#site").on("change", function (branchName) {
+                $('#loading').show();
+                var value = $(this).val().toLowerCase();
+                $.ajax({
+                        url: '@Url.Action("GetBranch")',
+                        method: 'GET',
+                        cache: false,
+                        contentType: 'application/json; charset=utf-8',
+                        data: { branch: value },
+                        success: function (result) {
+                            branchId = result.id;
+                            //console.log(result);
+                            $("#address").val(result.branchAddress);
+                            $('#lblProcessingSiteAddress').html(result.branchAddress);
+                            $('#lblProcessingSiteOfficeHours').html(result.officeHours);
+                            $('#lblProcessingSiteContactNumber').html(result.contactNumber);
+                            $('#lblProcessingSiteEmail').html(result.email);
+                            calendar.removeAllEvents();
+                            calendar.addEventSource(JSON.parse(result.availableDates));
+                            calendar.refetchEvents();
+                            $('#AvailableTime').empty();
+                            $(result.availableHours).each(function (i, elem) {
+                                $('#AvailableTime').append('<label class="black-text"><input type="radio" class="option1" name="option1" value="' + elem.value + '" /> ' + elem.caption + ' </label>')
+                            });
+                            $("#AvailableTime input:radio:first").attr('checked', true);
+                            $('#appointmentScheduleTime').text($('input[name="option1"]:checked').val());
+                            canConfirm = false;
+                            $('#selectTimeContainer').css('z-index', '-1');
+                            $('#selectTimeContainer').css('opacity', '0.5');
+                            $('#appointmentSchedule').val("");
+                            $('#availableSchedMessage').hide();
+                            $('#unAvailableSchedMessage').hide();
+                            $('#siteAndNameAddress').text(result.branchName);
+                            $('#siteAndAddress').text(result.branchAddress);
+                            isBranchHasExpidite = result.hasExpidite;
+                            $('.form-check-input').prop("checked", false);
+                            $('.transactionQuantity').val('');
+                            $('.transactionQuantity').attr("disabled", true);
+                            $("#documentsTable tbody > tr").empty();
+                            $('#apostileData').val('');
+                            if (result.hasExpidite) {
+                                $('#ExpiditeNotice').hide();
+                            }
+                            else {
+                                $('#ExpiditeNotice').show();
+                            }
+
+                            //$('#gmap_canvas').attr('src', 'https://maps.google.com/maps?q=' + 'Department+of+Foreign+Affairs+–+NCR-East' + '&t=&z=18&ie=UTF8&iwloc=&output=embed');
+                            //document.getElementById('gmap_canvas').src = document.getElementById('gmap_canvas').src
+                            $('#MapDiv').empty();
+                            $('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="' + result.mapAddress + '" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+                            //$('#MapDiv').append('<iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=' + result.mapAddress + '&t=&z=15&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe >')
+
+                            $('#loading').hide();
+                        },
+                        error: function () {
+                            $('#loading').hide();
+                            alert('CODE: 0001 - Something went wrong!');
+                    },
+                });
+            });
+
+            function onSubmit() {
+                $('#loading').show();
+                var valid = false;
+                var x = $.ajax({
+                        url: '@Url.Action("ValidateScheduleDate2")',
+                        method: 'GET',
+                        cache: false,
+                        contentType: 'application/json; charset=utf-8',
+                        data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
+                        success: function (result) {
+                            console.log('success');
+                            if (result) {
+                                valid = true;
+                            }
+                            else {
+                                valid = false;
+                                $('#onSubmit-modal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                    show: true
+                                });
+                            }
+                        },
+                        error: function () {
+                            valid =  false;
+                            alert('CODE: 0004 - Something went wrong!');
+                    },
+                    async: false
+
+                });
+
+            console.log(valid);
+            return valid;
+            //if (valid) {
+            //    alert('True: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+            //else {
+            //    alert('False: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+        }
 
             $(".unAvailableModal").click(function () {
                 console.log("unavailable modal");
@@ -2624,7 +2630,9 @@
             //}
             //$("#documentOwners > div:nth-child(" + (i) + ")").after(html);
             //}
-            $.ajax({
+
+
+            @*$.ajax({
                     url: '@Url.Action("GetBranches")',
                     type: 'GET',
                     contentType: 'application/json; charset=utf-8',
@@ -2643,11 +2651,14 @@
                         alert('Something went wrong!');
                     }
 
-            });
+            });*@
+
+
             $("#Region").change(function () {
                 $.ajax({
                     url: '@Url.Action("GetCity")',
-                    type: 'GET',
+                    method: 'GET',
+                    cache: false,
                     contentType: 'application/json; charset=utf-8',
                     data: { municipality: $('#Region').val() },
                     success: function (result) {
@@ -2667,7 +2678,7 @@
                     },
                     error: function () {
 
-                        alert('Something went wrong!');
+                        alert('CODE: 0002 - Something went wrong!');
                     }
 
                 });
@@ -3077,7 +3088,8 @@
                 $('#schedLoader').show();
                 $.ajax({
                     url: '@Url.Action("ValidateScheduleDate2")',
-                    type: 'GET',
+                    method: 'GET',
+                    cache: false,
                     contentType: 'application/json; charset=utf-8',
                     data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
                     success: function (result) {
@@ -3099,7 +3111,7 @@
                     error: function () {
                         $('#schedLoader').hide();
                         canConfirm = false;
-                        alert('Something went wrong!');
+                        alert('CODE: 0003 - Something went wrong!');
                     }
 
                 });

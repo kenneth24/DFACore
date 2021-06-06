@@ -266,6 +266,7 @@ namespace DFACore.Repository
             var range = _context.Branches.Where(a => a.Id == branchId).FirstOrDefault();
             var now = DateTime.UtcNow.ToLocalTime();
             //var toCompare = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
+            //var concreteDate = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
             //if (start >= toCompare)
             //    start = start.AddDays(1);
 
@@ -317,6 +318,8 @@ namespace DFACore.Repository
                 .Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
 
             unAvailable.AddRange(holidays);
+
+            start = new DateTime(start.Year, start.Month, start.Day, 0, 0, 0);
 
             for (var dt = start; dt <= end; dt = dt.AddDays(1))
             {
