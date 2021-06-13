@@ -64,5 +64,7 @@ namespace DFACore.Models
 
         public long BranchId { get; set; }
 
+        public long? TotalApostile { get; set; }
+
     }
 }

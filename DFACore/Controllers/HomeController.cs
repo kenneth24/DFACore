@@ -79,7 +79,7 @@ namespace DFACore.Controllers
             ViewData["ApplicantCount"] = applicantsCount;
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["DefaultBranch"] = defaultBranch;
-            ViewData["Branches"] = _applicantRepo.GetBranches();
+            //ViewData["Branches"] = _applicantRepo.GetBranches();
             ViewData["Price"] = _applicantRepo.GetPrice();
             return View();
         }
