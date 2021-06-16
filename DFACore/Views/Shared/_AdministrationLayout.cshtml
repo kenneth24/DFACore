@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 
     <style>
@@ -73,23 +73,31 @@
                     </button>
                     @if (SignInManager.IsSignedIn(User))
                     {
-                <div class="list-inline" style="font-size:10px;margin-top:10px;color:white;">
-                    <a asp-action="Index" asp-controller="Administration" class="list-inline-item" style="color:white">Home</a>
-                    @if (User.IsInRole("Super Administrator"))
-                    {
-                        <a asp-action="Branch" asp-controller="Administration" class="list-inline-item" style="color:white">Consular Offices</a>
-                        <a asp-action="Notice" asp-controller="Administration" class="list-inline-item" style="color:white">Notices</a>
-                        <a asp-action="UploadImage" asp-controller="Administration" class="list-inline-item" style="color:white">Set Type of Doc</a>
-                        <a asp-action="Price" asp-controller="Administration" class="list-inline-item" style="color:white">Set Price</a>
-                        <a asp-action="ActivityLog" asp-controller="Administration" class="list-inline-item" style="color:white">History</a>
-                    }
-                    <a asp-action="Holiday" asp-controller="Administration" class="list-inline-item" style="color:white">Calendar</a>
-                    <a asp-action="Account" asp-controller="Administration" class="list-inline-item" style="color:white">Accounts</a>
-                    <a asp-action="LogOff" asp-controller="Administration" class="list-inline-item" style="color:white">Logout</a>
-                    <p class="list-inline-item pull-right" style="margin-bottom:0">
-                        Apostille Appointment Management System
-                    </p>
-                </div>
+                        <div class="list-inline" style="font-size:10px;margin-top:10px;color:white;">
+                            <a asp-action="Index" asp-controller="Administration" class="list-inline-item" style="color:white">Home</a>
+                            @if (User.IsInRole("Super Administrator"))
+                            {
+                                <a asp-action="Branch" asp-controller="Administration" class="list-inline-item" style="color:white">Consular Offices</a>
+                                <a asp-action="Notice" asp-controller="Administration" class="list-inline-item" style="color:white">Notices</a>
+                                <a asp-action="UploadImage" asp-controller="Administration" class="list-inline-item" style="color:white">Set Type of Doc</a>
+                                <a asp-action="Price" asp-controller="Administration" class="list-inline-item" style="color:white">Set Price</a>
+                                <a asp-action="Holiday" asp-controller="Administration" class="list-inline-item" style="color:white">Calendar</a>
+                                <a asp-action="Account" asp-controller="Administration" class="list-inline-item" style="color:white">Accounts</a>
+                            }
+                            <a asp-action="ActivityLog" asp-controller="Administration" class="list-inline-item" style="color:white">History</a>
+
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <a asp-action="UserAccount" asp-controller="Administration" class="list-inline-item" style="color:white">Accounts</a>
+                            }
+
+
+
+                            <a asp-action="LogOff" asp-controller="Administration" class="list-inline-item" style="color:white">Logout</a>
+                            <p class="list-inline-item pull-right" style="margin-bottom:0">
+                                Apostille Appointment Management System
+                            </p>
+                        </div>
                         <p class="pull-right" style="margin-bottom:0;font-size:10px;color:white;">@User.Identity.Name | @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
                     }
 

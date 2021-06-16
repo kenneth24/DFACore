@@ -604,7 +604,7 @@ namespace DFACore.Controllers
         }
 
 
-        [Authorize(Roles = "Super Administrator")]
+        [Authorize(Roles = "Super Administrator, Administrator")]
         [HttpGet]
         public async Task<IActionResult> ActivityLog(
             string sortOrder,

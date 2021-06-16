@@ -5,7 +5,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    List<Branch> branches = (List<Branch>)ViewData["Branches"];
+    //List<Branch> branches = (List<Branch>)ViewData["Branches"];
     var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
     var price = (Price)ViewData["Price"];
     //var currentUser = (ApplicationUser)ViewBag.User;
@@ -161,10 +161,19 @@
                         <div class="col-10" style="padding:0">
                             <select asp-for="Record.ProcessingSite" id="site" class="form-control">
 
-                                @foreach (var item in ViewData["Branches"] as List<Branch>)
-                                {
-                                    <option value="@item.BranchName">@item.BranchName</option>
-                                }
+                                <option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
+                                <option value="CO East (SM Megamall)">CO East (SM Megamall)</option>
+                                <option value="CO Northeast (Ali Mall)">CO Northeast (Ali Mall)</option>
+                                <option value="CO South (Alabang)">CO South (Alabang)</option>
+                                <option value="CO West (SM Manila)">CO West (SM Manila)</option>
+                                <option value="CO Pampanga">CO Pampanga</option>
+                                <option value="CO Iloilo">CO Iloilo</option>
+                                <option value="CO Cebu">CO Cebu</option>
+
+                                @*@foreach (var item in ViewData["Branches"] as List<Branch>)
+        {
+            <option value="@item.BranchName">@item.BranchName</option>
+        }*@
                             </select>
                             <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:16px;margin-top:5px;">View Map</button>
                         </div>
@@ -2400,7 +2409,7 @@
 @section Scripts {
 
     @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>*@
     <script>
 
 
@@ -2431,6 +2440,30 @@
             branchId = @defaultBranch.Id;
             expeditePrice = @price.Expedite;
             regularPrice = @price.Regular;
+
+
+            @*$.ajax({
+                    url: '@Url.Action("GetBranches")',
+                    type: 'GET',
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        //console.log(result.branchName);
+                        $('#site').html("");
+                        $.each(result, function (index, val) {
+                            console.log(val.branchName);
+                            $('#site').append(
+                                $('<option></option>').val(val.branchName).html(val.branchName)
+                            );
+                        });
+                        //$('#loading').show();
+                    },
+                    error: function () {
+
+                        alert('Something went wrong!');
+                    }
+
+            });*@
 
             $("#site").on("change", function (branchName) {
                 $('#loading').show();
@@ -2632,26 +2665,7 @@
             //}
 
 
-            @*$.ajax({
-                    url: '@Url.Action("GetBranches")',
-                    type: 'GET',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (result) {
-                        //console.log(result.branchName);
-                        $('#site').html("");
-                        $.each(result, function (index, val) {
-                            console.log(val.branchName);
-                            $('#site').append(
-                                $('<option></option>').val(val.branchName).html(val.branchName)
-                            );
-                        });
-                    },
-                    error: function () {
 
-                        alert('Something went wrong!');
-                    }
-
-            });*@
 
 
             $("#Region").change(function () {
@@ -3082,6 +3096,9 @@
                 //});
                 //doc.save('sample-file.pdf');
             });*@
+
+
+
 
             $('#appointmentSchedule').change(function () {
                 $("#errSchedDate").hide();
