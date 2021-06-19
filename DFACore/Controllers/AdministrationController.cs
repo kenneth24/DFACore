@@ -75,14 +75,14 @@ namespace DFACore.Controllers
             IQueryable<AdminApplicantRecordViewModel> applicants;
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
-            {
-                applicants = _administrationRepository.GetAllApplicantRecordByBranch(currentUser.BranchId, sortOrder, searchString);
-            }
-            else // (await _userManager.IsInRoleAsync(user, "Super Administrator"))
-            {
-                applicants = _administrationRepository.GetAllApplicantRecord(sortOrder, searchString);
-            }
+            //if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            //{
+            //    applicants = _administrationRepository.GetAllApplicantRecordByBranch(currentUser.BranchId, sortOrder, searchString);
+            //}
+            //else // (await _userManager.IsInRoleAsync(user, "Super Administrator"))
+            //{
+            applicants = _administrationRepository.GetAllApplicantRecord(sortOrder, searchString);
+            //}
 
             int pageSize = 10;
             return View(await PaginatedList<AdminApplicantRecordViewModel>.CreateAsync(applicants, pageNumber ?? 1, pageSize));
@@ -375,7 +375,7 @@ namespace DFACore.Controllers
             string searchString,
             int? pageNumber)
         {
-            
+
 
             //return View(accounts);
 
@@ -464,7 +464,7 @@ namespace DFACore.Controllers
                 Email = model.Email
             };
 
-            
+
             return View(result);
         }
 
@@ -777,7 +777,7 @@ namespace DFACore.Controllers
         [HttpPost]
         public async Task<IActionResult> ExportAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
         {
-           
+
             var model = new ExportPDFViewModel();
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -794,7 +794,7 @@ namespace DFACore.Controllers
             var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
             //ViewBag.Sum = sum;
 
-            
+
             model.From = dateFrom;
             model.To = dateTo;
             model.Sum = sum;
@@ -815,7 +815,7 @@ namespace DFACore.Controllers
                 }
             };
             _generatePdf.SetConvertOptions(options);
-            
+
 
             //var data = new TestData
             //{
@@ -837,18 +837,20 @@ namespace DFACore.Controllers
         {
 
             var model = new ExportPDFViewModel();
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            //var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
-            {
-                //todo
-                model.ExportTemplates = _administrationRepository.ExportApplicantRecordByBranch(currentUser.BranchId.GetValueOrDefault(), dateFrom, dateTo);
-            }
-            else
-            {
-                model.ExportTemplates = _administrationRepository.ExportAttendanceToPDF(branchId, dateFrom, dateTo);
-            }
+            //if (await _userManager.IsInRoleAsync(currentUser, "Administrator"))
+            //{
+            //    //todo
+            //    model.ExportTemplates = _administrationRepository.ExportApplicantRecordByBranch(currentUser.BranchId.GetValueOrDefault(), dateFrom, dateTo);
+            //}
+            //else
+            //{
+            //    model.ExportTemplates = _administrationRepository.ExportAttendanceToPDF(branchId, dateFrom, dateTo);
+            //}
 
+            model.ExportTemplates = _administrationRepository.ExportAttendanceToPDF(branchId, dateFrom, dateTo);
+            //var x = model.ExportTemplates.ToList();
 
             var count = model.ExportTemplates.Where(a => a.Attendance == "Yes").Count();
 
@@ -897,7 +899,7 @@ namespace DFACore.Controllers
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
             model.ActivityLogs = _administrationRepository.GetActivityLogs(dateFrom, dateTo).AsEnumerable();
-            
+
 
             //var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
             //ViewBag.Sum = sum;

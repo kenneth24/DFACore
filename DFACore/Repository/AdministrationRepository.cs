@@ -55,7 +55,7 @@ namespace DFACore.Repository
                     applicants = applicants.OrderByDescending(s => s.ScheduleDate);
                     break;
                 default:
-                    applicants = applicants.OrderBy(s => s.LastName);
+                    applicants = applicants.OrderByDescending(s => s.ScheduleDate);
                     break;
             }
             var result = applicants.AsNoTracking();

@@ -47,20 +47,20 @@
                     <form method="post" style="margin-bottom:20px;">
                         <div class="form-row align-items-center">
 
-                            @if (User.IsInRole("Super Administrator"))
-                            {
-                                <div class="col-sm-2 my-1">
-                                    <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
-                                    <select class="form-control" name="branchId">
-                                        @*<option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>*@
-                                        <option value="0">All</option>
-                                        @foreach (var branch in ViewBag.Branches)
-                                        {
-                                            <option value="@branch.Id">@branch.BranchName</option>
-                                        }
-                                    </select>
-                                </div>
-                            }
+                            @*@if (User.IsInRole("Super Administrator"))
+                                {*@
+                            <div class="col-sm-2 my-1">
+                                <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
+                                <select class="form-control" name="branchId">
+                                    @*<option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>*@
+                                    <option value="0">All</option>
+                                    @foreach (var branch in ViewBag.Branches)
+                                    {
+                                        <option value="@branch.Id">@branch.BranchName</option>
+                                    }
+                                </select>
+                            </div>
+                            @*}*@
 
 
                             <div class="col-sm-2 my-1">
