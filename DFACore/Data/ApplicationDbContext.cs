@@ -13,6 +13,7 @@ namespace DFACore.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            this.Database.SetCommandTimeout(60);
         }
 
         public DbSet<Models.ApplicantRecord> ApplicantRecords { get; set; }
@@ -60,5 +61,6 @@ namespace DFACore.Data
                 e.ToView(null);
             });
         }
+
     }
 }

@@ -314,7 +314,7 @@ namespace DFACore.Repository
             var unAvailable = GetUnAvailableDates(branchId);
 
             //this should be optimize by date between now and end of date you want
-            var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year && (h.BranchId == null || h.BranchId == branchId))
+            var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year && (h.BranchId == 0 || h.BranchId == branchId))
                 .Select(x => new DateTime(x.Date.Year, x.Date.Month, x.Date.Day)).ToList();
 
             unAvailable.AddRange(holidays);
@@ -2111,7 +2111,7 @@ namespace DFACore.Repository
             }
         }
 
-
+        
     }
 }
 
