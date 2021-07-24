@@ -161,19 +161,19 @@
                         <div class="col-10" style="padding:0">
                             <select asp-for="Record.ProcessingSite" id="site" class="form-control">
 
-                                <option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
+                                @*<option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
                                 <option value="CO East (SM Megamall)">CO East (SM Megamall)</option>
                                 <option value="CO Northeast (Ali Mall)">CO Northeast (Ali Mall)</option>
                                 <option value="CO South (Alabang)">CO South (Alabang)</option>
                                 <option value="CO West (SM Manila)">CO West (SM Manila)</option>
                                 <option value="CO Pampanga">CO Pampanga</option>
                                 <option value="CO Iloilo">CO Iloilo</option>
-                                <option value="CO Cebu">CO Cebu</option>
+                                <option value="CO Cebu">CO Cebu</option>*@
 
-                                @*@foreach (var item in ViewData["Branches"] as List<Branch>)
-        {
-            <option value="@item.BranchName">@item.BranchName</option>
-        }*@
+                                @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                {
+                                    <option value="@item.BranchName">@item.BranchName</option>
+                                }
                             </select>
                             <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:16px;margin-top:5px;">View Map</button>
                         </div>
