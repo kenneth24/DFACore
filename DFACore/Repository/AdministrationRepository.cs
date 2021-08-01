@@ -1,9 +1,13 @@
 ﻿using DFACore.Data;
 using DFACore.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,14 +21,22 @@ namespace DFACore.Repository
             _context = context;
         }
 
+        public ApplicantRecord GetApplicantRecord(long id)
+        {
+            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).FirstOrDefault();
+            return applicant;
+        }
         public IQueryable<AdminApplicantRecordViewModel> GetAllApplicantRecord(string sortOrder, string searchString)
         {
             //var result = _context.ApplicantRecords.Select(a => a);
             var applicants = from ar in _context.ApplicantRecords
                              join u in _context.Users on ar.CreatedBy.ToString() equals u.Id
-                             select new AdminApplicantRecordViewModel { 
+                             select new AdminApplicantRecordViewModel
+                             {
+                                 Id = ar.Id,
                                  ApplicationCode = ar.ApplicationCode,
                                  ScheduleDate = ar.ScheduleDate,
+                                 DateCreated = ar.DateCreated,
                                  FirstName = ar.FirstName,
                                  MiddleName = ar.MiddleName,
                                  LastName = ar.LastName,
@@ -66,7 +78,8 @@ namespace DFACore.Repository
         public IQueryable<AdminApplicantRecordViewModel> GetAllApplicantRecordByBranch(long? branchId, string sortOrder, string searchString)
         {
             //var result = _context.ApplicantRecords.Select(a => a);
-            var applicants = from ar in _context.ApplicantRecords where ar.BranchId == branchId
+            var applicants = from ar in _context.ApplicantRecords
+                             where ar.BranchId == branchId
                              join u in _context.Users on ar.CreatedBy.ToString() equals u.Id
                              select new AdminApplicantRecordViewModel
                              {
@@ -112,7 +125,7 @@ namespace DFACore.Repository
         public IQueryable<Branch> GetBranches(string sortOrder, string searchString)
         {
             var branches = from s in _context.Branches
-                             select s;
+                           select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 branches = branches.Where(s => s.BranchName.Contains(searchString));
@@ -138,8 +151,14 @@ namespace DFACore.Repository
         }
 
         public Branch GetBranch(long branchId)
-        { 
+        {
             var branch = _context.Branches.Where(a => a.Id == branchId).Include(a => a.ScheduleCapacities).FirstOrDefault();
+            return branch;
+        }
+
+        public Branch GetBranch(string branchName)
+        {
+            var branch = _context.Branches.Where(a => a.BranchName == branchName).Include(a => a.ScheduleCapacities).FirstOrDefault();
             return branch;
         }
 
@@ -160,7 +179,8 @@ namespace DFACore.Repository
                 HasExpidite = branch.HasExpidite,
                 StartTime = branch.StartTime,
                 EndTime = branch.EndTime,
-                ScheduleCapacities = branch.ScheduleCapacities.Select(sc => new ScheduleCapacity {
+                ScheduleCapacities = branch.ScheduleCapacities.Select(sc => new ScheduleCapacity
+                {
                     Id = sc.Id,
                     Type = sc.Type,
                     Name = sc.Name,
@@ -200,7 +220,7 @@ namespace DFACore.Repository
             {
                 throw new Exception("Unable to save changes. Try again, and if the problem persists, see your system administrator.");
             }
-            
+
         }
 
         public List<AdminAccountViewModel> AccountList()
@@ -229,7 +249,7 @@ namespace DFACore.Repository
                 raw = raw.Where(s => s.Email.Contains(searchString)
                                 || s.FirstName.Contains(searchString)
                                 || s.LastName.Contains(searchString));
-                                
+
             }
             switch (sortOrder)
             {
@@ -293,6 +313,11 @@ namespace DFACore.Repository
 
         }
 
+        public ApplicationUser GetAccount(string userId)
+        {
+            var user = _context.Users.Where(a => a.Id == userId).AsNoTracking().FirstOrDefault();
+            return user;
+        }
         public ApplicationUser EditAccount(string userId)
         {
             try
@@ -319,7 +344,7 @@ namespace DFACore.Repository
                 raw.PhoneNumber = model.PhoneNumber;
                 raw.Gender = model.Gender;
                 raw.DateOfBirth = model.DateOfBirth;
-                
+
                 _context.Users.Update(raw);
                 await _context.SaveChangesAsync();
                 return model;
@@ -369,7 +394,7 @@ namespace DFACore.Repository
                 holidays = _context.Holidays.Where(s => s.BranchId.Equals(Convert.ToInt64(searchString)));
             }
             else
-            { 
+            {
                 holidays = _context.Holidays.Where(a => a.BranchId == 0 && a.Date.Year == DateTime.Now.Year);
             }
             switch (sortOrder)
@@ -410,8 +435,9 @@ namespace DFACore.Repository
 
         public IQueryable<ActivityLog> GetActivityLogs(string sortOrder, string searchString)
         {
-            var activityLogs = from s in _context.ActivityLogs where s.UserId != "1"
-                           select s;
+            var activityLogs = from s in _context.ActivityLogs
+                               where s.UserId != "1"
+                               select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 activityLogs = activityLogs.Where(s => s.Email.Contains(searchString));
@@ -436,7 +462,7 @@ namespace DFACore.Repository
             var activityLogs = from s in _context.ActivityLogs
                                where s.UserId != "1" && (s.CreatedDate >= dateFrom && s.CreatedDate < dateTo)
                                select s;
-            
+
             var result = activityLogs.AsNoTracking();
 
             return result;
@@ -459,13 +485,13 @@ namespace DFACore.Repository
             return price;
         }
 
-        public Notice GetNotice()
+        public Notice GetNotice(long id)
         {
-            var notice = _context.Notices.Select(a => a).FirstOrDefault();
+            var notice = _context.Notices.Where(a => a.Id == id).FirstOrDefault();
             return notice;
         }
 
-        public Notice UpdateNotice(Notice notice)
+        public Notice UpdateNotice(long id, Notice notice) //Id 1 for announcement, 2 for Declaration, 3 for Terms and conditions
         {
             if (notice == null)
             {
@@ -480,23 +506,24 @@ namespace DFACore.Repository
         {
             dateTo = dateTo.AddDays(1).AddSeconds(-1);
 
-            var raw = from ar in _context.ApplicantRecords where ar.ScheduleDate >= dateFrom && ar.ScheduleDate < dateTo
-                             join u in _context.Users on ar.CreatedBy.ToString() equals u.Id
-                             select new AdminApplicantRecordViewModel
-                             {
-                                 ApplicationCode = ar.ApplicationCode,
-                                 ScheduleDate = ar.ScheduleDate,
-                                 FirstName = ar.FirstName,
-                                 MiddleName = ar.MiddleName,
-                                 LastName = ar.LastName,
-                                 ContactNumber = ar.ContactNumber,
-                                 NameOfRepresentative = ar.NameOfRepresentative,
-                                 RepresentativeContactNumber = ar.RepresentativeContactNumber,
-                                 ProcessingSite = ar.ProcessingSite,
-                                 Data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(ar.ApostileData),
-                                 Email = u.Email,
-                                 Suffix = ar.Suffix
-                             };
+            var raw = from ar in _context.ApplicantRecords
+                      where ar.ScheduleDate >= dateFrom && ar.ScheduleDate < dateTo
+                      join u in _context.Users on ar.CreatedBy.ToString() equals u.Id
+                      select new AdminApplicantRecordViewModel
+                      {
+                          ApplicationCode = ar.ApplicationCode,
+                          ScheduleDate = ar.ScheduleDate,
+                          FirstName = ar.FirstName,
+                          MiddleName = ar.MiddleName,
+                          LastName = ar.LastName,
+                          ContactNumber = ar.ContactNumber,
+                          NameOfRepresentative = ar.NameOfRepresentative,
+                          RepresentativeContactNumber = ar.RepresentativeContactNumber,
+                          ProcessingSite = ar.ProcessingSite,
+                          Data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(ar.ApostileData),
+                          Email = u.Email,
+                          Suffix = ar.Suffix
+                      };
 
             //var raw = applicants.ToList();
 
@@ -516,9 +543,9 @@ namespace DFACore.Repository
                 Quantity = string.Join(Environment.NewLine, ar.Data.Select(d => d.Quantity)),
                 Transaction = string.Join(Environment.NewLine, ar.Data.Select(d => d.Transaction)),
                 TotalDocuments = ar.Data.Select(d => d.Quantity).Sum(),
-                Email =ar.Email,
+                Email = ar.Email,
             });
-            
+
 
             return applicants.OrderBy(a => a.ScheduleDate);
         }
@@ -618,7 +645,7 @@ namespace DFACore.Repository
                       };
             }
 
-            
+
 
             //var raw = applicants.ToList();
 
@@ -703,7 +730,7 @@ namespace DFACore.Repository
                       };
             }
 
-            
+
 
             //var raw = applicants.ToList();
 
@@ -732,7 +759,59 @@ namespace DFACore.Repository
             return applicants.OrderBy(a => a.ScheduleDate);
         }
 
+        public ApplicantRecord ResendApplication(long id)
+        {
+            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).AsNoTracking().FirstOrDefault();
+            return applicant;
+        }
 
+        public byte[] GenerateQRCode(string plainText)
+        {
+            QRCodeGenerator _qrCode = new QRCodeGenerator();
+            QRCodeData _qrCodeData = _qrCode.CreateQrCode(plainText, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(_qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            return BitmapToBytesCode(qrCodeImage);
+        }
+
+        private static Byte[] BitmapToBytesCode(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
+
+        public bool CancelApplication(long id)
+        {
+
+            
+
+            //they have separate archive table for logs here (not part of code first)
+            //insert in logs
+            //_context.ApplicantRecords.FromSqlRaw($"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, ");
+
+
+            using (var context = _context)
+            {
+                var commandText = $"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+                    $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
+                    $"SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+                    $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE Id=@id";
+                var name = new SqlParameter("@id", id);
+                context.Database.ExecuteSqlRaw(commandText, name);
+            }
+            //delete in original table
+
+            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).FirstOrDefault();
+            var x = _context.ApplicantRecords.Remove(applicant);
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }
 

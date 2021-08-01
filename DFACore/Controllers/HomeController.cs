@@ -79,7 +79,7 @@ namespace DFACore.Controllers
             ViewData["ApplicantCount"] = applicantsCount;
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["DefaultBranch"] = defaultBranch;
-            //ViewData["Branches"] = _applicantRepo.GetBranches();
+            ViewData["Branches"] = _applicantRepo.GetBranches();
             ViewData["Price"] = _applicantRepo.GetPrice();
             return View();
         }
@@ -121,7 +121,7 @@ namespace DFACore.Controllers
                 //{
                 var applicantRecord = new ApplicantRecord
                 {
-                    BranchId = branch != null? branch.Id : 0,
+                    BranchId = branch != null ? branch.Id : 0,
                     FirstName = model.Record.FirstName?.ToUpper(),
                     MiddleName = model.Record.MiddleName?.ToUpper(),
                     LastName = model.Record.LastName?.ToUpper(),
@@ -168,7 +168,7 @@ namespace DFACore.Controllers
 
                     //data += JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(record.ApostileData).Count;
 
-                    
+
 
                     var applicantRecord = new ApplicantRecord
                     {
@@ -205,15 +205,15 @@ namespace DFACore.Controllers
                     var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                     if (age < 18)
                         generatePowerOfAttorney = true;
-                    else
-                        generateAuthLetter = true;
+
+                    generateAuthLetter = true;
 
                     var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                     total += data.Sum(a => a.Quantity);
                 }
 
 
-               
+
 
             };
 
@@ -558,7 +558,7 @@ namespace DFACore.Controllers
             return Json("");
         }
 
-        
+
 
         public int SetNumberOfApplicants(int applicantsCount)
         {

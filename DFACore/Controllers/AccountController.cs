@@ -209,7 +209,9 @@ namespace DFACore.Controllers
 
             await LogOff();
             ViewBag.ReturnUrl = returnUrl;
-            ViewData["NoticeMessage"] = _applicantRepo.GetNotice();
+            ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
+            ViewData["DeclarationMessage"] = _applicantRepo.GetNotice(2);
+            ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
             else

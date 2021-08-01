@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using NETCore.MailKit.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,6 +31,8 @@ namespace DFACore.Controllers
         private readonly AdministrationRepository _administrationRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IGeneratePdf _generatePdf;
+        private readonly IMessageService _messageService;
+
 
         public AdministrationController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
@@ -37,7 +40,8 @@ namespace DFACore.Controllers
             IEmailService emailService,
             AdministrationRepository administrationRepository,
             IWebHostEnvironment env,
-            IGeneratePdf generatePdf)
+            IGeneratePdf generatePdf,
+            IMessageService messageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -46,6 +50,7 @@ namespace DFACore.Controllers
             _administrationRepository = administrationRepository;
             _env = env;
             _generatePdf = generatePdf;
+            _messageService = messageService;
         }
 
         [Authorize(Roles = "Super Administrator, Administrator")]
@@ -655,7 +660,7 @@ namespace DFACore.Controllers
         [HttpGet]
         public IActionResult Notice()
         {
-            var result = _administrationRepository.GetNotice();
+            var result = _administrationRepository.GetNotice(1);
             ViewData["UpdateNoticeMessage"] = this.TempData["updateNoticeTemp"];
             return View(result);
         }
@@ -664,7 +669,43 @@ namespace DFACore.Controllers
         [HttpPost]
         public IActionResult Notice(Notice notice)
         {
-            var result = _administrationRepository.UpdateNotice(notice);
+            _administrationRepository.UpdateNotice(1, notice);
+            this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            return RedirectToAction("Notice");
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult Declaration()
+        {
+            var result = _administrationRepository.GetNotice(2);
+            ViewData["UpdateNoticeMessage"] = this.TempData["updateNoticeTemp"];
+            return View(result);
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public IActionResult Declaration(Notice notice)
+        {
+            _administrationRepository.UpdateNotice(2, notice);
+            this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            return RedirectToAction("Notice");
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult TermsAndCondition()
+        {
+            var result = _administrationRepository.GetNotice(3);
+            ViewData["UpdateNoticeMessage"] = this.TempData["updateNoticeTemp"];
+            return View(result);
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        public IActionResult TermsAndCondition(Notice notice)
+        {
+            _administrationRepository.UpdateNotice(3, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
             return RedirectToAction("Notice");
         }
@@ -978,6 +1019,287 @@ namespace DFACore.Controllers
             }
 
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<bool> ResendApplication(long id)
+        {
+            var model = _administrationRepository.GetApplicantRecord(id);
+
+            var attachments = new List<Attachment>();
+
+            bool generatePowerOfAttorney = false;
+            bool generateAuthLetter = false;
+
+            var dateTimeSched = model.ScheduleDate; //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+
+            var branch = _administrationRepository.GetBranch(model.ProcessingSite);
+
+            if (model.Type != 1)
+            {
+                var applicantRecord = new ApplicantRecord
+                {
+                    BranchId = branch != null ? branch.Id : 0,
+                    FirstName = model.FirstName?.ToUpper(),
+                    MiddleName = model.MiddleName?.ToUpper(),
+                    LastName = model.LastName?.ToUpper(),
+                    Suffix = model.Suffix?.ToUpper(),
+                    DateOfBirth = model.DateOfBirth,
+                    ContactNumber = model.ContactNumber,
+                    CountryDestination = model.CountryDestination?.ToUpper(),
+                    ApostileData = model.ApostileData,
+                    ProcessingSite = model.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
+                    ScheduleDate = dateTimeSched, //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture),
+                    ApplicationCode = model.ApplicationCode,
+                    //CreatedBy = new Guid(_userManager.GetUserId(User)),
+                    Fees = model.Fees,
+                    Type = 0,
+                    DateCreated = DateTime.UtcNow,
+                    QRCode = _administrationRepository.GenerateQRCode($"{model.FirstName?.ToUpper()} {model.MiddleName?.ToUpper()} {model.LastName?.ToUpper()}" +
+                    $"{Environment.NewLine}{model.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                    $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                };
+
+                attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                if (age < 18)
+                    generatePowerOfAttorney = true;
+            }
+            else
+            {
+                var applicantRecord = new ApplicantRecord
+                {
+                    BranchId = branch != null ? branch.Id : 0,
+                    FirstName = model.FirstName?.ToUpper(),
+                    MiddleName = model.MiddleName?.ToUpper(),
+                    LastName = model.LastName?.ToUpper(),
+                    Suffix = model.Suffix?.ToUpper(),
+                    DateOfBirth = model.DateOfBirth,
+                    //Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
+                    //Nationality = record.Nationality?.ToUpper(),
+                    ContactNumber = string.IsNullOrEmpty(model.ContactNumber)? "" : model.ContactNumber,
+                    //CompanyName = record.CompanyName?.ToUpper(),
+                    CountryDestination = model.CountryDestination?.ToUpper(),
+                    NameOfRepresentative = model.NameOfRepresentative,
+                    RepresentativeContactNumber = model.RepresentativeContactNumber,
+                    ApostileData = model.ApostileData,
+                    ProcessingSite = model.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
+                    ScheduleDate = dateTimeSched,
+                    ApplicationCode = model.ApplicationCode, //record.ApplicationCode,
+                    //CreatedBy = new Guid(_userManager.GetUserId(User)),
+                    Fees = model.Fees,
+                    Type = 1,
+                    DateCreated = DateTime.UtcNow,
+                    QRCode = _administrationRepository.GenerateQRCode($"{model.FirstName?.ToUpper()} {model.MiddleName?.ToUpper()} {model.LastName?.ToUpper()}" +
+                                $"{Environment.NewLine}{model.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                                $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                };
+
+                
+                attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                if (age < 18)
+                    generatePowerOfAttorney = true;
+                
+                generateAuthLetter = true;
+            }
+
+            if (generatePowerOfAttorney)
+            {
+                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), 
+                    new MimeKit.ContentType("application", "pdf")));
+            }
+
+            if (generateAuthLetter)
+            {
+                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), 
+                    new MimeKit.ContentType("application", "pdf")));
+            }
+
+            var getUser = _administrationRepository.GetAccount(model.CreatedBy.ToString());
+            await _messageService.SendEmailAsync(getUser.UserName, getUser.UserName, "Application File",
+                    HtmlTemplate(),
+                    attachments.ToArray());
+            //Log("Generate Appointment", User.Identity.Name);
+            return true;
+
+            //return View();
+        }
+
+        public async Task<MemoryStream> GeneratePDF(ApplicantRecord model)
+        {
+            var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                HeaderHtml = header,
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 40,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
+
+        public async Task<MemoryStream> GeneratePowerOfAttorneyPDF(TestData data)
+        {
+            //var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            //var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                //HeaderHtml = header,
+                //FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 9,
+                    Bottom = 9,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/PowerOfAttorney.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
+
+        public async Task<MemoryStream> GenerateAuthorizationLetterPDF(TestData data)
+        {
+            //var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            //var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                //HeaderHtml = header,
+                //FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 15,
+                    Bottom = 15,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            //var data = new TestData
+            //{
+            //    Text = "This is a test",
+            //    Number = 123456
+            //};
+
+            var pdf = await _generatePdf.GetByteArray("Views/AuthorizationLetter.cshtml", data);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return pdfStream;
+        }
+
+        public string HtmlTemplate()
+        {
+            using (StreamReader SourceReader = System.IO.File.OpenText(_env.WebRootFileProvider.GetFileInfo("template.html")?.PhysicalPath))
+            {
+
+                return SourceReader.ReadToEnd();
+            }
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ViewPDFApplication(long id)
+        {
+
+            var get = _administrationRepository.GetApplicantRecord(id);
+
+            var model2 = new ApplicantRecord
+            {
+                Title = get.Title,
+                FirstName = get.FirstName,
+                MiddleName = get.MiddleName,
+                LastName = get.LastName,
+                Suffix = get.Suffix,
+                Nationality = get.Nationality,
+                ContactNumber = get.ContactNumber,
+                CompanyName = get.CompanyName,
+                CountryDestination = get.CountryDestination,
+                NameOfRepresentative = get.NameOfRepresentative,
+                RepresentativeContactNumber = get.RepresentativeContactNumber,
+                ApostileData = get.ApostileData,
+                ProcessingSite = get.ProcessingSite,
+                ProcessingSiteAddress = get.ProcessingSiteAddress,
+                ScheduleDate = get.ScheduleDate,
+                ApplicationCode = get.ApplicationCode,
+                QRCode = _administrationRepository.GenerateQRCode($"{get.FirstName?.ToUpper()} {get.MiddleName?.ToUpper()} {get.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{get.ApplicationCode}{Environment.NewLine}{get.ScheduleDate.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{get.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}"),
+                Fees = get.Fees
+            };
+
+
+            var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                HeaderHtml = header,
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Portrait,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 40,
+                    Bottom = 20,
+                    Right = 15,
+                    Left = 15
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var pdf = await _generatePdf.GetByteArray("Views/TestBootstrapSSL.cshtml", model2);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public bool CancelApplication(long id)
+        {
+            var result = _administrationRepository.CancelApplication(id);
+            return result;
         }
     }
 }

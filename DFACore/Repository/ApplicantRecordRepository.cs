@@ -2096,9 +2096,9 @@ namespace DFACore.Repository
             return price;
         }
 
-        public Notice GetNotice()
+        public Notice GetNotice(long id)
         {
-            var notice = _context.Notices.Select(a => a).FirstOrDefault();
+            var notice = _context.Notices.Where(a => a.Id == id).FirstOrDefault();
             return notice;
         }
 
