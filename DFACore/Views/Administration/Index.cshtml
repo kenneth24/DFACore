@@ -6,8 +6,33 @@
     Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
     ViewData["Title"] = "Administrator Homepage";
 }
+
+<style>
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+</style>
 <div style="margin-top:50px;">
 
+    <div id="loading" style="display:none;">
+        <div id="loading-image">
+            <span id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></span>
+        </div>
+    </div>
 
     <h3 style="margin-top:50px;">Home</h3>
 
@@ -48,7 +73,7 @@
                         <div class="form-row align-items-center">
 
                             @*@if (User.IsInRole("Super Administrator"))
-        {*@
+                                {*@
                             <div class="col-sm-2 my-1">
                                 <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
                                 <select class="form-control" name="branchId">
@@ -80,16 +105,16 @@
 
 
                             <div class="col-auto my-1">
-                                <button type="submit" asp-action="ExportAppointmentToPDF" class="btn btn-danger">Summary of Appointments</button>
+                                <button type="submit" asp-action="ExportAppointmentToPDF" class="btn btn-danger btn-sm">Summary of Appointments</button>
                             </div>
                             <div class="col-auto my-1">
-                                <button type="submit" asp-action="ExportAttendanceToPDF" class="btn btn-danger">Summary of Attendance</button>
+                                <button type="submit" asp-action="ExportAttendanceToPDF" class="btn btn-danger btn-sm">Summary of Attendance</button>
                             </div>
                             <div class="col-auto my-1">
-                                <button type="submit" asp-action="ExportUnAttendanceToPDF" class="btn btn-danger">Summary of No Shows</button>
+                                <button type="submit" asp-action="ExportUnAttendanceToPDF" class="btn btn-danger btn-sm">Summary of No Shows</button>
                             </div>
                             <div class="col-auto my-1">
-                                <button type="submit" asp-action="ExportCancelledAppointmentToPDF" class="btn btn-danger">Summary of Cancelled Appointments</button>
+                                <button type="submit" asp-action="ExportCancelledAppointmentToPDF" class="btn btn-danger btn-sm">Summary of Cancelled Appointments</button>
                             </div>
                         </div>
                     </form>
@@ -214,9 +239,10 @@
                     </td>
 
                     <td>
-                        <a asp-action="ResendApplication" asp-route-id="@item.Id">Resend</a>
-                        <a href="@Url.Action($"ResendApplication", "Administration", new { id = item.Id })" target="_blank">Resend</a>
-                        <a href="@Url.Action($"ViewPDFApplication", "Administration", new { id = item.Id })" target="_blank">View</a>
+                        @*<a asp-action="ResendApplication" asp-route-id="@item.Id">Resend</a>
+                        <a href="@Url.Action($"ResendApplication", "Administration", new { id = item.Id })" target="_blank">Resend</a>*@
+                        <a class="btn btn-success btn-sm" onclick="ResendApplication('@item.Id');" style="width:70px;color:white">Resend</a> <br/><br />
+                        <a class="btn btn-info btn-sm" href="@Url.Action($"ViewPDFApplication", "Administration", new { id = item.Id })" target="_blank" style="width:70px;">View</a>
                     </td>
                 </tr>
             }
@@ -246,5 +272,36 @@
 </div>
 
 @section Scripts {
+    <script>
+        function ResendApplication(id) {
+            $('#loading').show();
+                $.ajax({
+                        url: '@Url.Action("ResendApplication", "Administration")',
+                        method: 'GET',
+                        cache: false,
+                        contentType: 'application/json; charset=utf-8',
+                        data: { id: id },
+                        success: function (result) {
+                            
+                            $('#loading').hide();
+                            toastr.success('Apostille Application has been successfully resend.', 'Success', { timeOut: 5000 })
+                            //toastr.success('Success');
+                        },
+                        error: function () {
+                            $('#loading').hide();
+                            toastr.error('Something went wrong!', 'Error', { timeOut: 5000 });
+                            
+                    }
+                });
+        };
+
+        $(document).ready(function () {
+
+        });
+    </script>
+
+
     <partial name="_ValidationScriptsPartial" />
+
+
 }

@@ -899,6 +899,12 @@ namespace DFACore.Controllers
             var sum = model.ExportTemplates.Where(a => a.Attendance == "Yes").Sum(a => a.TotalDocuments);
             var totalSum = model.ExportTemplates.Sum(a => a.TotalDocuments);
 
+            double documentPercent = ((double)sum / (double)totalSum) * 100;
+            documentPercent = Math.Round(documentPercent, 2);
+
+            double attendancePercent = ((double)count / (double)model.ExportTemplates.Count()) * 100;
+            attendancePercent = Math.Round(attendancePercent, 2);
+
             //ViewBag.Sum = sum;
 
 
@@ -907,6 +913,8 @@ namespace DFACore.Controllers
             model.Count = count;
             model.Sum = sum;
             model.TotalSum = totalSum;
+            model.DocumentsPercent = documentPercent;
+            model.AttendancePercent = attendancePercent;
             model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
 
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
@@ -1105,7 +1113,7 @@ namespace DFACore.Controllers
             return View();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<bool> ResendApplication(long id)
         {
@@ -1385,5 +1393,59 @@ namespace DFACore.Controllers
             var result = _administrationRepository.CancelApplication(id);
             return result;
         }
+
+
+
+        public IActionResult LoadData()
+        {
+            try
+            {
+                //Creating instance of DatabaseContext class  
+                using (DatabaseContext _context = new DatabaseContext())
+                {
+                    var draw = Request.Form["draw"].FirstOrDefault();
+                    var start = Request.Form["start"].FirstOrDefault();
+                    var length = Request.Form["length"].FirstOrDefault();
+                    var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                    var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
+                    var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+
+                    //Paging Size (10,20,50,100)    
+                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                    int skip = start != null ? Convert.ToInt32(start) : 0;
+                    int recordsTotal = 0;
+
+                    // Getting all Customer data    
+                    var customerData = (from tempcustomer in _context.Customers
+                                        select tempcustomer);
+
+                    //Sorting    
+                    if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+                    {
+                        customerData = customerData.OrderBy(sortColumn + " " + sortColumnDir);
+                    }
+                    //Search    
+                    if (!string.IsNullOrEmpty(searchValue))
+                    {
+                        customerData = customerData.Where(m => m.CompanyName == searchValue);
+                    }
+
+                    //total number of rows count     
+                    recordsTotal = customerData.Count();
+                    //Paging     
+                    var data = customerData.Skip(skip).Take(pageSize).ToList();
+                    //Returning Json Data    
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
     }
+}
 }

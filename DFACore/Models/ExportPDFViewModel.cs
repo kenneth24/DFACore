@@ -15,5 +15,8 @@ namespace DFACore.Models
         public int TotalSum { get; set; }
         public int Count { get; set; }
         public string LogoPath { get; set; }
+
+        public double DocumentsPercent { get; set; }
+        public double AttendancePercent { get; set; }
     }
 }

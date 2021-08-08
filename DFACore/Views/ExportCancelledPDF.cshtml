@@ -50,28 +50,23 @@
 <body>
 
     <table style="border:none;margin-bottom:20px;">
-
         <tr>
-
             <td style="width:30%; text-align:right; border:none;">
                 <img src="@Model.LogoPath" width="140" height="140" />
             </td>
             <td style="width:40%; border:none;">
                 <h4 class="centerText">Department of Foreign Affairs<br>Authentication Division</h4>
                 <h3 class="centerText boldText" style="margin-top:10px;">APOSTILLE APPOINTMENT SYSTEM</h3>
-                <h3 class="centerText boldText">Summary of Attendance</h3>
+                <h3 class="centerText boldText">Summary of Cancelle Appointments</h3>
 
             </td>
             <td style="width:30%; border:none;">
             </td>
-
         </tr>
-
-
     </table>
 
-
     <p>From @Model.From.ToString("MM/dd/yyy") - To @Model.To.ToString("MM/dd/yyy")</p>
+
     <table>
         <tr>
             <th>No.</th>
@@ -88,7 +83,6 @@
             <th>Documents</th>
             <th>Qty</th>
             <th>Transaction</th>
-            <th>Attendance</th>
         </tr>
         @foreach (var item in Model.ExportTemplates)
         {
@@ -108,15 +102,14 @@
                 <td>@Html.Raw(item.Documents)</td>
                 <td>@Html.Raw(item.Quantity)</td>
                 <td>@Html.Raw(item.Transaction)</td>
-                <td>@item.Attendance</td>
             </tr>
         }
 
 
     </table>
 
-    <h3 class="rightText marginTop boldText" style="font-family:Arial;">Total No. of Documents: @Model.Sum/@Model.TotalSum <span style="color:darkred">(@Model.DocumentsPercent%)</span></h3>
-    <h3 class="rightText boldText" style="font-family:Arial;">Total No. of Attendance: @Model.Count/@Model.ExportTemplates.Count() <span style="color:darkred">(@Model.AttendancePercent%)</span></h3>
+    <h3 class="rightText marginTop boldText">Total No. of Documents: @Model.Sum</h3>
+    <h3 class="rightText boldText">Total No. of Appointments: @Model.ExportTemplates.Count()</h3>
 </body>
 </html>
 
