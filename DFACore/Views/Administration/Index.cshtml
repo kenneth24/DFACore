@@ -48,7 +48,7 @@
                         <div class="form-row align-items-center">
 
                             @*@if (User.IsInRole("Super Administrator"))
-                                {*@
+        {*@
                             <div class="col-sm-2 my-1">
                                 <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
                                 <select class="form-control" name="branchId">
@@ -84,6 +84,12 @@
                             </div>
                             <div class="col-auto my-1">
                                 <button type="submit" asp-action="ExportAttendanceToPDF" class="btn btn-danger">Summary of Attendance</button>
+                            </div>
+                            <div class="col-auto my-1">
+                                <button type="submit" asp-action="ExportUnAttendanceToPDF" class="btn btn-danger">Summary of No Shows</button>
+                            </div>
+                            <div class="col-auto my-1">
+                                <button type="submit" asp-action="ExportCancelledAppointmentToPDF" class="btn btn-danger">Summary of Cancelled Appointments</button>
                             </div>
                         </div>
                     </form>

@@ -759,6 +759,140 @@ namespace DFACore.Repository
             return applicants.OrderBy(a => a.ScheduleDate);
         }
 
+        public IEnumerable<ExportTemplate> ExportUnAttendanceToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
+            IEnumerable<AttendanceModel> raw;
+            if (branchId == default)
+            {
+                raw = _context.Set<AttendanceModel>().FromSqlRaw($"select ar.ApplicationCode, ar.ScheduleDate, ar.FirstName, ar.MiddleName, ar.LastName, ar.Suffix, ar.ContactNumber, " +
+                "ar.NameOfRepresentative, ar.RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, " +
+                "IsNull(a.attendance, 'No') attendance, ad.* " +
+                "from ApplicantRecords ar " +
+                "inner join AspNetUsers u on ar.CreatedBy = u.Id " +
+                "left join tbl_attendance a on ar.ApplicationCode = a.applicationcode " +
+                "cross apply OpenJson(ar.apostiledata, N'$') " +
+                "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                "where ar.ScheduleDate between {0} and {1} and a.attendance is null", dateFrom, dateTo).AsEnumerable();
+            }
+            else
+            {
+                raw = _context.Set<AttendanceModel>().FromSqlRaw($"select ar.ApplicationCode, ar.ScheduleDate, ar.FirstName, ar.MiddleName, ar.LastName, ar.Suffix, ar.ContactNumber, " +
+                "ar.NameOfRepresentative, ar.RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, " +
+                "IsNull(a.attendance, 'No') attendance, ad.* " +
+                "from ApplicantRecords ar " +
+                "inner join AspNetUsers u on ar.CreatedBy = u.Id " +
+                "left join tbl_attendance a on ar.ApplicationCode = a.applicationcode " +
+                "cross apply OpenJson(ar.apostiledata, N'$') " +
+                "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                "where ar.ScheduleDate between {0} and {1} and ar.BranchId={2} and a.attendance is null", dateFrom, dateTo, branchId).AsEnumerable();
+            }
+
+            var applicants = raw.GroupBy(a => new
+            {
+                a.ApplicationCode,
+                a.ScheduleDate,
+                a.FirstName,
+                a.MiddleName,
+                a.LastName,
+                a.Suffix,
+                a.ContactNumber,
+                a.NameOfRepresentative,
+                a.RepresentativeContactNumber,
+                a.ProcessingSite,
+                a.Email,
+                a.CountryDestination,
+                a.Attendance
+            }).Select(gcs => new ExportTemplate
+            {
+                AppointmentCode = gcs.Key.ApplicationCode,
+                ScheduleDate = gcs.Key.ScheduleDate,
+                FirstName = gcs.Key.FirstName,
+                MiddleName = gcs.Key.MiddleName,
+                LastName = gcs.Key.LastName,
+                Suffix = gcs.Key.Suffix,
+                ContactNumber = gcs.Key.ContactNumber,
+                NameOfRepresentative = gcs.Key.NameOfRepresentative,
+                RepresentativeContactNumber = gcs.Key.RepresentativeContactNumber,
+                ConsularOffice = gcs.Key.ProcessingSite,
+                Documents = string.Join("<br>", gcs.Select(a => a.DocumentName)),
+                Quantity = string.Join("<br>", gcs.Select(d => d.Quantity)),
+                Transaction = string.Join("<br>", gcs.Select(d => d.Transaction)),
+                TotalDocuments = gcs.Select(d => d.Quantity).Sum(),
+                Email = gcs.Key.Email,
+                CountryDestination = gcs.Key.CountryDestination,
+                Attendance = gcs.Key.Attendance
+            }).OrderBy(a => a.ScheduleDate).ToList();
+
+            return applicants;
+        }
+
+        public IEnumerable<ExportTemplate> ExportCancelledAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+            dateTo = dateTo.AddDays(1).AddSeconds(-1);
+     
+            IEnumerable<CancelAppointmentModel> raw;
+            if (branchId == default)
+            {
+                raw = _context.Set<CancelAppointmentModel>().FromSqlRaw($"select ar.ApplicationCode, ar.ScheduleDate, ar.FirstName, ar.MiddleName, ar.LastName, ar.Suffix, ar.ContactNumber, " +
+                "ar.NameOfRepresentative, ar.RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
+                "from ApplicantRecords_backup ar " +
+                "inner join AspNetUsers u on ar.CreatedBy = u.Id " +
+                "cross apply OpenJson(ar.apostiledata, N'$') " +
+                "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                "where ar.ScheduleDate between {0} and {1}", dateFrom, dateTo).AsEnumerable();
+            }
+            else
+            {
+                raw = _context.Set<CancelAppointmentModel>().FromSqlRaw($"select ar.ApplicationCode, ar.ScheduleDate, ar.FirstName, ar.MiddleName, ar.LastName, ar.Suffix, ar.ContactNumber, " +
+                "ar.NameOfRepresentative, ar.RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
+                "from ApplicantRecords_backup ar " +
+                "inner join AspNetUsers u on ar.CreatedBy = u.Id " +
+                "cross apply OpenJson(ar.apostiledata, N'$') " +
+                "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                "where ar.ScheduleDate between {0} and {1} and ar.BranchId={2}", dateFrom, dateTo, branchId).AsEnumerable();
+            }
+
+
+            var applicants = raw.GroupBy(a => new
+            {
+                a.ApplicationCode,
+                a.ScheduleDate,
+                a.FirstName,
+                a.MiddleName,
+                a.LastName,
+                a.Suffix,
+                a.ContactNumber,
+                a.NameOfRepresentative,
+                a.RepresentativeContactNumber,
+                a.ProcessingSite,
+                a.Email,
+                a.CountryDestination
+            }).Select(gcs => new ExportTemplate
+            {
+                AppointmentCode = gcs.Key.ApplicationCode,
+                ScheduleDate = gcs.Key.ScheduleDate,
+                FirstName = gcs.Key.FirstName,
+                MiddleName = gcs.Key.MiddleName,
+                LastName = gcs.Key.LastName,
+                Suffix = gcs.Key.Suffix,
+                ContactNumber = gcs.Key.ContactNumber,
+                NameOfRepresentative = gcs.Key.NameOfRepresentative,
+                RepresentativeContactNumber = gcs.Key.RepresentativeContactNumber,
+                ConsularOffice = gcs.Key.ProcessingSite,
+                Documents = string.Join("<br>", gcs.Select(a => a.DocumentName)),
+                Quantity = string.Join("<br>", gcs.Select(d => d.Quantity)),
+                Transaction = string.Join("<br>", gcs.Select(d => d.Transaction)),
+                TotalDocuments = gcs.Select(d => d.Quantity).Sum(),
+                Email = gcs.Key.Email,
+                CountryDestination = gcs.Key.CountryDestination
+            })
+            .OrderBy(a => a.ScheduleDate)
+            .ToList();
+
+            return applicants;
+        }
+
         public ApplicantRecord ResendApplication(long id)
         {
             var applicant = _context.ApplicantRecords.Where(a => a.Id == id).AsNoTracking().FirstOrDefault();
@@ -786,7 +920,7 @@ namespace DFACore.Repository
         public bool CancelApplication(long id)
         {
 
-            
+
 
             //they have separate archive table for logs here (not part of code first)
             //insert in logs

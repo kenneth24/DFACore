@@ -931,6 +931,90 @@ namespace DFACore.Controllers
             return new FileStreamResult(pdfStream, "application/pdf");
         }
 
+        [Authorize(Roles = "Super Administrator, Administrator")]
+        //[AllowAnonymous]
+        //[HttpPost]
+        public async Task<IActionResult> ExportUnAttendanceToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+
+            var model = new ExportPDFViewModel();
+      
+            model.ExportTemplates = _administrationRepository.ExportUnAttendanceToPDF(branchId, dateFrom, dateTo);
+
+            //var count = model.ExportTemplates.Where(a => a.Attendance == "Yes").Count();
+
+            //var sum = model.ExportTemplates.Where(a => a.Attendance == "Yes").Sum(a => a.TotalDocuments);
+            var totalSum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+
+
+            model.From = dateFrom;
+            model.To = dateTo;
+            //model.Count = count;
+            //model.Sum = sum;
+            model.TotalSum = totalSum;
+            model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
+
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Landscape,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Right = 10,
+                    Left = 10
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var pdf = await _generatePdf.GetByteArray("Views/ExportUnAttendancePDF.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
+        [Authorize(Roles = "Super Administrator, Administrator")]
+        [HttpPost]
+        public async Task<IActionResult> ExportCancelledAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+            var model = new ExportPDFViewModel();
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+            model.ExportTemplates = _administrationRepository.ExportCancelledAppointmentToPDF(branchId, dateFrom, dateTo);
+
+            var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
+
+            model.From = dateFrom;
+            model.To = dateTo;
+            model.Sum = sum;
+            model.LogoPath = Path.Combine(_env.WebRootPath + "/dfa.png");
+
+            var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
+            var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
+            var options = new ConvertOptions
+            {
+                FooterHtml = footer,
+                PageOrientation = Wkhtmltopdf.NetCore.Options.Orientation.Landscape,
+                PageMargins = new Wkhtmltopdf.NetCore.Options.Margins()
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Right = 10,
+                    Left = 10
+                }
+            };
+            _generatePdf.SetConvertOptions(options);
+
+            var pdf = await _generatePdf.GetByteArray("Views/ExportPDF.cshtml", model);
+            var pdfStream = new System.IO.MemoryStream();
+            pdfStream.Write(pdf, 0, pdf.Length);
+            pdfStream.Position = 0;
+            return new FileStreamResult(pdfStream, "application/pdf");
+        }
+
         [Authorize(Roles = "Super Administrator")]
         [HttpPost]
         public async Task<IActionResult> ExportLogsToPDF(DateTime dateFrom, DateTime dateTo)

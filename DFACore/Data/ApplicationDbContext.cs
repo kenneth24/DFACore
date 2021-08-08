@@ -41,6 +41,18 @@ namespace DFACore.Data
                 e.ToView(null);
             });
 
+            builder.Entity<AttendanceModel>(e =>
+            {  e.HasNoKey();
+                e.ToView(null);
+            });
+
+            builder.Entity<CancelAppointmentModel>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+
+
             //NOTE: I manually add index in ApplicantRecords table
             //create index IX_ApplicantRecords_Branchid_Scheduledate
             //on ApplicantRecords(branchid, scheduledate);

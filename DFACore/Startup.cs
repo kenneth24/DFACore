@@ -56,7 +56,7 @@ namespace DFACore
             //});
 
             //services.AddDistributedMemoryCache();
-
+            services.AddSession();
             //services.AddSession(options =>
             //{
             //    options.IdleTimeout = TimeSpan.FromSeconds(10);
@@ -117,8 +117,8 @@ namespace DFACore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //app.UseCookiePolicy();
-            //app.UseSession();
+            app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseRouting();
 
