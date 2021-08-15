@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DCore = System.Linq.Dynamic.Core;
 
 namespace DFACore.Repository
 {
@@ -21,11 +22,81 @@ namespace DFACore.Repository
             _context = context;
         }
 
-        public ApplicantRecord GetApplicantRecord(long id)
+        public ApplicantRecord GetApplicantRecord(string applicationCode)
         {
-            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).FirstOrDefault();
+            var applicant = _context.ApplicantRecords.Where(a => a.ApplicationCode == applicationCode).FirstOrDefault();
             return applicant;
         }
+
+        public int GetCount()
+        {
+            var count = _context.ApplicantRecords.Count();
+            return count;
+        }
+
+        public IQueryable<ApplicantModel> GetAllApplicantRecordForDT(int skip, int take, string searchText = "")
+        {
+            IQueryable<ApplicantModel> raw;
+            string str = "";
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                str = $"select ar.Id, ar.ApplicationCode, ar.ScheduleDate, ar.DateCreated, ar.FirstName, IsNull(ar.MiddleName, '') MiddleName, ar.LastName, IsNull(ar.Suffix, '') Suffix, IsNull(ar.ContactNumber, '') ContactNumber, IsNull(ar.NameOfRepresentative, '') NameOfRepresentative, IsNull(ar.RepresentativeContactNumber, '') RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
+                    "into #tmp " +
+                 "from ApplicantRecords ar " +
+                 "inner join AspNetUsers u on ar.CreatedBy = u.Id  " +
+                 "cross apply OpenJson(ar.apostiledata, N'$')  " +
+                 "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                 $"where ar.LastName = '{searchText}' or u.Email = '{searchText}' or ar.ApplicationCode = '{searchText}'; " +
+                 "select * from #tmp " +
+                     "order by ScheduleDate desc " +
+                     $"OFFSET     {skip} ROWS " +
+                     $"FETCH NEXT {take} ROWS ONLY; " +
+                     "drop table #tmp";
+            }
+            else
+            {
+                str = $"select ar.Id, ar.ApplicationCode, ar.ScheduleDate, ar.DateCreated, ar.FirstName, IsNull(ar.MiddleName, '') MiddleName, ar.LastName, IsNull(ar.Suffix, '') Suffix, IsNull(ar.ContactNumber, '') ContactNumber, IsNull(ar.NameOfRepresentative, '') NameOfRepresentative, IsNull(ar.RepresentativeContactNumber, '') RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
+                     "from ApplicantRecords ar " +
+                     "inner join AspNetUsers u on ar.CreatedBy = u.Id  " +
+                     "cross apply OpenJson(ar.apostiledata, N'$')  " +
+                     "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                     "order by ar.ScheduleDate desc " +
+                     $"OFFSET {skip} ROWS " +
+                     $"FETCH NEXT {take} ROWS ONLY; ";
+            }
+
+            raw = _context.Set<ApplicantModel>().FromSqlRaw(str);
+
+
+            return raw;
+        }
+
+        public int GetAllApplicantRecordCountForDT(string searchText = "")
+        {
+            IEnumerable<ApplicantModelCount> raw;
+            string str = "";
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                str = $"select count(1) [Count] from (" +
+                    "select ar.ApplicationCode " +
+                    "from ApplicantRecords ar inner join AspNetUsers u on ar.CreatedBy = u.Id  cross apply OpenJson(ar.apostiledata, N'$')  WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                    $"where ar.LastName = '{searchText}' or u.Email = '{searchText}' or ar.ApplicationCode = '{searchText}' " +
+                    "group by applicationcode) a ";
+            }
+            else
+            {
+                str = $"select count(1) [Count] from (" +
+                    "select ar.ApplicationCode " +
+                    "from ApplicantRecords ar inner join AspNetUsers u on ar.CreatedBy = u.Id  cross apply OpenJson(ar.apostiledata, N'$')  WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
+                    "group by applicationcode) a ";
+            }
+
+            raw = _context.Set<ApplicantModelCount>().FromSqlRaw(str);
+
+            return raw.FirstOrDefault().Count;
+        }
+
+
         public IQueryable<AdminApplicantRecordViewModel> GetAllApplicantRecord(string sortOrder, string searchString)
         {
             //var result = _context.ApplicantRecords.Select(a => a);
@@ -391,11 +462,36 @@ namespace DFACore.Repository
             IQueryable<Holiday> holidays;
             if (!String.IsNullOrEmpty(searchString))
             {
-                holidays = _context.Holidays.Where(s => s.BranchId.Equals(Convert.ToInt64(searchString)));
+                holidays = _context.Holidays.Where(a => a.BranchId.Equals(Convert.ToInt64(searchString)) && a.Date.Year == DateTime.Now.Year && a.Type != "UnAvailableDay");
             }
             else
             {
-                holidays = _context.Holidays.Where(a => a.BranchId == 0 && a.Date.Year == DateTime.Now.Year);
+                holidays = _context.Holidays.Where(a => a.BranchId == 0 && a.Date.Year == DateTime.Now.Year && a.Type != "UnAvailableDay");
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    holidays = holidays.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    holidays = holidays.OrderByDescending(s => s.Date);
+                    break;
+            }
+            var result = holidays.AsNoTracking();
+
+            return result;
+        }
+
+        public IQueryable<Holiday> GetExceptionDay(string sortOrder, string searchString)
+        {
+            IQueryable<Holiday> holidays;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                holidays = _context.Holidays.Where(a => a.BranchId.Equals(Convert.ToInt64(searchString)) && a.Date.Year >= DateTime.Now.Year && a.Type == "UnAvailableDay");
+            }
+            else
+            {
+                holidays = _context.Holidays.Where(a => a.BranchId == 0 && a.Date.Year >= DateTime.Now.Year && a.Type == "UnAvailableDay");
             }
             switch (sortOrder)
             {
@@ -422,6 +518,27 @@ namespace DFACore.Repository
             _context.Holidays.Add(holiday);
             _context.SaveChanges();
             return holiday;
+        }
+
+        public bool UnAvailableDay(long branchId, DateTime start, DateTime end)
+        {
+            for (var date = start; date <= end; date = date.AddDays(1))
+            {
+                var holiday = new Holiday
+                {
+                    Title = "UnAvailableDay",
+                    BranchId = branchId,
+                    Date = date,
+                    Type = "UnAvailableDay"
+                };
+                _context.Holidays.Add(holiday);
+                _context.SaveChanges();
+            }
+            //var days = Enumerable.Range(0, 1 + end.Subtract(start).Days)
+            //  .Select(offset => start.AddDays(offset))
+            //  .ToArray();
+           
+            return true;
         }
 
         public bool DeleteHoliday(long holidayId)
@@ -485,6 +602,11 @@ namespace DFACore.Repository
             return price;
         }
 
+        public IEnumerable<Notice> GetNotice()
+        {
+            var notice = _context.Notices.AsEnumerable();
+            return notice;
+        }
         public Notice GetNotice(long id)
         {
             var notice = _context.Notices.Where(a => a.Id == id).FirstOrDefault();
@@ -830,7 +952,7 @@ namespace DFACore.Repository
         public IEnumerable<ExportTemplate> ExportCancelledAppointmentToPDF(long branchId, DateTime dateFrom, DateTime dateTo)
         {
             dateTo = dateTo.AddDays(1).AddSeconds(-1);
-     
+
             IEnumerable<CancelAppointmentModel> raw;
             if (branchId == default)
             {
@@ -917,9 +1039,9 @@ namespace DFACore.Repository
             }
         }
 
-        public bool CancelApplication(long id)
+        public bool CancelApplication(string applicationCode)
         {
-
+            //string[] tokens = str.Split(',');
 
 
             //they have separate archive table for logs here (not part of code first)
@@ -927,24 +1049,55 @@ namespace DFACore.Repository
             //_context.ApplicantRecords.FromSqlRaw($"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, ");
 
 
-            using (var context = _context)
-            {
-                var commandText = $"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
-                    $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
-                    $"SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
-                    $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE Id=@id";
-                var name = new SqlParameter("@id", id);
-                context.Database.ExecuteSqlRaw(commandText, name);
-            }
+            //using (var context = _context)
+            //{
+            //    var commandText = $"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+            //        $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+            //        $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
+            //        $"SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+            //        $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+            //        $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in (@applicationCode); " +
+            //        "DELETE ApplicantRecords WHERE ApplicationCode in (@applicationCode2); ";
+            //    var param1 = new SqlParameter("@applicationCode", applicationCode);
+            //    var param2 = new SqlParameter("@applicationCode2", applicationCode);
+            //    context.Database.ExecuteSqlRaw(commandText, param1, param2);
+
+            //    context.SaveChanges();
+            //}
+            //using (var context = _context)
+            var commandText = "INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+                    "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+                    "ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
+                    "SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+                    "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
+                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in ({applicationCode}); " +
+                    $"DELETE ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
+            //var param1 = new SqlParameter("applicationCode", applicationCode);
+            //var param2 = new SqlParameter("applicationCode2", applicationCode);
+            _context.Database.ExecuteSqlRaw(commandText);
             //delete in original table
 
-            var applicant = _context.ApplicantRecords.Where(a => a.Id == id).FirstOrDefault();
-            var x = _context.ApplicantRecords.Remove(applicant);
-            _context.SaveChanges();
+            //using (var context = _context)
+            //{
+            //    var commandText = $"DELETE ApplicantRecords WHERE ApplicationCode in (@applicationCode)";
+            //    var name = new SqlParameter("@applicationCode", applicationCode);
+            //    context.Database.ExecuteSqlRaw(commandText, name);
+            //}
+
+            //var applicant = _context.ApplicantRecords.Where(a => a.ApplicationCode == applicationCode).FirstOrDefault();
+            //var x = _context.ApplicantRecords.Remove(applicant);
+            //_context.SaveChanges();
 
             return true;
+        }
+
+
+        public List<DocumentStatistic> GetDocumentCountByDay(long branchId, DateTime startDate)
+        {
+            var raw = _context.Set<DocumentStatistic>().FromSqlRaw($"exec GetAvailableTimeByDay {branchId}, '{startDate.ToString("yyyy-MM-dd")}'")
+                .ToList();
+
+            return raw;
         }
     }
 }

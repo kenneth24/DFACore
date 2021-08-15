@@ -9,11 +9,11 @@
 }
 <div style="margin-top:50px;">
 
-    <h3 style="margin-top:50px;">Calendar</h3>
+    <h3 style="margin-top:50px;">Exception Days</h3>
 
     <div class="row">
         <div class="col-12">
-            <a class="btn btn-primary pull-right" asp-action="AddHoliday">Create New</a>
+            <a class="btn btn-primary pull-right" asp-action="Calendar">Create New</a>
         </div>
     </div>
 
@@ -21,11 +21,11 @@
         <div class="form-row align-items-center">
 
             @*<div class="col-sm-3 my-1">
-                    <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter title or type here">
-                    </div>
-                </div>*@
+                <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter title or type here">
+                </div>
+            </div>*@
             <label class="black-text">By CO:</label>
             <div class="col-sm-3 my-1">
                 <select class="form-control" name="SearchString">
@@ -39,26 +39,25 @@
             </div>
 
             @*<div class="col-sm-2 my-1">
-                    <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="From">
-                    </div>
+                <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="From">
                 </div>
-                <div class="col-sm-2 my-1">
-                    <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="To">
-                    </div>
-                </div>*@
+            </div>
+            <div class="col-sm-2 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="To">
+                </div>
+            </div>*@
             <div class="col-auto my-1">
                 <button type="submit" class="btn btn-primary">Search</button> |
                 <a asp-action="Holiday">Refresh</a>
             </div>
-            
         </div>
         <div>
             <div class="col-auto my-1 pull-right">
-                <a asp-action="ExceptionDay" class="pull-right">Go to Exception Day</a>
+                <a asp-action="Holiday" class="pull-right">Go to Holiday</a>
             </div>
         </div>
     </form>
@@ -77,9 +76,9 @@
                 <th>
                     Date
                 </th>
-                <th>
+                @*<th>
                     Type
-                </th>
+                </th>*@
 
 
 
@@ -97,12 +96,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Type)
-                    </td>
+                    </td>*@
                     <td>
                         @*<a asp-action="EditHoliday" asp-route-holidayId="@item.Id">Edit</a> |*@
-                        <a asp-action="DeleteHoliday" asp-route-holidayId="@item.Id">Delete</a>
+                        <a asp-action="DeleteExceptionDay" asp-route-holidayId="@item.Id">Delete</a>
                     </td>
 
                 </tr>

@@ -52,6 +52,22 @@ namespace DFACore.Data
                 e.ToView(null);
             });
 
+            builder.Entity<ApplicantModel>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+            builder.Entity<ApplicantModelCount>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+            builder.Entity<DocumentStatistic>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
+
 
             //NOTE: I manually add index in ApplicantRecords table
             //create index IX_ApplicantRecords_Branchid_Scheduledate

@@ -283,7 +283,7 @@ namespace DFACore.Repository
             }
             else
             {
-                if (range.StartTime != null)
+                if (range.StartTime != default)
                 {
                     if (range.StartTime < now)
                     {
@@ -300,7 +300,7 @@ namespace DFACore.Repository
                 }
 
                 //var end = new DateTime(2021, 05, 01); //start.AddYears(1); //.AddDays(30);
-                if (range.EndTime != null)
+                if (range.EndTime != default)
                 {
                     end = range.EndTime;
                 }

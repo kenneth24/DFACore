@@ -1,4 +1,5 @@
-﻿using ClosedXML.Excel;
+﻿
+using ClosedXML.Excel;
 using DFACore.Models;
 using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+
+
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -102,10 +106,10 @@ namespace DFACore.Controllers
         {
             await LogOff();
             ViewBag.ReturnUrl = returnUrl;
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-            else
-                return View();
+            //if (User.Identity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Home");
+            //else
+            return View();
 
         }
 
@@ -144,7 +148,7 @@ namespace DFACore.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Administration");
+                return RedirectToAction("Home", "Administration");
             }
 
             if (result.IsNotAllowed)
@@ -167,6 +171,14 @@ namespace DFACore.Controllers
                 return View(model);
             }
 
+        }
+
+
+        [HttpGet]
+        public IActionResult Home()
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            return View();
         }
 
         [HttpGet]
@@ -586,6 +598,69 @@ namespace DFACore.Controllers
             return View(await PaginatedList<Holiday>.CreateAsync(holidays, pageNumber ?? 1, pageSize));
         }
 
+        public async Task<IActionResult> ExceptionDay(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString == "0" || searchString is null)
+            {
+                ViewData["CurrentValue"] = "Applied to All";
+            }
+            else
+            {
+                ViewData["CurrentValue"] = _administrationRepository.GetBranchName(Convert.ToInt64(searchString));
+            }
+
+            var holidays = _administrationRepository.GetExceptionDay(sortOrder, searchString);
+
+            int pageSize = 100;
+            return View(await PaginatedList<Holiday>.CreateAsync(holidays, pageNumber ?? 1, pageSize));
+        }
+
+        [HttpGet]
+        public IActionResult Calendar()
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Calendar(long branchId, DateTime dateFrom, DateTime dateTo)
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            if (dateFrom == default || dateTo == default)
+            {
+                foreach (var modelValue in ModelState.Values)
+                {
+                    modelValue.Errors.Clear();
+                }
+                ModelState.AddModelError(string.Empty, "Invalid data in DateFrom or DateTo.");
+                return View();
+            }
+
+            _administrationRepository.UnAvailableDay(branchId, dateFrom, dateTo);
+            return RedirectToAction("ExceptionDay");
+        }
+
         [HttpGet]
         public IActionResult AddHoliday()
         {
@@ -606,6 +681,13 @@ namespace DFACore.Controllers
         {
             _administrationRepository.DeleteHoliday(holidayId);
             return RedirectToAction("Holiday");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteExceptionDay(long holidayId)
+        {
+            _administrationRepository.DeleteHoliday(holidayId);
+            return RedirectToAction("ExceptionDay");
         }
 
 
@@ -689,7 +771,7 @@ namespace DFACore.Controllers
         {
             _administrationRepository.UpdateNotice(2, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
-            return RedirectToAction("Notice");
+            return RedirectToAction("Declaration");
         }
 
         [Authorize(Roles = "Super Administrator")]
@@ -707,7 +789,7 @@ namespace DFACore.Controllers
         {
             _administrationRepository.UpdateNotice(3, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
-            return RedirectToAction("Notice");
+            return RedirectToAction("TermsAndCondition");
         }
 
         public IActionResult AccessDenied()
@@ -946,7 +1028,7 @@ namespace DFACore.Controllers
         {
 
             var model = new ExportPDFViewModel();
-      
+
             model.ExportTemplates = _administrationRepository.ExportUnAttendanceToPDF(branchId, dateFrom, dateTo);
 
             //var count = model.ExportTemplates.Where(a => a.Attendance == "Yes").Count();
@@ -1031,7 +1113,7 @@ namespace DFACore.Controllers
             var model = new ExportPDFViewModel();
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-            model.ActivityLogs = _administrationRepository.GetActivityLogs(dateFrom, dateTo).AsEnumerable();
+            model.ActivityLogs = _administrationRepository.GetActivityLogs(dateFrom, dateTo).ToList();//.AsEnumerable();
 
 
             //var sum = model.ExportTemplates.Sum(a => a.TotalDocuments);
@@ -1115,9 +1197,9 @@ namespace DFACore.Controllers
 
         //[AllowAnonymous]
         [HttpGet]
-        public async Task<bool> ResendApplication(long id)
+        public async Task<bool> ResendApplication(string applicationCode)
         {
-            var model = _administrationRepository.GetApplicantRecord(id);
+            var model = _administrationRepository.GetApplicantRecord(applicationCode);
 
             var attachments = new List<Attachment>();
 
@@ -1172,7 +1254,7 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     //Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
                     //Nationality = record.Nationality?.ToUpper(),
-                    ContactNumber = string.IsNullOrEmpty(model.ContactNumber)? "" : model.ContactNumber,
+                    ContactNumber = string.IsNullOrEmpty(model.ContactNumber) ? "" : model.ContactNumber,
                     //CompanyName = record.CompanyName?.ToUpper(),
                     CountryDestination = model.CountryDestination?.ToUpper(),
                     NameOfRepresentative = model.NameOfRepresentative,
@@ -1191,25 +1273,25 @@ namespace DFACore.Controllers
                                 $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
                 };
 
-                
+
                 attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
                     generatePowerOfAttorney = true;
-                
+
                 generateAuthLetter = true;
             }
 
             if (generatePowerOfAttorney)
             {
-                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), 
+                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()),
                     new MimeKit.ContentType("application", "pdf")));
             }
 
             if (generateAuthLetter)
             {
-                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), 
+                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()),
                     new MimeKit.ContentType("application", "pdf")));
             }
 
@@ -1329,12 +1411,12 @@ namespace DFACore.Controllers
 
         }
 
-        [AllowAnonymous]
+
         [HttpGet]
-        public async Task<IActionResult> ViewPDFApplication(long id)
+        public async Task<IActionResult> ViewPDFApplication(string applicationCode)
         {
 
-            var get = _administrationRepository.GetApplicantRecord(id);
+            var get = _administrationRepository.GetApplicantRecord(applicationCode);
 
             var model2 = new ApplicantRecord
             {
@@ -1386,66 +1468,126 @@ namespace DFACore.Controllers
         }
 
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
-        public bool CancelApplication(long id)
+        public bool CancelApplication(string applicationCode)
         {
-            var result = _administrationRepository.CancelApplication(id);
+            var result = _administrationRepository.CancelApplication(applicationCode);
             return result;
         }
 
 
-
-        public IActionResult LoadData()
+        //[AllowAnonymous]
+        [HttpPost]
+        public IActionResult GetAllApplicantRecordForDT()
         {
-            try
+            var draw = Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+
+            IQueryable<ApplicantModel> applicants;
+
+            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+            //{
+            //    applicants = applicants.OrderBy(sortColumn + " " + sortColumnDirection);
+
+            //}
+            if (!string.IsNullOrEmpty(searchValue))
             {
-                //Creating instance of DatabaseContext class  
-                using (DatabaseContext _context = new DatabaseContext())
-                {
-                    var draw = Request.Form["draw"].FirstOrDefault();
-                    var start = Request.Form["start"].FirstOrDefault();
-                    var length = Request.Form["length"].FirstOrDefault();
-                    var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
-                    var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-                    var searchValue = Request.Form["search[value]"].FirstOrDefault();
-
-
-                    //Paging Size (10,20,50,100)    
-                    int pageSize = length != null ? Convert.ToInt32(length) : 0;
-                    int skip = start != null ? Convert.ToInt32(start) : 0;
-                    int recordsTotal = 0;
-
-                    // Getting all Customer data    
-                    var customerData = (from tempcustomer in _context.Customers
-                                        select tempcustomer);
-
-                    //Sorting    
-                    if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-                    {
-                        customerData = customerData.OrderBy(sortColumn + " " + sortColumnDir);
-                    }
-                    //Search    
-                    if (!string.IsNullOrEmpty(searchValue))
-                    {
-                        customerData = customerData.Where(m => m.CompanyName == searchValue);
-                    }
-
-                    //total number of rows count     
-                    recordsTotal = customerData.Count();
-                    //Paging     
-                    var data = customerData.Skip(skip).Take(pageSize).ToList();
-                    //Returning Json Data    
-                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-                }
+                recordsTotal = _administrationRepository.GetAllApplicantRecordCountForDT(searchValue);
+                applicants = _administrationRepository.GetAllApplicantRecordForDT(skip, pageSize, searchValue);
             }
-            catch (Exception)
+            else
             {
-                throw;
+                recordsTotal = _administrationRepository.GetAllApplicantRecordCountForDT();
+                applicants = _administrationRepository.GetAllApplicantRecordForDT(skip, pageSize);
             }
+
+
+
+
+
+
+
+
+            var data = applicants.ToList().GroupBy(a => new
+            {
+                a.ApplicationCode,
+                a.ScheduleDate,
+                a.DateCreated,
+                a.FirstName,
+                a.MiddleName,
+                a.LastName,
+                a.Suffix,
+                a.ContactNumber,
+                a.NameOfRepresentative,
+                a.RepresentativeContactNumber,
+                a.ProcessingSite,
+                a.Email,
+                a.CountryDestination
+            }).Select(gcs => new ApplicantTemplate
+            {
+                ApplicationCode = gcs.Key.ApplicationCode,
+                ScheduleDate = gcs.Key.ScheduleDate.ToString("yyyy/MM/dd hh:mm:ss tt"),
+                DateCreated = gcs.Key.DateCreated.ToString("yyyy/MM/dd hh:mm:ss tt"),
+                Email = gcs.Key.Email,
+                DocumentOwner = $"{gcs.Key.LastName}, {gcs.Key.FirstName} {gcs.Key.MiddleName}",
+                ContactNumber = gcs.Key.ContactNumber,
+                NameOfRepresentative = gcs.Key.NameOfRepresentative,
+                RepresentativeContactNumber = gcs.Key.RepresentativeContactNumber,
+                ConsularOffice = gcs.Key.ProcessingSite,
+                CountryDestination = gcs.Key.CountryDestination,
+                Documents = string.Join("<br>", gcs.Select(a => a.DocumentName)),
+                Quantity = string.Join("<br>", gcs.Select(d => d.Quantity)),
+                Transaction = string.Join("<br>", gcs.Select(d => d.Transaction))
+
+
+            }).ToList();
+
+            var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+            return Ok(jsonData);
 
         }
 
+        [HttpGet]
+        public IActionResult Dashboard()
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            ViewBag.Branch = 1;
+            ViewBag.FilterDate = DateTime.Now;
+            var result = _administrationRepository.GetDocumentCountByDay(1, DateTime.Now);
+            return View(result);
+        }
+
+
+        [HttpPost]
+        public IActionResult Dashboard(long branchId, DateTime startDate)
+        {
+            ViewBag.Branches = _administrationRepository.GetBranches();
+            if (branchId == default || startDate == default)
+            {
+                foreach (var modelValue in ModelState.Values)
+                {
+                    modelValue.Errors.Clear();
+                }
+                ModelState.AddModelError(string.Empty, "Invalid attempt.");
+                ViewBag.Branch = 1;
+                ViewBag.FilterDate = DateTime.Now;
+                return View(default);
+            }
+            var result = _administrationRepository.GetDocumentCountByDay(branchId, startDate);
+            ViewBag.Branch = branchId;
+            ViewBag.FilterDate = startDate;
+            return View(result);
+        }
+
+
+
     }
-}
 }

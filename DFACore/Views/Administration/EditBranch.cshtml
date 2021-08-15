@@ -97,7 +97,7 @@
                                 <div class="col-md-3 col-sm-12">
                                     <p><span style="font-weight:bold">Time:</span> @Html.DisplayFor(model => model.ScheduleCapacities[i].Name)</p>
                                 </div>
-                                <div class="col-md-6 col-sm-12">
+                                <div class="col-md-6 col-sm-12 schedCapacity">
                                     <span style="font-weight:bold">Capacity:</span> @Html.EditorFor(model => model.ScheduleCapacities[i].Capacity)
                                 </div>
                             </div>
@@ -110,6 +110,9 @@
 
                         @Html.HiddenFor(model => model.ScheduleCapacities[i].BranchId)
                     }
+
+                    
+                <p style="font-weight:bold;color:darkred;text-align:center;">TOTAL CAPACITY: <span class="totalCapacity"></span></p>
 
                     <p style="font-weight:bold;">SET AVAILABLE DATES</p>
                     <div class="form-group black-text">
@@ -149,5 +152,25 @@
 </div>
 
 @section Scripts {
+
+    <script>
+        $(document).on("change", ".schedCapacity :input", function () {
+            var sum = 0;
+            $(".schedCapacity :input").each(function () {
+                console.log($(this).val());
+                sum += +$(this).val();
+            });
+            $(".totalCapacity").text(sum);
+        });
+        $(document).ready(function () {
+            var sum = 0;
+            $(".schedCapacity :input").each(function () {
+                console.log($(this).val());
+                sum += +$(this).val();
+            });
+            $(".totalCapacity").text(sum);
+        });
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 }

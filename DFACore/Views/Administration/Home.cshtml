@@ -1,0 +1,218 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Homepage";
+}
+
+
+<style>
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+</style>
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<div id="loading" style="display:none;">
+    <div id="loading-image">
+        <span id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></span>
+    </div>
+</div>
+<div class="container">
+
+
+    <h3 style="margin-top:50px;">Home</h3>
+
+    
+    <div class="row" style="margin-top:30px;">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
+                Export
+            </button>
+            <button id="CancelAppointment" class="btn btn-danger">Cancel Appointment</button>
+
+        </div>
+
+
+    </div>
+
+
+    <br />
+
+    <div class="table-responsive">
+
+
+
+
+
+
+
+        <table id="customerDatatable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Appt. Code
+                    </th>
+                    <th>
+                        Schedule
+                    </th>
+                    <th>
+                        DateCreated
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Document Owner
+                    </th>
+                    <th>
+                        Contact No.
+                    </th>
+                    <th>
+                        Authorized Rep.
+                    </th>
+                    <th>
+                        Contact No.
+                    </th>
+                    <th>
+                        Consular Office
+                    </th>
+                    <th>
+                        Destination
+                    </th>
+                    <th>
+                        Documents
+                    </th>
+                    <th>
+                        Qty
+                    </th>
+                    <th>
+                        Transaction
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+
+
+    <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" style="margin-bottom:20px;">
+                        <div class="form-row align-items-center">
+                            @if (User.IsInRole("Super Administrator"))
+                            {
+                                <div class="col-sm-12 my-1">
+                                    Consular Office
+                                </div>
+                                <div class="col-sm-12 my-1">
+                                    <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
+                                    <select class="form-control" name="branchId">
+                                        <option value="0">All</option>
+                                        @foreach (var branch in ViewBag.Branches)
+                                        {
+                                            <option value="@branch.Id">@branch.BranchName</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+
+                            
+                            <div class="col-sm-6 my-1">
+                                From
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="DateFrom" name="dateFrom" placeholder="From">
+                                </div>
+                            </div>
+                            @*<label for="inlineFormInputGroupUsername" style="margin:0 10px">To</label>*@
+
+                            <div class="col-sm-6 my-1">
+                                To
+                                <div class="input-group">
+                                    <input type="date" class="form-control" id="DateTo" name="dateTo" placeholder="To">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6 my-1">
+                                <button type="submit" asp-action="ExportAppointmentToPDF" class="btn btn-danger btn-sm col-sm-12">Summary of Appointments</button>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <button type="submit" asp-action="ExportAttendanceToPDF" class="btn btn-danger btn-sm col-sm-12">Summary of Attendance</button>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <button type="submit" asp-action="ExportUnAttendanceToPDF" class="btn btn-danger btn-sm col-sm-12">Summary of No Shows</button>
+                            </div>
+                            <div class="col-sm-6 my-1">
+                                <button type="submit" asp-action="ExportCancelledAppointmentToPDF" class="btn btn-danger btn-sm col-sm-12">Summary of Cancelled Appts</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.21/dataRender/datetime.js"></script>
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+
+    <script src="~/js/home.js"></script>
+    <script>
+
+        var urlHome = '@Url.Action("GetAllApplicantRecordForDT", "Administration")';
+        var urlHomeCancel = '@Url.Action("CancelApplication", "Administration")';
+        var urlResend = '@Url.Action("ResendApplication", "Administration")'
+        var urlView = '@Url.Action("ViewPDFApplication", "Administration")'
+
+        $(document).ready(function () {
+            var d = new Date();
+
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+
+            var output = d.getFullYear() + '-' +
+                (month < 10 ? '0' : '') + month + '-' +
+                (day < 10 ? '0' : '') + day;
+            $('#DateFrom').val(output);
+            $('#DateTo').val(output);
+        });
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}
