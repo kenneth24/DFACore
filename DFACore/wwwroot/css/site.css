@@ -95,7 +95,7 @@ body {
     font-family: 'Trajan Pro Bold';
 }
 
-div.pageContainers {
+/*div.pageContainers {
     margin-top: 150px !important;
 }
 
@@ -103,7 +103,7 @@ div.pageContainers {
     div.pageContainers {
         margin-top: 70px !important;
     }
-}
+}*/
 
 .black-text {
     color: #000000 !important;
@@ -263,4 +263,39 @@ margin-left: -3.3%;*/
     50% {
         opacity: 0;
     }
+}
+
+.img-container {
+    height: 80px;
+}
+
+.pointer {
+    cursor: pointer!important;
+}
+
+.container.db {
+    max-width: 100%!important;
+    padding: 0;
+}
+
+.video-thumbnail {
+    width: 400px;
+    height: auto;
+}
+
+.mb-60 {
+    margin-bottom: 60px !important;
+}
+
+.mb-70 {
+    margin-bottom: 70px !important;
+}
+
+.navbar > .container {
+    width: 100% !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    max-width: 960px!important;
 }
