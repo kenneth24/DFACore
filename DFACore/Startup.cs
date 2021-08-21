@@ -117,8 +117,8 @@ namespace DFACore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseCookiePolicy();
-            app.UseSession();
+            //app.UseCookiePolicy();
+            //app.UseSession();
 
             app.UseRouting();
 

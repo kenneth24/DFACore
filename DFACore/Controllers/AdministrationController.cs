@@ -1470,9 +1470,9 @@ namespace DFACore.Controllers
 
         //[AllowAnonymous]
         [HttpGet]
-        public bool CancelApplication(string applicationCode)
+        public async Task<bool> CancelApplication(string applicationCode)
         {
-            var result = _administrationRepository.CancelApplication(applicationCode);
+            var result = await _administrationRepository.CancelApplication(applicationCode);
             return result;
         }
 
