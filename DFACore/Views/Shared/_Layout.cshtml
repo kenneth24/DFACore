@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="~/css/typography.css" />
+    <link rel="stylesheet" href="~/css/card.css" />
+    <link rel="stylesheet" href="~/css/colors.css" />
+    <link rel="stylesheet" href="~/css/responsiveness.css" />
+
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">*@
     @*<link href="~/lib/bootstrap/dist/css/font-awesome.css" rel="stylesheet" />*@
@@ -55,9 +59,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 fixed-top" style="background-color: #217ff3 !important;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 sticky-top" style="background-color: #217ff3 !important;">
             <div class="container">
-                <div id="dfa-banner">
+                <div id="dfa-banner" class="mx-auto">
                     <img src="~/Banner.png" class="img-fluid" style="width:50%!important" />
                     @*<img id="BannerLogo" src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;" />
                         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -87,7 +91,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div id="mainContainer" class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -108,6 +112,38 @@
     <script src='~/lib/calendar/daygrid/main.js'></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/moment.min.js"></script>
+
+    <script>
+        // call timerInterval function every 1 minute if mouse in idle
+        // validate if no. of minutes idle is > 9
+        // if true, logoff user
+        let baseUrl = window.location.origin;
+        var idleTime = 0;
+
+        $(document).ready(function () {
+            var idleInterval = setInterval(timerIncrement, 60000); // 1m
+
+            $(this).mousemove(function (e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function (e) {
+                idleTime = 0;
+            });
+        });
+
+        function timerIncrement() {
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            if (userAuthorized) {
+                idleTime += 1;
+                if (idleTime = 10) {
+                    window.alert('You have been logged out due to inactivity!');
+                    window.location = `${baseUrl}/Account/LogOff`;
+                }
+            }
+        }
+    </script>
+
+
     @*<script src='https://momentjs.com/downloads/moment.min.js'></script>*@
     @RenderSection("Scripts", required: false)
 </body>

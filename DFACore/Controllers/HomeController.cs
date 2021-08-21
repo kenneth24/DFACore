@@ -660,5 +660,12 @@ namespace DFACore.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [Route("/")]
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
     }
 }

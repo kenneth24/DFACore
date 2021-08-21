@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Landing Page";
+}
+
+<div class="dashboard text-center">
+    <section class="header px-4 mt-5">
+        <div class="text-center mt-3 w-100 mb-60">
+            <p class="black-text bold mb-0 p-label">Office of the Consular Affairs</p>
+            <p class="black-text bold p-label">Authentication Division</p>
+            <h2 class="blue-text bold mb-0 mt-2 h2">Apostille Appointment System</h2>
+        </div>
+    </section>
+
+    <section class="content text-center mx-auto px-4 mb-70">
+        <div class="hide-on-small">
+            <div class="d-flex">
+                <a asp-action="Login" asp-controller="Account">
+                    <div class="img-container ml-auto mr-5 pointer">
+                        <img src="~/images/sched_cancel.jpg" class="h-100" />
+                    </div>
+                </a>
+                <a asp-action="Register" asp-controller="Account">
+                    <div class="img-container mr-auto pointer">
+                        <img src="~/images/create.jpg" class="h-100" />
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="show-on-small-only">
+            <a asp-action="Login" asp-controller="Account">
+                <div class="img-container text-center mb-5">
+                    <img src="~/images/create_new.png" class="w-100" />
+                </div>
+            </a>
+            <a asp-action="Register" asp-controller="Account">
+                <div class="img-container mb-3 text-center">
+                    <img src="~/images/sched_cancel_new.png" class="w-100" />
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="light-blue-bg p-4">
+        <a class="pointer d-flex" href="https://www.google.com" target="_blank">
+            <div class="w-100 mx-auto">
+                <img src="~/images/video_thumbnail.PNG" class="video-thumbnail" />
+            </div>
+        </a>
+    </section>
+</div>
+
+<script>
+    $('document').ready(function () {
+        let container = $('.container');
+        container.addClass('db');
+    });
+</script>

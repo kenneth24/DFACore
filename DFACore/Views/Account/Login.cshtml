@@ -72,11 +72,14 @@
         margin-left: -14px;
     }
 </style>
-<div id="dfa-title" class="jumbotron pageContainers" style="background-color: white;">
-    <h5 class="text-center bannerDetails black-text">WELCOME TO</h5>
-    <h2 class="text-center bannerDetails black-text-bold loginTitle loginTitleVisible" style="color: #858585">APOSTILLE APPLICATION & APPOINTMENT SYSTEM</h2>
-    <h1 class="text-center bannerDetails black-text-bold loginTitle loginTitleVisible2" style="color: #858585; font-size:20px">APOSTILLE APPLICATION &<br>APPOINTMENT SYSTEM</h1>
-</div>
+<section class="header px-4 mt-5">
+    <div class="text-center mt-3 w-100 mb-60">
+        <p class="black-text bold mb-0 p-label">Office of the Consular Affairs</p>
+        <p class="black-text bold p-label">Authentication Division</p>
+        <h2 class="blue-text bold mb-0 mt-2 h2">Apostille Appointment System</h2>
+    </div>
+</section>
+
 <div class="row">
     <div class="col-md-3 col-sm-0">
     </div>
@@ -100,13 +103,13 @@
                     </div>
 
                     @*<div class="form-group col-md-12 col-sm-12" style="text-align: center;">
-                            <div class="checkbox " >
-                                <label asp-for="RememberMe">
-                                    <input asp-for="RememberMe" />
-                                    @Html.DisplayNameFor(m => m.RememberMe)
-                                </label>
-                            </div>
-                        </div>*@
+            <div class="checkbox " >
+                <label asp-for="RememberMe">
+                    <input asp-for="RememberMe" />
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </label>
+            </div>
+        </div>*@
 
                     <div class="form-group col-md-12 col-sm-12">
                         <button id="login-button" type="button" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">LOGIN</button>
@@ -115,17 +118,18 @@
                         <h6>
                             <a id="forgot-password" asp-action="ForgotPassword">Forgot your password?</a>
                         </h6>
-                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" />
-                        <p style="text-align:right;">
-                            @*<span style="color:#656565">New user? Click</span>*@
-                            <span style="color:#217ff3;font-weight: bold;">@Html.ActionLink("Create Account", "Register", "Account")</span>
-                            @*<span style="color:#656565">to register</span>*@
-                        </p>
+                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2" />
+                        <a asp-action="Dashboard" asp-controller="Home" class="float-right bold">Back to Home Page</a>
+                        @*<button id="btnVideo" type="button" class="btn btn-outline-primary" style="font-size:12px;font-weight:bold;">CLICK HERE TO WATCH INSTRUCTIONAL VIDEO</button>*@
+                        <br />
 
-                        <button id="btnVideo" type="button" class="btn btn-outline-primary" style="font-size:12px;font-weight:bold;">CLICK HERE TO WATCH INSTRUCTIONAL VIDEO</button>
-
+                        <div class="card bg-light mb-3 w-100 white-bg mt-4">
+                            <div class="card-header text-uppercase bold p-1 white-bg">reminders to all users</div>
+                            <div class="card-body px-5 py-3">
+                                <p class="card-text">Appointments cannot be cancelled on the scheduled day itself. Please allow at least (1) day for appointment cancellation. (ex. If your appointment is on 29 August you cannot cancel it on the same day. The last day to cancel it will be 28 August) Previous appointments cannot be cancelled anymore. There are no fees or charges in using the Appointment Cancellation System.</p>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
 
@@ -196,9 +200,9 @@
                                 and other pertinent DFA rules, regulations and policies on the matter.
                             </p>*@
                     </div>
-                    <div class="container" style="padding:10px">
+                    <div class="container p-0">
                         <hr />
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-md-3 col-sm-5"> </div>
                             <div class="col-md-6 col-sm-2">
                                 <button id="declaration-agree" style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">I AGREE</button>
@@ -259,7 +263,7 @@
                                 </i>
                             </p>*@
                     </div>
-                    <div class="container" style="padding:10px">
+                    <div class="container p-0" >
                         <hr />
                         <div class="row ">
                             <div class="col-md-3 col-sm-5"> </div>
