@@ -243,6 +243,7 @@ namespace DFACore.Controllers
                 if (user.Type != 0)
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
+                    Log("Invalid username or password.", model.Email);
                     return View(model);
                 }
 
@@ -252,8 +253,10 @@ namespace DFACore.Controllers
 
                     // Uncomment to debug locally  
                     // ViewBag.Link = callbackUrl;
-                    ViewBag.errorMessage = "You must have a confirmed email to log on. "
+                    var err = "You must have a confirmed email to log on. "
                                          + "The confirmation token has been resent to your email account.";
+                    ViewBag.errorMessage = err;
+                    Log($"Logging in but with error {err}", model.Email);
                     return View("Error");
                 }
             }
@@ -399,6 +402,7 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            Log("Visit ForgotPassword page");
             return View();
         }
 
@@ -412,6 +416,7 @@ namespace DFACore.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
+                    Log($"Email not exist or Email not confirmed. Email: {model.Email}");
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("/ForgotPasswordConfirmation");
                 }
@@ -439,7 +444,7 @@ namespace DFACore.Controllers
                 //await _messageService.SendEmailAsync(model.Email, model.Email, "Reset Password",
                 //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
                 //        attachment);
-
+                Log($"Click ForgotPassword button and send email for reset password to {model.Email}.");
                 return RedirectToAction("ForgotPasswordConfirmation");
             }
 
@@ -480,6 +485,7 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
+            Log($"Visit ForgotPasswordConfirmation page");
             return View();
         }
 
@@ -489,10 +495,15 @@ namespace DFACore.Controllers
             if (code == null || email == null)
             {
                 ViewBag.errorMessage = "A code must be supplied for password reset.";
+                Log($"Visit ResetPassword page with error: A code must be supplied for password reset");
                 return View("Error");
             }
             else
+            {
+                Log($"Visit ResetPassword page");
                 return View();
+            }
+                
 
         }
 
@@ -515,6 +526,7 @@ namespace DFACore.Controllers
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
+                Log($"Submit ResetPasswordConfirmation: {model.Email}");
                 return View("ResetPasswordConfirmation");
             }
 

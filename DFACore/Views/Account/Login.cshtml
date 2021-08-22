@@ -103,16 +103,16 @@
                     </div>
 
                     @*<div class="form-group col-md-12 col-sm-12" style="text-align: center;">
-            <div class="checkbox " >
-                <label asp-for="RememberMe">
-                    <input asp-for="RememberMe" />
-                    @Html.DisplayNameFor(m => m.RememberMe)
-                </label>
-            </div>
-        </div>*@
+                            <div class="checkbox " >
+                                <label asp-for="RememberMe">
+                                    <input asp-for="RememberMe" />
+                                    @Html.DisplayNameFor(m => m.RememberMe)
+                                </label>
+                            </div>
+                        </div>*@
 
                     <div class="form-group col-md-12 col-sm-12">
-                        <button id="login-button" type="button" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">LOGIN</button>
+                        <button id="login-button" type="submit" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">LOGIN</button>
                     </div>
                     <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
                         <h6>
@@ -144,77 +144,82 @@
 
 </div>
 
-@if (declaration != null || !string.IsNullOrEmpty(declaration.NoticeMessage))
+@if (declaration != null)
 {
-    <div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row text-center">
-                        <div class="col-lg-4 col-md-5 col-sm-5"></div>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <p class="black-text" style="font-size:12px;">Department of Foreign Affairs</p>
-                            <p class="black-text" style="font-size:12px;margin-top: -15px;">Office of Consular Affairs</p>
-                            <p class="black-text" style="font-size:12px;margin-top: -15px;">Authentication Division</p>
-                        </div>
-                        <div class="col-lg-4 col-md-5 col-sm-5"></div>
-                    </div>
-                    <div class="row text-center">
-                        <div class="col-lg-4 col-md-5 col-sm-5"></div>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <h4 class="modal-title text-center black-text-bold">DECLARATION</h4>
-                        </div>
-                        <div class="col-lg-4 col-md-5 col-sm-5"></div>
-                    </div>
-                    <div class="container">
-                        <hr />
-                        @Html.Raw(@declaration.NoticeMessage)
-                        @*<p class="black-text" style="font-size:14px;">
-                                I hereby declare and certify that the documents submitted are authentic, I understand that the documents
-                                submitted shall be subjected to verification by the Department of Foreign Affairs(DFA).
-                                In the event that the same be found to be falsified or forged, my application shall be forfeited and I
-                                shall be subject to legal sanctions in accordance with the law.
-                            </p>
-                            <p class="black-text" style="font-size:14px;">
-                                In case my document needs further verification from the issuing agency, I am aware that release of
-                                submitted document/s may exceed beyond the prescribed processing time depending on the
-                                compliance of the verification request from the issuing agency.
-                            </p>
-                            <p class="black-text" style="font-size:14px;">
-                                I understand that should my document/s be submitted to any jurisdiction where the Hague
-                                Convention Abolishing the Requirement of Legalization for Foreign Public Documents (otherwise
-                                known as the Apostille Convention of 1961) does not apply, I shall undertake to present said
-                                document/s to the appropriate Embassy/Consulate in the Philippines for legalization.
-                            </p>
-                            <p class="black-text" style="font-size:14px;">
-                                Further, I hold the DFA free from any liability should the Apostilized document be not accepted
-                                by any foreign jurisdiction, or for any delay, delivery error, loss, or damage due to unforeseen
-                                events beyond the control of the DFA, or once the Apostillized documents has been issued to the
-                                courier company or to my authorized representative.
-                            </p>
-                            <p class="black-text" style="font-size:14px;">
-                                By proceeding with this application, I understand that I am signifying my consent
-                                which effectively constitutes as waiver of any and all privacy rights pertaining to the disclosure,
-                                collection, and use of my personal information and data under the specific terms and conditions
-                                of R.A. No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations,
-                                and other pertinent DFA rules, regulations and policies on the matter.
-                            </p>*@
-                    </div>
-                    <div class="container p-0">
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-3 col-sm-5"> </div>
-                            <div class="col-md-6 col-sm-2">
-                                <button id="declaration-agree" style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">I AGREE</button>
+
+    @if (!string.IsNullOrEmpty(declaration.NoticeMessage))
+    {
+        <div class="modal fade" id="declaration-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row text-center">
+                            <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="black-text" style="font-size:12px;">Department of Foreign Affairs</p>
+                                <p class="black-text" style="font-size:12px;margin-top: -15px;">Office of Consular Affairs</p>
+                                <p class="black-text" style="font-size:12px;margin-top: -15px;">Authentication Division</p>
                             </div>
-                            <div class="col-md-3 col-sm-5"></div>
+                            <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <h4 class="modal-title text-center black-text-bold">DECLARATION</h4>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5"></div>
+                        </div>
+                        <div class="container">
+                            <hr />
+                            @Html.Raw(@declaration.NoticeMessage)
+                            @*<p class="black-text" style="font-size:14px;">
+                                    I hereby declare and certify that the documents submitted are authentic, I understand that the documents
+                                    submitted shall be subjected to verification by the Department of Foreign Affairs(DFA).
+                                    In the event that the same be found to be falsified or forged, my application shall be forfeited and I
+                                    shall be subject to legal sanctions in accordance with the law.
+                                </p>
+                                <p class="black-text" style="font-size:14px;">
+                                    In case my document needs further verification from the issuing agency, I am aware that release of
+                                    submitted document/s may exceed beyond the prescribed processing time depending on the
+                                    compliance of the verification request from the issuing agency.
+                                </p>
+                                <p class="black-text" style="font-size:14px;">
+                                    I understand that should my document/s be submitted to any jurisdiction where the Hague
+                                    Convention Abolishing the Requirement of Legalization for Foreign Public Documents (otherwise
+                                    known as the Apostille Convention of 1961) does not apply, I shall undertake to present said
+                                    document/s to the appropriate Embassy/Consulate in the Philippines for legalization.
+                                </p>
+                                <p class="black-text" style="font-size:14px;">
+                                    Further, I hold the DFA free from any liability should the Apostilized document be not accepted
+                                    by any foreign jurisdiction, or for any delay, delivery error, loss, or damage due to unforeseen
+                                    events beyond the control of the DFA, or once the Apostillized documents has been issued to the
+                                    courier company or to my authorized representative.
+                                </p>
+                                <p class="black-text" style="font-size:14px;">
+                                    By proceeding with this application, I understand that I am signifying my consent
+                                    which effectively constitutes as waiver of any and all privacy rights pertaining to the disclosure,
+                                    collection, and use of my personal information and data under the specific terms and conditions
+                                    of R.A. No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations,
+                                    and other pertinent DFA rules, regulations and policies on the matter.
+                                </p>*@
+                        </div>
+                        <div class="container p-0">
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-3 col-sm-5"> </div>
+                                <div class="col-md-6 col-sm-2">
+                                    <button id="declaration-agree" style="width:100%" type="button" class="btn button-primary text-white" data-dismiss="modal">I AGREE</button>
+                                </div>
+                                <div class="col-md-3 col-sm-5"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 }
+
 
 @if (termsAndConditions != null || !string.IsNullOrEmpty(termsAndConditions.NoticeMessage))
 {
@@ -263,7 +268,7 @@
                                 </i>
                             </p>*@
                     </div>
-                    <div class="container p-0" >
+                    <div class="container p-0">
                         <hr />
                         <div class="row ">
                             <div class="col-md-3 col-sm-5"> </div>
@@ -402,14 +407,14 @@
             show: true
         });
 
-        $("#login-button").click(function () {
+        @*$("#login-button").click(function () {
             var model = {
                 Email: $("#Email").val(),
                 Password: $("#Password").val(),
                 RememberMe: false
             };
 
-            var url = "@Url.Action("ValidateAccount", "Account")";
+            var url = "@Url.Action("ValidateAccount", "Account")"; //ValidateAccount
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -427,7 +432,8 @@
 
             });
             //$("#declaration-modal").modal('show');
-        });
+        });*@
+
         $("#declaration-agree").click(function () {
             $("#declaration-modal").modal('hide');
             $("#terms-and-conditions-modal").modal('show');
