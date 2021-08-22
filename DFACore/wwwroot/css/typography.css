@@ -109,7 +109,7 @@ a {
     letter-spacing: normal;
 }
 
-p,
+/*p,
 span,
 a {
     font-size: 16px;
@@ -119,7 +119,7 @@ a {
     letter-spacing: normal;
     margin-bottom: 0;
 }
-
+*/
 p,
 label,
 span,
@@ -141,9 +141,7 @@ a {
     font-family: Bebas!important;
 }
 
-small {
-    line-height: 14px!important;
-}
+
 
 p.card-text {
     font-size: 13px!important;
