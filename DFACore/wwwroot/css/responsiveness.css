@@ -55,6 +55,10 @@
     .img-container {
         height: 70px!important;
     }
+
+    .location-container {
+        max-width: 75% !important;
+    }
 }
 
 /* sm */
@@ -93,6 +97,13 @@
         padding-right: 20px!important;
     }
 
+    .location-container {
+        max-width: 100%!important;
+    }
+
+    .sm-p-0 {
+        padding: 0!important;
+    }
 }
 
 @media (max-width: 400px) {

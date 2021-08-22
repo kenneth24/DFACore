@@ -58,8 +58,8 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 sticky-top" style="background-color: #217ff3 !important;">
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #217ff3 !important;">
             <div class="container">
                 <div id="dfa-banner" class="mx-auto">
                     <img src="~/Banner.png" class="img-fluid" style="width:50%!important" />
@@ -118,10 +118,11 @@
         // validate if no. of minutes idle is > 9
         // if true, logoff user
         let baseUrl = window.location.origin;
+        var idleInterval = null;
         var idleTime = 0;
 
         $(document).ready(function () {
-            var idleInterval = setInterval(timerIncrement, 60000); // 1m
+            idleInterval = setInterval(timerIncrement, 60000); // 1m
 
             $(this).mousemove(function (e) {
                 idleTime = 0;
@@ -135,7 +136,9 @@
             var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
             if (userAuthorized) {
                 idleTime += 1;
-                if (idleTime = 10) {
+                console.log(idleTime);
+                if (idleTime > 9) {
+                    clearInterval(idleInterval);
                     window.alert('You have been logged out due to inactivity!');
                     window.location = `${baseUrl}/Account/LogOff`;
                 }

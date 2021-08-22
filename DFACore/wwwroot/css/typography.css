@@ -180,4 +180,9 @@ p.card-text {
     small, label {
         font-size: 11.4px !important;
     }
+
+    .p-label {
+        line-height: 12px;
+        font-size: 11px !important;
+    }
 }
