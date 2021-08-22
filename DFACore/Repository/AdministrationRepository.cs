@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using DCore = System.Linq.Dynamic.Core;
 
@@ -1105,6 +1106,41 @@ namespace DFACore.Repository
                 .ToList();
 
             return raw;
+        }
+
+
+        public bool AddActivityLog(ActivityLog activityLog)
+        {
+            activityLog.CreatedDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(activityLog.IpAddress) || activityLog.IpAddress != "::1")
+            {
+                var getUserCountryByIp = GetUserCountryByIp(activityLog.IpAddress);
+                activityLog.City = getUserCountryByIp.city;
+                activityLog.Region = getUserCountryByIp.region;
+                activityLog.Country = getUserCountryByIp.country;
+            }
+            _context.ActivityLogs.Add(activityLog);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public IpInfo GetUserCountryByIp(string ip)
+        {
+            //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.country = null;
+            }
+
+            return ipInfo;
         }
     }
 }
