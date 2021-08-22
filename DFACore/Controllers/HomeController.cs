@@ -106,6 +106,7 @@ namespace DFACore.Controllers
 
             var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
 
+            List<string> apptCode = new List<string>();
 
             var total = 0;
             if (model.Records == null)
@@ -155,7 +156,7 @@ namespace DFACore.Controllers
                 //}
                 var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                 total = data.Sum(a => a.Quantity);
-
+                apptCode.Add(model.Record.ApplicationCode);
             }
             else
             {
@@ -210,6 +211,8 @@ namespace DFACore.Controllers
 
                     var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                     total += data.Sum(a => a.Quantity);
+
+                    apptCode.Add(record.ApplicationCode);
                 }
 
 
@@ -227,7 +230,7 @@ namespace DFACore.Controllers
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
-                Log("Generate Appointment but error occured while saving data.", User.Identity.Name);
+                Log("Generate appointment but an error occured while saving data.", User.Identity.Name);
                 return RedirectToAction("Error");  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
             //var name = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
@@ -249,7 +252,7 @@ namespace DFACore.Controllers
                     HtmlTemplate(),
                     attachments.ToArray());
             ViewData["ApplicantCount"] = model.ApplicantCount;
-            Log("Generate Appointment", User.Identity.Name);
+            Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return RedirectToAction("Success");
 
 

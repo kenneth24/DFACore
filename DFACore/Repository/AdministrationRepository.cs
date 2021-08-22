@@ -1,7 +1,9 @@
 ﻿using DFACore.Data;
 using DFACore.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NETCore.MailKit.Core;
 using Newtonsoft.Json;
 using QRCoder;
 using System;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using DCore = System.Linq.Dynamic.Core;
 
@@ -17,9 +20,15 @@ namespace DFACore.Repository
     public class AdministrationRepository
     {
         private ApplicationDbContext _context;
-        public AdministrationRepository(ApplicationDbContext context)
+        private readonly IEmailService _emailService;
+        private readonly IWebHostEnvironment _env;
+        public AdministrationRepository(ApplicationDbContext context,
+            IEmailService emailService,
+            IWebHostEnvironment env)
         {
             _context = context;
+            _emailService = emailService;
+            _env = env;
         }
 
         public ApplicantRecord GetApplicantRecord(string applicationCode)
@@ -1039,32 +1048,11 @@ namespace DFACore.Repository
             }
         }
 
-        public bool CancelApplication(string applicationCode)
+        public async Task<bool> CancelApplication(string applicationCode)
         {
-            //string[] tokens = str.Split(',');
+            
 
 
-            //they have separate archive table for logs here (not part of code first)
-            //insert in logs
-            //_context.ApplicantRecords.FromSqlRaw($"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, ");
-
-
-            //using (var context = _context)
-            //{
-            //    var commandText = $"INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
-            //        $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-            //        $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
-            //        $"SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
-            //        $"CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-            //        $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in (@applicationCode); " +
-            //        "DELETE ApplicantRecords WHERE ApplicationCode in (@applicationCode2); ";
-            //    var param1 = new SqlParameter("@applicationCode", applicationCode);
-            //    var param2 = new SqlParameter("@applicationCode2", applicationCode);
-            //    context.Database.ExecuteSqlRaw(commandText, param1, param2);
-
-            //    context.SaveChanges();
-            //}
-            //using (var context = _context)
             var commandText = "INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
                     "ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
@@ -1072,23 +1060,43 @@ namespace DFACore.Repository
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
                     $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in ({applicationCode}); " +
                     $"DELETE ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
-            //var param1 = new SqlParameter("applicationCode", applicationCode);
-            //var param2 = new SqlParameter("applicationCode2", applicationCode);
+        
             _context.Database.ExecuteSqlRaw(commandText);
-            //delete in original table
 
-            //using (var context = _context)
-            //{
-            //    var commandText = $"DELETE ApplicantRecords WHERE ApplicationCode in (@applicationCode)";
-            //    var name = new SqlParameter("@applicationCode", applicationCode);
-            //    context.Database.ExecuteSqlRaw(commandText, name);
-            //}
+            string[] codes = applicationCode.Split(',');
 
-            //var applicant = _context.ApplicantRecords.Where(a => a.ApplicationCode == applicationCode).FirstOrDefault();
-            //var x = _context.ApplicantRecords.Remove(applicant);
-            //_context.SaveChanges();
+
+
+            foreach (var code in codes)
+            {
+                var appCode = code.Replace("'", "");
+                var applicant = _context.ApplicantRecords.Where(a => a.ApplicationCode == appCode).FirstOrDefault();
+                var email = _context.Users.Where(a => a.Id == applicant.CreatedBy.ToString()).FirstOrDefault().Email;
+                await _emailService.SendAsync(email, "Appointment Cancellation", HtmlTemplate(email, applicant), true);
+            };
+
+
 
             return true;
+        }
+
+        public string HtmlTemplate(string email, ApplicantRecord applicant)
+        {
+            using (StreamReader SourceReader = File.OpenText(_env.WebRootFileProvider.GetFileInfo("cancelappointment.html")?.PhysicalPath))
+            {
+                var str = SourceReader.ReadToEnd();
+                str = str.Replace("@@EMAIL", email);
+                str = str.Replace("@@DATENOW", DateTime.Now.ToString("dddd, dd MMMM yyyy"));
+                str = str.Replace("@@APPOINTMENTCODE", applicant.ApplicationCode);
+                str = str.Replace("@@APPOINTMENTDATE", applicant.ScheduleDate.ToString("MM/dd/yyyy"));
+                str = str.Replace("@@APPOINTMENTTIME", applicant.ScheduleDate.ToString("hh:mm tt"));
+                str = str.Replace("@@PROCESSINGSITE", applicant.ProcessingSite);
+                str = str.Replace("@@PROCESSINGADDRESS", applicant.ProcessingSiteAddress);
+                str = str.Replace("@@DOCUMENTOWNER", $"{applicant.FirstName} {applicant.LastName}");
+                str = str.Replace("@@COUNTRYOFDESTINATION", applicant.CountryDestination);
+                return str;
+            }
+
         }
 
 
@@ -1098,6 +1106,41 @@ namespace DFACore.Repository
                 .ToList();
 
             return raw;
+        }
+
+
+        public bool AddActivityLog(ActivityLog activityLog)
+        {
+            activityLog.CreatedDate = DateTime.Now;
+            if (!string.IsNullOrEmpty(activityLog.IpAddress) || activityLog.IpAddress != "::1")
+            {
+                var getUserCountryByIp = GetUserCountryByIp(activityLog.IpAddress);
+                activityLog.City = getUserCountryByIp.city;
+                activityLog.Region = getUserCountryByIp.region;
+                activityLog.Country = getUserCountryByIp.country;
+            }
+            _context.ActivityLogs.Add(activityLog);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public IpInfo GetUserCountryByIp(string ip)
+        {
+            //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+            IpInfo ipInfo = new IpInfo();
+            try
+            {
+                string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
+                ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
+                //RegionInfo myRI1 = new RegionInfo(ipInfo.Country);
+                //ipInfo.Country = myRI1.EnglishName;
+            }
+            catch (Exception)
+            {
+                ipInfo.country = null;
+            }
+
+            return ipInfo;
         }
     }
 }

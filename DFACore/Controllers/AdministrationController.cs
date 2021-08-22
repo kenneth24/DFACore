@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.WebUtilities;
 using NETCore.MailKit.Core;
 using Newtonsoft.Json;
+using Shyjus.BrowserDetection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,6 +38,8 @@ namespace DFACore.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly IGeneratePdf _generatePdf;
         private readonly IMessageService _messageService;
+        private readonly IActionContextAccessor _accessor;
+        private readonly IBrowserDetector _browserDetector;
 
 
         public AdministrationController(UserManager<ApplicationUser> userManager,
@@ -45,7 +49,9 @@ namespace DFACore.Controllers
             AdministrationRepository administrationRepository,
             IWebHostEnvironment env,
             IGeneratePdf generatePdf,
-            IMessageService messageService)
+            IMessageService messageService,
+            IActionContextAccessor accessor,
+            IBrowserDetector browserDetector)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -55,6 +61,8 @@ namespace DFACore.Controllers
             _env = env;
             _generatePdf = generatePdf;
             _messageService = messageService;
+            _accessor = accessor;
+            _browserDetector = browserDetector;
         }
 
         [Authorize(Roles = "Super Administrator, Administrator")]
@@ -93,6 +101,8 @@ namespace DFACore.Controllers
             applicants = _administrationRepository.GetAllApplicantRecord(sortOrder, searchString);
             //}
 
+            Log("Visit Homepage.", User.Identity.Name);
+
             int pageSize = 10;
             return View(await PaginatedList<AdminApplicantRecordViewModel>.CreateAsync(applicants, pageNumber ?? 1, pageSize));
 
@@ -109,6 +119,7 @@ namespace DFACore.Controllers
             //if (User.Identity.IsAuthenticated)
             //    return RedirectToAction("Index", "Home");
             //else
+            Log("Visit Admin Login page.");
             return View();
 
         }
@@ -120,6 +131,7 @@ namespace DFACore.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Log($"Click login but with error: {model.Email}");
                 return View(model);
             }
 
@@ -131,6 +143,7 @@ namespace DFACore.Controllers
                 if (user.Type != 1)
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
+                    Log($"Click login but with error invalid username or password.: {model.Email}");
                     return View(model);
                 }
 
@@ -148,6 +161,7 @@ namespace DFACore.Controllers
 
             if (result.Succeeded)
             {
+                Log($"Successfully logged in: {model.Email}");
                 return RedirectToAction("Home", "Administration");
             }
 
@@ -168,6 +182,7 @@ namespace DFACore.Controllers
             else
             {
                 ModelState.AddModelError("", "Invalid username or password.");
+                Log($"Click login but with error invalid username or password.: {model.Email}");
                 return View(model);
             }
 
@@ -178,6 +193,7 @@ namespace DFACore.Controllers
         public IActionResult Home()
         {
             ViewBag.Branches = _administrationRepository.GetBranches();
+            Log($"Visit Home page.", User.Identity.Name);
             return View();
         }
 
@@ -220,6 +236,7 @@ namespace DFACore.Controllers
             ViewBag.Roles = _roleManager.Roles;
             ViewBag.Branches = _administrationRepository.GetBranches();
             ViewData["ReturnUrl"] = returnUrl;
+            Log($"Visit Registration page for new admin user.", User.Identity.Name);
             return View();
         }
 
@@ -272,6 +289,7 @@ namespace DFACore.Controllers
                         await _userManager.AddToRoleAsync(newAddedUser, role.Name);
                     }
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
+                    Log($"Register new user with email {user.Email} and role of {role.Name}", User.Identity.Name);
                     return RedirectToAction("VerifyEmail", "Administration", new { email = user.Email });
                 }
 
@@ -382,7 +400,7 @@ namespace DFACore.Controllers
             }
 
             ViewData["UpdateAccountMessage"] = this.TempData["updateAccountTemp"];
-
+            Log($"Visit Admin Accounts", User.Identity.Name);
             return View(accounts);
         }
 
@@ -413,6 +431,7 @@ namespace DFACore.Controllers
             var accounts = _administrationRepository.UserList(sortOrder, searchString);
 
             int pageSize = 10;
+            Log($"Visit User Accounts", User.Identity.Name);
             return View(await PaginatedList<UserAccountViewModel>.CreateAsync(accounts, pageNumber ?? 1, pageSize));
 
 
@@ -445,6 +464,7 @@ namespace DFACore.Controllers
             var accounts = _administrationRepository.Blacklist(sortOrder, searchString);
 
             int pageSize = 10;
+            Log($"Visit BlackList page", User.Identity.Name);
             return View(await PaginatedList<UserAccountViewModel>.CreateAsync(accounts, pageNumber ?? 1, pageSize));
 
 
@@ -456,7 +476,7 @@ namespace DFACore.Controllers
         {
 
             var result = await _administrationRepository.AddToBlackList(userId);
-
+            Log($"Add to blacklist the userId of {userId}", User.Identity.Name);
             return RedirectToAction("UserAccount");
             //return View(result);
         }
@@ -493,6 +513,7 @@ namespace DFACore.Controllers
             //var result = await _userManager.UpdateAsync(user);
             await _administrationRepository.EditAccount(model);
             this.TempData["updateAccountTemp"] = "Account successfully saved.";
+            Log($"Update the account of {model.Email}", User.Identity.Name);
             return RedirectToAction("Account");
         }
 
@@ -502,13 +523,14 @@ namespace DFACore.Controllers
         {
 
             var result = await _administrationRepository.DeleteAccount(userId);
-
+            Log($"Delete the account with userId of {userId}", User.Identity.Name);
             return RedirectToAction("Account");
             //return View(result);
         }
 
         public async Task<ActionResult> LogOff(string returnUrl = null)
         {
+            Log($"Logged out.", User.Identity.Name);
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
@@ -536,6 +558,7 @@ namespace DFACore.Controllers
             var branches = _administrationRepository.GetBranches(sortOrder, searchString);
 
             int pageSize = 100;
+            Log($"Visit Consular Office page.", User.Identity.Name);
             return View(await PaginatedList<Branch>.CreateAsync(branches, pageNumber ?? 1, pageSize));
         }
 
@@ -544,7 +567,7 @@ namespace DFACore.Controllers
         public IActionResult EditBranch(long branchId)
         {
             var branch = _administrationRepository.GetBranchForEdit(branchId);
-
+            Log($"Visit Update Consular Office page.", User.Identity.Name);
             return View(branch);
         }
 
@@ -555,7 +578,7 @@ namespace DFACore.Controllers
         {
 
             var result = await _administrationRepository.UpdateBranch(branch);
-
+            Log($"Update Consular Office with details of {JsonConvert.SerializeObject(branch)}.", User.Identity.Name);
             return RedirectToAction("Branch");
             //return View(result);
         }
@@ -595,6 +618,7 @@ namespace DFACore.Controllers
             var holidays = _administrationRepository.GetHoliday(sortOrder, searchString);
 
             int pageSize = 100;
+            Log($"Visit Calendar.", User.Identity.Name);
             return View(await PaginatedList<Holiday>.CreateAsync(holidays, pageNumber ?? 1, pageSize));
         }
 
@@ -726,6 +750,7 @@ namespace DFACore.Controllers
         {
             var result = _administrationRepository.GetPrice();
             ViewData["UpdatePriceMessage"] = this.TempData["updatePriceTemp"];
+            Log($"Visit SetPrice.", User.Identity.Name);
             return View(result);
         }
 
@@ -735,6 +760,7 @@ namespace DFACore.Controllers
         {
             var result = _administrationRepository.UpdatePrice(price);
             this.TempData["updatePriceTemp"] = "Price successfully saved.";
+            Log($"Set Price to {JsonConvert.SerializeObject(price)}.", User.Identity.Name);
             return RedirectToAction("Price");
         }
 
@@ -753,6 +779,7 @@ namespace DFACore.Controllers
         {
             _administrationRepository.UpdateNotice(1, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            Log($"Update Announcement.", User.Identity.Name);
             return RedirectToAction("Notice");
         }
 
@@ -771,6 +798,7 @@ namespace DFACore.Controllers
         {
             _administrationRepository.UpdateNotice(2, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            Log($"Update Declaration.", User.Identity.Name);
             return RedirectToAction("Declaration");
         }
 
@@ -789,6 +817,7 @@ namespace DFACore.Controllers
         {
             _administrationRepository.UpdateNotice(3, notice);
             this.TempData["updateNoticeTemp"] = "Announcement successfully saved.";
+            Log($"Update TermsAndCondition.", User.Identity.Name);
             return RedirectToAction("TermsAndCondition");
         }
 
@@ -1300,6 +1329,7 @@ namespace DFACore.Controllers
                     HtmlTemplate(),
                     attachments.ToArray());
             //Log("Generate Appointment", User.Identity.Name);
+            Log($"Resend appointment with code of {applicationCode}.", User.Identity.Name);
             return true;
 
             //return View();
@@ -1470,9 +1500,10 @@ namespace DFACore.Controllers
 
         //[AllowAnonymous]
         [HttpGet]
-        public bool CancelApplication(string applicationCode)
+        public async Task<bool> CancelApplication(string applicationCode)
         {
-            var result = _administrationRepository.CancelApplication(applicationCode);
+            var result = await _administrationRepository.CancelApplication(applicationCode);
+            Log($"Cancel appointment with code of {applicationCode}.", User.Identity.Name);
             return result;
         }
 
@@ -1562,6 +1593,7 @@ namespace DFACore.Controllers
             ViewBag.Branch = 1;
             ViewBag.FilterDate = DateTime.Now;
             var result = _administrationRepository.GetDocumentCountByDay(1, DateTime.Now);
+            Log("Visit Dashboard.", User.Identity.Name);
             return View(result);
         }
 
@@ -1587,6 +1619,26 @@ namespace DFACore.Controllers
             return View(result);
         }
 
+
+        public void Log(string data, string email = null)
+        {
+            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
+            var browser = _browserDetector.Browser;
+            if (browser != null)
+            {
+                var activity = new ActivityLog
+                {
+                    CreatedDate = DateTime.Now,
+                    IpAddress = ip,
+                    Browser = $"{browser.Name} {browser.Version}",
+                    OS = browser.OS,
+                    DeviceType = browser.DeviceType,
+                    Remarks = data,
+                    Email = email
+                };
+                _administrationRepository.AddActivityLog(activity);
+            }
+        }
 
 
     }
