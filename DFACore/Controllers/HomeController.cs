@@ -670,5 +670,10 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public IActionResult DocumentLocation()
+        {
+            return View();
+        }
+
     }
 }
