@@ -114,11 +114,12 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl = null)
         {
-            await LogOff();
+            
             ViewBag.ReturnUrl = returnUrl;
-            //if (User.Identity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Home");
-            //else
+
+            if (User.Identity.IsAuthenticated)
+                await _signInManager.SignOutAsync();
+
             Log("Visit Admin Login page.");
             return View();
 
@@ -1186,7 +1187,6 @@ namespace DFACore.Controllers
         }
 
 
-
         [Authorize(Roles = "Super Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1219,6 +1219,54 @@ namespace DFACore.Controllers
                 this.TempData["UploadImageTemp"] = $"{fileName} successfully updated.";
 
                 return RedirectToAction("UploadImage");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult UploadVideo()
+        {
+            ViewData["UploadImageMessage"] = this.TempData["UploadImageTemp"];
+            string wwwRootPath = _env.WebRootPath;
+            string path = Path.Combine(wwwRootPath + "/video/");
+            ViewData["Path"] = path;
+            return View();
+        }
+
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UploadVideo(ImageModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _env.WebRootPath;
+                string fileName = $"{model.Name}.mp4";
+
+                string path = Path.Combine(wwwRootPath + "/video/", fileName);
+
+                try
+                {
+                    System.IO.File.Delete(path);
+                }
+                catch (Exception e)
+                {
+                    ViewBag.errorMessage = e.Message;
+                    return View("Error");
+                }
+
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await model.File.CopyToAsync(fileStream);
+                }
+                //model.File.SaveAs(path);
+
+                this.TempData["UploadImageTemp"] = $"{fileName} successfully updated.";
+
+                return RedirectToAction("UploadVideo");
             }
 
             return View();

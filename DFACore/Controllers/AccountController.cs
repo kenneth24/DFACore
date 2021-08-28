@@ -57,13 +57,13 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null)
+        public async Task<IActionResult> Register(string returnUrl = null)
         {
+
             ViewData["ReturnUrl"] = returnUrl;
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-            else
-                return View();
+                await _signInManager.SignOutAsync();
+            return View();
         }
 
         [HttpPost]
@@ -207,18 +207,17 @@ namespace DFACore.Controllers
         public async Task<ActionResult> Login(string returnUrl = null)
         {
 
-            await LogOff();
+
             ViewBag.ReturnUrl = returnUrl;
             ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
             ViewData["DeclarationMessage"] = _applicantRepo.GetNotice(2);
             ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-            else
-            {
-                Log("Visited");
-                return View();
-            }
+                await _signInManager.SignOutAsync();
+
+            Log("Visited");
+            return View();
+
 
         }
 
@@ -503,7 +502,7 @@ namespace DFACore.Controllers
                 Log($"Visit ResetPassword page");
                 return View();
             }
-                
+
 
         }
 
@@ -547,12 +546,12 @@ namespace DFACore.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> ValidateAccount([FromBody]LoginViewModel model)
+        public async Task<ActionResult> ValidateAccount([FromBody] LoginViewModel model)
         {
 
             if (!ModelState.IsValid)
                 return Ok(false);
-            
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
@@ -567,7 +566,7 @@ namespace DFACore.Controllers
                 await _signInManager.SignOutAsync();
                 return Ok(true);
             }
-            
+
 
             return Ok(false);
         }
