@@ -132,7 +132,7 @@
         </div>
     </section>
 
-    <p style="margin-bottom: 1rem;" class="d-none d-md-block">
+    <p style="margin-bottom: 1rem;" class="show-on-large-only">
         <span class="float-left grey-text-bold font-weight-bold">
             @User.Identity.Name
         </span>
@@ -144,9 +144,9 @@
         </span>
     </p>
 
-    <br class="d-none d-md-block" />
+    <br class="show-on-large-only" />
 
-    <div class="d-sm-none">
+    <div class="hide-on-large">
         <p class="p-label mb-1">
             <span class="grey-text-bold">@User.Identity.Name</span>
             <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
@@ -352,43 +352,14 @@
 
             </div>
 
-            <div id="applicationTypeSelection" class="tabcontent">
-
-                <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5</p>
+            <div id="step-one" style="display:none" class="tabcontent">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
+                    <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 4 of 5</p>
                 </div>
 
-                <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-2 d-flex flex-column justify-content-center">
-                    <div class="location-container w-100 mx-auto px-5">
-                        <div class="card-header bold p-1 white-bg text-center mt-4">
-                            <h6 class="bold text-uppercase">Please choose one</h6>
-                            <p class="mb-0" style="font-weight: normal">I am the</p>
-                        </div>
-                        <div class="card-body px-5 py-4">
-                            <button id="philippines-button" class="btn btn-primary  w-100 d-block text-uppercase bold mb-4">Document owner</button>
-                            <button id="abroad-button" class="btn btn-primary w-100 d-block text-uppercase bold">Authorized representative</button>
-                            <div>
-                                <a class="button-primary">
-                                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
-                                    VIEW REQUIREMENTS
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            if (applicants == 0)
-            {
-
-                <div id="step-one" style="display:none" class="tabcontent">
-                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5: Apostille Application</p>
-                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 5</p>
-                    </div>
-
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
-
+                <div class="card-panel white-bg p-4">
+                    <div>
                         <div class="form-group">
                             <p class="d-none d-lg-block">
                                 <span style="font-weight: bold">Document Owner</span>
@@ -405,7 +376,6 @@
 
 
                         <div class="form-group">
-
                             <div class="row">
                                 <div class="col-md-3 col-sm-12">
                                     <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
@@ -510,8 +480,8 @@
                                     </div>
                                 </div>
                             </div>*@
-                    </div>
 
+                    </div>
 
                     <div style="margin-top: 20px;">
                         <div class="col-12">
@@ -554,203 +524,204 @@
                         </div>
                         <div>
                             <input asp-for="Record.ApostileData" id="apostileData" class="form-control" hidden />
-
                         </div>
 
                     </div>
-                    <div class="row justify-content-center" style="margin-top: 20px;">
-                        <div class="col-10">
+                    <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
+                        <div class="w-100">
                             <button id="stepOneBackBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</button>
-                            <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;margin-top: 20px;">Next</button>
+                            <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-15" style="color: white;margin-top: 20px;">Next</button>
 
                         </div>
                     </div>
-                    @*<div class="row" style="margin-top: 20px;">
-                            <div class="col-md-4 col-sm-12"></div>
-                            <div class="col-md-4 col-sm-12">
-                                <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
-                            </div>
-                            <div class="col-md-4 col-sm-12"></div>
-                        </div>*@
-
-
-
-                    @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
-
                 </div>
-            }
-            else
-            {
-                @*<form method="post" id="application-form">*@
-                <div id="step-one-authorized" style="display:none" class="tabcontent">
-                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5: Apostille Application</p>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;margin-bottom: 45px;">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p style="margin-bottom:30px;">
-                                        <span style="font-weight: bold">Name of the Authorized Representative</span>
-                                        <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                @*<div class="col-md-2 col-sm-12">
-                                        <label asp-for="Title">Title <span class="red">*</span></label>
-                                        <select asp-for="Title" class="form-control">
-                                            <option value=""></option>
-                                            <option value="MR">MR.</option>
-                                            <option value="MRS">MRS.</option>
-                                            <option value="MRS">MS.</option>
-                                        </select>
-                                        <span asp-validation-for="Title" class="text-danger title"></span>
-                                    </div>*@
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="Record.FirstName" class="form-control" />
-                                    <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
-                                </div>
-
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="Record.MiddleName"></label>
-                                    <input asp-for="Record.MiddleName" class="form-control" />
-                                    <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="Record.LastName" class="form-control" />
-                                    <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
-                                </div>
 
 
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="Record.Suffix"></label>
-                                    <select asp-for="Record.Suffix" class="form-control">
-                                        <option value="">N/A</option>
-                                        <option value="JR.">JR.</option>
-                                        <option value="SR.">SR.</option>
-                                        <option value="I">I</option>
-                                        <option value="II">II</option>
-                                        <option value="III">III</option>
-                                        <option value="IV">IV</option>
-                                        <option value="V">V</option>
-                                        <option value="VI">VI</option>
-                                        <option value="VII">VII</option>
-                                        <option value="VIII">VIII</option>
-                                        <option value="IX">IX</option>
-                                        <option value="X">X</option>
-                                        <option value="XI">XI</option>
-                                        <option value="XII">XII</option>
-                                        <option value="XIII">XIII</option>
-                                        <option value="XIV">XIV</option>
-                                        <option value="XV">XV</option>
-                                    </select>
-                                    <span asp-validation-for="Record.Suffix" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        @*<div class="form-group">
-                            <h6>Address</h6>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                                    <input asp-for="Barangay" class="form-control" />
-                                    <span asp-validation-for="Barangay" class="text-danger address"></span>
-                                </div>
-
-
-                                <div class="col-md-3 col-sm-12">
-                                    <label asp-for="Region">Region/Province <span class="red">*</span></label>
-                                    <select asp-for="Region" class="form-control">
-                                        <option value=""></option>*@
-                        @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
-                            {
-                                <option value="@item">@item</option>
-                            }*@
-                        @*</select>
-                                        <span asp-validation-for="Region" class="text-danger nationality"></span>
-                                    </div>
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                                        <select asp-for="City" class="form-control">
-                                            <option value=""></option>
-                                            <option value="Caloocan">Caloocan</option>
-                                            <option value="Las Piñas">Las Piñas</option>
-                                            <option value="Makati">Makati</option>
-                                            <option value="Malabon">Malabon</option>
-                                            <option value="Mandaluyong">Mandaluyong</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Marikina">Marikina</option>
-                                            <option value="Muntinlupa">Muntinlupa</option>
-                                            <option value="Navotas">Navotas</option>
-                                            <option value="Parañaque">Parañaque</option>
-                                            <option value="Pasay">Pasay</option>
-                                            <option value="Pasig">Pasig</option>
-                                            <option value="Pateros">Pateros</option>
-                                            <option value="Quezon City">Quezon City</option>
-                                            <option value="San Juan">San Juan</option>
-                                            <option value="Taguig">Taguig</option>
-                                            <option value="Valenzuela">Valenzuela</option>
-                                        </select>
-                                        <span asp-validation-for="City" class="text-danger nationality"></span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group">
-                            <div class="row">
-
-                                <div class="col-md-6 col-sm-12">
-                                    <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
-                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
-                                </div>
-                                @*<div class="col-md-6 col-sm-12">
-                                        <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
-
-                                        <select asp-for="CountryDestination" class="form-control">
-                                            <partial name="_CountriesPartial" />
-                                        </select>
-                                        <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                                    </div>*@
-                            </div>
-                        </div>
-                        @*<div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7 col-sm-12">
-                                        <label asp-for="NameOfRepresentative"></label>
-                                        <input asp-for="NameOfRepresentative" class="form-control" />
-                                        <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-md-5 col-sm-12">
-                                        <label asp-for="RepresentativeContactNumber"></label>
-                                        <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
-                                        <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>*@
-                    </div>
-                    <div id="documentOwners" style="margin-top:10px;margin-bottom:10px;width: 102.5%; margin-left: -1.3%;">
-                    </div>
-                    <div class="row">
+                @*<div class="row" style="margin-top: 20px;">
                         <div class="col-md-4 col-sm-12"></div>
                         <div class="col-md-4 col-sm-12">
-                            <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                            <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
                         </div>
                         <div class="col-md-4 col-sm-12"></div>
-                    </div>
-
-                    @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
+                    </div>*@
 
 
 
+                @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
+
+            </div>
+
+            @*<form method="post" id="application-form">*@
+            <div id="step-one-authorized" style="display:none" class="tabcontent">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
                 </div>
-                @*</form>*@
-            }
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;margin-bottom: 45px;">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <p style="margin-bottom:30px;">
+                                    <span style="font-weight: bold">Name of the Authorized Representative</span>
+                                    <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            @*<div class="col-md-2 col-sm-12">
+                                    <label asp-for="Title">Title <span class="red">*</span></label>
+                                    <select asp-for="Title" class="form-control">
+                                        <option value=""></option>
+                                        <option value="MR">MR.</option>
+                                        <option value="MRS">MRS.</option>
+                                        <option value="MRS">MS.</option>
+                                    </select>
+                                    <span asp-validation-for="Title" class="text-danger title"></span>
+                                </div>*@
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
+                                <input asp-for="Record.FirstName" class="form-control" />
+                                <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="Record.MiddleName"></label>
+                                <input asp-for="Record.MiddleName" class="form-control" />
+                                <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
+                                <input asp-for="Record.LastName" class="form-control" />
+                                <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="Record.Suffix"></label>
+                                <select asp-for="Record.Suffix" class="form-control">
+                                    <option value="">N/A</option>
+                                    <option value="JR.">JR.</option>
+                                    <option value="SR.">SR.</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="VI">VI</option>
+                                    <option value="VII">VII</option>
+                                    <option value="VIII">VIII</option>
+                                    <option value="IX">IX</option>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                    <option value="XIII">XIII</option>
+                                    <option value="XIV">XIV</option>
+                                    <option value="XV">XV</option>
+                                </select>
+                                <span asp-validation-for="Record.Suffix" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <h6>Address</h6>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
+                                <input asp-for="Barangay" class="form-control" />
+                                <span asp-validation-for="Barangay" class="text-danger address"></span>
+                            </div>
+
+
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Region">Region/Province <span class="red">*</span></label>
+                                <select asp-for="Region" class="form-control">
+                                    <option value=""></option>*@
+                    @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                        {
+                            <option value="@item">@item</option>
+                        }*@
+                    @*</select>
+                                    <span asp-validation-for="Region" class="text-danger nationality"></span>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                                    <select asp-for="City" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Caloocan">Caloocan</option>
+                                        <option value="Las Piñas">Las Piñas</option>
+                                        <option value="Makati">Makati</option>
+                                        <option value="Malabon">Malabon</option>
+                                        <option value="Mandaluyong">Mandaluyong</option>
+                                        <option value="Manila">Manila</option>
+                                        <option value="Marikina">Marikina</option>
+                                        <option value="Muntinlupa">Muntinlupa</option>
+                                        <option value="Navotas">Navotas</option>
+                                        <option value="Parañaque">Parañaque</option>
+                                        <option value="Pasay">Pasay</option>
+                                        <option value="Pasig">Pasig</option>
+                                        <option value="Pateros">Pateros</option>
+                                        <option value="Quezon City">Quezon City</option>
+                                        <option value="San Juan">San Juan</option>
+                                        <option value="Taguig">Taguig</option>
+                                        <option value="Valenzuela">Valenzuela</option>
+                                    </select>
+                                    <span asp-validation-for="City" class="text-danger nationality"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
+                                <input asp-for="Record.ContactNumber" class="form-control numberInput" type="number" min="1" />
+                                <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
+                            </div>
+                            @*<div class="col-md-6 col-sm-12">
+                                    <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                    <select asp-for="CountryDestination" class="form-control">
+                                        <partial name="_CountriesPartial" />
+                                    </select>
+                                    <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                </div>*@
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-12">
+                                    <label asp-for="NameOfRepresentative"></label>
+                                    <input asp-for="NameOfRepresentative" class="form-control" />
+                                    <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-5 col-sm-12">
+                                    <label asp-for="RepresentativeContactNumber"></label>
+                                    <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
+                                    <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <div id="documentOwners" style="margin-top:10px;margin-bottom:10px;width: 102.5%; margin-left: -1.3%;">
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12">
+                        <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                    </div>
+                    <div class="col-md-4 col-sm-12"></div>
+                </div>
+
+                @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
+
+
+
+            </div>
+            @*</form>*@
         }
+
+
         <div id="step-three" style="display:none" class="tabcontent">
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                 <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 5 of 5: Generate Appointment Letter</p>
@@ -1031,6 +1002,93 @@
         <input id="Token" asp-for="Token" type="hidden" />
     </form>
 
+    <div id="applicationTypeSelection" class="tabcontent">
+
+        <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5</p>
+        </div>
+
+        <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
+            <div class="location-container w-100 mx-auto px-5">
+                <div class="card-header bold p-1 white-bg text-center mt-4">
+                    <h6 class="bold text-uppercase">Please choose one</h6>
+                    <label class="mb-0" style="font-weight: normal">I am the</label>
+                </div>
+                <div class="card-body px-5 py-4">
+                    <button id="ownerButton" class="btn btn-primary  w-100 d-block text-uppercase bold mb-4">Document owner</button>
+                    <button id="authorizedButton" class="btn btn-primary w-100 d-block text-uppercase bold">Authorized representative</button>
+                    <div class="d-flex my-4">
+                        <a class="mx-auto pointer" data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                            <img src="~/images/requirements.png" id="viewRequirements" />
+                        </a>
+                    </div>
+                    <button id="backToStepTwoButton" class="btn button-primary w-100 d-block text-uppercase bold" style="background-color: #6c757d!important; border: none; color: white; ">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="view-requirements-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header primary"></div>
+                <div class="modal-body">
+                    <div class="form-group container">
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Requirements for filing/claiming Authentication applications via Authorized Representative:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            1. Authorization letter from the owner. For Minor Applicants - Original Special Power
+                            of Attorney executed by parent/s. <br />
+                            2. Photocopy of the owner's ID bearing his/her signature. <br />
+                            3. Photocopy and original copy of representative's ID.
+                        </p>
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Acceptable IDs:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card. <br />
+                            *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID . <br />
+                            *Digital Student ID (valid for the duration of his studies up to 1 year upon graduation)
+                        </p>
+                        <p class="black-text-bold text-center" style="font-size:14px;">
+                            REMINDER FOR MINOR APPLICANTS
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            For applications / documents involving Minor (age below 18 years old), the following additional documents
+                            must be presented if the applicant / representative processing the authentication / Apostille is:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any of the parent as reflected on Birth Certificate:</strong> proof of filiation such as Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any representative other than the parent as reflected on Birth Certificate:</strong> notarized Special Power of Attorney
+                            executed by any of the parent of the minor as reflected on Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>NOTE:</strong> If the child is not acknowledged by the father, then any  representative (even if he is the biological father) who
+                            is NOT the mother of the minor applicant must present a notarized Special Power of Attorney executed by the mother.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-4 col-sm-12"> </div>
+
+                            <button id="declaration-agree"
+                                    type="button"
+                                    class="button-secondary text-white col-md-4 col-sm-12"
+                                    data-dismiss="modal"
+                                    style="height:30px;">
+                                CLOSE
+                            </button>
+
+                            <div class="col-md-4 col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
@@ -2655,7 +2713,7 @@
                 if ($(this).is(':checked') == true) {
                     console.log(formatId);
                     if (isBranchHasExpidite) {
-                        $(expediteId).removeAttr("disabled");
+                        $(expediteId).removeAttr("dapplicationTypeSelectionisabled");
                     }
                     $(regularId).removeAttr("disabled");
                 }
@@ -2757,16 +2815,16 @@
                 document.documentElement.scrollTop = 0;
             });
 
-            $("#stepOneBackBtn").click(function () {
-                //$('#stepOneBtn').click();
-                $("#step-select-processing-site").show();
-                $("#step-one").hide();
-                $("#step-one-authorized").hide();
-                $("#step-two").hide();
-                $("#step-three").hide();
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            });
+            //$("#stepOneBackBtn").click(function () {
+            //    //$('#stepOneBtn').click();
+            //    $("#step-select-processing-site").show();
+            //    $("#step-one").hide();
+            //    $("#step-one-authorized").hide();
+            //    $("#step-two").hide();
+            //    $("#step-three").hide();
+            //    document.body.scrollTop = 0;
+            //    document.documentElement.scrollTop = 0;
+            //});
 
             $("#backToStepOne").click(function () {
                 //$('#stepOneBtn').click();
@@ -3814,4 +3872,5 @@
 
 
     </script>
+    <script src="~/js/oas.js"></script>
 }

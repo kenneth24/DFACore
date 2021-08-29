@@ -307,3 +307,7 @@ margin-left: -3.3%;*/
 body {
     background-color: #F9F9FA;
 }
+
+#viewRequirements {
+    height: 30px!important;
+}
