@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model DFACore.Models.ApplicantsViewModel
 @using Microsoft.Extensions.Options
+@using System.Linq
+
 @*@inject IOptions<DFACore.Models.ReCAPTCHASetting>  GoogleRecaptcha*@
 
 @{
@@ -14,8 +16,9 @@
 }
 <style>
     body {
-        margin: 0!important;
+        margin: 0 !important;
     }
+
     .nav-item a {
         height: 30px;
         line-height: 15px;
@@ -123,7 +126,13 @@
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <p style="margin-bottom: 2rem;" class="d-none d-md-block">
+    <section class="header px-4 mt-3">
+        <div class="text-center mt-3 w-100 mb-4">
+            <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+        </div>
+    </section>
+
+    <p style="margin-bottom: 1rem;" class="d-none d-md-block">
         <span class="float-left grey-text-bold font-weight-bold">
             @User.Identity.Name
         </span>
@@ -152,7 +161,7 @@
             <div id="step-select-processing-site" class="tabcontent">
                 <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                     <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 5</p>
-                    <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 3: Apostille Application</p>
+                    <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 5</p>
                 </div>
 
                 <div class="card-panel mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
@@ -162,139 +171,147 @@
 
                                 <div class="row justify-content-center">
                                     <div class="col-12 mb-2">
-                                        <p class="mb-0">Select Site</p>
+                                        <label class="mb-0 bold">Select Site</label>
                                     </div>
                                     <div class="col-12">
                                         <select asp-for="Record.ProcessingSite" id="site" class="form-control">
 
                                             @*<option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
-                    <option value="CO East (SM Megamall)">CO East (SM Megamall)</option>
-                    <option value="CO Northeast (Ali Mall)">CO Northeast (Ali Mall)</option>
-                    <option value="CO South (Alabang)">CO South (Alabang)</option>
-                    <option value="CO West (SM Manila)">CO West (SM Manila)</option>
-                    <option value="CO Pampanga">CO Pampanga</option>
-                    <option value="CO Iloilo">CO Iloilo</option>
-                    <option value="CO Cebu">CO Cebu</option>*@
-
-                                            @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                                <option value="CO East (SM Megamall)">CO East (SM Megamall)</option>
+                                                <option value="CO Northeast (Ali Mall)">CO Northeast (Ali Mall)</option>
+                                                <option value="CO South (Alabang)">CO South (Alabang)</option>
+                                                <option value="CO West (SM Manila)">CO West (SM Manila)</option>
+                                                <option value="CO Pampanga">CO Pampanga</option>
+                                                <option value="CO Iloilo">CO Iloilo</option>
+                                                <option value="CO Cebu">CO Cebu</option>*@
+                                            @if (ViewBag.Location == 0)
                                             {
-                                                <option value="@item.BranchName">@item.BranchName</option>
+                                                <option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
                                             }
+                                            else
+                                            {
+                                                @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                                {
+                                                    <option value="@item.BranchName">@item.BranchName</option>
+                                                }
+                                            }
+
                                         </select>
-                                        <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white" style="font-size:16px;margin-top:5px;">View Map</button>
+                                        <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white mt-3" style="font-size:16px;margin-top:5px;">View Map</button>
                                     </div>
                                 </div>
 
 
-                                <div class="row m-0 justify-content-center card bg-light white-bg mt-3">
-                                    <div class="col-12" style="padding: 10px;">
-                                        <label class="col-sm-12" style="font-weight:bold">Address</label>
-                                        <label id="lblProcessingSiteAddress" class="col-sm-12">@defaultBranch.BranchAddress</label>
+                                <div class="row m-0 justify-content-center mt-3">
+                                    <div class="col-12 p-0" style="padding: 10px;">
+                                        <label class="col-sm-12 p-0" style="font-weight:bold">Address</label>
+                                        <label id="lblProcessingSiteAddress" class="col-sm-12 p-0">@defaultBranch.BranchAddress</label>
                                         <input asp-for="Record.ProcessingSiteAddress" id="address" class="form-control" value="@defaultBranch.BranchAddress" style="display:none" />
 
-                                        <label class="col-sm-12" style="font-weight:bold">Office Hours</label>
-                                        <label id="lblProcessingSiteOfficeHours" class="col-sm-12">@defaultBranch.OfficeHours</label>
+                                        <label class="col-sm-12 p-0" style="font-weight:bold">Office Hours</label>
+                                        <label id="lblProcessingSiteOfficeHours" class="col-sm-12 p-0">@defaultBranch.OfficeHours</label>
 
-                                        <label class="col-sm-12" style="font-weight:bold">Contact Number</label>
-                                        <label id="lblProcessingSiteContactNumber" class="col-sm-12">@defaultBranch.ContactNumber</label>
+                                        <label class="col-sm-12 p-0" style="font-weight:bold">Contact Number</label>
+                                        <label id="lblProcessingSiteContactNumber" class="col-sm-12 p-0">@defaultBranch.ContactNumber</label>
 
-                                        <label class="col-sm-12" style="font-weight:bold">Email</label>
-                                        <label id="lblProcessingSiteEmail" class="col-sm-12">@defaultBranch.Email</label>
+                                        <label class="col-sm-12 p-0" style="font-weight:bold">Email</label>
+                                        <label id="lblProcessingSiteEmail" class="col-sm-12 p-0">@defaultBranch.Email</label>
                                     </div>
                                 </div>
 
                                 @*<div class="row">
-            <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-2 col-sm-2">
 
-            </div>
-            <div class="col-md-3 col-sm-3" style="margin-bottom: 10px;">
-                <button id="backToApplicantType" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
-            </div>
-            <div class="col-md-2 col-sm-2">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" style="margin-bottom: 10px;">
+                                            <button id="backToApplicantType" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
+                                        </div>
+                                        <div class="col-md-2 col-sm-2">
 
-            </div>
-            <div class="col-md-5 col-sm-5">
-                <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Next</button>
-            </div>
-        </div>*@
-                                @*<div class="row justify-content-center">
-            <div class="col-10">
-                <a asp-action="ApplicantTypeSelection" asp-controller="Home" id="backToApplicantType" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</a>
-                <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;margin-top: 20px;">Next</button>
-
-            </div>
-        </div>*@
-
-                                <div id="step-two" class="mt-5">
-                                    @*<div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5: Schedule an Appointment</p>
-                                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 3: Schedule an Appointment</p>
+                                        </div>
+                                        <div class="col-md-5 col-sm-5">
+                                            <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Next</button>
+                                        </div>
                                     </div>*@
-                                    <div class="row col-12 m-0 p-0" style="margin-top:10px;">
+                                @*<div class="row justify-content-center">
+                                        <div class="col-10">
+                                            <a asp-action="ApplicantTypeSelection" asp-controller="Home" id="backToApplicantType" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</a>
+                                            <button id="stepSelectProcessingSiteNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;margin-top: 20px;">Next</button>
+
+                                        </div>
+                                    </div>*@
+
+                                <hr class="show-on-small-only" />
+                                <div id="step-two" class="mt-3">
+                                    @*<div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                                            <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5: Schedule an Appointment</p>
+                                            <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 3: Schedule an Appointment</p>
+                                        </div>*@
+                                    <div id="scheduleSelection" class="row col-12 m-0 p-0" style="margin-top:10px;">
                                         <div class="col-lg-6 col-md-12 col-sm-12 px-0" style="margin-bottom: 10px">
-                                            <div class="card bg-light white-bg" style="padding: 10px;">
-                                                <label class="black-text">Select Available Schedule</label>
+                                            <div class="card bg-light white-bg h-100" style="padding: 10px;">
+                                                <label class="black-text mb-0 bold">Select Available Schedule</label>
                                                 @*<input class="form-control" type="date" />*@
                                                 @*<div id="datetimepicker"></div>*@
                                                 @*@Html.Partial("_CalendarPartial")*@
                                                 <partial name="_CalendarPartial" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 col-md-12 col-sm-12 p-sm-0" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                                        <div class="col-lg-2 col-md-12 col-sm-12 px-0 px-lg-2 p-sm-0" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
                                             <div class=" white-bg card bg-light " style="height:auto;padding:5px;margin-bottom: 10px">
-                                                <label class="black-text">Select Time</label>
+                                                <label class="black-text bold">Select Time</label>
                                                 <div class="row justify-content-center">
                                                     <div id="AvailableTime" class="col-lg-10 col-md-12 col-sm-12">
                                                         @foreach (var hour in defaultBranch.AvailableHours)
                                                         {
-                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
+                                                            <label class="black-text mr-2"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
                                                         }
                                                         @*<label class="black-text"><input type="radio" class="option1" name="option1" value="07:00 AM" checked /> 7-8 AM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="08:00 AM" /> 8-9 AM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="09:00 AM" /> 9-10 AM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="10:00 AM" /> 10-11 AM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="11:00 AM" /> 11-12 PM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="12:00 PM" /> 12-1 PM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="01:00 PM" /> 1-2 PM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="02:00 PM" /> 2-3 PM</label>
-                                <label class="black-text"><input type="radio" class="option1" name="option1" value="03:00 PM" /> 3-4 PM</label>*@
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="08:00 AM" /> 8-9 AM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="09:00 AM" /> 9-10 AM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="10:00 AM" /> 10-11 AM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="11:00 AM" /> 11-12 PM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="12:00 PM" /> 12-1 PM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="01:00 PM" /> 1-2 PM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="02:00 PM" /> 2-3 PM</label>
+                                                            <label class="black-text"><input type="radio" class="option1" name="option1" value="03:00 PM" /> 3-4 PM</label>*@
                                                     </div>
                                                     <div class="col-lg-2 col-md-12 col-sm-12"></div>
                                                 </div>
                                                 @*<div id="appointmentTime" style="height:auto;">
-                            <div class="col-12 ">
-                                <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
-                            </div>
-                            <div class="col-12 ">
-                                <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
-                            </div>
-                            <div class="col-12">
+                                                        <div class="col-12 ">
+                                                            <label><input type="radio" name="option1" value="08:00 AM" /> 8:00 AM</label>
+                                                        </div>
+                                                        <div class="col-12 ">
+                                                            <label><input type="radio" name="option1" value="09:00 AM" /> 9:00 AM</label>
+                                                        </div>
+                                                        <div class="col-12">
 
-                                <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
-                            </div>
-                            <div class="col-12">
-                                <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
-                            </div>
-                        </div>*@
+                                                            <label><input type="radio" name="option1" value="10:00 AM" /> 10:00 AM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="11:00 AM" /> 11:00 AM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="12:00 PM" /> 12:00 PM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="01:00 PM" /> 1:00 PM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="02:00 PM" /> 2:00 PM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="03:00 PM" /> 3:00 PM</label>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label><input type="radio" name="option1" value="04:00 PM" /> 4:00 PM</label>
+                                                        </div>
+                                                    </div>*@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-12 col-sm-12 px-0 card bg-light white-bg">
-                                            <div style="height:auto;padding:10px;">
+                                            <div id="selectedDateAndTime" style="height:auto;padding:10px;">
                                                 <p class="black-text">Selected Date and Time</p>
                                                 @*<p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>*@
                                                 <input asp-for="ScheduleDate" id="appointmentSchedule" class="form-control font-weight-bold" readonly>
@@ -335,17 +352,39 @@
 
             </div>
 
+            <div id="applicationTypeSelection" class="tabcontent">
+
+                <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5</p>
+                </div>
+
+                <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-2 d-flex flex-column justify-content-center">
+                    <div class="location-container w-100 mx-auto px-5">
+                        <div class="card-header bold p-1 white-bg text-center mt-4">
+                            <h6 class="bold text-uppercase">Please choose one</h6>
+                            <p class="mb-0" style="font-weight: normal">I am the</p>
+                        </div>
+                        <div class="card-body px-5 py-4">
+                            <button id="philippines-button" class="btn btn-primary  w-100 d-block text-uppercase bold mb-4">Document owner</button>
+                            <button id="abroad-button" class="btn btn-primary w-100 d-block text-uppercase bold">Authorized representative</button>
+                            <div>
+                                <a class="button-primary">
+                                   data-toggle="modal" data-target="#view-requirements-modal" data-backdrop="static" data-keyboard="false">
+                                    VIEW REQUIREMENTS
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             if (applicants == 0)
             {
 
                 <div id="step-one" style="display:none" class="tabcontent">
-
-
-
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                         <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5: Apostille Application</p>
-                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 3: Apostille Application</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 5</p>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;">
@@ -2428,7 +2467,7 @@
         var regularPrice = 0;
 
 
-
+        $('#applicationTypeSelection').hide();
 
 
 
@@ -2919,22 +2958,31 @@
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             });
+
             $("#stepTwoNextBtn").click(function () {
+                let siteAndScheduleSelection = $('#step-select-processing-site');
+                let applicationTypeSelection = $('#applicationTypeSelection');
+                let siteAndScheduleButton = $('#stepTwoNextBtn');
+
                 if (canConfirm == false) {
                     $("#errSchedDate").show();
                     return;
                 }
 
+                siteAndScheduleSelection.hide();
+                applicationTypeSelection.show();
+
                 $("#step-one").hide();
                 $("#step-one-authorized").hide();
                 $("#step-two").hide();
-                $("#step-three").show();
+                $("#step-three").hide();
+
                 $('#stepThreeBtn').click();
 
                 $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
                 total = 0;
                 var subtotal = 0;
-                if (applicants == 0) {
+                @*if (applicants == 0) {
                     var docuType = JSON.parse($('#apostileData').val());
                     var lbldocuType = $('#LblTypeOfDocument');
                     lbldocuType.empty();
@@ -2951,7 +2999,7 @@
                         }
 
                     });
-                }
+                }*@
 
 
 

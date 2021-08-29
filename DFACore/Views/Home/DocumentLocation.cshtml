@@ -6,10 +6,10 @@
     </div>
 </section>
 
-<div class="pageContainers" id="application-form" style="padding: 20px;
+<div class="pageContainers px-0" id="application-form" style="padding: 20px;
         height: auto;min-height:450px;">
 
-    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
+    <p style=" margin-bottom: 2rem;" class="show-on-large-only">
         <span class="float-left grey-text-bold font-weight-bold">
             @User.Identity.Name
         </span>
@@ -20,7 +20,7 @@
             @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
         </span>
     </p>
-    <div class="d-sm-none">
+    <div class="hide-on-large">
         <p class="p-label mb-1">
             <span class="grey-text-bold">@User.Identity.Name</span>
             <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
@@ -32,13 +32,16 @@
         <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 5</p>
     </div>
 
-    <div class="card bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
-        <div class="location-container w-100 mx-auto">
+    <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
+        <div class="location-container w-100 mx-auto px-5">
             <div class="card-header bold p-1 white-bg text-center mt-4">Where will the document be used?</div>
             <div class="card-body px-5 py-5">
-                <button id="philippines-button" asp-action="Index" asp-controller="Home" class="btn btn-primary  w-100 d-block text-uppercase mb-4">Philippines</button>
-                <button id="abroad-button" asp-action="Index" asp-controller="Home" class="btn btn-primary w-100 d-block text-uppercase">Abroad</button>
+                <button id="philippines-button" class="btn btn-primary  w-100 d-block text-uppercase mb-4">Philippines</button>
+                <button id="abroad-button" class="btn btn-primary w-100 d-block text-uppercase">Abroad</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<script src="~/js/documentlocation.js"></script>

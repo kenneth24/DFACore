@@ -66,7 +66,7 @@ namespace DFACore.Controllers
         {
             return RedirectToAction("Login", "Account");
         }
-        public IActionResult Index(int applicantsCount = 0)
+        public IActionResult Index(int applicantsCount = 0, int id = 0)
         {
             if (applicantsCount > 10)
                 applicantsCount = 10;
@@ -81,6 +81,9 @@ namespace DFACore.Controllers
             ViewData["DefaultBranch"] = defaultBranch;
             ViewData["Branches"] = _applicantRepo.GetBranches();
             ViewData["Price"] = _applicantRepo.GetPrice();
+
+            var data = _applicantRepo.GetBranches();
+            ViewBag.Location = id;
             return View();
         }
 
@@ -254,7 +257,6 @@ namespace DFACore.Controllers
             ViewData["ApplicantCount"] = model.ApplicantCount;
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return RedirectToAction("Success");
-
 
         }
 
