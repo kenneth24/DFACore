@@ -18,6 +18,7 @@ using shortid.Configuration;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Shyjus.BrowserDetection;
 using System.Net;
+using DFACore.Data;
 
 namespace DFACore.Controllers
 {
@@ -34,6 +35,7 @@ namespace DFACore.Controllers
         private readonly GoogleCaptchaService _googleCaptchaService;
         private readonly IActionContextAccessor _accessor;
         private readonly IBrowserDetector _browserDetector;
+        private readonly DocumentTypes _documentsType;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -56,6 +58,7 @@ namespace DFACore.Controllers
             _googleCaptchaService = googleCaptchaService;
             _accessor = accessor;
             _browserDetector = browserDetector;
+            _documentsType = new DocumentTypes();
         }
         public IActionResult ApplicantTypeSelection()
         {
@@ -82,7 +85,16 @@ namespace DFACore.Controllers
             ViewData["Branches"] = _applicantRepo.GetBranches();
             ViewData["Price"] = _applicantRepo.GetPrice();
 
-            var data = _applicantRepo.GetBranches();
+            var documents = _documentsType.Get();
+            if (id == 1)
+            {
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+            }
+            ViewData["DocumentTypes"] = documents;
+
             ViewBag.Location = id;
             return View();
         }
@@ -336,13 +348,23 @@ namespace DFACore.Controllers
         //    return RedirectToAction("Success");
         //}
 
-        public IActionResult PartialApplicant(int i)
+        public IActionResult PartialApplicant(int i, int id = 0)
         {
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
             //ViewData[$"ApplicationCode{i}"] = applicationCode + (i + 1);
             ViewBag.Increment = i;
-            return View();
+
+            var documents = _documentsType.Get();
+            if (id == 1)
+            {
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+            }
+            ViewData["DocumentTypes"] = documents;
+            return PartialView("PartialApplicant");
         }
 
         [AllowAnonymous]
@@ -675,6 +697,11 @@ namespace DFACore.Controllers
         public IActionResult DocumentLocation()
         {
             return View();
+        }
+
+        public List<Documents> GetDocuments()
+        {
+            return _documentsType.Get();
         }
 
     }

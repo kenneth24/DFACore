@@ -371,9 +371,7 @@
                             <p class="d-lg-none text-left">
                                 <i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i>
                             </p>
-
                         </div>
-
 
                         <div class="form-group">
                             <div class="row">
@@ -495,7 +493,7 @@
                     </div>
                     <div>
                         <div>
-                            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
+                            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#documentTypesModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
                                 (+) ADD DOCUMENTS HERE
                             </a>
                             <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata" style="position: relative;top: 20px;left: 10px;"></span>
@@ -529,8 +527,8 @@
                     </div>
                     <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
                         <div class="w-100">
-                            <button id="stepOneBackBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</button>
-                            <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-15" style="color: white;margin-top: 20px;">Next</button>
+                            <button id="backToStepThreeBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</button>
+                            <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-2" style="color: white;margin-top: 20px;">Next</button>
 
                         </div>
                     </div>
@@ -553,10 +551,10 @@
 
             @*<form method="post" id="application-form">*@
             <div id="step-one-authorized" style="display:none" class="tabcontent">
-                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:15px;">
                     <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 10px;border: 1px solid #a0a0a0;border-radius: 5px;margin-bottom: 45px;">
+                <div class="card-panel white-bg mb-3 p-4" style="padding: 10px; ">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12">
@@ -703,7 +701,10 @@
                             </div>
                         </div>*@
                 </div>
-                <div id="documentOwners" style="margin-top:10px;margin-bottom:10px;width: 102.5%; margin-left: -1.3%;">
+                <div id="documentOwners" >
+                </div>
+                <div class="mb-3 col-md-4 offset-md-4 offset-lg-4 col-sm-12 justify-content-center">
+                    <button id="addDocumentOwnerBtn" type="button" class="btn bold text-uppercase w-100" style="background-color:#217ff3;color:white;">(+) Add Document Owner</button>
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-12"></div>
@@ -2009,6 +2010,60 @@
         </div>
     </div>
 
+    <div class="modal fade" id="documentTypesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-autoheight" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/images/add_document.PNG" style="height: 30px" />
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center text-uppercase" style="padding: 8px;font-weight:600;font-size:16px;">Type of Documents</p>
+                    </div>
+                    <select id="docTypeSelect" class="form-control mb-3 mt-2 bg-light">
+                        @foreach (var item in ViewData["DocumentTypes"] as List<Documents>)
+                        {
+                            <option id="@item.Id" value="@item.Value">@item.Name</option>
+                        }
+                    </select>
+                    <div class="mb-3" id="documentTypeInfo">
+                        <small class="bold">Document Information:</small>
+                        <div class="card white-bg p-2 px-3">
+                            <span id="documentInfoText">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
+                        </div>
+                    </div>
+                    <div class="mb-3" id="documentQuantity">
+                        <h5 class="bold text-center mb-3">No. of Documents</h5>
+                        <div class="d-flex">
+                            <div class="d-flex flex-column ml-auto mr-2">
+                                <input type="number" min="1" max="10" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
+                                <span class="bold">Regular</span>
+                            </div>
+                            <div class="d-flex flex-column mr-auto ml-2">
+                                <input type="number" min="1" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
+                                <span class="bold">Expedite</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="documentTypeSample">
+                        <small class="bold">*Personal Copy is NOT valid</small>
+                        <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
+                        <small class="bold">*Sample copy of NBI sundry</small>
+                        <img src="~/images/documents/1 Sample NBI Sundry-1.png" class="w-100" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Back</button></div>
+                    <div class="col-md-2 col-sm-2" style="margin-top:10px;">
+                    </div>
+                    <div class="col-md-5 col-sm-5" style="margin-left: -15px;"><button id="selectDocumentsBtnModal" type="button" class="btn button-primary col-md-12 col-sm-12" style="color:white;">ADD</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="personalCopyNotValid-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -2508,6 +2563,22 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-column p-3">
+                <img src="~/dfa.png" class="mx-auto mb-4" style="height: 50px"/>
+                <div class="mx-auto text-center px-2">
+                    <p class="text-danger text-uppercase bold" id="errorMessage"></p>
+                </div>
+                <button id="exitButton" data-dismiss="modal" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;">EXIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
 
     @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
@@ -2828,12 +2899,13 @@
 
             $("#backToStepOne").click(function () {
                 //$('#stepOneBtn').click();
-                $("#step-one").show();
-                $("#step-one-authorized").show();
-                $("#step-two").hide();
-                $("#step-three").hide();
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
+                //$("#step-one").show();
+                //$("#step-one-authorized").show();
+                //$("#step-two").hide();
+                //$("#step-three").hide();
+                //document.body.scrollTop = 0;
+                //document.documentElement.scrollTop = 0;
+                window.location.href = '/Home/DocumentLocation'
             });
             $("#stepOneNextBtn").click(function () {
                 docuTotalCount = 0;
@@ -3114,6 +3186,7 @@
             });
             $('#documentsCount').text(0);
             $('#selectDocumentsBtn').click(function () {
+                console.log('here');
                 var documentObject = [];
                 $(':checkbox:checked').each(function (i) {
                     var getId = $(this).attr('id');

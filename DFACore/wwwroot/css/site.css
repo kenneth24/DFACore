@@ -196,18 +196,18 @@ body {
         width: 50px !important;
         height: 30px !important;
     }
-
+/*
     #documentOwners {
         width: 104.5% !important;
         margin-left: -2.3% !important;
-    }
+    }*/
 }
 
 @media only screen and (max-width: 400px) {
-    #documentOwners {
+    /*#documentOwners {
         width: 110.5% !important;
         margin-left: -5.3% !important;
-    }
+    }*/
 }
 /*@media only screen and (min-width: 401px) {
     #documentOwners {
@@ -216,11 +216,11 @@ body {
     }
 }*/
 @media only screen and (max-width: 600px) {
-    #documentOwners {
+    /*#documentOwners {
         width: 108.4% !important;
         margin-left: -4.3% !important;
         
-    }
+    }*/
 
     .fc-toolbar {
         flex-wrap: wrap;
@@ -310,4 +310,11 @@ body {
 
 #viewRequirements {
     height: 30px!important;
+}
+
+.modal-autoheight .modal-body {
+    position: relative;
+    overflow-y: auto;
+    min-height: 100px !important;
+    max-height: 600px !important;
 }
