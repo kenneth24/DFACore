@@ -8,6 +8,7 @@ namespace DFACore.Models
     public class ApplicantsViewModel
     {
         public ApplicantRecordViewModel Record { get; set; }
+        public ApplicantRecordViewModel AuthRecord { get; set; }
         public List<ApplicantRecordViewModel> Records { get; set; }
         public string ScheduleDate { get; set; }
         public int ApplicantCount { get; set; }

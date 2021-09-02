@@ -17,7 +17,7 @@
         <label>Application Code: @ViewData["ApplicationCode" + increment]</label>*@
     @*<input asp-for="Records[increment].ApplicationCode" value="" class="form-control" />*@
     <div id="applicants-container" class="w-100 mb-3">
-        @{ var documentOwnerNo = 1;
+        @{ var documentOwnerNo = 0;
             documentOwnerNo += increment;
         }
         <h6 style="font-weight:bold">Document Owner no. <span>@documentOwnerNo</span></h6>
@@ -132,7 +132,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="apostileModal@(increment)" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
+<!--<div class="modal fade" id="apostileModal@(increment)" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -447,9 +447,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled class="small transactionQuantity@(increment)" id="qtyMedCerts@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -476,9 +476,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled class="small transactionQuantity@(increment)" id="qtyCAAP@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -865,9 +865,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled class="small transactionQuantity@(increment)" id="qtyImmigration@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -893,9 +893,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled class="small transactionQuantity@(increment)" id="qtyDSWDClearance@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -951,9 +951,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled class="small transactionQuantity@(increment)" id="qtyBusinessRegistration@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -1009,9 +1009,9 @@
                                         <br />
                                     </div>
                                     <input type="number" min="1" disabled disbled class="small transactionQuantity@(increment)" id="qtyExportDocuments@(increment)" style="width: 15%;height:30px;">
-                                    <span> Total</span>
+                                    <span> Total</span>-->
                                     @*<label for="qtyPRC"></label>*@
-                                </div>
+                                <!--</div>
                             </td>
                             <td>
                                 <i class="text-bold">For sample document click here</i> <br />
@@ -1033,7 +1033,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <div class="modal fade" id="documentTypesModal@(increment)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1096,55 +1096,66 @@
 @section Scripts {
     <script>
 
-        let selectDocumentsBtn = $('#selectDocumentsBtnModal@(increment)');
-        let docTypeSelect = $('#docTypeSelect@(increment)');
-        let documentTypeInfo = $('#documentTypeInfo@(increment)');
-        let documentInfoText = $('#documentInfoText@(increment)');
-        let documentQuantity = $('#documentQuantity@(increment)');
-        let regularQuantityElement = $('#documentQuantity@(increment) .regular');
-        let expediteQuantityElement = $('#documentQuantity@(increment) .expedite');
-        let documentsTable = $("#documentsTable@(increment)");
-        let documentTypeSample = $('#documentTypeSample@(increment)');
+        $(document).ready(function () {
+            //$('.transactionQuantity@(increment)').keyup(function () {
+            //    this.value = this.value.replace(0,"");
+            //});
+            //$('.transactionQuantity@(increment)').focusout(function () {
+            //    if (this.value < 1) {
+            //        this.value = this.value.replace(0, "");
+            //        alert('Quantity cannot be zero');
+            //    }
+            //});
+
+        let selectDocumentsBtn@(increment) = $('#selectDocumentsBtnModal@(increment)');
+        let docTypeSelect@(increment) = $('#docTypeSelect@(increment)');
+        let documentTypeInfo@(increment) = $('#documentTypeInfo@(increment)');
+        let documentInfoText@(increment) = $('#documentInfoText@(increment)');
+        let documentQuantity@(increment) = $('#documentQuantity@(increment)');
+        let regularQuantityElement@(increment) = $('#documentQuantity@(increment) .regular');
+        let expediteQuantityElement@(increment) = $('#documentQuantity@(increment) .expedite');
+        let documentsTable@(increment) = $("#documentsTable@(increment)");
+        let documentTypeSample@(increment) = $('#documentTypeSample@(increment)');
         let documentObject@(increment) = [];
-        let docTypeSelect = $('#docTypeSelect@(increment)');
-        let documentTypeInfo = $('#documentTypeInfo@(increment)');
-        let documentInfoText = $('#documentInfoText@(increment)');
-        let documentQuantity = $('#documentQuantity@(increment)');
+        let docTypeSelect@(increment) = $('#docTypeSelect@(increment)');
+        let documentTypeInfo@(increment)= $('#documentTypeInfo@(increment)');
+        let documentInfoText@(increment) = $('#documentInfoText@(increment)');
+        let documentQuantity@(increment) = $('#documentQuantity@(increment)');
 
-        let documents = getDocumentsType();
+        //let documents@(increment) = getDocumentsType();
 
-        docTypeSelect.on('change', function () {
+        $('#docTypeSelect@(increment)').on('change', function () {
             let $this = $(this),
                 selected = $this.find(":selected"),
                 id = selected.attr('id'),
                 value = selected.attr('value'),
-                selectedData = documents.filter(x => x.id == id)[0],
+                selectedData = documents@(increment).filter(x => x.id == id)[0],
                 regularQuantity = selectedData.quantities.filter(x => x.name == 'Regular')[0],
                 expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
                 baseUrl = window.location.origin;
 
             console.log('passed');
-            documentTypeSample.children().remove();
+            documentTypeSample@(increment).children().remove();
             if (selectedData != null) {
                 // change displayed document info
                 if (selectedData.description == '') {
-                    documentTypeInfo.hide();
+                    documentTypeInfo@(increment).hide();
                 } else {
-                    documentTypeInfo.show();
-                    documentInfoText.text(selectedData.description);
+                    documentTypeInfo@(increment).show();
+                    documentInfoText@(increment).text(selectedData.description);
                 }
 
-                regularQuantityElement.attr('id', regularQuantity.id);
-                expediteQuantityElement.attr('id', expediteQuantity.id);
+                regularQuantityElement@(increment).attr('id', regularQuantity.id);
+                expediteQuantityElement@(increment).attr('id', expediteQuantity.id);
 
                 if (selectedData.info != null) {
                     for (var i = 0; i < selectedData.info.length; i++) {
                         if (selectedData.info[i].Name != '') {
                             var label = `<small class="bold">${selectedData.info[i].name}</small>`;
-                            documentTypeSample.append(label);
+                            documentTypeSample@(increment).append(label);
                         }
                         var image = `<img id="${i}-img" class="w-100 mb-3 "/>`;
-                        documentTypeSample.append(image);
+                        documentTypeSample@(increment).append(image);
                         var imageUrl = `${baseUrl}${selectedData.info[i].source}`;
                         $(`#${i}-img`).attr('src', imageUrl);
                     }
@@ -1153,15 +1164,15 @@
         });
 
 
-            selectDocumentsBtn.on('click', function () {
+            $('#selectDocumentsBtnModal@(increment)').on('click', function () {
                 console.log('passed here');
-                let $this = docTypeSelect;
+                let $this = docTypeSelect@(increment);
                 selected = $this.find(":selected"),
                     id = selected.attr('id'),
-                    regularId = regularQuantityElement.attr('id'),
-                    expediteId = expediteQuantityElement.attr('id'),
-                    regularQuantity = parseInt(regularQuantityElement.val()),
-                    expediteQuantity = parseInt(expediteQuantityElement.val());
+                    regularId = regularQuantityElement@(increment).attr('id'),
+                    expediteId = expediteQuantityElement@(increment).attr('id'),
+                    regularQuantity = parseInt(regularQuantityElement@(increment).val()),
+                    expediteQuantity = parseInt(expediteQuantityElement@(increment).val());
 
 
                 if (regularQuantity > 10 || expediteQuantity > 10) {
@@ -1244,17 +1255,6 @@
                 documents = data;
             });
         };
-
-        $(document).ready(function () {
-            //$('.transactionQuantity@(increment)').keyup(function () {
-            //    this.value = this.value.replace(0,"");
-            //});
-            //$('.transactionQuantity@(increment)').focusout(function () {
-            //    if (this.value < 1) {
-            //        this.value = this.value.replace(0, "");
-            //        alert('Quantity cannot be zero');
-            //    }
-            //});
 
             $('.transactionQuantity@(increment)').keypress(function (e) {
                 if (this.value.length == 0 && e.which == 48) {
