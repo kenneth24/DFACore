@@ -10,7 +10,6 @@
     //List<Branch> branches = (List<Branch>)ViewData["Branches"];
     var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
     var price = (Price)ViewData["Price"];
-    var a = 0;
     //var currentUser = (ApplicationUser)ViewBag.User;
     //var suffix = string.IsNullOrEmpty(currentUser.Suffix) ? "N/A" : currentUser.Suffix;
 
@@ -353,252 +352,52 @@
 
             </div>
 
-                <div id="step-one" style="display: none"  class="tabcontent">
-                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
-                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
-                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 4 of 5</p>
-                    </div>
-
-                    <div class="card-panel white-bg p-4">
-                        <div>
-                            <div class="form-group">
-                                <p class="d-none d-lg-block">
-                                    <span style="font-weight: bold">Document Owner</span>
-                                    <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                                </p>
-                                <p class="d-lg-none text-left" style="font-weight: bold">
-                                    Document Owner
-                                </p>
-                                <p class="d-lg-none text-left">
-                                    <i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i>
-                                </p>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
-                                        <input asp-for="Record.FirstName" class="form-control" />
-                                        <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Record.MiddleName"></label>
-                                        <input asp-for="Record.MiddleName" class="form-control" />
-                                        <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
-                                        <input asp-for="Record.LastName" class="form-control" />
-                                        <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
-                                    </div>
-
-
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Record.Suffix"></label>
-                                        @*<input asp-for="Suffix" class="form-control" />*@
-                                        <select asp-for="Record.Suffix" class="form-control">
-                                            <option value="">N/A</option>
-                                            <option value="JR.">JR.</option>
-                                            <option value="SR.">SR.</option>
-                                            <option value="I">I</option>
-                                            <option value="II">II</option>
-                                            <option value="III">III</option>
-                                            <option value="IV">IV</option>
-                                            <option value="V">V</option>
-                                            <option value="VI">VI</option>
-                                            <option value="VII">VII</option>
-                                            <option value="VIII">VIII</option>
-                                            <option value="IX">IX</option>
-                                            <option value="X">X</option>
-                                            <option value="XI">XI</option>
-                                            <option value="XII">XII</option>
-                                            <option value="XIII">XIII</option>
-                                            <option value="XIV">XIV</option>
-                                            <option value="XV">XV</option>
-
-                                        </select>
-
-                                        <span asp-validation-for="Record.Suffix" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="Record.DateOfBirth">Date of Birth <span class="red">*</span></label>
-                                        <input type="date" asp-for="Record.DateOfBirth" class="form-control dateOfBirthOwner" />
-                                        <span asp-validation-for="Record.DateOfBirth" class="text-danger dateofbirth"></span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
-                                        <input asp-for="Record.ContactNumber" class="form-control numberInput " type="tel" min="1" />
-                                        <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="Record.CountryDestination">Country of Destination <span class="red">*</span></label>
-
-                                        <select asp-for="Record.CountryDestination" class="form-control">
-                                            <partial name="_CountriesPartial" />
-                                        </select>
-                                        <span asp-validation-for="Record.CountryDestination" class="text-danger countrydestination"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-8 col-sm-12">
-                                            <label asp-for="CompanyName"></label>
-                                            <input asp-for="CompanyName" class="form-control" />
-                                            <span asp-validation-for="CompanyName" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
-                                            <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
-
-                                            <select asp-for="CountryDestination" class="form-control">
-                                                <partial name="_CountriesPartial" />
-                                            </select>
-                                            <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                                        </div>
-                                    </div>
-                                </div>*@
-                            @*<div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-7 col-sm-12">
-                                            <label asp-for="NameOfRepresentative"></label>
-                                            <input asp-for="NameOfRepresentative" class="form-control" />
-                                            <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
-                                        </div>
-                                        <div class="col-md-5 col-sm-12">
-                                            <label asp-for="RepresentativeContactNumber"></label>
-                                            <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
-                                            <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                </div>*@
-
-                        </div>
-
-                        <div style="margin-top: 20px;">
-                            <div class="col-12">
-                                @*<label class="form-check-label">*@
-                                @*<a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
-
-                                        (<i class="fa fa-plus" aria-hidden="true"></i>)ADD DOCUMENTS
-                                    </a>*@
-                                @*</label>*@
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#documentTypesModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
-                                    (+) ADD DOCUMENTS HERE
-                                </a>
-                                <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata" style="position: relative;top: 20px;left: 10px;"></span>
-                                @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
-                                <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
-                                    <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
-                                </div>
-                                <div id="documentList" style="
-                            border: 1px solid #b7b7b7;
-                            padding: 10px;
-                            height: 150px;
-                            overflow: scroll;
-                            position: relative;
-                            top: 10px;">
-
-                                    <table class="table " id="documentsTable">
-                                        <tr>
-                                            <th>Document</th>
-                                            <th>Quantity</th>
-                                            <th>Transaction</th>
-                                        </tr>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div>
-                                <input asp-for="Record.ApostileData" id="apostileData" class="form-control" hidden />
-                            </div>
-
-                        </div>
-                        <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
-                            <div class="w-100">
-                                <button id="backToStepThreeBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12" style="color: white;border: 1px solid darkgray;margin-top:20px;">Back</button>
-                                <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-2" style="color: white;margin-top: 20px;">Next</button>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    @*<div class="row" style="margin-top: 20px;">
-                            <div class="col-md-4 col-sm-12"></div>
-                            <div class="col-md-4 col-sm-12">
-                                <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
-                            </div>
-                            <div class="col-md-4 col-sm-12"></div>
-                        </div>*@
-
-
-
-                    @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
-
+            <div id="step-one" style="display: none" class="tabcontent">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                    <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
+                    <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 4 of 5</p>
                 </div>
 
-            @*<form method="post" id="application-form">*@
-                <div id="step-one-authorized" style="display: none" class="tabcontent">
-                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:15px;">
-                        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
-                    </div>
-                    <div class="card-panel white-bg mb-3 p-4" style="padding: 10px; ">
+                <div class="card-panel white-bg p-4">
+                    <div>
+                        <div class="form-group">
+                            <p class="d-none d-lg-block">
+                                <span style="font-weight: bold">Document Owner</span>
+                                <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
+                            </p>
+                            <p class="d-lg-none text-left" style="font-weight: bold">
+                                Document Owner
+                            </p>
+                            <p class="d-lg-none text-left">
+                                <i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i>
+                            </p>
+                        </div>
+
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-12">
-                                    <p style="margin-bottom:30px;">
-                                        <span style="font-weight: bold">Name of the Authorized Representative</span>
-                                        <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                @*<div class="col-md-2 col-sm-12">
-                                        <label asp-for="Title">Title <span class="red">*</span></label>
-                                        <select asp-for="Title" class="form-control">
-                                            <option value=""></option>
-                                            <option value="MR">MR.</option>
-                                            <option value="MRS">MRS.</option>
-                                            <option value="MRS">MS.</option>
-                                        </select>
-                                        <span asp-validation-for="Title" class="text-danger title"></span>
-                                    </div>*@
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="AuthRecord.FirstName">First Name <span class="red">*</span></label>
-                                    <input asp-for="AuthRecord.FirstName" class="form-control" />
-                                    <span asp-validation-for="AuthRecord.FirstName" class="text-danger fname"></span>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Record.FirstName">First Name <span class="red">*</span></label>
+                                    <input asp-for="Record.FirstName" class="form-control" />
+                                    <span asp-validation-for="Record.FirstName" class="text-danger fname"></span>
                                 </div>
 
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="AuthRecord.MiddleName"></label>
-                                    <input asp-for="AuthRecord.MiddleName" class="form-control" />
-                                    <span asp-validation-for="AuthRecord.MiddleName" class="text-danger"></span>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Record.MiddleName"></label>
+                                    <input asp-for="Record.MiddleName" class="form-control" />
+                                    <span asp-validation-for="Record.MiddleName" class="text-danger"></span>
                                 </div>
 
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="AuthRecord.LastName">Last Name <span class="red">*</span></label>
-                                    <input asp-for="AuthRecord.LastName" class="form-control" />
-                                    <span asp-validation-for="AuthRecord.LastName" class="text-danger lname"></span>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Record.LastName">Last Name <span class="red">*</span></label>
+                                    <input asp-for="Record.LastName" class="form-control" />
+                                    <span asp-validation-for="Record.LastName" class="text-danger lname"></span>
                                 </div>
 
 
-                                <div class="col-lg-3 col-md-12 col-sm-12">
-                                    <label asp-for="AuthRecord.Suffix"></label>
-                                    <select asp-for="AuthRecord.Suffix" class="form-control">
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="Record.Suffix"></label>
+                                    @*<input asp-for="Suffix" class="form-control" />*@
+                                    <select asp-for="Record.Suffix" class="form-control">
                                         <option value="">N/A</option>
                                         <option value="JR.">JR.</option>
                                         <option value="SR.">SR.</option>
@@ -617,76 +416,54 @@
                                         <option value="XIII">XIII</option>
                                         <option value="XIV">XIV</option>
                                         <option value="XV">XV</option>
+
                                     </select>
-                                    <span asp-validation-for="AuthRecord.Suffix" class="text-danger"></span>
+
+                                    <span asp-validation-for="Record.Suffix" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+
+                                <div class="col-md-4 col-sm-12">
+                                    <label asp-for="Record.DateOfBirth">Date of Birth <span class="red">*</span></label>
+                                    <input type="date" asp-for="Record.DateOfBirth" class="form-control dateOfBirthOwner" />
+                                    <span asp-validation-for="Record.DateOfBirth" class="text-danger dateofbirth"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label asp-for="Record.ContactNumber">Contact Number <span class="red">*</span></label>
+                                    <input asp-for="Record.ContactNumber" class="form-control numberInput " type="tel" min="1" />
+                                    <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <label asp-for="Record.CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                    <select asp-for="Record.CountryDestination" class="form-control">
+                                        <partial name="_CountriesPartial" />
+                                    </select>
+                                    <span asp-validation-for="Record.CountryDestination" class="text-danger countrydestination"></span>
                                 </div>
                             </div>
                         </div>
                         @*<div class="form-group">
-                            <h6>Address</h6>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
-                                    <input asp-for="Barangay" class="form-control" />
-                                    <span asp-validation-for="Barangay" class="text-danger address"></span>
-                                </div>
-
-
-                                <div class="col-md-3 col-sm-12">
-                                    <label asp-for="Region">Region/Province <span class="red">*</span></label>
-                                    <select asp-for="Region" class="form-control">
-                                        <option value=""></option>*@
-                        @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
-                            {
-                                <option value="@item">@item</option>
-                            }*@
-                        @*</select>
-                                        <span asp-validation-for="Region" class="text-danger nationality"></span>
+                                <div class="row">
+                                    <div class="col-md-8 col-sm-12">
+                                        <label asp-for="CompanyName"></label>
+                                        <input asp-for="CompanyName" class="form-control" />
+                                        <span asp-validation-for="CompanyName" class="text-danger"></span>
                                     </div>
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="City">City/Municipality <span class="red">*</span></label>
-                                        <select asp-for="City" class="form-control">
-                                            <option value=""></option>
-                                            <option value="Caloocan">Caloocan</option>
-                                            <option value="Las Piñas">Las Piñas</option>
-                                            <option value="Makati">Makati</option>
-                                            <option value="Malabon">Malabon</option>
-                                            <option value="Mandaluyong">Mandaluyong</option>
-                                            <option value="Manila">Manila</option>
-                                            <option value="Marikina">Marikina</option>
-                                            <option value="Muntinlupa">Muntinlupa</option>
-                                            <option value="Navotas">Navotas</option>
-                                            <option value="Parañaque">Parañaque</option>
-                                            <option value="Pasay">Pasay</option>
-                                            <option value="Pasig">Pasig</option>
-                                            <option value="Pateros">Pateros</option>
-                                            <option value="Quezon City">Quezon City</option>
-                                            <option value="San Juan">San Juan</option>
-                                            <option value="Taguig">Taguig</option>
-                                            <option value="Valenzuela">Valenzuela</option>
-                                        </select>
-                                        <span asp-validation-for="City" class="text-danger nationality"></span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group">
-                            <div class="row">
-
-                                <div class="col-md-6 col-sm-12">
-                                    <label asp-for="AuthRecord.ContactNumber">Contact Number <span class="red">*</span></label>
-                                    <input asp-for="AuthRecord.ContactNumber" class="form-control numberInput" type="number" min="1" />
-                                    <span asp-validation-for="AuthRecord.ContactNumber" class="text-danger contactnumber"></span>
-                                </div>
-                                @*<div class="col-md-6 col-sm-12">
+                                    <div class="col-md-4 col-sm-12">
                                         <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
 
                                         <select asp-for="CountryDestination" class="form-control">
                                             <partial name="_CountriesPartial" />
                                         </select>
                                         <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
-                                    </div>*@
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
                         @*<div class="form-group">
                                 <div class="row">
                                     <div class="col-md-7 col-sm-12">
@@ -701,23 +478,255 @@
                                     </div>
                                 </div>
                             </div>*@
+
                     </div>
-                    <div id="documentOwners">
+
+                    <div style="margin-top: 20px;">
+                        <div class="col-12">
+                            @*<label class="form-check-label">*@
+                            @*<a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#apostileModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;">
+
+                                    (<i class="fa fa-plus" aria-hidden="true"></i>)ADD DOCUMENTS
+                                </a>*@
+                            @*</label>*@
+                        </div>
                     </div>
-                    <div class="mb-3 col-md-4 p-0 offset-md-4 offset-lg-4 col-sm-12 justify-content-center">
-                        <button id="addDocumentOwnerBtn" type="button" class="btn bold text-uppercase w-100" style="background-color:#217ff3;color:white;">(+) Add Document Owner</button>
+                    <div>
+                        <div>
+                            <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#documentTypesModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
+                                (+) ADD DOCUMENTS HERE
+                            </a>
+                            <span asp-validation-for="Record.ApostileData" class="text-danger apostiledata" style="position: relative;top: 20px;left: 10px;"></span>
+                            @*<h6>Authentication requirements may be subject to change. The Department may require additional supporting documents if necessary.</h6>*@
+                            <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
+                                <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
+                            </div>
+                            <div id="documentList" style="
+                            border: 1px solid #b7b7b7;
+                            padding: 10px;
+                            height: 150px;
+                            overflow: scroll;
+                            position: relative;
+                            top: 10px;">
+
+                                <table class="table " id="documentsTable">
+                                    <tr>
+                                        <th>Document</th>
+                                        <th>Quantity</th>
+                                        <th>Transaction</th>
+                                    </tr>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <input asp-for="Record.ApostileData" id="apostileData" class="form-control" hidden />
+                        </div>
+
                     </div>
-                    <div class="row">
+                    <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
+                        <div class="w-100">
+                            <button id="backToStepThreeBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12 mt-2" style="color: white;border: 1px solid darkgray;">Back</button>
+                            <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-2" style="color: white;">Next</button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                @*<div class="row" style="margin-top: 20px;">
+                        <div class="col-md-4 col-sm-12"></div>
+                        <div class="col-md-4 col-sm-12">
+                            <button id="stepOneNextBtn" type="button" class="button-primary btn col-md-12 col-sm-12" style="color:white;">Next</button>
+                        </div>
+                        <div class="col-md-4 col-sm-12"></div>
+                    </div>*@
+
+
+
+                @*<button id="stepOneBackBtn" class="btn btn-secondary  col-md-4 col-sm-12" style="background: white;color: #217ff3;border: 1px solid darkgray;">Back</button>*@
+
+            </div>
+
+            @*<form method="post" id="application-form">*@
+            <div id="step-one-authorized" style="display: none" class="tabcontent">
+                <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:15px;">
+                    <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
+                </div>
+                <div class="card-panel white-bg mb-3 p-4" style="padding: 10px; ">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <p style="margin-bottom:30px;">
+                                    <span style="font-weight: bold">Name of the Authorized Representative</span>
+                                    <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            @*<div class="col-md-2 col-sm-12">
+                                    <label asp-for="Title">Title <span class="red">*</span></label>
+                                    <select asp-for="Title" class="form-control">
+                                        <option value=""></option>
+                                        <option value="MR">MR.</option>
+                                        <option value="MRS">MRS.</option>
+                                        <option value="MRS">MS.</option>
+                                    </select>
+                                    <span asp-validation-for="Title" class="text-danger title"></span>
+                                </div>*@
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="AuthRecord.FirstName">First Name <span class="red">*</span></label>
+                                <input asp-for="AuthRecord.FirstName" class="form-control" />
+                                <span asp-validation-for="AuthRecord.FirstName" class="text-danger fname"></span>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="AuthRecord.MiddleName"></label>
+                                <input asp-for="AuthRecord.MiddleName" class="form-control" />
+                                <span asp-validation-for="AuthRecord.MiddleName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="AuthRecord.LastName">Last Name <span class="red">*</span></label>
+                                <input asp-for="AuthRecord.LastName" class="form-control" />
+                                <span asp-validation-for="AuthRecord.LastName" class="text-danger lname"></span>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <label asp-for="AuthRecord.Suffix"></label>
+                                <select asp-for="AuthRecord.Suffix" class="form-control">
+                                    <option value="">N/A</option>
+                                    <option value="JR.">JR.</option>
+                                    <option value="SR.">SR.</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="VI">VI</option>
+                                    <option value="VII">VII</option>
+                                    <option value="VIII">VIII</option>
+                                    <option value="IX">IX</option>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                    <option value="XIII">XIII</option>
+                                    <option value="XIV">XIV</option>
+                                    <option value="XV">XV</option>
+                                </select>
+                                <span asp-validation-for="AuthRecord.Suffix" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <h6>Address</h6>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="Barangay">Block/Lot/Street/Barangay <span class="red">*</span></label>
+                                <input asp-for="Barangay" class="form-control" />
+                                <span asp-validation-for="Barangay" class="text-danger address"></span>
+                            </div>
+
+
+                            <div class="col-md-3 col-sm-12">
+                                <label asp-for="Region">Region/Province <span class="red">*</span></label>
+                                <select asp-for="Region" class="form-control">
+                                    <option value=""></option>*@
+                    @*@foreach (var item in ViewData["GetMunicipality"] as List<string>)
+                        {
+                            <option value="@item">@item</option>
+                        }*@
+                    @*</select>
+                                    <span asp-validation-for="Region" class="text-danger nationality"></span>
+                                </div>
+                                <div class="col-md-3 col-sm-12">
+                                    <label asp-for="City">City/Municipality <span class="red">*</span></label>
+                                    <select asp-for="City" class="form-control">
+                                        <option value=""></option>
+                                        <option value="Caloocan">Caloocan</option>
+                                        <option value="Las Piñas">Las Piñas</option>
+                                        <option value="Makati">Makati</option>
+                                        <option value="Malabon">Malabon</option>
+                                        <option value="Mandaluyong">Mandaluyong</option>
+                                        <option value="Manila">Manila</option>
+                                        <option value="Marikina">Marikina</option>
+                                        <option value="Muntinlupa">Muntinlupa</option>
+                                        <option value="Navotas">Navotas</option>
+                                        <option value="Parañaque">Parañaque</option>
+                                        <option value="Pasay">Pasay</option>
+                                        <option value="Pasig">Pasig</option>
+                                        <option value="Pateros">Pateros</option>
+                                        <option value="Quezon City">Quezon City</option>
+                                        <option value="San Juan">San Juan</option>
+                                        <option value="Taguig">Taguig</option>
+                                        <option value="Valenzuela">Valenzuela</option>
+                                    </select>
+                                    <span asp-validation-for="City" class="text-danger nationality"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-12">
+                                <label asp-for="AuthRecord.ContactNumber">Contact Number <span class="red">*</span></label>
+                                <input asp-for="AuthRecord.ContactNumber" class="form-control numberInput" type="number" min="1" />
+                                <span asp-validation-for="AuthRecord.ContactNumber" class="text-danger contactnumber"></span>
+                            </div>
+                            @*<div class="col-md-6 col-sm-12">
+                                    <label asp-for="CountryDestination">Country of Destination <span class="red">*</span></label>
+
+                                    <select asp-for="CountryDestination" class="form-control">
+                                        <partial name="_CountriesPartial" />
+                                    </select>
+                                    <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                </div>*@
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-12">
+                                    <label asp-for="NameOfRepresentative"></label>
+                                    <input asp-for="NameOfRepresentative" class="form-control" />
+                                    <span asp-validation-for="NameOfRepresentative" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-5 col-sm-12">
+                                    <label asp-for="RepresentativeContactNumber"></label>
+                                    <input asp-for="RepresentativeContactNumber" class="form-control" type="number" min="1" disabled />
+                                    <span asp-validation-for="RepresentativeContactNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <div id="documentOwners">
+                </div>
+                <div class="mb-3 col-md-4 p-0 offset-md-4 offset-lg-4 col-sm-12 justify-content-center">
+                    <button id="addDocumentOwnerBtn" type="button" class="btn bold text-uppercase w-100" style="background-color:#217ff3;color:white;">(+) Add Document Owner</button>
+                </div>
+                <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
+                    <div class="w-100">
+                        <button id="backToStepThreeAuthBtn" type="button" class="btn button-secondary col-md-4 col-sm-12 mb-2" style="color: white;border: 1px solid darkgray;">Back</button>
+                        <button id="stepOneNextBtnAuth" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right" style="color: white;">Next</button>
+
+                    </div>
+                </div>
+                @*<div class="mb-3 col-md-4 p-0 offset-md-4 offset-lg-4 col-sm-12 justify-content-center">
+                        <button id="stepOneNextBtnAuth" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+                    </div>*@
+                @*<div class="row">
                         <div class="col-md-4 col-sm-12"></div>
                         <div class="col-md-4 col-sm-12">
                             <button id="stepOneNextBtnAuth" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
                         </div>
                         <div class="col-md-4 col-sm-12"></div>
-                    </div>
+                    </div>*@
 
-                    @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
+                @*<button type="submit" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">ADD APPLICANT</button>*@
 
-                </div>
+            </div>
             @*</form>*@
         }
 
@@ -726,277 +735,223 @@
             <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                 <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 5 of 5: Generate Appointment Letter</p>
             </div>
-            <div id="editor"></div>
-            <h4 class="font-weight-bold text-center">Summary of Application</h4>
-            <hr />
-            <div class="alert alert-secondary" role="alert">
-                <p class="text-center">
-                    Please ensure that all the information/details are correct before clicking the <strong>GENERATE APPOINTMENT</strong> box. <br />
-                    Kindly <strong>PRINT</strong> and present your Appointment Letter when you visit the selected Consular Office for the processing of your Apostille.
-                </p>
-            </div>
 
-            <p class="red font-weight-bold text-center">IMPORTANT REMINDER: <strong class="black-text">Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</strong></p>
-            <div class="row">
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Code</p>
-                    <div class="font-weight-bold">
-                        <input value="@ViewData["ApplicationCode"]" asp-for="Record.ApplicationCode" type="hidden" />
-                        <span class="black-text" id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                    </div>
+            <div class="card-panel white-bg mb-3 p-4" style="padding: 10px; ">
+                <div id="editor"></div>
+                <h6 class="font-weight-bold text-center text-uppercase mb-3">Generate your appointment letter</h6>
+                <div>
+                    <p class="text-center red">
+                        Please ensure that all the information/details are correct before clicking the <b class="text-uppercase">GENERATE APPOINTMENT</b> button. <br />
+                        Kindly <b class="text-uppercase">PRINT</b> and present your Appointment Letter on your appointment schedule below.
+                    </p>
                 </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Date</p>
-                    <div class="font-weight-bold">
-                        <span class="black-text" id="LblDateOfAppointment"></span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Application Time</p>
-                    <div class="font-weight-bold">
-                        <span class="black-text" id="LblTimeOfAppointment"></span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <p class="appointmentHeader">Processing Site</p>
-                    <div class="font-weight-bold">
-                        <span class="black-text" id="LblProcessingSite"></span>
-                        <span class="black-text" id="LblProcessingSiteAddress"></span>
-                    </div>
-                </div>
-            </div>
-            <hr />
-
-            @if (@applicants > 0)
-            {
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Authorized Representative: </span>
-                    </div>
-                    <div class="col-md-8 col-sm-12">
-                        <span class="black-text" id="LblNameOfApplicant"></span>
-                    </div>
-                </div>
+                <p class="font-weight-bold text-center">IMPORTANT REMINDER: <strong class="black-text">Be at the DFA Processing Site at least 1 hour BEFORE your scheduled appointment.</strong></p>
+                <hr />
 
                 <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Contact No: </span>
+                    <div class="col-md-3 col-sm-12">
+                        <p class="appointmentHeader bold">Application Code</p>
+                        <div class="font-weight-bold">
+                            <input value="@ViewData["ApplicationCode"]" asp-for="Record.ApplicationCode" type="hidden" />
+                            <span class="black-text" id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                        </div>
                     </div>
-                    <div class="col-md-8 col-sm-12">
-                        <span class="black-text" id="LblContactNumber"></span>
+                    <div class="col-md-3 col-sm-12">
+                        <p class="appointmentHeader bold">Application Date</p>
+                        <div>
+                            <span class="black-text" id="LblDateOfAppointment"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <p class="appointmentHeader bold">Application Time</p>
+                        <div>
+                            <span class="black-text" id="LblTimeOfAppointment"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                        <p class="appointmentHeader bold">Processing Site</p>
+                        <div>
+                            <span class="black-text" id="LblProcessingSite"></span>
+                            <span class="black-text" id="LblProcessingSiteAddress"></span>
+                        </div>
                     </div>
                 </div>
                 <hr />
-                for (var i = 0; i < @applicants; i++)
-                {
-                    <div class="font-weight-bold">
 
-                        @{var appcodeIndex = i + 1;}
-                        <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" hidden />
-                        <span id="LblAppointmentCode-@i">@ViewData["ApplicationCode"]</span><span>-@appcodeIndex</span>
-                        @*<span id="LblAppointmentCode-@i"></span>*@
-                    </div>
+                <div id="authContainer" style="display: none">
+
                     <div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Document Owner: </span>
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Authorized Representative: </span>
                         </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span class="black-text" id="documentOwner-@i"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Country of Destination: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span class="black-text" id="LblCountryDestination-@i"></span>
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+                            <span class="LblNameOfApplicant black-text"></span>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Type of Document to be Apostillized: </span>
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Contact No: </span>
                         </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span class="black-text" id="LblTypeOfDocument-@i"></span>
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+                            <span class="black-text LblContactNumber"></span>
                         </div>
                     </div>
+                    <hr />
+                    <div id="documentsContainer"></div>
+                    @for (var i = 0; i < @applicants; i++)
+                    {
+                        <div class="font-weight-bold">
+                            @{var appcodeIndex = i + 1;}
+                            <input value="@ViewData[$"ApplicationCode"]-@appcodeIndex" asp-for="Records[i].ApplicationCode" hidden />
+                            <span id="LblAppointmentCode-@i">@ViewData["ApplicationCode"]</span><span>-@appcodeIndex</span>
+                            @*<span id="LblAppointmentCode-@i"></span>*@
+                        </div>
 
+                        <div class="row">
+                            <div class="step-three-field col-md-3 col-sm-12">
+                                <span>Document Owner: </span>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <span class="black-text" id="documentOwner-@i"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="step-three-field col-md-3 col-sm-12">
+                                <span>Country of Destination: </span>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <span class="black-text" id="LblCountryDestination-@i"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="step-three-field col-md-3 col-sm-12">
+                                <span>Type of Document to be Apostillized: </span>
+                            </div>
+                            <div class="col-md-8 col-sm-12">
+                                <span class="black-text" id="LblTypeOfDocument-@i"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="step-three-field col-md-3 col-sm-12">
+                                <span>Sub-Total:</span>
+                            </div>
+                            <div class="col-md-8 col-sm-12 font-weight-bold">
+                                <span class="black-text" id="LblPayment-@i"> PhP 0.00</span>
+                                <input asp-for="Records[i].Fees" type="hidden" />
+                            </div>
+                        </div>
+                        @*<input asp-for="Records[i].Fees" type="hidden" />*@
+                        <hr />
+                    }
                     <div class="row">
                         <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Sub-Total:</span>
+                            <span class="bold">TOTAL FEES:</span>
                         </div>
                         <div class="col-md-8 col-sm-12 font-weight-bold">
-                            <span class="black-text" id="LblPayment-@i"> PhP 0.00</span>
-                            <input asp-for="Records[i].Fees" type="hidden" />
+                            <span class="black-text" id="totalFeesAuth"> PhP 0.00</span>
+                            <input type="hidden" />
                         </div>
                     </div>
-                    @*<input asp-for="Records[i].Fees" type="hidden" />*@
-                    <hr />
-                }
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>TOTAL FEES:</span>
-                    </div>
-                    <div class="col-md-8 col-sm-12 font-weight-bold">
-                        <span class="black-text" id="totalFees"> PhP 0.00</span>
-                        <input type="hidden" />
-                    </div>
                 </div>
-            }
-            else
-            {
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Document Owner: </span>
-                    </div>
-                    <div class="col-md-8 col-sm-12">
-                        <span class="black-text" id="LblNameOfApplicant"></span>
-                    </div>
+                <div id="ownerContainer">
 
-                </div>
-                @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Address: </span>
+                    <div class="row">
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Document Owner: </span>
                         </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblAddress"></span>
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+                            <span class="black-text" id="LblNameOfApplicant"></span>
                         </div>
-                    </div>*@
-                @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Contact No: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblContactNumber"></span>
-                        </div>
-                    </div>*@
-                @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Authorize Representative: </span>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblAuthorizeRepresentative"></span>
-                        </div>
+
                     </div>
                     <div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Contact No: </span>
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Country of Destination: </span>
                         </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblRepresentativeContactNumber"></span>
+                        <div class="col-lg-9 col-md-8 col-sm-12">
+                            <span class="black-text" id="LblCountryDestination"></span>
                         </div>
-                    </div>*@
+                    </div>
 
-                @*<div class="row">
-                        <div class="step-three-field col-md-3 col-sm-12">
-                            <span>Company/ Office: </span>
+                    <div class="row">
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Documents: </span>
                         </div>
-                        <div class="col-md-8 col-sm-12">
-                            <span id="LblCompany"></span>
+                        <div class="col-lg-9 col-md-8 col-sm-12" id="LblTypeOfDocument">
                         </div>
-                    </div>*@
-
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Country of Destination: </span>
                     </div>
-                    @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>*@
-                    <div class="col-md-8 col-sm-12">
-                        <span class="black-text" id="LblCountryDestination"></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Type of Document to be Apostillized: </span>
-                    </div>
-                    @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
-                        </div>*@
-                    <div class="col-md-8 col-sm-12">
-                        <span class="black-text" id="LblTypeOfDocument"></span>
-                    </div>
-                </div>
 
 
-                @*<div class="step-three-field col-md-4 col-sm-12">
-                            <span>Date of Appointment</span>
+                    @*<div class="step-three-field col-md-4 col-sm-12">
+                                <span>Date of Appointment</span>
+                            </div>
+                            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                                <span>: </span>
+                            </div>
+                            <div class="col-md-7 col-sm-12 font-weight-bold">
+                                <span id="LblDateOfAppointment"></span>
+                            </div>
+
+                        <div class="step-three-field col-md-4 col-sm-12">
+                            <span>Time</span>
                         </div>
                         <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                             <span>: </span>
                         </div>
                         <div class="col-md-7 col-sm-12 font-weight-bold">
-                            <span id="LblDateOfAppointment"></span>
-                        </div>
-
-                    <div class="step-three-field col-md-4 col-sm-12">
-                        <span>Time</span>
-                    </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
-                    </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <span id="LblTimeOfAppointment"></span>
-                    </div>*@
-
-
-                <div class="row">
-                    <div class="step-three-field col-md-3 col-sm-12">
-                        <span>Total Fees:</span>
-                    </div>
-                    @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                            <span>: </span>
+                            <span id="LblTimeOfAppointment"></span>
                         </div>*@
-                    <div class="col-md-8 col-sm-12 font-weight-bold">
-                        <span class="black-text" id="LblPayment"> PhP 0.00</span>
-                        <input asp-for="Record.Fees" type="hidden" />
+
+
+                    <div class="row">
+                        <div class="step-three-field col-lg-3 col-md-4 col-sm-12">
+                            <span class="bold">Total Fees:</span>
+                        </div>
+                        @*<div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                                <span>: </span>
+                            </div>*@
+                        <div class="col-lg-9 col-md-8 col-sm-12 font-weight-bold">
+                            <span class="black-text" id="LblPayment"> PhP 0.00</span>
+                            <input asp-for="Record.Fees" type="hidden" />
+                        </div>
                     </div>
-                </div>
-                @*<div class="step-three-field col-md-4 col-sm-12">
-                            <span>Appointment Code</span>
+                    @*<div class="step-three-field col-md-4 col-sm-12">
+                                <span>Appointment Code</span>
+                            </div>
+                            <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
+                                <span>: </span>
+                            </div>
+                            <div class="col-md-7 col-sm-12 font-weight-bold">
+                                <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
+                                <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
+                            </div>
+
+                        <div class="step-three-field col-md-4 col-sm-12">
+                            <span>Processing Site</span>
                         </div>
                         <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
                             <span>: </span>
                         </div>
                         <div class="col-md-7 col-sm-12 font-weight-bold">
-                            <input value="@ViewData["ApplicationCode"]" asp-for="ApplicationCode" type="hidden" />
-                            <span id="LblAppointmentCode"> @ViewData["ApplicationCode"]</span>
-                        </div>
+                            <span id="LblProcessingSite"></span>
+                        </div>*@
+                </div>
 
-                    <div class="step-three-field col-md-4 col-sm-12">
-                        <span>Processing Site</span>
+                @*<p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>*@
+
+                <div class="row mt-4">
+                    <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12 mb-0">
+                        <button type="button" name="stepthreebackbutton" id="stepThreeBackBtn" class=" btn button-secondary text-white col-md-12 col-sm-12">Back</button>
                     </div>
-                    <div class="col-md-1 col-sm-4 d-none d-md-block text-right">
-                        <span>: </span>
+                    <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12 mb-0">
+                        <button type="submit" name="submitbutton" class="btn button-primary col-md-12 col-sm-12 float-right" style="color:white;" id="sendPdfToEmail">Generate Appointment</button>
                     </div>
-                    <div class="col-md-7 col-sm-12 font-weight-bold">
-                        <span id="LblProcessingSite"></span>
-                    </div>*@
-            }
-
-            @*<p style="margin-top:10px" class="text-center">An Appointment Letter will be sent to your email. Please print and present confirmed Appointment Letter when you visit the DFA - Office of Consular Affairs for the processing of your Apostille.</p>*@
-
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-md-2 col-sm-1">
-
                 </div>
-                <div class="col-md-3 col-sm-12" style="margin-bottom: 10px;">
-                    <button type="button" name="stepthreebackbutton" id="stepThreeBackBtn" class=" btn button-secondary text-white col-md-12 col-sm-12">Back</button>
-                </div>
-                <div class="col-md-2 col-sm-1">
-
-                </div>
-                <div class="col-md-3 col-sm-12">
-                    <button type="submit" name="submitbutton" class="btn button-primary col-md-12 col-sm-12 float-right" style="color:white;" id="sendPdfToEmail">Generate Appointment</button>
-                </div>
-                <div class="col-md-2 col-sm-1">
-
-                </div>
+                @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
             </div>
-            @*<p style="margin-top:10px" class="text-center">Did'nt receive? <a href="#">Send email Again.</a></p>*@
         </div>
 
         <input id="Token" asp-for="Token" type="hidden" />
@@ -1009,12 +964,12 @@
         </div>
 
         <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
-            <div class="location-container w-100 mx-auto px-5">
+            <div class="location-container w-100 mx-auto px-4">
                 <div class="card-header bold p-1 white-bg text-center mt-4">
                     <h6 class="bold text-uppercase">Please choose one</h6>
                     <label class="mb-0" style="font-weight: normal">I am the</label>
                 </div>
-                <div class="card-body px-5 py-4">
+                <div class="card-body px-2 py-4">
                     <button id="ownerButton" class="btn btn-primary  w-100 d-block text-uppercase bold mb-4">Document owner</button>
                     <button id="authorizedButton" class="btn btn-primary w-100 d-block text-uppercase bold">Authorized representative</button>
                     <div class="d-flex my-4">
@@ -2582,6 +2537,9 @@
 
     @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>*@
+
+    <script src="~/js/oas.js"></script>
+
     <script>
 
 
@@ -2597,7 +2555,7 @@
 
         $('#applicationTypeSelection').hide();
 
-        $('#ownerButton').on('click', function () {
+        @*$('#ownerButton').on('click', function () {
             @{
                 a = 0;
             }
@@ -2607,7 +2565,7 @@
             @{
                 a = 1;
             }
-        })
+        })*@
 
 
         @*grecaptcha.ready(function () {
@@ -2619,6 +2577,10 @@
 
         $(document).ready(function () {
 
+
+            $(document).ready(function () {
+                SetCode("@ViewData["ApplicationCode"]");
+            });
             branchId = @defaultBranch.Id;
             expeditePrice = @price.Expedite;
             regularPrice = @price.Regular;
@@ -2916,187 +2878,7 @@
                 //document.documentElement.scrollTop = 0;
                 window.location.href = '/Home/DocumentLocation'
             });
-            $("#stepOneNextBtn").click(function () {
-                docuTotalCount = 0;
-                //|| $('#Nationality').val() == "" fNamePartial  || $('#Address').val() == ""
-                if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
-                    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
-                    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
-                ) {
 
-                    //if ($('#Title').val() == "")
-                    //    $('.title').text('This field is required.');
-                    //else
-                    //    $('.title').text('');
-                    if ($('.fNamePartial').val() == "") {
-                        $('.fNamePartialValidation').text('This field is required.');
-                    }
-                    else
-                        $('.fNamePartialValidation').text('');
-
-                    if ($('.lNamePartial').val() == "") {
-                        $('.lNamePartialValidation').text('This field is required.');
-                    }
-                    else
-                        $('.lNamePartialValidation').text('');
-
-                    if ($('.dateOfbirthPartial').val() == "") {
-                        $('.dateOfbirthPartialValidation').text('This field is required.');
-                    }
-                    else
-                        $('.dateOfbirthPartialValidation').text('');
-
-                    if ($('.countrydestinationPartial').val() == "") {
-                        $('.countrydestinationPartialValidation').text('This field is required.');
-                    }
-                    else
-                        $('.countrydestinationPartialValidation').text('');
-
-                    if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
-                        $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
-                    }
-                    else if ($('.apostiledataPartial').val() == "[]") {
-                        $('.apostiledataPartialValidation').text('Please insert document quantity.');
-                    }
-                    else
-                        $('.apostiledataPartialValidation').text('');
-
-                    if ($('#Record_FirstName').val() == "")
-                        $('.fname').text('This field is required.');
-                    else
-                        $('.fname').text('');
-
-                    if ($('#Record_LastName').val() == "")
-                        $('.lname').text('This field is required.');
-                    else
-                        $('.lname').text('');
-
-
-                    if ($('#Record_DateOfBirth').val() == "")
-                        $('.dateofbirth').text('This field is required.');
-                    else
-                        $('.dateofbirth').text('');
-
-                    //if ($('#Address').val() == "")
-                    //    $('.address').text('This field is required.');
-                    //else
-                    //    $('.address').text('');
-
-                    //if ($('#Nationality').val() == "")
-                    //    $('.nationality').text('This field is required.');
-                    //else
-                    //    $('.nationality').text('');
-
-                    if ($('#Record_ContactNumber').val() == "")
-                        $('.contactnumber').text('This field is required.');
-                    else
-                        $('.contactnumber').text('');
-
-                    if ($('#Record_CountryDestination').val() == "")
-                        $('.countrydestination').text('This field is required.');
-                    else
-                        $('.countrydestination').text('');
-
-                    if ($('#apostileData').val() == "")
-                        $('.apostiledata').text('Please add documents for apostillization.');
-                    else if ($('#apostileData').val() == "[]")
-                        $('.apostiledata').text('Please insert document quantity.');
-                    else
-                        $('.apostiledata').text('');
-
-
-                    return;
-                }
-                else {
-                    $('.title').text('');
-                    $('.fname').text('');
-                    $('.lname').text('');
-                    $('.address').text('');
-                    //$('.nationality').text('');
-                    $('.contactnumber').text('');
-                    $('.countrydestination').text('');
-                    $('.apostiledata').text('');
-                }
-
-                //var apostiledataPartialValidation = true;
-                //$.each($('.apostiledataPartial'), function () {
-                //    if ($(this).val() == '' || $(this).val() == '[]') {
-                //        alert('Please check all documents and insert value.');
-                //        apostiledataPartialValidation = false;
-                //        return;
-                //    }
-                //});
-
-                var fnamePartialClassReq = $('.fNamePartial').length;
-                var fnamePartialClass = $('.fNamePartial').filter(function () {
-                    return this.value != '';
-                });
-                if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
-                    //alert('Please fill out all required fields.bbbb');
-                    $('.fNamePartialValidation').text('This field is required.');
-                    return;
-                }
-
-                var lnamePartialClassReq = $('.lNamePartial').length;
-                var lnamePartialClass = $('.lNamePartial').filter(function () {
-                    return this.value != '';
-                });
-                if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
-                    $('.lNamePartialValidation').text('This field is required.');
-                    return;
-                }
-
-                var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
-                var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
-                    return this.value != '';
-                });
-                if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
-                    $('.dateOfbirthPartialValidation').text('This field is required.');
-                    return;
-                }
-
-
-                var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
-                var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
-                    return this.value != '';
-                });
-                if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
-                    $('.countrydestinationPartialValidation').text('This field is required.');
-                    return;
-                }
-
-
-                var reqlength = $('.apostiledataPartial').length;
-                console.log(reqlength);
-                var value = $('.apostiledataPartial').filter(function () {
-                    return this.value != '';
-                });
-                if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
-                    alert('Please fill out all required fields.');
-                    $('.apostiledataPartialValidation').text('Please insert document quantity.');
-                    return;
-                }
-
-
-                $("#step-one").hide();
-                $("#step-one-authorized").hide();
-                $("#step-two").show();
-                $("#step-three").hide();
-
-                if (applicants == 0) {
-                    if ($('#apostileData').val() !== '' || $('#apostileData').val() !== null) {
-                        var docuType = JSON.parse($('#apostileData').val());
-                        var docuCount = 0;
-                        docuType.forEach(function (v) {
-                            docuCount += parseInt(v.Quantity);
-                        });
-                        docuTotalCount += docuCount
-                    }
-                }
-                //$('#stepTwoBtn').click();
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            });
 
             $("#stepTwoNextBtn").click(function () {
                 let siteAndScheduleSelection = $('#step-select-processing-site');
@@ -3929,7 +3711,6 @@
 
         });
 
-
         function Navigate(step, element) {
             var i, tabcontent, tablinks;
             tabcontent = $('.tabcontent');
@@ -3949,10 +3730,7 @@
                 $('#selectTimeContainer').css('opacity', '0.5');
                 $('#appointmentSchedule').val('');
             }
-
         };
 
-
     </script>
-    <script src="~/js/oas.js"></script>
 }

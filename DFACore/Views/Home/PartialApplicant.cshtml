@@ -124,7 +124,6 @@
         </div>
         <div style="display:none;">
             <input asp-for="Records[increment].ApostileData" id="apostileData@(increment)" class="form-control apostiledataPartial" />
-
         </div>
 
 
@@ -1093,8 +1092,7 @@
 
 
 
-@section Scripts {
-    <script>
+    <!--<script>
 
         $(document).ready(function () {
             //$('.transactionQuantity@(increment)').keyup(function () {
@@ -1279,7 +1277,7 @@
                     $(expediteId).attr("disabled", true);
                     $(regularId).attr("disabled", true);
                 }
-            });
+            });--
             @*EnableTransactionField('','');
             function EnableTransactionField(id, prefix) {
                 var elementId = '#' + id;
@@ -1290,7 +1288,7 @@
                      $(regularId).removeAttr("disabled");
                 }
             }*@
-            //Compute total qty per document function
+            <!--<!--//Compute total qty per document function
             $('#qtyNbiClearanceExpedite@(increment)').focusout(function () {
                 if (parseInt($('#qtyNbiClearanceExpedite@(increment)').val()) > 0 && !$('#qtyNbiClearanceRegular@(increment)').val()) {
                     $('#qtyNbiClearance@(increment)').val(parseInt($('#qtyNbiClearanceExpedite@(increment)').val()))
@@ -1930,7 +1928,7 @@
                 if (age < 18) {
                     $('#viewMinorReminder-modal').modal('show');
                 }
-            });
+            });-->
 
                 @*$('#appointmentSchedule').change(function () {
                 $("#errSchedDate").hide();
@@ -1963,7 +1961,7 @@
                 });
 
                 });*@
-            $("#stepOneNextBtn").click(function () {
+            <!--<!--$("#stepOneNextBtn").click(function () {
                 if ($('#apostileData@(increment)').val() !== '' || $('#apostileData@(increment)').val() !== null)
                 {
                     var docuType@(increment) = JSON.parse($('#apostileData@(increment)').val());
@@ -2008,10 +2006,10 @@
                         subtotal@(increment) += (regularPrice * parseInt(Quantity));
                     }
                 });
-                console.log(subtotal@(increment));
+                console.log(subtotal@(increment));-->
                 @*@{ var appCode = ViewData[$"ApplicationCode{increment}"] as string;}
                 $('#LblAppointmentCode-@(increment)').text(@appCode);*@
-                $('#documentOwner-@(increment)').text($('#Records_@(increment)__FirstName').val().toUpperCase() + ' ' + $('#Records_@(increment)__MiddleName').val().toUpperCase() + ' ' + $('#Records_@(increment)__LastName').val().toUpperCase() + ' '+ $('#Records_@(increment)__Suffix').val().toUpperCase());
+                <!--<!--$('#documentOwner-@(increment)').text($('#Records_@(increment)__FirstName').val().toUpperCase() + ' ' + $('#Records_@(increment)__MiddleName').val().toUpperCase() + ' ' + $('#Records_@(increment)__LastName').val().toUpperCase() + ' '+ $('#Records_@(increment)__Suffix').val().toUpperCase());
                 $('#dateofBirth-@(increment)').text($('#Records_@(increment)__DateOfBirth').val());
                 $('#LblCountryDestination-@(increment)').text($('#Records_@(increment)__CountryDestination').val());
                 //console.log($('#Records_@(increment)__FirstName').val());
@@ -2029,12 +2027,12 @@
                 $('#LblCountryDestination').text($('#CountryDestination@(increment)').val());
 
                 $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
-                $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
+                $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());-->
 
                 @*$('#LblPayment-@(increment)').text('PhP'.concat(' ', parseInt($('#documentsCount@(increment)').text()) * 100, '.00'));*@
-                $('#LblPayment-@(increment)').text('PhP'.concat(' ', subtotal@(increment), '.00'));
+                <!--<!--$('#LblPayment-@(increment)').text('PhP'.concat(' ', subtotal@(increment), '.00'));
                 $('#Fees').val('PhP'.concat(' ', subtotal@(increment), '.00'));
-                $('#Records_@(increment)__Fees').val(subtotal@(increment));
+                $('#Records_@(increment)__Fees').val(subtotal@(increment));--
                 @*var fees@(increment) = 0;
                 fees@(increment) = parseInt($('#documentsCount@(increment)').text()) * 100;
                 var totalFees = 0;
@@ -2043,7 +2041,7 @@
                 $.each(docus, function (index, value) {
                     totalFees += parseInt(value.innerText) * 100;
                 });*@
-                total += subtotal@(increment);
+                <!--<!--total += subtotal@(increment);
 
                 $('#totalFees').text('PhP'.concat(' ', total, '.00'));
                 //$('#LblAppointmentCode').text('MNL-20200524');
@@ -2085,5 +2083,4 @@
         });
 
 
-    </script>
-}
+    </script>-->

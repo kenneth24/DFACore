@@ -88,12 +88,12 @@
     font-family: Helvetica-Bold !important;
 }
 
-p,
+/*p,
 span,
 a {
     font-size: 14px !important;
 }
-
+*/
 .p-alt {
     color: #737373 !important;
     font-weight: normal;

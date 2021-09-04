@@ -703,6 +703,10 @@ namespace DFACore.Controllers
         {
             return _documentsType.Get();
         }
+        public Price GetPrices()
+        {
+            return _applicantRepo.GetPrice();
+        }
 
     }
 }
