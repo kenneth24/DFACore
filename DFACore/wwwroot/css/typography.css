@@ -88,12 +88,12 @@
     font-family: Helvetica-Bold !important;
 }
 
-p,
+/*p,
 span,
 a {
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
-
+*/
 .p-alt {
     color: #737373 !important;
     font-weight: normal;
@@ -109,7 +109,7 @@ a {
     letter-spacing: normal;
 }
 
-p,
+/*p,
 span,
 a {
     font-size: 16px;
@@ -119,7 +119,7 @@ a {
     letter-spacing: normal;
     margin-bottom: 0;
 }
-
+*/
 p,
 label,
 span,
@@ -141,9 +141,7 @@ a {
     font-family: Bebas!important;
 }
 
-small {
-    line-height: 14px!important;
-}
+
 
 p.card-text {
     font-size: 13px!important;
@@ -181,5 +179,10 @@ p.card-text {
 
     small, label {
         font-size: 11.4px !important;
+    }
+
+    .p-label {
+        line-height: 12px;
+        font-size: 11px !important;
     }
 }
