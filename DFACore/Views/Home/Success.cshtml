@@ -2,46 +2,14 @@
 @{
     ViewData["Title"] = "Success";
 }
-
-<style>
-    button a {
-        color: white;
-    }
-</style>
-<div class="row" style="margin-top:130px;">
-    <div class="col-md-3 col-sm-0">
-    </div>
-    <div class="col-md-6 col-sm-12">
-        <div style="border: 1px solid #b7b7b7;height:auto;">
-            <div style="background-color: #217ff3;color: white;height: 35px;">
-                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Application successfully submitted.</p>
-            </div>
-            <div style="padding:30px;">
-                <p class="text-center">
-                    An Appointment letter has been sent to your email.  <br>
-                    Kindly check your Inbox or Spam and other folder to view your appointment letter.
-                </p>
-
-                <p class="text-center">
-                    Please <span style="color: red;">PRINT</span> and present your confirmed appointment letter to the Appointment Verification Counter.
-                </p>
-
-                <p class="text-center" style="font-weight: bold;">
-                    EDITING, REVISING OR ALTERING THE APPOINTMENT <br> LETTER IS CONSIDERED FALSIFICATION OF <br> PUBLIC DOCUMENT AND IS PUNISHABLE BY LAW.
-                </p>
-                <div class="row">
-                    <div class="col-md-2 col-sm-1"></div>
-                    <div class="col-md-8 col-sm-10">
-                        <button type="button" class="btn button-secondary col-md-12 col-sm-12" onclick="location.href='@Url.Action("Login", "Account")'">@Html.ActionLink("Back", "Login", "Account")</button>
-                        @*<div class="col-md-12 col-sm-12">@Html.ActionLink("Back", "Login", "Account",null, new { @class= "button-secondary"})</div>*@
-                    </div>
-                    <div class="col-md-2 col-sm-1"></div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-0">
+<div id="success" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
+    <h5 class="mb-3 bold text-primary">Your Appointment has been successfully created.</h5>
+    <div class="success-message mx-auto">
+        <p class="mb-0">An appointment letter has been sent to your email.</p>
+        <p>Please check your inbox, span and other folder to view your Appointment Letter. Kindly PRINT and present your confirmed appointment letter to the Appointment Verification Counter.</p>
+        <p class="my-4 text-uppercase bold">Editing, revising or altering the appointment letter is considered falsification of public document and is punishable by law.</p>
+        <p>Didn't receive the email? Click <a class="pointer text-primary">here</a> to resend.</p>
+        <button id="schedAnother" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Schedule another appointment</button>
+        <button id="exit" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
     </div>
 </div>

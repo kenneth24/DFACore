@@ -322,3 +322,19 @@ body {
 .modal {
     height: 100vh!important;
 }
+
+.success-message {
+    max-width: 50%;
+}
+
+    .success-message button {
+        max-width: 75%;
+    }
+
+select option {
+    width: 100% !important;
+}
+
+.transactionQuantity {
+    font-size: 24px!important;
+}

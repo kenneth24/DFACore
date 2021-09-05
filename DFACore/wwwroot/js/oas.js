@@ -29,6 +29,42 @@ let ownerContainer = $('#ownerContainer');
 let authContainer = $('#authContainer');
 let authNameLbl = $('#authContainer .LblNameOfApplicant');
 let authContactNumber = $('#authContainer .LblContactNumber');
+let stepFiveBackBtn = $('#stepThreeBackBtn');
+let sendPdfToEmail = $('#sendPdfToEmail');
+let schedAnother = $('#schedAnother');
+let exit = $('#exit');
+let resendEmail = $('#resendEmail');
+let token = '';
+let loading = $('#loading');
+let termsAndConditions = $('#terms-and-conditions-modal');
+let agreeterms = $('#terms-and-conditions-agree');
+let hasTermsAndConditions = false;
+let hasExpedite = false;
+
+let ownerModel = {
+    FirstName: '',
+    MiddleName: '',
+    LastName: '',
+    Suffix: '',
+    DateOfBirth: '',
+    ContactNumber: '',
+    CountryDestination: '',
+    ApostileData: '',
+    ProcessingSite: '',
+    ProcessingSiteAddress: '',
+    ApplicationCode: '',
+    Fees: 0,
+    ScheduleDate: ''
+};
+
+let record = {
+    ScheduleDate: '',
+    ApplicantCount: 0,
+    Token: '',
+    Records: [],
+    Record: ''
+};
+
 let docOwner = 0;
 let documentObject = [];
 let code = '';
@@ -54,42 +90,62 @@ let applicantType = 0;
 applicationTypeSelection.hide();
 ownerDocument.hide();
 authorizeDocument.hide();
+console.log($('#appointmentSchedule').val());
 
 siteAndScheduleButton.on('click', function () {
+    if ($('#appointmentSchedule').val() == '') {
+        return;
+    }
+    
+    loading.show();
     siteAndScheduleSelection.hide();
     applicationTypeSelection.show();
+    loading.hide();
 });
 
 ownerButton.on('click', function () {
+    loading.show();
     applicantType = 0;
     applicationTypeSelection.hide();
     ownerDocument.show();
+    if (hasExpedite) {
+        console.log('hasExpedite');
+        $('.transactionQuantity.expedite').attr('disabled', false);
+        $('.transactionQuantity.regular').attr('disabled', false);
+    }
+    loading.hide();
 });
 
 authorizedButton.on('click', function () {
+    loading.show();
     applicantType = 1;
     applicationTypeSelection.hide();
     console.log('pass');
     authorizeDocument.show();
     addDocumentOwnerBtn.click();
-
+    loading.hide();
 });
 
 backToStepTwoButton.on('click', function () {
+    loading.show();
     applicationTypeSelection.hide();
     stepTwo.show();
     siteAndScheduleSelection.show();
+    loading.hide();
 });
 
 stepFourBackButton.on('click', function () {
+    loading.show();
     ownerDocument.hide();
     applicationTypeSelection.show();
     $('#step-select-processing-site').hide();
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    loading.hide();
 });
 
 docTypeSelect.on('change', function () {
+    loading.show();
     let $this = $(this),
         selected = $this.find(":selected"),
         id = selected.attr('id'),
@@ -124,10 +180,15 @@ docTypeSelect.on('change', function () {
                 $(`#${i}-img`).attr('src', imageUrl);
             }
         }
+        loading.hide();
+    }
+    else {
+        loading.hide();
     }
 });
 
 selectDocumentsBtn.on('click', function () {
+    loading.show();
     let $this = docTypeSelect;
     selected = $this.find(":selected"),
         id = selected.attr('id'),
@@ -138,6 +199,7 @@ selectDocumentsBtn.on('click', function () {
 
 
     if (regularQuantity > 10 || expediteQuantity > 10) {
+        loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('#errorMessage');
 
@@ -209,9 +271,11 @@ selectDocumentsBtn.on('click', function () {
     else
         $('.modal').modal('hide');//$("#apostileModal .close").click()//$('#apostileModal').modal('hide');
 
+    loading.hide();
 });
 
 backToStepThreeBtn.on('click', function () {
+    loading.show();
     documentObject = [];
 
     $("#documentsTable tbody > tr").empty();
@@ -221,9 +285,11 @@ backToStepThreeBtn.on('click', function () {
     $('#documentsCount').text(0);
     ownerDocument.hide();
     applicationTypeSelection.show();
+    loading.hide();
 });
 
 backToStepThreeAuthBtn.on('click', function () {
+    loading.show();
     documentObject = [];
     docOwner = 0;
 
@@ -235,9 +301,11 @@ backToStepThreeAuthBtn.on('click', function () {
     $('#documentsCount').text(0);
     authorizeDocument.hide();
     applicationTypeSelection.show();
+    loading.hide();
 });
 
 addDocumentOwnerBtn.on('click', function () {
+    loading.show();
     console.log('clicked');
     docOwner += 1;
     window['documentObject' + docOwner] = [];
@@ -255,12 +323,13 @@ addDocumentOwnerBtn.on('click', function () {
         url: '/Home/PartialApplicant?i=' + docOwner + '&id=' + applicantType,
         cache: false,
         success: function (html) {
+
+
             if (docOwner == 0) {
                 $("#documentOwners").append(html);
             } else {
                 $("#documentOwners").append(html).insertAfter('documentOwner-' + docOwner - 1);
             }
-
             //$(`#documentsTable${docOwner} tbody > tr`).empty();
             //$(`#documentsTable${docOwner}`).append('<tr class="docsHeader"><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
             //$('#documentsCount').text(0);
@@ -320,6 +389,7 @@ addDocumentOwnerBtn.on('click', function () {
                 console.log(docOwnerBase);
 
                 if (regularQuantity > 10 || expediteQuantity > 10) {
+                    loading.hide();
                     var errorModal = $('#errorModal');
                     var errorMessageElement = $('#errorMessage');
 
@@ -391,12 +461,134 @@ addDocumentOwnerBtn.on('click', function () {
                     $('.modal').modal('hide');//$("#apostileModal .close").click()//$('#apostileModal').modal('hide');
 
             });
+
+
+            if (hasExpedite) {
+                console.log('hasExpedite');
+                $('.transactionQuantity.expedite').attr('disabled', false);
+                $('.transactionQuantity.regular').attr('disabled', false);
+            }
         },
         async: false
     });
+
+    loading.hide();
 });
 
 goToStepFiveButton.on('click', function () {
+    if (hasTermsAndConditions)
+        termsAndConditions.modal('show');
+    else {
+        docOwnerStepFive();
+    }
+});
+
+goToStepFiveButtonAuth.on('click', function () {
+    if (hasTermsAndConditions)
+        termsAndConditions.modal('show');
+    else {
+        authorizedStepFive();
+    }
+});
+
+agreeterms.on('click', function () {
+    if (applicantType == 0) {
+        termsAndConditions.modal('hide');
+        docOwnerStepFive();
+    }
+    else {
+        termsAndConditions.modal('hide');
+        authorizedStepFive();
+    }
+});
+
+stepFiveBackBtn.on('click', function () {
+    loading.show();
+    if (applicantType == 0) {
+        $("#step-three").hide();
+        ownerDocument.show();
+        loading.hide();
+    }
+    else {
+        $("#step-three").hide();
+        authorizeDocument.show();
+        loading.hide();
+    }
+});
+
+sendPdfToEmail.on('click', function () {
+    loading.show();
+    $.ajax({
+        type: "post",
+        url: "/Home/PostApplication",
+        data: record,
+        datatype: "json",
+        cache: false,
+        success: function (data) {
+            $('#formContainer').attr('style', 'display: none!important');
+            $('#success').show();
+            loading.hide();
+        },
+        error: function (data){
+            loading.hide();
+        }
+    });
+});
+
+schedAnother.on('click', function () {
+    window.location.href = '/Home/DocumentLocation';
+});
+
+exit.on('click', function () {
+    let baseUrl = window.location.origin;
+    window.location = `${baseUrl}/Account/LogOff`;
+});
+
+resendEmail.on('click', function () {
+    loading.show();
+    $.ajax({
+        type: "post",
+        url: "/Home/ResendEmail",
+        data: record,
+        datatype: "json",
+        cache: false,
+        success: function (data) {
+            $('#formContainer').attr('style', 'display: none!important');
+            $('#success').show();
+            loading.hide();
+        },
+        error: function (data) {
+            loading.hide();
+        }
+    });
+});
+
+function addPartialView() {
+    let baseUrl = window.location.origin;
+    window.location = `${baseUrl}/Account/LogOff`;
+}
+
+function getDocumentsType() {
+    $.get("/Home/GetDocuments", function (data, status) {
+        documents = data;
+    });
+};
+
+function getPrices() {
+    $.get("/Home/GetPrices", function (data, status) {
+        prices = data;
+    });
+}
+
+function SetCode(codeParam, ifHasTerms) {
+    code = codeParam;
+    hasTermsAndConditions = ifHasTerms;
+    console.log(ifHasTerms);
+}
+
+function docOwnerStepFive() {
+
+    loading.show();
     docuTotalCount = 0;
     if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
         || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
@@ -563,9 +755,35 @@ goToStepFiveButton.on('click', function () {
 
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-});
 
-goToStepFiveButtonAuth.on('click', function () {
+    ownerModel.ApostileData = JSON.stringify(documentObject);
+    ownerModel.ApplicationCode = code;
+    ownerModel.ContactNumber = $('#Record_ContactNumber').val();
+    ownerModel.CountryDestination = $('#Record_CountryDestination').val();
+    ownerModel.DateOfBirth = $('#Record_DateOfBirth').val();
+    ownerModel.Fees = totalFee;
+    ownerModel.FirstName = $('#Record_FirstName').val();
+    ownerModel.MiddleName = $('#Record_MiddleName').val();
+    ownerModel.LastName = $('#Record_LastName').val();
+    ownerModel.ProcessingSite = $('#site').val();
+    ownerModel.ProcessingSiteAddress = $('#address').val();
+    ownerModel.Suffix = $('#Record_Suffix').val();
+    ownerModel.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
+
+    record.ApplicationCode = code;
+    record.ApplicantCount = 0;
+    record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
+    record.Records = null;
+    record.Record = ownerModel;
+    record.Token = token;
+
+    console.log(record);
+    loading.hide();
+}
+
+function authorizedStepFive() {
+
+    loading.show();
     docuTotalCount = 0;
     ownerContainer.attr('style', 'display: none');
     authContainer.show();
@@ -720,16 +938,18 @@ goToStepFiveButtonAuth.on('click', function () {
     documentsParent.empty();
     authNameLbl.text($('#AuthRecord_FirstName').val().toUpperCase() + ' ' + $('#AuthRecord_MiddleName').val().toUpperCase() + ' ' + $('#AuthRecord_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
     authContactNumber.text($('#AuthRecord_ContactNumber').val());
+    let records = [];
 
     for (var i = 1; i <= docOwner; i++) {
         let fname = $(`#Records_${i}__FirstName`).val();
         let mname = $(`#Records_${i}__MiddleName`).val();
         let lname = $(`#Records_${i}__LastName`).val();
         let bday = $(`#Records_${i}__DateOfBirth`).val();
+        let suffix = $(`#Records_${i}__Suffix`).val();
         let destination = $(`#Records_${i}__CountryDestination`).val();
 
         let codeContainer = `<div class="font-weight-bold mb-2"><span id="LblAppointmentCode-${i}">${code}-${i}</div>`;
-        let ownerContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Document Owner: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text text-uppercase" id="documentOwner-${i}">${fname} ${mname} ${lname}</span></div></div>`;
+        let ownerContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Document Owner: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text text-uppercase" id="documentOwner-${i}">${fname} ${mname} ${lname} ${suffix}</span></div></div>`;
         let destinationContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Country of Destination: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblCountryDestination-${i}">${destination}</span></div></div>`;
         let documentsContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Documents: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblTypeOfDocument-${i}"></span></div></div>`;
         let subTotalContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Sub-Total:</span></div><div class="col-lg-9 col-md-8 col-sm-12 font-weight-bold"><span class="black-text" id="LblPayment-${i}"></span></div></div>`;
@@ -756,7 +976,7 @@ goToStepFiveButtonAuth.on('click', function () {
             console.log('subFee');
             console.log(subFee);
 
-            if (x == window['documentObject' + i].length - 1 ) {
+            if (x == window['documentObject' + i].length - 1) {
                 totalFees += subFee;
                 subTotalContainerElement.text(`PHP ${subFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
 
@@ -771,59 +991,60 @@ goToStepFiveButtonAuth.on('click', function () {
         console.log(docOwner);
         if (i == docOwner)
             $('#totalFeesAuth').text(`PHP ${totalFees.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
-    }
 
-    
+        let model = {
+            ApostileData: JSON.stringify(window['documentObject' + i]),
+            ApplicationCode: `${code}-${i}`,
+            CountryDestination: destination,
+            DateOfBirth: bday,
+            Fees: subFee,
+            FirstName: fname,
+            MiddleName: mname,
+            LastName: lname,
+            ProcessingSite: $('#site').val(),
+            ProcessingSiteAddress: $('#address').val(),
+            Suffix: suffix,
+            ScheduleDate: `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`,
+            NameOfRepresentative: `${$(`#AuthRecord_FirstName`).val()} ${$(`#AuthRecord_MiddleName`).val()} ${$(`#AuthRecord_LastName`).val()} ${$(`#AuthRecord_Suffix`).val()}`,
+            RepresentativeContactNumber: $('#AuthRecord_ContactNumber').val()
+        };
+
+        records.push(model);
+    }
 
 
     $('#LblTypeOfDocument').empty();
-    let totalFee = 0;
 
-    for (var i = 0; i < documentObject.length; i++) {
-        let documentText = `<p class="mb-0">(${documentObject[i].Quantity}) (${documentObject[i].Transaction}) ${documentObject[i].Name}</p>`;
-        $('#LblTypeOfDocument').append(documentText);
-        if (documentObject[i].Transaction == 'Regular')
-            totalFee += prices.regular * documentObject[i].Quantity;
-        else
-            totalFee += prices.expedite * documentObject[i].Quantity;
+    let authorized = {
+        ApplicationCode: code,
+        ContactNumber: $('#AuthRecord_ContactNumber').val(),
+        Fees: totalFees,
+        FirstName: $(`#AuthRecord_FirstName`).val(),
+        MiddleName: $(`#AuthRecord_MiddleName`).val(),
+        LastName: $(`#AuthRecord_LastName`).val(),
+        ProcessingSite: $('#site').val(),
+        ProcessingSiteAddress: $('#address').val(),
+        Suffix: $(`#AuthRecord_Suffix`).val()
+    };
 
-        if (i == documentObject.length - 1)
-            $('#LblPayment').text(`PHP ${totalFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
-    }
+    record.ApplicationCode = code;
+    record.ApplicantCount = docOwner;
+    record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
+    record.Records = records;
+    record.Record = authorized;
+    record.Token = token;
+
+    console.log(record);
 
     $("#step-one").hide();
     $("#step-one-authorized").hide();
     $("#step-three").show();
+    loading.hide();
 
-    if (applicantType == 0) {
-        if ($('#apostileData').val() !== '' || $('#apostileData').val() !== null) {
-            var docuType = JSON.parse($('#apostileData').val());
-            var docuCount = 0;
-            docuType.forEach(function (v) {
-                docuCount += parseInt(v.Quantity);
-            });
-            docuTotalCount += docuCount
-        }
-    }
-
-});
-
-function addPartialView() {
 }
 
-function getDocumentsType() {
-    $.get("/Home/GetDocuments", function (data, status) {
-        documents = data;
-    });
-};
-
-function getPrices() {
-    $.get("/Home/GetPrices", function (data, status) {
-        prices = data;
-    });
+function HasExpedite(ifHasExpedite) {
+    hasExpedite = ifHasExpedite;
+    console.log('hasExpedite');
+    console.log(hasExpedite);
 }
-
-function SetCode(codeParam) {
-    code = codeParam;
-}
-
