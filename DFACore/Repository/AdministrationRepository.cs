@@ -1055,11 +1055,10 @@ namespace DFACore.Repository
 
             var commandText = "INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-                    "ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by)" +
+                    "ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by) " +
                     "SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
-                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in ({applicationCode}); " +
-                    $"DELETE ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
+                    $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
         
             _context.Database.ExecuteSqlRaw(commandText);
 
@@ -1076,6 +1075,8 @@ namespace DFACore.Repository
             };
 
 
+            commandText = $"DELETE ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
+            _context.Database.ExecuteSqlRaw(commandText);
 
             return true;
         }

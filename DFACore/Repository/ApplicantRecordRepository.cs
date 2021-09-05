@@ -69,24 +69,24 @@ namespace DFACore.Repository
         {
             try
             {
-                var newObject = applicantRecords.Select(model => new ApplicantRecord {
-                    FirstName = model.FirstName,
-                    MiddleName = model.MiddleName,
-                    LastName = model.LastName,
-                    Suffix = model.Suffix,
-                    DateOfBirth = model.DateOfBirth,
-                    ContactNumber = model.ContactNumber,
-                    CountryDestination = model.CountryDestination?.ToUpper(),
-                    ApostileData = model.ApostileData,
-                    ProcessingSite = model.ProcessingSite,
-                    ProcessingSiteAddress = model.ProcessingSiteAddress,
-                    ScheduleDate = model.ScheduleDate, 
-                    ApplicationCode = model.ApplicationCode,
-                    CreatedBy = model.CreatedBy,
-                    Fees = model.Fees,
-                    Type = model.Type,
-                    DateCreated = DateTime.UtcNow,
-                });
+                //var newObject = applicantRecords.Select(model => new ApplicantRecord {
+                //    FirstName = model.FirstName,
+                //    MiddleName = model.MiddleName,
+                //    LastName = model.LastName,
+                //    Suffix = model.Suffix,
+                //    DateOfBirth = model.DateOfBirth,
+                //    ContactNumber = model.ContactNumber,
+                //    CountryDestination = model.CountryDestination?.ToUpper(),
+                //    ApostileData = model.ApostileData,
+                //    ProcessingSite = model.ProcessingSite,
+                //    ProcessingSiteAddress = model.ProcessingSiteAddress,
+                //    ScheduleDate = model.ScheduleDate, 
+                //    ApplicationCode = model.ApplicationCode,
+                //    CreatedBy = model.CreatedBy,
+                //    Fees = model.Fees,
+                //    Type = model.Type,
+                //    DateCreated = DateTime.UtcNow,
+                //});
                 //var act = new ActivityLog
                 //{
                 //    UserId = 1,
@@ -385,8 +385,6 @@ namespace DFACore.Repository
 
             return result;
         }
-
-
 
         public List<City> GetCity()
         {
@@ -2111,7 +2109,13 @@ namespace DFACore.Repository
             }
         }
 
-        
+        public bool CheckIfSchedExistInHoliday(DateTime schedule)
+        {
+            var isExist = _context.Holidays.Any(a => a.Date.Date == schedule.Date);
+            return isExist;
+        }
+
+
     }
 }
 

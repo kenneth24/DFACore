@@ -18,6 +18,8 @@ using NETCore.MailKit.Infrastructure.Internal;
 using DFACore.Repository;
 using Wkhtmltopdf.NetCore;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Http;
+using DFACore.Helpers;
 
 namespace DFACore
 {
@@ -56,13 +58,22 @@ namespace DFACore
             //});
 
             //services.AddDistributedMemoryCache();
-            services.AddSession();
+            //services.AddSession();
             //services.AddSession(options =>
             //{
             //    options.IdleTimeout = TimeSpan.FromSeconds(10);
             //    options.Cookie.HttpOnly = true;
             //    options.Cookie.IsEssential = true;
             //});
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                options.OnAppendCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            });
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -88,6 +99,18 @@ namespace DFACore
             services.AddBrowserDetection();
             services.AddWkhtmltopdf();
             //services.AddDatabaseDeveloperPageExceptionFilter();
+        }
+
+        private void CheckSameSite(HttpContext httpContext, CookieOptions options)
+        {
+            if (options.SameSite == SameSiteMode.None)
+            {
+                var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
+                if (MyUserAgentDetectionLib.DisallowsSameSiteNone(userAgent))
+                {
+                    options.SameSite = SameSiteMode.Unspecified;
+                }
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -117,10 +140,12 @@ namespace DFACore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //app.UseCookiePolicy();
-            //app.UseSession();
+        
 
             app.UseRouting();
+
+            app.UseCookiePolicy();
+            //app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -138,4 +163,7 @@ namespace DFACore
             });
         }
     }
+
+
+
 }

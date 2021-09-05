@@ -111,6 +111,9 @@ namespace DFACore.Controllers
             //    //return View();
             //}
 
+
+            
+
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
@@ -118,6 +121,14 @@ namespace DFACore.Controllers
             bool generateAuthLetter = false;
 
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+
+            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {model.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
 
             var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
 
@@ -241,6 +252,8 @@ namespace DFACore.Controllers
                 ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
                 return View("Error");
             }
+
+            //
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
