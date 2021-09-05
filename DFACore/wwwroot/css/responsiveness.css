@@ -59,6 +59,10 @@
     .location-container {
         max-width: 75% !important;
     }
+
+    .success-message, .success-message button {
+        max-width: 75%;
+    }
 }
 
 /* sm */
@@ -125,6 +129,10 @@
 
     #selectedDateAndTime {
         padding: 0!important;
+    }
+
+    .success-message, .success-message button {
+        max-width: 100%;
     }
 }
 
