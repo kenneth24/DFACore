@@ -733,6 +733,14 @@ namespace DFACore.Controllers
 
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
 
+            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {model.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+
             var branch = _applicantRepo.GetBranch(model.Record.ProcessingSite);
 
             List<string> apptCode = new List<string>();

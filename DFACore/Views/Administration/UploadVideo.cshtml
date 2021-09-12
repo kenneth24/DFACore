@@ -9,10 +9,16 @@
 
 <div style="margin-top:50px;">
 
+    <div class="row">
+        <div class="col-sm-12">
+            <a asp-action="UploadImage" class="btn btn-primary pull-right">Update Images</a>
+        </div>
+
+    </div>
 
     <div class="row justify-content-center">
         <div class="col-6">
-            <h3>Set Type of Documents</h3>
+            <h3>Update Video</h3>
             @if (ViewData["UploadImageMessage"] != null)
             {
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
