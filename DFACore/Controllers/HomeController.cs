@@ -810,14 +810,14 @@ namespace DFACore.Controllers
             if (!validate)
             {
                 ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
-                return View("Error");
+                return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
             }
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
             {
                 Log("Generate appointment but an error occured while saving data.", User.Identity.Name);
-                return RedirectToAction("Error");  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+                return Json(new { Status = "Error", Message = "" });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
 
             if (generatePowerOfAttorney)
@@ -838,7 +838,7 @@ namespace DFACore.Controllers
             ViewData["ApptCode"] = apptCode;
 
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
-            return Json("Success");
+            return Json(new { Status = "Success", Message = ""});
         }
 
         [HttpPost]
