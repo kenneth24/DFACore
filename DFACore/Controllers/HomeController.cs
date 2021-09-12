@@ -424,8 +424,21 @@ namespace DFACore.Controllers
         }
 
 
+
+        private string AddtnlCode(ApplicantRecord model)
+        {
+            var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.ApostileData);
+            
+            var addtnlCode = $"{data.Sum(a => a.Quantity)}-{model.BranchId}{model.ScheduleDate.ToString("HH")}{model.CountryDestination.Length}-" +
+                $"{model.DateCreated.ToString("dd")}{model.DateCreated.ToString("MM")}{model.DateCreated.ToString("yy")}" +
+                $"{model.DateCreated.ToString("HH")}{model.DateCreated.ToString("mm")}-{model.FirstName.Length}";
+            return addtnlCode;
+        }
+
         public async Task<MemoryStream> GeneratePDF(ApplicantRecord model)
         {
+
+            model.AdditionalCode = AddtnlCode(model);
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
             var options = new ConvertOptions
@@ -766,7 +779,7 @@ namespace DFACore.Controllers
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = model.Record.Fees,
                     Type = 0,
-                    DateCreated = DateTime.UtcNow,
+                    DateCreated = DateTime.Now,
                     QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
                         $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
                         $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
@@ -777,8 +790,10 @@ namespace DFACore.Controllers
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
                     generatePowerOfAttorney = true;
-                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.Record.ApostileData);
                 total = data.Sum(a => a.Quantity);
+
                 apptCode.Add(model.Record.ApplicationCode);
             }
             else
@@ -805,7 +820,7 @@ namespace DFACore.Controllers
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
                         Type = 1,
-                        DateCreated = DateTime.UtcNow,
+                        DateCreated = DateTime.Now,
                         QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
                             $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.Record.ProcessingSite?.ToUpper()}")
@@ -861,6 +876,8 @@ namespace DFACore.Controllers
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return Json(new { Status = "Success", Message = ""});
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> ResendEmail(ApplicantsViewModel model)

@@ -66,5 +66,8 @@ namespace DFACore.Models
 
         public long? TotalApostile { get; set; }
 
+        [NotMapped]
+        public string AdditionalCode { get; set; }
+
     }
 }

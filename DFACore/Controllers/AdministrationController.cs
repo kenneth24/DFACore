@@ -1490,6 +1490,16 @@ namespace DFACore.Controllers
         }
 
 
+        private string AddtnlCode(ApplicantRecord model)
+        {
+            var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.ApostileData);
+
+            var addtnlCode = $"{data.Sum(a => a.Quantity)}-{model.BranchId}{model.ScheduleDate.ToString("HH")}{model.CountryDestination.Length}-" +
+                $"{model.DateCreated.ToString("dd")}{model.DateCreated.ToString("MM")}{model.DateCreated.ToString("yy")}" +
+                $"{model.DateCreated.ToString("HH")}{model.DateCreated.ToString("mm")}-{model.FirstName.Length}";
+            return addtnlCode;
+        }
+
         [HttpGet]
         public async Task<IActionResult> ViewPDFApplication(string applicationCode)
         {
@@ -1498,6 +1508,7 @@ namespace DFACore.Controllers
 
             var model2 = new ApplicantRecord
             {
+                BranchId = get.BranchId,
                 Title = get.Title,
                 FirstName = get.FirstName,
                 MiddleName = get.MiddleName,
@@ -1514,12 +1525,14 @@ namespace DFACore.Controllers
                 ProcessingSiteAddress = get.ProcessingSiteAddress,
                 ScheduleDate = get.ScheduleDate,
                 ApplicationCode = get.ApplicationCode,
+                DateCreated = get.DateCreated,
                 QRCode = _administrationRepository.GenerateQRCode($"{get.FirstName?.ToUpper()} {get.MiddleName?.ToUpper()} {get.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{get.ApplicationCode}{Environment.NewLine}{get.ScheduleDate.ToString("MM/dd/yyyy")}" +
                             $"{Environment.NewLine}{get.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}"),
                 Fees = get.Fees
             };
 
+            model2.AdditionalCode = AddtnlCode(model2);
 
             var header = _env.WebRootFileProvider.GetFileInfo("header2.html")?.PhysicalPath;
             var footer = _env.WebRootFileProvider.GetFileInfo("footer.html")?.PhysicalPath;
