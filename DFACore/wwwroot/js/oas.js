@@ -243,7 +243,7 @@ selectDocumentsBtn.on('click', function () {
             documentObject.push({ Name: $this.val(), Quantity: regularQuantity, Transaction: "Regular" });
         }
     }
-    else { return; }
+    else { loading.hide(); return; }
 
     $("#documentsTable tbody > tr").empty();
     //documentsTableBody.empty();
@@ -311,6 +311,7 @@ addDocumentOwnerBtn.on('click', function () {
     window['documentObject' + docOwner] = [];
 
     if (docOwner > 9) {
+        loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('#errorMessage');
 
@@ -431,7 +432,7 @@ addDocumentOwnerBtn.on('click', function () {
                         window['documentObject' + docOwnerBase].push({ Name: $this.val(), Quantity: regularQuantity, Transaction: "Regular" });
                     }
                 }
-                else { return; }
+                else { loading.hide(); return; }
 
                 $(`#documentsTable${docOwnerBase} tbody > tr`).empty();
                 //documentsTableBody.empty();
@@ -526,7 +527,15 @@ sendPdfToEmail.on('click', function () {
         cache: false,
         success: function (data) {
             $('#formContainer').attr('style', 'display: none!important');
-            $('#success').show();
+            if (data.status == 'Success') {
+                $('#error').hide();
+                $('#success').show();
+            }
+            else {
+                $('#success').hide();
+                $('#error #errorMessage').val(data.Message);
+                $('#error').show();
+            }
             loading.hide();
         },
         error: function (data){
@@ -660,7 +669,7 @@ function docOwnerStepFive() {
         else
             $('.apostiledata').text('');
 
-
+        loading.hide();
         return;
     }
     else {
@@ -679,6 +688,7 @@ function docOwnerStepFive() {
     });
     if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
         $('.fNamePartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -688,6 +698,7 @@ function docOwnerStepFive() {
     });
     if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
         $('.lNamePartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -697,6 +708,7 @@ function docOwnerStepFive() {
     });
     if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
         $('.dateOfbirthPartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -707,6 +719,7 @@ function docOwnerStepFive() {
     });
     if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
         $('.countrydestinationPartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -718,6 +731,7 @@ function docOwnerStepFive() {
     if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
         alert('Please fill out all required fields.');
         $('.apostiledataPartialValidation').text('Please insert document quantity.');
+        loading.hide();
         return;
     }
 
@@ -874,6 +888,7 @@ function authorizedStepFive() {
         //else
         //    $('.apostiledata').text('');
 
+        loading.hide();
         return;
     }
     else {
@@ -892,6 +907,7 @@ function authorizedStepFive() {
     });
     if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
         $('.fNamePartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -901,6 +917,7 @@ function authorizedStepFive() {
     });
     if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
         $('.lNamePartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -910,6 +927,7 @@ function authorizedStepFive() {
     });
     if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
         $('.dateOfbirthPartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -920,6 +938,7 @@ function authorizedStepFive() {
     });
     if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
         $('.countrydestinationPartialValidation').text('This field is required.');
+        loading.hide();
         return;
     }
 
@@ -930,6 +949,7 @@ function authorizedStepFive() {
     if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
         alert('Please fill out all required fields.');
         $('.apostiledataPartialValidation').text('Please insert document quantity.');
+        loading.hide();
         return;
     }
 
