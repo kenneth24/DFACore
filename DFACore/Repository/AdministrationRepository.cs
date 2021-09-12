@@ -546,7 +546,7 @@ namespace DFACore.Repository
             //var days = Enumerable.Range(0, 1 + end.Subtract(start).Days)
             //  .Select(offset => start.AddDays(offset))
             //  .ToArray();
-           
+
             return true;
         }
 
@@ -1050,21 +1050,16 @@ namespace DFACore.Repository
 
         public async Task<bool> CancelApplication(string applicationCode)
         {
-            
-
-
             var commandText = "INSERT INTO ApplicantRecords_backup (Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
                     "ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, deleted_time, deleted_by) " +
                     "SELECT Title, FirstName,MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
                     "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, ProcessingSite, " +
                     $"ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, [Type], DateOfBirth, BranchId, TotalApostile, GETDATE(), 'test' FROM ApplicantRecords WHERE ApplicationCode in ({applicationCode}); ";
-        
+
             _context.Database.ExecuteSqlRaw(commandText);
 
             string[] codes = applicationCode.Split(',');
-
-
 
             foreach (var code in codes)
             {
@@ -1143,6 +1138,16 @@ namespace DFACore.Repository
 
             return ipInfo;
         }
+
+
+        public async Task<bool> ResendCancellationEmail(ApplicantRecord record)
+        {
+            var email = _context.Users.Where(a => a.Id == record.CreatedBy.ToString()).FirstOrDefault().Email;
+            await _emailService.SendAsync(email, "Appointment Cancellation", HtmlTemplate(email, record), true);
+
+            return true;
+        }
+
     }
 }
 

@@ -287,7 +287,8 @@ namespace DFACore.Controllers
                 //return View(model);
                 //return RedirectToAction("Index", "Home");
                 Log("Logged In", model.Email);
-                return RedirectToAction("DocumentLocation", "Home");
+                //return RedirectToAction("DocumentLocation", "Home");
+                return RedirectToAction("LoginOptions", "Home");
             }
 
             if (result.IsNotAllowed)

@@ -24,6 +24,17 @@
         max-width: 644px !important;
     }
 
+    .login-options {
+        max-width: 700px!important;
+    }
+    .cancellation-container .card-body {
+        max-width: 70% !important;
+    }
+    .cancellation-container {
+        max-width: 70% !important;
+    }
+
+
 }
 
 /* md */
@@ -63,7 +74,17 @@
     .success-message, .success-message button {
         max-width: 75%;
     }
+
+    .login-options {
+        max-width: 700px !important;
+    }
+
+    .cancellation-container, .cancellation-container .card-body {
+        max-width: 100% !important;
+    }
 }
+
+
 
 /* sm */
 @media (max-width: 576px) {
@@ -102,7 +123,11 @@
     }
 
     .location-container {
-        max-width: 100%!important;
+        max-width: 100% !important;
+    }
+
+    .cancellation-container {
+        max-width: 100% !important;
     }
 
     .sm-p-0 {
@@ -134,11 +159,20 @@
     .success-message, .success-message button {
         max-width: 100%;
     }
+    .cancellation-container, .cancellation-container .card-body {
+        max-width: 100% !important;
+    }
 }
 
 @media (max-width: 400px) {
     .img-container {
         width: 100%;
         height: auto;
+    }
+}
+
+@media (min-width: 559px) and (max-width: 769px){
+    .container {
+        max-width: 100%!important;
     }
 }

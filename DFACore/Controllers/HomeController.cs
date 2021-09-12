@@ -36,6 +36,7 @@ namespace DFACore.Controllers
         private readonly IActionContextAccessor _accessor;
         private readonly IBrowserDetector _browserDetector;
         private readonly DocumentTypes _documentsType;
+        private readonly AdministrationRepository _administrationRepository;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -46,7 +47,8 @@ namespace DFACore.Controllers
             IWebHostEnvironment env,
             GoogleCaptchaService googleCaptchaService,
             IActionContextAccessor accessor,
-            IBrowserDetector browserDetector)
+            IBrowserDetector browserDetector,
+            AdministrationRepository administrationRepository)
         {
             _logger = logger;
             _userManager = userManager;
@@ -59,6 +61,7 @@ namespace DFACore.Controllers
             _accessor = accessor;
             _browserDetector = browserDetector;
             _documentsType = new DocumentTypes();
+            _administrationRepository = administrationRepository;
         }
         public IActionResult ApplicantTypeSelection()
         {
@@ -877,8 +880,6 @@ namespace DFACore.Controllers
             return Json(new { Status = "Success", Message = ""});
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> ResendEmail(ApplicantsViewModel model)
         {
@@ -1010,5 +1011,62 @@ namespace DFACore.Controllers
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return Json("Success");
         }
+
+        public ActionResult LoginOptions()
+        {
+            return View();
+        }
+
+        public ActionResult Cancellation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ValidateAppointment(string code)
+        {
+            var record = _administrationRepository.GetApplicantRecord(code);
+            if (record is null)
+            {
+                return Json(new { Status = "Error", ErrorMessage = "Appointment not found", Message = "Please double-check the Appointment Code." });
+            }
+
+            if (record.ScheduleDate.ToShortDateString() == DateTime.Now.ToShortDateString())
+            {
+                return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", date = DateTime.Now.ToShortDateString()});
+            }
+
+            return Json(new { Status = "Success", Data = record });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelAppointment(string code)
+        {
+            var success = await _administrationRepository.CancelApplication($"'{code}'");
+            if (success)
+            {
+                return Json(new { Status = "Success"});
+            }
+            else
+            {
+                return Json(new { Status = "Error", ErrorMessage = "There is a problem encountered while processing request. Please try again." });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResendCancellationEmail(ApplicantRecord record)
+        {
+            var success = await _administrationRepository.ResendCancellationEmail(record);
+            if (success)
+            {
+                return Json(new { Status = "Success" });
+            }
+            else
+            {
+                return Json(new { Status = "Error", ErrorMessage = "There is a problem encountered while processing request. Please try again." });
+            }
+        }
+
     }
 }

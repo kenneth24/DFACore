@@ -1,0 +1,63 @@
+﻿
+<section class="header px-4 mt-3">
+    <div class="text-center mt-3 w-100 mb-4">
+        <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+    </div>
+</section>
+
+<div class="pageContainers px-0" style="padding: 20px;">
+
+    <p style=" margin-bottom: 2rem;" class="show-on-large-only">
+        <span class="float-left grey-text-bold font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="hide-on-large">
+        <p class="p-label mb-1">
+            <span class="grey-text-bold">@User.Identity.Name</span>
+            <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+        </p>
+        <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
+    </div>
+
+    <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+        <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Please choose one:</p>
+    </div>
+
+</div>
+
+
+<section class="content card-panel text-center mx-auto p-4 mb-70 w-100 h-100">
+    <div class="hide-on-small">
+        <div class="d-flex">
+            <a asp-action="DocumentLocation" asp-controller="Home" class="ml-auto">
+                <div class="img-container ml-auto mr-5 pointer">
+                    <img src="~/images/MAIN PAGE ICON_3.png" class="h-100" />
+                </div>
+            </a>
+            <a asp-action="Cancellation" asp-controller="Home" class="mr-auto">
+                <div class="img-container mr-auto pointer">
+                    <img src="~/images/MAIN PAGE ICON_4.png" class="h-100" />
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="show-on-small-only">
+        <a asp-action="DocumentLocation" asp-controller="Home">
+            <div class="img-container text-center mb-5">
+                <img src="~/images/MAIN PAGE ICON_3.png" class="w-100" />
+            </div>
+        </a>
+        <a asp-action="Cancellation" asp-controller="Home">
+            <div class="img-container mb-3 text-center">
+                <img src="~/images/MAIN PAGE ICON_4.png" class="w-100" />
+            </div>
+        </a>
+    </div>
+</section>
