@@ -585,6 +585,13 @@ namespace DFACore.Controllers
             return RedirectToAction("Login");
         }
 
+        public ActionResult PlayVideo(string returnUrl = null)
+        {
+            return View();
+        }
+
+
+
         public void Log(string data, string email = null)
         {
             var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
