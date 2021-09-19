@@ -1047,7 +1047,7 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
+        <!--<div class="modal fade" id="apostileModal" tabindex="-1" role="dialog" aria-labelledby="apostileModallLabel" aria-hidden="true" style="overflow-y:scroll !important;">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1084,12 +1084,13 @@
                                             </div>
 
                                             <div class="form-group">
+
                                                 <input type="number" min="1" disabled class="small transactionQuantity" id="qtyNbiClearanceExpedite" style="width: 15%;height:30px;">
                                                 <span> Expedite</span>
                                                 <div class="d-block d-lg-none">
                                                     <br />
                                                 </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyNbiClearanceRegular" style="width: 15%;height:30px;">
+                                                <input type="number" min="1" max="10" disabled class="small transactionQuantity" id="qtyNbiClearanceRegular1" style="width: 15%;height:30px;">
                                                 <span style="margin-right:10px"> Regular</span>
                                                 <div class="d-block d-lg-none">
                                                     <br />
@@ -1228,719 +1229,719 @@
                                                 <span> Total</span>
                                             </div>
                                         </td>
-                                        <td>
-                                            @*<p><a href="#" class="blue-text"></a></p>*@
-                                            <p>*Certified True Copies from school</p>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p>
-                                                <a href="#" class="blue-text" data-toggle="modal" data-target="#elementaryAndHighSchoolCAV-modal">
-                                                    *Certification, Authentication and Verification (CAV) from DepEd Regional Office.
-                                                </a>
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="techVoch" value="TOR & Diploma/National Certificate"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVoch" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @*<p><a href="#" class="blue-text"></a></p>*@
-                                            <p>*Certified True Copies from school</p>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#techVocCAV-modal">*Certification, Authentication and Verification (CAV) from Technical and Skills Development Authority (TESDA).</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="State Colleges and Universities TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p>*Certified True Copies from school</p>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#SCandUnivCAV-modal">*Certification, Authentication and Verification (CAV) from the school.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="Private/Local Colleges and Universities TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            @*<p><a href="#" class="blue-text"></a></p>*@
-                                            <p>*Certified True Copies from school</p>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#chedCOV-modal">*Certification, Authentication and Verification (CAV) from Commission on Higher Education (CHED). </a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="PRC" value="PRC Document/s"> 4. Professional Regulation Commission (PRC) document/s
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRC" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#prcCTC-modal">*Originally-signed and/or certified true copies from PRC.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="medCerts" value="Medical Certificates"> 5. Medical Certificates
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
+                                        <td>-->
+        @*<p><a href="#" class="blue-text"></a></p>*@
+        <!--<p>*Certified True Copies from school</p>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p>
+                    <a href="#" class="blue-text" data-toggle="modal" data-target="#elementaryAndHighSchoolCAV-modal">
+                        *Certification, Authentication and Verification (CAV) from DepEd Regional Office.
+                    </a>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="techVoch" value="TOR & Diploma/National Certificate"> For Technical and Vocational Courses (TOR and Diploma/National Certificate)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVochRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTechVoch" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>-->
+        @*<p><a href="#" class="blue-text"></a></p>*@
+        <!--<p>*Certified True Copies from school</p>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#techVocCAV-modal">*Certification, Authentication and Verification (CAV) from Technical and Skills Development Authority (TESDA).</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="stateCollegesAndUniversities" value="State Colleges and Universities TOR & Diploma"> For State Colleges and Universities (TOR and Diploma)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversitiesRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyStateCollegesAndUniversities" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>
+                <p>*Certified True Copies from school</p>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#SCandUnivCAV-modal">*Certification, Authentication and Verification (CAV) from the school.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="privateOrLocalColleges" value="Private/Local Colleges and Universities TOR & Diploma"> For Private/Local Colleges and Universities (TOR and Diploma)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalCollegesRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateOrLocalColleges" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>-->
+        @*<p><a href="#" class="blue-text"></a></p>*@
+        <!--<p>*Certified True Copies from school</p>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#chedCOV-modal">*Certification, Authentication and Verification (CAV) from Commission on Higher Education (CHED). </a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="PRC" value="PRC Document/s"> 4. Professional Regulation Commission (PRC) document/s
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRCRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPRC" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#prcCTC-modal">*Originally-signed and/or certified true copies from PRC.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="medCerts" value="Medical Certificates"> 5. Medical Certificates
+                    </label>
+                </div>
+                <div class="form-group">
 
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCerts" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohStamp-modal">*For employement: DOH Stamp per document.</a></p>
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohMedCert-modal">*For other purpose: Certification issued by the DOH with attached Medical Certificate.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="CAAP" value="CAAP Documents"> 6. Civil Aviation Authority of the Philippines (CAAP) issued document/s
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAP" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#caapCert-modal">*Certificate by CAAP.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="driverLicense" value="Driver's License"> 7. Driver's License
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCertsRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMedCerts" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohStamp-modal">*For employement: DOH Stamp per document.</a></p>
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dohMedCert-modal">*For other purpose: Certification issued by the DOH with attached Medical Certificate.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="CAAP" value="CAAP Documents"> 6. Civil Aviation Authority of the Philippines (CAAP) issued document/s
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAPRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCAAP" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#caapCert-modal">*Certificate by CAAP.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="driverLicense" value="Driver's License"> 7. Driver's License
+                    </label>
+                </div>
+                <div class="form-group">
 
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicense" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#ltoCert-modal">*Certification from Land Transportation Office (LTO Main Branch Only).</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="form-check-label font-weight-bold">
-                                                8. Documents issued by a private entity
-                                            </label>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="COE" value="Certificate of Employment"> Certificate of Employment
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOEExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOERegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOE" style="width: 15%;height:30px;">
-                                                <span> Total</span>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicenseRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDriverLicense" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#ltoCert-modal">*Certification from Land Transportation Office (LTO Main Branch Only).</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-check-label font-weight-bold">
+                    8. Documents issued by a private entity
+                </label>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="COE" value="Certificate of Employment"> Certificate of Employment
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOEExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOERegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCOE" style="width: 15%;height:30px;">
+                    <span> Total</span>
 
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="invitationLetter" value="Invitation Letter"> Invitation Letter
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetter" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="trainings" value="Trainings"> Trainings
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainings" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="baptismalCert" value="Baptismal Certificate"> Baptismal Certificate
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCert" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document (Private Entity)"> Other Document
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p>*Notarized Affidavit stating necessary factual circumstances and indicating certificate/s as attachments.</p>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p>
-                                                <a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">
-                                                    *Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).
-                                                </a>
-                                            </p>
-                                            <p>*Copy of Notarial Commission is not the same as Certificate of Authority for a Notarial Act.</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="form-check-label font-weight-bold">
-                                                9. Notary Public Documents
-                                            </label>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" id="specialPowerOfAttorney" value="Special Power of Attorney"> Special Power of Attorney
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="invitationLetter" value="Invitation Letter"> Invitation Letter
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetterRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyInvitationLetter" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="trainings" value="Trainings"> Trainings
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainingsRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyTrainings" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="baptismalCert" value="Baptismal Certificate"> Baptismal Certificate
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCertRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBaptismalCert" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="privateIssuedOtherDocu" value="Other Document (Private Entity)"> Other Document
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocuRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPrivateIssuedOtherDocu" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
+            </td>
+            <td>
+                <p>*Notarized Affidavit stating necessary factual circumstances and indicating certificate/s as attachments.</p>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p>
+                    <a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">
+                        *Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).
+                    </a>
+                </p>
+                <p>*Copy of Notarial Commission is not the same as Certificate of Authority for a Notarial Act.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-check-label font-weight-bold">
+                    9. Notary Public Documents
+                </label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="specialPowerOfAttorney" value="Special Power of Attorney"> Special Power of Attorney
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorneyRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtySpecialPowerOfAttorney" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="MOA" value="Memorandum of Agreement"> Memorandum of Agreement
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOAExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOARegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOA" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="MOA" value="Memorandum of Agreement"> Memorandum of Agreement
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOAExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOARegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOA" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="MOU" value="Memorandum of Understanding"> Memorandum of Understanding
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOUExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOURegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOU" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="MOU" value="Memorandum of Understanding"> Memorandum of Understanding
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOUExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOURegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyMOU" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="anyContract" value="Contract"> Any Form of Contract
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContract" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="anyContract" value="Contract"> Any Form of Contract
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContractRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAnyContract" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent/Advice"> Affidavit of Consent or Advise
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="affidavitOfConsent" value="Affidavit of Consent/Advice"> Affidavit of Consent or Advise
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsentRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyAffidavitOfConsent" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="jointAffidavit" value="Joint Affidavit"> Joint Affidavit
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavit" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="jointAffidavit" value="Joint Affidavit"> Joint Affidavit
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavitRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyJointAffidavit" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="otherAffidavit" value="Other Affidavit"> Other Affidavit
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right: 10px "> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="otherAffidavit" value="Other Affidavit"> Other Affidavit
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavitRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right: 10px "> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyOtherAffidavit" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="form-check-label font-weight-bold">
-                                                10. Court Document/s
-                                            </label>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" id="courtDecision" value="Court Decision"> Decision
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#cana-modal">*Certificate of Authority for a Notarial Act (CANA) signed by the Executive Judge/Vice-Executive Judge/any office authorized signatories (issued by the Regional Trial Court).</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-check-label font-weight-bold">
+                    10. Court Document/s
+                </label>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="courtDecision" value="Court Decision"> Decision
+                    </label>
+                </div>
+                <div class="form-group">
 
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionRegular" style="width: 15%; height: 30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecision" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecisionRegular" style="width: 15%; height: 30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtDecision" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" id="courtResolution" value="Court Resolution/Order"> Resolution/Order
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="courtResolution" value="Court Resolution/Order"> Resolution/Order
+                    </label>
+                </div>
+                <div class="form-group">
 
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolution" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolutionRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtResolution" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                            <div class="form-check">
-                                                <label class="form-check-label ">
-                                                    <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Other Court Documents"> Other Court Documents
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+                <div class="form-check">
+                    <label class="form-check-label ">
+                        <input type="checkbox" class="form-check-input" id="courtOtherDocument" value="Other Court Documents"> Other Court Documents
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocumentRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyCourtOtherDocument" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#courtDocuCTC-modal">*Certified True Copies from the Court.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="Immigration" value="Immigration Record/s"> 11. Immigration Record/s
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigration" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#immigrationDocu-modal">*Certified by Bureau of Immigration.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="DSWDClearance" value="DSWD Clearance"> 12. DSWD Clearance
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearance" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dswdClearance-modal">*Original or certified true copies issued by the Department of Social Welfare and Development. </a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance/Sundry
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearance" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#courtDocuCTC-modal">*Certified True Copies from the Court.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="Immigration" value="Immigration Record/s"> 11. Immigration Record/s
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigrationRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyImmigration" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#immigrationDocu-modal">*Certified by Bureau of Immigration.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="DSWDClearance" value="DSWD Clearance"> 12. DSWD Clearance
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearanceRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyDSWDClearance" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#dswdClearance-modal">*Original or certified true copies issued by the Department of Social Welfare and Development. </a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="policeClearance" value="Police Clearance"> 13. Police Clearance/Sundry
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearanceRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyPoliceClearance" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpCert-modal">*Original document issued by Philippine National Police (PNP).</a></p>
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpSundry-modal">*Sample copy of PNP Sundry.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="businessRegistration" value="Business Registration & Other Documents issued by a Government Agency">
-                                                    14. Business Registration & Other Documents issued by a Government Agency (e.g. SEC, DTI, SSS, BIR, Municipal Business Permit and Licensing Office, etc.)
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistration" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#govtCTC-modal">*Certified true copy/ies from the issuing office.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="barangayClearance" value="Barangay Clearance/Certifcate">
-                                                    15. Barangay Clearance/Certifcate
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearance" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                            </div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpCert-modal">*Original document issued by Philippine National Police (PNP).</a></p>
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#pnpSundry-modal">*Sample copy of PNP Sundry.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="businessRegistration" value="Business Registration & Other Documents issued by a Government Agency">
+                        14. Business Registration & Other Documents issued by a Government Agency (e.g. SEC, DTI, SSS, BIR, Municipal Business Permit and Licensing Office, etc.)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistrationRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBusinessRegistration" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#govtCTC-modal">*Certified true copy/ies from the issuing office.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="barangayClearance" value="Barangay Clearance/Certifcate">
+                        15. Barangay Clearance/Certifcate
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearanceRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyBarangayClearance" style="width: 15%;height:30px;">
+                    <span> Total</span>
+                </div>
 
-                                        </td>
-                                        <td>
-                                            <i class="text-bold">For sample document click here</i> <br />
-                                            <p><a href="#" class="blue-text" data-toggle="modal" data-target="#mayorCert-modal">*Mayor's certification/clearance which has a jurisdiction over the Barangay.</a></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label font-weight-bold">
-                                                    <input type="checkbox" class="form-check-input" id="exportDocuments" value="Export Document/s">
-                                                    16. Export Document/s
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsExpedite" style="width: 15%;height:30px;">
-                                                <span> Expedite</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsRegular" style="width: 15%;height:30px;">
-                                                <span style="margin-right:10px"> Regular</span>
-                                                <div class="d-block d-lg-none">
-                                                    <br />
-                                                </div>
-                                                <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocuments" style="width: 15%;height:30px;">
-                                                <span> Total</span>
-                                                @*<label for="qtyPRC"></label>*@
-                                            </div>
+            </td>
+            <td>
+                <i class="text-bold">For sample document click here</i> <br />
+                <p><a href="#" class="blue-text" data-toggle="modal" data-target="#mayorCert-modal">*Mayor's certification/clearance which has a jurisdiction over the Barangay.</a></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-check">
+                    <label class="form-check-label font-weight-bold">
+                        <input type="checkbox" class="form-check-input" id="exportDocuments" value="Export Document/s">
+                        16. Export Document/s
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsExpedite" style="width: 15%;height:30px;">
+                    <span> Expedite</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocumentsRegular" style="width: 15%;height:30px;">
+                    <span style="margin-right:10px"> Regular</span>
+                    <div class="d-block d-lg-none">
+                        <br />
+                    </div>
+                    <input type="number" min="1" disabled class="small transactionQuantity" id="qtyExportDocuments" style="width: 15%;height:30px;">
+                    <span> Total</span>-->
+        @*<label for="qtyPRC"></label>*@
+        <!--</div>
                                         </td>
                                         <td>
                                             <i class="text-bold">For sample document click here</i> <br />
@@ -1963,7 +1964,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="modal fade" id="documentTypesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-autoheight" role="document">
@@ -1992,18 +1993,39 @@
                         </div>
                         <div class="mb-3" id="documentQuantity">
                             <h5 class="bold text-center mb-3">No. of Documents</h5>
-                            <div class="d-flex">
-                                <div class="d-flex flex-column ml-auto mr-2">
-                                    <input type="number" min="1" max="10" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
+
+                            @*<div class="col-md-4 col-xs-12">
                                     <span class="bold">Regular</span>
+                                    <input id="TestSpinner" type="number" value="1" />
+                                </div>*@
+                        @*<div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-5 col-xs-12">
+                                    <span class="bold">Regular</span>
+                                    <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular spinnerRegular" id="qtyNbiClearanceRegular">
                                 </div>
-                                <div class="d-flex flex-column mr-auto ml-2">
-                                    <input type="number" min="1" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
-                                    <span class="bold">Expedite</span>
+                                <div class="col-md-5 col-xs-12">
+                                    <span class="bold">Expedite</span> <span id="ChckIfhasExpedite" style="color: darkred"></span>
+                                    <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite spinnerRegular" id="qtyNbiClearanceExpedite">
                                 </div>
                             </div>
+                        </div>*@
+                            
+
+
+                        <div class="d-flex">
+                            <div class="d-flex flex-column ml-auto mr-2">
+                                <span class="bold" style="text-align:center">Regular</span>
+                                <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
+
+                            </div>
+                            <div class="d-flex flex-column mr-auto ml-2">
+                                <span class="bold" style="text-align:center">Expedite</span>
+                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
+                            </div>
                         </div>
-                        <div id="documentTypeSample">
+                        </div>
+                        <div id="documentTypeSample" style="margin-top: 35px;">
                             <small class="bold">*Personal Copy is NOT valid</small>
                             <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
                             <small class="bold">*Sample copy of NBI sundry</small>
@@ -2606,8 +2628,29 @@
     @*<script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>*@
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>*@
 
-    <script src="~/js/oas.js"></script>
+    <script>
 
+        
+
+        //$("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })
+
+        //$("#qtyNbiClearanceRegular1").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular2").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular3").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular4").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular5").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular6").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular7").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular8").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular9").inputSpinner({ buttonsOnly: true })
+        //$("#qtyNbiClearanceRegular10").inputSpinner({ buttonsOnly: true })
+    </script>
+    <script src="~/js/oas.js"></script>
+    <script>
+        $("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
+        $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })
+    </script>
     <script>
 
 
@@ -2648,7 +2691,6 @@
         });*@
 
         $(document).ready(function () {
-
 
             $(document).ready(function () {
                 var e = document.querySelectorAll('option')
@@ -2723,6 +2765,7 @@
                             $('#siteAndNameAddress').text(result.branchName);
                             $('#siteAndAddress').text(result.branchAddress);
                             isBranchHasExpidite = result.hasExpidite;
+
                             HasExpedite(isBranchHasExpidite);
                             $('.form-check-input').prop("checked", false);
                             $('.transactionQuantity').val('');
@@ -3207,9 +3250,11 @@
             $('#qtyNbiClearanceRegular').focusout(function () {
                 if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
                     $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceRegular').val()))
+
                 }
                 else {
                     $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceExpedite').val()) + parseInt($('#qtyNbiClearanceRegular').val()))
+
                 }
             });
 

@@ -24,8 +24,8 @@ namespace DFACore.Data
             };
 
             nbi.Quantities = new List<DocumentInfo>();
-            nbi.Quantities.Add(new DocumentInfo { Id = "qtyNbiClearanceExpedite", Name = "Expedite" });
-            nbi.Quantities.Add(new DocumentInfo { Id = "qtyNbiClearanceRegular", Name = "Regular" });
+            nbi.Quantities.Add(new DocumentInfo { Id = "qtyNbiClearanceExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            nbi.Quantities.Add(new DocumentInfo { Id = "qtyNbiClearanceRegular", Name = "Regular", Min = 0, Max = 10 });
             nbi.Quantities.Add(new DocumentInfo { Id = "qtyNbiClearance", Name = "Total" });
 
             nbi.Info = new List<DocumentInfo>();
@@ -41,8 +41,8 @@ namespace DFACore.Data
             };
 
             psaBirthCert.Quantities = new List<DocumentInfo>();
-            psaBirthCert.Quantities.Add(new DocumentInfo { Id = "qtyBirthCertificateExpedite", Name = "Expedite" });
-            psaBirthCert.Quantities.Add(new DocumentInfo { Id = "qtyBirthCertificateRegular", Name = "Regular" });
+            psaBirthCert.Quantities.Add(new DocumentInfo { Id = "qtyBirthCertificateExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            psaBirthCert.Quantities.Add(new DocumentInfo { Id = "qtyBirthCertificateRegular", Name = "Regular", Min = 0, Max = 10 });
             psaBirthCert.Quantities.Add(new DocumentInfo { Id = "qtyBirthCertificate", Name = "Total" });
 
             psaBirthCert.Info = new List<DocumentInfo>();
@@ -57,8 +57,8 @@ namespace DFACore.Data
             };
 
             psaMarriageCert.Quantities = new List<DocumentInfo>();
-            psaMarriageCert.Quantities.Add(new DocumentInfo { Id = "qtyMarriageCertificateExpedite", Name = "Expedite" });
-            psaMarriageCert.Quantities.Add(new DocumentInfo { Id = "qtyMarriageCertificateRegular", Name = "Regular" });
+            psaMarriageCert.Quantities.Add(new DocumentInfo { Id = "qtyMarriageCertificateExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            psaMarriageCert.Quantities.Add(new DocumentInfo { Id = "qtyMarriageCertificateRegular", Name = "Regular", Min = 0, Max = 10 });
             psaMarriageCert.Quantities.Add(new DocumentInfo { Id = "qtyMarriageCertificate", Name = "Total" });
 
             psaMarriageCert.Info = new List<DocumentInfo>();
@@ -73,8 +73,8 @@ namespace DFACore.Data
             };
 
             psaDeathCert.Quantities = new List<DocumentInfo>();
-            psaDeathCert.Quantities.Add(new DocumentInfo { Id = "qtyDeathCertificateExpedite", Name = "Expedite" });
-            psaDeathCert.Quantities.Add(new DocumentInfo { Id = "qtyDeathCertificateRegular", Name = "Regular" });
+            psaDeathCert.Quantities.Add(new DocumentInfo { Id = "qtyDeathCertificateExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            psaDeathCert.Quantities.Add(new DocumentInfo { Id = "qtyDeathCertificateRegular", Name = "Regular", Min = 0, Max = 10 });
             psaDeathCert.Quantities.Add(new DocumentInfo { Id = "qtyDeathCertificate", Name = "Total" });
 
             psaDeathCert.Info = new List<DocumentInfo>();
@@ -89,8 +89,8 @@ namespace DFACore.Data
             };
 
             psaCenomar.Quantities = new List<DocumentInfo>();
-            psaCenomar.Quantities.Add(new DocumentInfo { Id = "qtyCenomarExpedite", Name = "Expedite" });
-            psaCenomar.Quantities.Add(new DocumentInfo { Id = "qtyCenomarRegular", Name = "Regular" });
+            psaCenomar.Quantities.Add(new DocumentInfo { Id = "qtyCenomarExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            psaCenomar.Quantities.Add(new DocumentInfo { Id = "qtyCenomarRegular", Name = "Regular", Min = 0, Max = 10 });
             psaCenomar.Quantities.Add(new DocumentInfo { Id = "qtyCenomar", Name = "Total" });
 
             var school = new Documents
@@ -102,8 +102,8 @@ namespace DFACore.Data
             };
 
             school.Quantities = new List<DocumentInfo>();
-            school.Quantities.Add(new DocumentInfo { Id = "qtyElementaryAndHighschoolExpedite", Name = "Expedite" });
-            school.Quantities.Add(new DocumentInfo { Id = "qtyElementaryAndHighschoolRegular", Name = "Regular" });
+            school.Quantities.Add(new DocumentInfo { Id = "qtyElementaryAndHighschoolExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            school.Quantities.Add(new DocumentInfo { Id = "qtyElementaryAndHighschoolRegular", Name = "Regular", Min = 0, Max = 10 });
             school.Quantities.Add(new DocumentInfo { Id = "qtyElementaryAndHighschool", Name = "Total" });
 
             school.Info = new List<DocumentInfo>();
@@ -118,8 +118,8 @@ namespace DFACore.Data
             };
 
             schoolTOR.Quantities = new List<DocumentInfo>();
-            schoolTOR.Quantities.Add(new DocumentInfo { Id = "qtyTechVochExpedite", Name = "Expedite" });
-            schoolTOR.Quantities.Add(new DocumentInfo { Id = "qtyTechVochRegular", Name = "Regular" });
+            schoolTOR.Quantities.Add(new DocumentInfo { Id = "qtyTechVochExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            schoolTOR.Quantities.Add(new DocumentInfo { Id = "qtyTechVochRegular", Name = "Regular", Min = 0, Max = 10 });
             schoolTOR.Quantities.Add(new DocumentInfo { Id = "qtyTechVoch", Name = "Total" });
 
             schoolTOR.Info = new List<DocumentInfo>();
@@ -134,8 +134,8 @@ namespace DFACore.Data
             };
 
             schoolCollege.Quantities = new List<DocumentInfo>();
-            schoolCollege.Quantities.Add(new DocumentInfo { Id = "qtyStateCollegesAndUniversitiesExpedite", Name = "Expedite" });
-            schoolCollege.Quantities.Add(new DocumentInfo { Id = "qtyStateCollegesAndUniversitiesRegular", Name = "Regular" });
+            schoolCollege.Quantities.Add(new DocumentInfo { Id = "qtyStateCollegesAndUniversitiesExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            schoolCollege.Quantities.Add(new DocumentInfo { Id = "qtyStateCollegesAndUniversitiesRegular", Name = "Regular", Min = 0, Max = 10 });
             schoolCollege.Quantities.Add(new DocumentInfo { Id = "qtyStateCollegesAndUniversities", Name = "Total" });
 
             schoolCollege.Info = new List<DocumentInfo>();
@@ -150,8 +150,8 @@ namespace DFACore.Data
             };
 
             schoolPrivateOrLocal.Quantities = new List<DocumentInfo>();
-            schoolPrivateOrLocal.Quantities.Add(new DocumentInfo { Id = "qtyPrivateOrLocalCollegesExpedite", Name = "Expedite" });
-            schoolPrivateOrLocal.Quantities.Add(new DocumentInfo { Id = "qtyPrivateOrLocalCollegesRegular", Name = "Regular" });
+            schoolPrivateOrLocal.Quantities.Add(new DocumentInfo { Id = "qtyPrivateOrLocalCollegesExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            schoolPrivateOrLocal.Quantities.Add(new DocumentInfo { Id = "qtyPrivateOrLocalCollegesRegular", Name = "Regular", Min = 0, Max = 10 });
             schoolPrivateOrLocal.Quantities.Add(new DocumentInfo { Id = "qtyPrivateOrLocalColleges", Name = "Total" });
 
             schoolPrivateOrLocal.Info = new List<DocumentInfo>();
@@ -166,8 +166,8 @@ namespace DFACore.Data
             };
 
             prc.Quantities = new List<DocumentInfo>();
-            prc.Quantities.Add(new DocumentInfo { Id = "qtyPRCExpedite", Name = "Expedite" });
-            prc.Quantities.Add(new DocumentInfo { Id = "qtyPRCRegular", Name = "Regular" });
+            prc.Quantities.Add(new DocumentInfo { Id = "qtyPRCExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            prc.Quantities.Add(new DocumentInfo { Id = "qtyPRCRegular", Name = "Regular", Min = 0, Max = 10 });
             prc.Quantities.Add(new DocumentInfo { Id = "qtyPRC", Name = "Total" });
 
             prc.Info = new List<DocumentInfo>();
@@ -182,8 +182,8 @@ namespace DFACore.Data
             };
 
             medCerts.Quantities = new List<DocumentInfo>();
-            medCerts.Quantities.Add(new DocumentInfo { Id = "qtyMedCertsExpedite", Name = "Expedite" });
-            medCerts.Quantities.Add(new DocumentInfo { Id = "qtyMedCertsRegular", Name = "Regular" });
+            medCerts.Quantities.Add(new DocumentInfo { Id = "qtyMedCertsExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            medCerts.Quantities.Add(new DocumentInfo { Id = "qtyMedCertsRegular", Name = "Regular", Min = 0, Max = 10 });
             medCerts.Quantities.Add(new DocumentInfo { Id = "qtyMedCerts", Name = "Total" });
 
             medCerts.Info = new List<DocumentInfo>();
@@ -199,8 +199,8 @@ namespace DFACore.Data
             };
 
             caap.Quantities = new List<DocumentInfo>();
-            caap.Quantities.Add(new DocumentInfo { Id = "qtyCAAPExpedite", Name = "Expedite" });
-            caap.Quantities.Add(new DocumentInfo { Id = "qtyCAAPRegular", Name = "Regular" });
+            caap.Quantities.Add(new DocumentInfo { Id = "qtyCAAPExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            caap.Quantities.Add(new DocumentInfo { Id = "qtyCAAPRegular", Name = "Regular", Min = 0, Max = 10 });
             caap.Quantities.Add(new DocumentInfo { Id = "qtyCAAP", Name = "Total" });
 
             caap.Info = new List<DocumentInfo>();
@@ -215,8 +215,8 @@ namespace DFACore.Data
             };
 
             driverLicense.Quantities = new List<DocumentInfo>();
-            driverLicense.Quantities.Add(new DocumentInfo { Id = "qtyDriverLicenseExpedite", Name = "Expedite" });
-            driverLicense.Quantities.Add(new DocumentInfo { Id = "qtyDriverLicenseRegular", Name = "Regular" });
+            driverLicense.Quantities.Add(new DocumentInfo { Id = "qtyDriverLicenseExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            driverLicense.Quantities.Add(new DocumentInfo { Id = "qtyDriverLicenseRegular", Name = "Regular", Min = 0, Max = 10 });
             driverLicense.Quantities.Add(new DocumentInfo { Id = "qtyDriverLicense", Name = "Total" });
 
             driverLicense.Info = new List<DocumentInfo>();
@@ -231,8 +231,8 @@ namespace DFACore.Data
             };
 
             coe.Quantities = new List<DocumentInfo>();
-            coe.Quantities.Add(new DocumentInfo { Id = "qtyCOEExpedite", Name = "Expedite" });
-            coe.Quantities.Add(new DocumentInfo { Id = "qtyCOERegular", Name = "Regular" });
+            coe.Quantities.Add(new DocumentInfo { Id = "qtyCOEExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            coe.Quantities.Add(new DocumentInfo { Id = "qtyCOERegular", Name = "Regular", Min = 0, Max = 20 });
             coe.Quantities.Add(new DocumentInfo { Id = "qtyCOE", Name = "Total" });
 
             coe.Info = new List<DocumentInfo>();
@@ -247,8 +247,8 @@ namespace DFACore.Data
             };
 
             invitationLetter.Quantities = new List<DocumentInfo>();
-            invitationLetter.Quantities.Add(new DocumentInfo { Id = "qtyInvitationLetterExpedite", Name = "Expedite" });
-            invitationLetter.Quantities.Add(new DocumentInfo { Id = "qtyInvitationLetterRegular", Name = "Regular" });
+            invitationLetter.Quantities.Add(new DocumentInfo { Id = "qtyInvitationLetterExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            invitationLetter.Quantities.Add(new DocumentInfo { Id = "qtyInvitationLetterRegular", Name = "Regular", Min = 0, Max = 20 });
             invitationLetter.Quantities.Add(new DocumentInfo { Id = "qtyInvitationLetter", Name = "Total" });
 
             invitationLetter.Info = new List<DocumentInfo>();
@@ -263,8 +263,8 @@ namespace DFACore.Data
             };
 
             trainings.Quantities = new List<DocumentInfo>();
-            trainings.Quantities.Add(new DocumentInfo { Id = "qtyTrainingsExpedite", Name = "Expedite" });
-            trainings.Quantities.Add(new DocumentInfo { Id = "qtyTrainingsRegular", Name = "Regular" });
+            trainings.Quantities.Add(new DocumentInfo { Id = "qtyTrainingsExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            trainings.Quantities.Add(new DocumentInfo { Id = "qtyTrainingsRegular", Name = "Regular", Min = 0, Max = 20 });
             trainings.Quantities.Add(new DocumentInfo { Id = "qtyTrainings", Name = "Total" });
 
             trainings.Info = new List<DocumentInfo>();
@@ -279,8 +279,8 @@ namespace DFACore.Data
             };
 
             baptismalCert.Quantities = new List<DocumentInfo>();
-            baptismalCert.Quantities.Add(new DocumentInfo { Id = "qtyBaptismalCertExpedite", Name = "Expedite" });
-            baptismalCert.Quantities.Add(new DocumentInfo { Id = "qtyBaptismalCertRegular", Name = "Regular" });
+            baptismalCert.Quantities.Add(new DocumentInfo { Id = "qtyBaptismalCertExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            baptismalCert.Quantities.Add(new DocumentInfo { Id = "qtyBaptismalCertRegular", Name = "Regular", Min = 0, Max = 20 });
             baptismalCert.Quantities.Add(new DocumentInfo { Id = "qtyBaptismalCert", Name = "Total" });
 
             baptismalCert.Info = new List<DocumentInfo>();
@@ -295,8 +295,8 @@ namespace DFACore.Data
             };
 
             privateIssuedOtherDocu.Quantities = new List<DocumentInfo>();
-            privateIssuedOtherDocu.Quantities.Add(new DocumentInfo { Id = "qtyPrivateIssuedOtherDocuExpedite", Name = "Expedite" });
-            privateIssuedOtherDocu.Quantities.Add(new DocumentInfo { Id = "qtyPrivateIssuedOtherDocuRegular", Name = "Regular" });
+            privateIssuedOtherDocu.Quantities.Add(new DocumentInfo { Id = "qtyPrivateIssuedOtherDocuExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            privateIssuedOtherDocu.Quantities.Add(new DocumentInfo { Id = "qtyPrivateIssuedOtherDocuRegular", Name = "Regular", Min = 0, Max = 20 });
             privateIssuedOtherDocu.Quantities.Add(new DocumentInfo { Id = "qtyPrivateIssuedOtherDocu", Name = "Total" });
 
             privateIssuedOtherDocu.Info = new List<DocumentInfo>();
@@ -311,8 +311,8 @@ namespace DFACore.Data
             };
 
             specialPowerOfAttorney.Quantities = new List<DocumentInfo>();
-            specialPowerOfAttorney.Quantities.Add(new DocumentInfo { Id = "qtySpecialPowerOfAttorneyExpedite", Name = "Expedite" });
-            specialPowerOfAttorney.Quantities.Add(new DocumentInfo { Id = "qtySpecialPowerOfAttorneyRegular", Name = "Regular" });
+            specialPowerOfAttorney.Quantities.Add(new DocumentInfo { Id = "qtySpecialPowerOfAttorneyExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            specialPowerOfAttorney.Quantities.Add(new DocumentInfo { Id = "qtySpecialPowerOfAttorneyRegular", Name = "Regular", Min = 0, Max = 20 });
             specialPowerOfAttorney.Quantities.Add(new DocumentInfo { Id = "qtySpecialPowerOfAttorney", Name = "Total" });
 
             specialPowerOfAttorney.Info = new List<DocumentInfo>();
@@ -327,8 +327,8 @@ namespace DFACore.Data
             };
 
             moa.Quantities = new List<DocumentInfo>();
-            moa.Quantities.Add(new DocumentInfo { Id = "qtyMOAExpedite", Name = "Expedite" });
-            moa.Quantities.Add(new DocumentInfo { Id = "qtyMOARegular", Name = "Regular" });
+            moa.Quantities.Add(new DocumentInfo { Id = "qtyMOAExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            moa.Quantities.Add(new DocumentInfo { Id = "qtyMOARegular", Name = "Regular", Min = 0, Max = 20 });
             moa.Quantities.Add(new DocumentInfo { Id = "qtyMOA", Name = "Total" });
 
             moa.Info = new List<DocumentInfo>();
@@ -343,8 +343,8 @@ namespace DFACore.Data
             };
 
             mou.Quantities = new List<DocumentInfo>();
-            mou.Quantities.Add(new DocumentInfo { Id = "qtyMOUExpedite", Name = "Expedite" });
-            mou.Quantities.Add(new DocumentInfo { Id = "qtyMOURegular", Name = "Regular" });
+            mou.Quantities.Add(new DocumentInfo { Id = "qtyMOUExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            mou.Quantities.Add(new DocumentInfo { Id = "qtyMOURegular", Name = "Regular", Min = 0, Max = 20 });
             mou.Quantities.Add(new DocumentInfo { Id = "qtyMOU", Name = "Total" });
 
             mou.Info = new List<DocumentInfo>();
@@ -359,8 +359,8 @@ namespace DFACore.Data
             };
 
             anyContract.Quantities = new List<DocumentInfo>();
-            anyContract.Quantities.Add(new DocumentInfo { Id = "qtyAnyContractExpedite", Name = "Expedite" });
-            anyContract.Quantities.Add(new DocumentInfo { Id = "qtyAnyContractRegular", Name = "Regular" });
+            anyContract.Quantities.Add(new DocumentInfo { Id = "qtyAnyContractExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            anyContract.Quantities.Add(new DocumentInfo { Id = "qtyAnyContractRegular", Name = "Regular", Min = 0, Max = 20 });
             anyContract.Quantities.Add(new DocumentInfo { Id = "qtyAnyContract", Name = "Total" });
 
             anyContract.Info = new List<DocumentInfo>();
@@ -375,8 +375,8 @@ namespace DFACore.Data
             };
 
             affidavitOfConsent.Quantities = new List<DocumentInfo>();
-            affidavitOfConsent.Quantities.Add(new DocumentInfo { Id = "qtyAffidavitOfConsentExpedite", Name = "Expedite" });
-            affidavitOfConsent.Quantities.Add(new DocumentInfo { Id = "qtyAffidavitOfConsentRegular", Name = "Regular" });
+            affidavitOfConsent.Quantities.Add(new DocumentInfo { Id = "qtyAffidavitOfConsentExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            affidavitOfConsent.Quantities.Add(new DocumentInfo { Id = "qtyAffidavitOfConsentRegular", Name = "Regular", Min = 0, Max = 20 });
             affidavitOfConsent.Quantities.Add(new DocumentInfo { Id = "qtyAffidavitOfConsent", Name = "Total" });
 
             affidavitOfConsent.Info = new List<DocumentInfo>();
@@ -391,8 +391,8 @@ namespace DFACore.Data
             };
 
             jointAffidavit.Quantities = new List<DocumentInfo>();
-            jointAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyJointAffidavitExpedite", Name = "Expedite" });
-            jointAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyJointAffidavitRegular", Name = "Regular" });
+            jointAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyJointAffidavitExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            jointAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyJointAffidavitRegular", Name = "Regular", Min = 0, Max = 20 });
             jointAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyJointAffidavit", Name = "Total" });
 
             jointAffidavit.Info = new List<DocumentInfo>();
@@ -407,8 +407,8 @@ namespace DFACore.Data
             };
 
             otherAffidavit.Quantities = new List<DocumentInfo>();
-            otherAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyOtherAffidavitExpedite", Name = "Expedite" });
-            otherAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyOtherAffidavitRegular", Name = "Regular" });
+            otherAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyOtherAffidavitExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            otherAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyOtherAffidavitRegular", Name = "Regular", Min = 0, Max = 20 });
             otherAffidavit.Quantities.Add(new DocumentInfo { Id = "qtyOtherAffidavit", Name = "Total" });
 
             otherAffidavit.Info = new List<DocumentInfo>();
@@ -423,8 +423,8 @@ namespace DFACore.Data
             };
 
             courtDecision.Quantities = new List<DocumentInfo>();
-            courtDecision.Quantities.Add(new DocumentInfo { Id = "qtyCourtDecisionExpedite", Name = "Expedite" });
-            courtDecision.Quantities.Add(new DocumentInfo { Id = "qtyCourtDecisionRegular", Name = "Regular" });
+            courtDecision.Quantities.Add(new DocumentInfo { Id = "qtyCourtDecisionExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            courtDecision.Quantities.Add(new DocumentInfo { Id = "qtyCourtDecisionRegular", Name = "Regular", Min = 0, Max = 10 });
             courtDecision.Quantities.Add(new DocumentInfo { Id = "qtyCourtDecision", Name = "Total" });
 
             courtDecision.Info = new List<DocumentInfo>();
@@ -439,8 +439,8 @@ namespace DFACore.Data
             };
 
             courtResolution.Quantities = new List<DocumentInfo>();
-            courtResolution.Quantities.Add(new DocumentInfo { Id = "qtyCourtResolutionExpedite", Name = "Expedite" });
-            courtResolution.Quantities.Add(new DocumentInfo { Id = "qtyCourtResolutionRegular", Name = "Regular" });
+            courtResolution.Quantities.Add(new DocumentInfo { Id = "qtyCourtResolutionExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            courtResolution.Quantities.Add(new DocumentInfo { Id = "qtyCourtResolutionRegular", Name = "Regular", Min = 0, Max = 10 });
             courtResolution.Quantities.Add(new DocumentInfo { Id = "qtyCourtResolution", Name = "Total" });
 
             courtResolution.Info = new List<DocumentInfo>();
@@ -455,8 +455,8 @@ namespace DFACore.Data
             };
 
             courtOtherDocument.Quantities = new List<DocumentInfo>();
-            courtOtherDocument.Quantities.Add(new DocumentInfo { Id = "qtyCourtOtherDocumentExpedite", Name = "Expedite" });
-            courtOtherDocument.Quantities.Add(new DocumentInfo { Id = "qtyCourtOtherDocumentRegular", Name = "Regular" });
+            courtOtherDocument.Quantities.Add(new DocumentInfo { Id = "qtyCourtOtherDocumentExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            courtOtherDocument.Quantities.Add(new DocumentInfo { Id = "qtyCourtOtherDocumentRegular", Name = "Regular", Min = 0, Max = 10 });
             courtOtherDocument.Quantities.Add(new DocumentInfo { Id = "qtyCourtOtherDocument", Name = "Total" });
 
             courtOtherDocument.Info = new List<DocumentInfo>();
@@ -471,8 +471,8 @@ namespace DFACore.Data
             };
 
             immigration.Quantities = new List<DocumentInfo>();
-            immigration.Quantities.Add(new DocumentInfo { Id = "qtyImmigrationExpedite", Name = "Expedite" });
-            immigration.Quantities.Add(new DocumentInfo { Id = "qtyImmigrationRegular", Name = "Regular" });
+            immigration.Quantities.Add(new DocumentInfo { Id = "qtyImmigrationExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            immigration.Quantities.Add(new DocumentInfo { Id = "qtyImmigrationRegular", Name = "Regular", Min = 0, Max = 10 });
             immigration.Quantities.Add(new DocumentInfo { Id = "qtyImmigration", Name = "Total" });
 
             immigration.Info = new List<DocumentInfo>();
@@ -487,8 +487,8 @@ namespace DFACore.Data
             };
 
             DSWDClearance.Quantities = new List<DocumentInfo>();
-            DSWDClearance.Quantities.Add(new DocumentInfo { Id = "qtyDSWDClearanceExpedite", Name = "Expedite" });
-            DSWDClearance.Quantities.Add(new DocumentInfo { Id = "qtyDSWDClearanceRegular", Name = "Regular" });
+            DSWDClearance.Quantities.Add(new DocumentInfo { Id = "qtyDSWDClearanceExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            DSWDClearance.Quantities.Add(new DocumentInfo { Id = "qtyDSWDClearanceRegular", Name = "Regular", Min = 0, Max = 10 });
             DSWDClearance.Quantities.Add(new DocumentInfo { Id = "qtyDSWDClearance", Name = "Total" });
 
             DSWDClearance.Info = new List<DocumentInfo>();
@@ -504,8 +504,8 @@ namespace DFACore.Data
             };
 
             policeClearance.Quantities = new List<DocumentInfo>();
-            policeClearance.Quantities.Add(new DocumentInfo { Id = "qtyPoliceClearanceExpedite", Name = "Expedite" });
-            policeClearance.Quantities.Add(new DocumentInfo { Id = "qtyPoliceClearanceRegular", Name = "Regular" });
+            policeClearance.Quantities.Add(new DocumentInfo { Id = "qtyPoliceClearanceExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            policeClearance.Quantities.Add(new DocumentInfo { Id = "qtyPoliceClearanceRegular", Name = "Regular", Min = 0, Max = 10 });
             policeClearance.Quantities.Add(new DocumentInfo { Id = "qtyPoliceClearance", Name = "Total" });
 
             policeClearance.Info = new List<DocumentInfo>();
@@ -522,8 +522,8 @@ namespace DFACore.Data
             };
 
             businessRegistration.Quantities = new List<DocumentInfo>();
-            businessRegistration.Quantities.Add(new DocumentInfo { Id = "qtyBusinessRegistrationExpedite", Name = "Expedite" });
-            businessRegistration.Quantities.Add(new DocumentInfo { Id = "qtyBusinessRegistrationRegular", Name = "Regular" });
+            businessRegistration.Quantities.Add(new DocumentInfo { Id = "qtyBusinessRegistrationExpedite", Name = "Expedite", Min = 0, Max = 20 });
+            businessRegistration.Quantities.Add(new DocumentInfo { Id = "qtyBusinessRegistrationRegular", Name = "Regular", Min = 0, Max = 20 });
             businessRegistration.Quantities.Add(new DocumentInfo { Id = "qtyBusinessRegistration", Name = "Total" });
 
             businessRegistration.Info = new List<DocumentInfo>();
@@ -539,8 +539,8 @@ namespace DFACore.Data
             };
 
             barangayClearance.Quantities = new List<DocumentInfo>();
-            barangayClearance.Quantities.Add(new DocumentInfo { Id = "qtyBarangayClearanceExpedite", Name = "Expedite" });
-            barangayClearance.Quantities.Add(new DocumentInfo { Id = "qtyBarangayClearanceRegular", Name = "Regular" });
+            barangayClearance.Quantities.Add(new DocumentInfo { Id = "qtyBarangayClearanceExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            barangayClearance.Quantities.Add(new DocumentInfo { Id = "qtyBarangayClearanceRegular", Name = "Regular", Min = 0, Max = 10 });
             barangayClearance.Quantities.Add(new DocumentInfo { Id = "qtyBarangayClearance", Name = "Total" });
 
             barangayClearance.Info = new List<DocumentInfo>();
@@ -555,8 +555,8 @@ namespace DFACore.Data
             };
 
             exportDocuments.Quantities = new List<DocumentInfo>();
-            exportDocuments.Quantities.Add(new DocumentInfo { Id = "qtyExportDocumentsExpedite", Name = "Expedite" });
-            exportDocuments.Quantities.Add(new DocumentInfo { Id = "qtyExportDocumentsRegular", Name = "Regular" });
+            exportDocuments.Quantities.Add(new DocumentInfo { Id = "qtyExportDocumentsExpedite", Name = "Expedite", Min = 0, Max = 50 });
+            exportDocuments.Quantities.Add(new DocumentInfo { Id = "qtyExportDocumentsRegular", Name = "Regular", Min = 0, Max = 50 });
             exportDocuments.Quantities.Add(new DocumentInfo { Id = "qtyExportDocuments", Name = "Total" });
 
             exportDocuments.Info = new List<DocumentInfo>();
@@ -572,8 +572,8 @@ namespace DFACore.Data
             };
 
             phEmbassy.Quantities = new List<DocumentInfo>();
-            phEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyPHEmbassyExpedite", Name = "Expedite" });
-            phEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyPHEmbassyRegular", Name = "Regular" });
+            phEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyPHEmbassyExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            phEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyPHEmbassyRegular", Name = "Regular", Min = 0, Max = 10 });
             phEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyPHEmbassy", Name = "Total" });
 
             var foreignEmbassy = new Documents
@@ -585,8 +585,8 @@ namespace DFACore.Data
             };
 
             foreignEmbassy.Quantities = new List<DocumentInfo>();
-            foreignEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyForeignEmbassyExpedite", Name = "Expedite" });
-            foreignEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyForeignEmbassyRegular", Name = "Regular" });
+            foreignEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyForeignEmbassyExpedite", Name = "Expedite", Min = 0, Max = 10 });
+            foreignEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyForeignEmbassyRegular", Name = "Regular", Min = 0, Max = 10 });
             foreignEmbassy.Quantities.Add(new DocumentInfo { Id = "qtyForeignEmbassy", Name = "Total" });
 
             _documents.Add(nbi);

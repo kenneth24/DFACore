@@ -10,5 +10,8 @@ namespace DFACore.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Source { get; set; }
+
+        public int Min { get; set; }
+        public int Max { get; set; }
     }
 }

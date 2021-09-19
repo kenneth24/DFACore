@@ -108,13 +108,20 @@ ownerButton.on('click', function () {
     applicantType = 0;
     applicationTypeSelection.hide();
     ownerDocument.show();
+    $('.transactionQuantity.regular').val("0");
+    $("#ChckIfhasExpedite").text("(N/A for this Consular Office)");
     if (hasExpedite) {
+        $("#ChckIfhasExpedite").text("");
+
+        $('.transactionQuantity.expedite').val("0");
         console.log('hasExpedite');
         $('.transactionQuantity.expedite').attr('disabled', false);
         $('.transactionQuantity.regular').attr('disabled', false);
     }
+    
     loading.hide();
 });
+
 
 authorizedButton.on('click', function () {
     loading.show();
@@ -164,9 +171,20 @@ docTypeSelect.on('change', function () {
             documentTypeInfo.show();
             documentInfoText.text(selectedData.description);
         }
-
+        
         regularQuantityElement.attr('id', regularQuantity.id);
         expediteQuantityElement.attr('id', expediteQuantity.id);
+
+        $("#" + regularQuantity.id).val("0");
+        if (hasExpedite) {
+            $("#" + expediteQuantity.id).val("0");
+        }
+
+        regularQuantityElement.attr('min', regularQuantity.min);
+        regularQuantityElement.attr('max', regularQuantity.max);
+
+        expediteQuantityElement.attr('min', expediteQuantity.min);
+        expediteQuantityElement.attr('max', expediteQuantity.max);
 
         if (selectedData.info != null) {
             for (var i = 0; i < selectedData.info.length; i++) {
@@ -198,7 +216,7 @@ selectDocumentsBtn.on('click', function () {
         expediteQuantity = parseInt(expediteQuantityElement.val());
 
 
-    if (regularQuantity > 10 || expediteQuantity > 10) {
+    if (regularQuantity > 21 || expediteQuantity > 21) {
         loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('#errorMessage');
@@ -328,12 +346,19 @@ addDocumentOwnerBtn.on('click', function () {
 
             if (docOwner == 0) {
                 $("#documentOwners").append(html);
+                alert(docOwner);
             } else {
                 $("#documentOwners").append(html).insertAfter('documentOwner-' + docOwner - 1);
+                alert(docOwner);
+                alert("#qtyNbiClearanceRegular" + docOwner);
+                $("#qtyNbiClearanceRegular" + docOwner).inputSpinner({ buttonsOnly: true })
+                $("#qtyNbiClearanceExpedite" + docOwner).inputSpinner({ buttonsOnly: true })
             }
             //$(`#documentsTable${docOwner} tbody > tr`).empty();
             //$(`#documentsTable${docOwner}`).append('<tr class="docsHeader"><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
             //$('#documentsCount').text(0);
+
+            
 
             $(`#docTypeSelect${docOwner}`).on('change', function () {
                 let $this = $(this),
@@ -358,8 +383,22 @@ addDocumentOwnerBtn.on('click', function () {
                         $(`#documentInfoText${docOwnerBase}`).text(selectedData.description);
                     }
 
+                    console.log(regularQuantity);
+                    
+
                     $(`#documentQuantity${docOwnerBase} .regular`).attr('id', `${regularQuantity.id}${docOwnerBase}`);
                     $(`#documentQuantity${docOwnerBase} .expedite`).attr('id', `${expediteQuantity.id}${docOwnerBase}`);
+
+                    $(`#${regularQuantity.id}${docOwnerBase}`).val("0");
+                    if (hasExpedite) {
+                        $(`#${regularQuantity.id}${docOwnerBase}`).val("0");
+                    }
+
+                    $(`#documentQuantity${docOwnerBase} .regular`).attr('min', `${regularQuantity.min}`);
+                    $(`#documentQuantity${docOwnerBase} .regular`).attr('max', `${regularQuantity.max}`);
+
+                    $(`#documentQuantity${docOwnerBase} .expedite`).attr('min', `${expediteQuantity.min}`);
+                    $(`#documentQuantity${docOwnerBase} .expedite`).attr('max', `${expediteQuantity.max}`);
 
                     if (selectedData.info != null) {
                         for (var i = 0; i < selectedData.info.length; i++) {
@@ -474,6 +513,7 @@ addDocumentOwnerBtn.on('click', function () {
     });
 
     loading.hide();
+   
 });
 
 goToStepFiveButton.on('click', function () {
@@ -1065,6 +1105,7 @@ function authorizedStepFive() {
 
 function HasExpedite(ifHasExpedite) {
     hasExpedite = ifHasExpedite;
+
     console.log('hasExpedite');
     console.log(hasExpedite);
 }

@@ -75,7 +75,7 @@
                         Time
                     </th>
                     <th>
-                        Capacity
+                        Document Limit
                     </th>
                     <th>
                         Total Applicants
@@ -84,7 +84,7 @@
                         Total Documents
                     </th>
                     <th>
-                        Percentage(%)
+                        Document Limit Rate
                     </th>
 
                 </tr>
@@ -95,7 +95,7 @@
 
                     @foreach (var item in Model)
                     {
-                        var percent = (item.TotalDocument / item.Capacity) * 100;
+                        var percent = Math.Round(((double)item.TotalDocument / (double)item.Capacity) * 100.00, 2);
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Time)
