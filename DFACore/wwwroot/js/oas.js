@@ -216,7 +216,7 @@ selectDocumentsBtn.on('click', function () {
         expediteQuantity = parseInt(expediteQuantityElement.val());
 
 
-    if (regularQuantity > 21 || expediteQuantity > 21) {
+    if (regularQuantity > 51 || expediteQuantity > 51) {
         loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('#errorMessage');
@@ -428,7 +428,7 @@ addDocumentOwnerBtn.on('click', function () {
                 console.log('docOwner');
                 console.log(docOwnerBase);
 
-                if (regularQuantity > 10 || expediteQuantity > 10) {
+                if (regularQuantity > 51 || expediteQuantity > 51) {
                     loading.hide();
                     var errorModal = $('#errorModal');
                     var errorMessageElement = $('#errorMessage');
