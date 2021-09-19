@@ -323,20 +323,20 @@ backToStepThreeAuthBtn.on('click', function () {
 });
 
 addDocumentOwnerBtn.on('click', function () {
-    loading.show();
-    console.log('clicked');
-    docOwner += 1;
-    window['documentObject' + docOwner] = [];
-
     if (docOwner > 9) {
         loading.hide();
         var errorModal = $('#errorModal');
-        var errorMessageElement = $('#errorMessage');
-
+        var errorMessageElement = $('.modal #errorMessage');
+        console.log(errorMessageElement);
         errorMessageElement.text('You have exceeded the maximum no. of document owners!');
         errorModal.modal('show');
         return;
     }
+
+    loading.show();
+    console.log('clicked');
+    docOwner += 1;
+    window['documentObject' + docOwner] = [];
 
     $.ajax({
         url: '/Home/PartialApplicant?i=' + docOwner + '&id=' + applicantType,
@@ -346,11 +346,11 @@ addDocumentOwnerBtn.on('click', function () {
 
             if (docOwner == 0) {
                 $("#documentOwners").append(html);
-                alert(docOwner);
+                //alert(docOwner);
             } else {
                 $("#documentOwners").append(html).insertAfter('documentOwner-' + docOwner - 1);
-                alert(docOwner);
-                alert("#qtyNbiClearanceRegular" + docOwner);
+                //alert(docOwner);
+                //alert("#qtyNbiClearanceRegular" + docOwner);
                 $("#qtyNbiClearanceRegular" + docOwner).inputSpinner({ buttonsOnly: true })
                 $("#qtyNbiClearanceExpedite" + docOwner).inputSpinner({ buttonsOnly: true })
             }

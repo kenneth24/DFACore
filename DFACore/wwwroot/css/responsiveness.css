@@ -34,7 +34,9 @@
         max-width: 70% !important;
     }
 
-
+    #quantityInputSelector .flex-column {
+        max-width: 175px!important;
+    }
 }
 
 /* md */

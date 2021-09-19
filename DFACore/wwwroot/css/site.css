@@ -339,3 +339,7 @@ select option {
 .transactionQuantity {
     font-size: 24px!important;
 }
+
+.btn-minus, .btn-plus {
+    line-height: 0.5!important;
+}
