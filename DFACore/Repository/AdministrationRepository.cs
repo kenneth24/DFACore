@@ -37,6 +37,27 @@ namespace DFACore.Repository
             return applicant;
         }
 
+        public ApplicantRecord GetApplicantRecord(Guid id, string applicationCode)
+        {
+            var applicant = _context.ApplicantRecords.Where(a => a.CreatedBy == id && a.ApplicationCode == applicationCode).FirstOrDefault();
+            return applicant;
+        }
+
+        public IQueryable<ApplicantRecord> GetCancelledApplicantRecord(Guid id, string applicationCode)
+        {
+            IQueryable<ApplicantRecord> raw;
+
+            var str = $"select top 1 Id, Title, FirstName, MiddleName, LastName, Suffix, [Address], Nationality, ContactNumber, " +
+                "CompanyName, CountryDestination, NameOfRepresentative, RepresentativeContactNumber, ApostileData, " +
+                "ProcessingSite, ProcessingSiteAddress, ScheduleDate, ApplicationCode, Fees, DateCreated, CreatedBy, " +
+                "[Type], DateOfBirth, BranchId, TotalApostile " +
+                $"from ApplicantRecords_backup where ApplicationCode = '{applicationCode}' and CreatedBy = '{id}'";
+
+            raw = _context.Set<ApplicantRecord>().FromSqlRaw(str);
+
+            return raw;
+        }
+
         public int GetCount()
         {
             var count = _context.ApplicantRecords.Count();

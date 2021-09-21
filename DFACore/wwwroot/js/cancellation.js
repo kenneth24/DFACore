@@ -144,6 +144,9 @@ resendEmail.on('click', function () {
         datatype: "json",
         cache: false,
         success: function (data) {
+            //loading.show();
+            $('#DidntReceivedMail').attr('style', 'display: none!important');
+            $('#AlreadySent').attr('style', 'display: block!important');
             stepTwo.hide();
             success.show();
         },

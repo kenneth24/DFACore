@@ -603,6 +603,9 @@ resendEmail.on('click', function () {
         cache: false,
         success: function (data) {
             $('#formContainer').attr('style', 'display: none!important');
+            $('#DidntReceivedMail').attr('style', 'display: none!important');
+            $('#AlreadySent').attr('style', 'display: block!important');
+
             $('#success').show();
             loading.hide();
         },

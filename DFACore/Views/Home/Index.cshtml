@@ -186,16 +186,17 @@
                                                 <option value="CO Pampanga">CO Pampanga</option>
                                                 <option value="CO Iloilo">CO Iloilo</option>
                                                 <option value="CO Cebu">CO Cebu</option>*@
-                                            @if (ViewBag.Location == 0)
-                                            {
-                                                <option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
-                                            }
-                                            else
-                                            {
-                                                @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                            @*@if (ViewBag.Location == 0)
                                                 {
-                                                    <option value="@item.BranchName">@item.BranchName</option>
+                                                    <option value="DFA - OCA (ASEANA)">DFA - OCA (ASEANA)</option>
                                                 }
+                                                else
+                                                {
+
+                                                }*@
+                                            @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                            {
+                                                <option value="@item.BranchName">@item.BranchName</option>
                                             }
 
                                         </select>
@@ -440,11 +441,21 @@
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="Record.CountryDestination">Country of Destination <span class="red">*</span></label>
+                                    <label asp-for="Record.CountryDestination">Country of Destinations <span class="red">*</span></label>
 
-                                    <select asp-for="Record.CountryDestination" class="form-control">
-                                        <partial name="_CountriesPartial" />
-                                    </select>
+                                    @if (ViewBag.Location == 0)
+                                    {
+                                        <select asp-for="Record.CountryDestination" class="form-control">
+                                            <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <select asp-for="Record.CountryDestination" class="form-control">
+                                            <partial name="_CountriesPartial" />
+                                        </select>
+                                    }
+
                                     <span asp-validation-for="Record.CountryDestination" class="text-danger countrydestination"></span>
                                 </div>
                             </div>
@@ -999,14 +1010,55 @@
                                 2. Photocopy of the owner's ID bearing his/her signature. <br />
                                 3. Photocopy and original copy of representative's ID.
                             </p>
-                            <p class="black-text-bold" style="font-size:12px;">
-                                Acceptable IDs:
+                            @*<p class="black-text-bold" style="font-size:12px;">
+                                    Acceptable IDs:
+                                </p>
+                                <p class="black-text" style="font-size:12px;">
+                                    *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card. <br />
+                                    *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID . <br />
+                                    *Digital Student ID (valid for the duration of his studies up to 1 year upon graduation)
+                                </p>*@
+
+                            <p style="font-weight:bold;">Acceptable Identification Cards:</p>
+
+                            <p>A.Valid digitized government-issued IDs bearing applicant's signature:</p>
+                            <ul>
+                                <li>Philippine Passport</li>
+                                <li>Social Security System (SSS) Card</li>
+                                <li>Government Service Insurance System (GSIS) Card</li>
+                                <li>Unified Multi-Purpose Identification (UMID) Card</li>
+                                <li>Land Transportation Office (LTO) Driver's License. Student Permit may be accepted if in card format</li>
+                                <li>Professional Regulatory Commission (PRC) ID</li>
+                                <li>Overseas Workers Welfare Administration (OWWA) E-Card</li>
+                                <li>Philippine National Police (PNP) Permit to Carry Firearms Outside Residence</li>
+                                <li>Airman License (issued August 2016 onwards)</li>
+                                <li>Philippine Postal ID (issued November 2016 onwards)</li>
+                                <li>Seafarer's Record Book (*must be issued Feb 2020 onwards) issued by the Maritime Industry Authority (MARINA)</li>
+                            </ul>
+
+                            <p style="font-weight:bold;">
+                                Note:
                             </p>
-                            <p class="black-text" style="font-size:12px;">
-                                *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card. <br />
-                                *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID . <br />
-                                *Digital Student ID (valid for the duration of his studies up to 1 year upon graduation)
-                            </p>
+                            <p>For applicants based overseas, they may use their host government issued IDs (Example: Foreign Passport, Residence Card)</p>
+
+                            <p>B. Valid nondigitized government-issued IDs:</p>
+
+
+                            <ul>
+                                <li>Senior Citizen</li>
+                                <li>PWD</li>
+                                <li>Solo Parent</li>
+                                <li>COMELEC Voter's ID / Certification</li>
+                            </ul>
+
+                            <p>C. For students: School ID (valid for the duration of his/her studies up to 1 year upon graduation)</p>
+
+                            <p>Reminder: All IDs presented should be readable, untampered, and contains consistent information with the documents presented upon application.</p>
+
+                            <p>*************************************************************************************************** </p>
+
+
+
                             <p class="black-text-bold text-center" style="font-size:14px;">
                                 REMINDER FOR MINOR APPLICANTS
                             </p>
@@ -1998,32 +2050,32 @@
                                     <span class="bold">Regular</span>
                                     <input id="TestSpinner" type="number" value="1" />
                                 </div>*@
-                        @*<div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-5 col-xs-12">
-                                    <span class="bold">Regular</span>
-                                    <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular spinnerRegular" id="qtyNbiClearanceRegular">
+                            @*<div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-5 col-xs-12">
+                                            <span class="bold">Regular</span>
+                                            <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular spinnerRegular" id="qtyNbiClearanceRegular">
+                                        </div>
+                                        <div class="col-md-5 col-xs-12">
+                                            <span class="bold">Expedite</span> <span id="ChckIfhasExpedite" style="color: darkred"></span>
+                                            <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite spinnerRegular" id="qtyNbiClearanceExpedite">
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
+
+                            <div class="d-flex">
+                                <div class="d-flex flex-column ml-auto mr-2">
+                                    <span class="bold" style="text-align:center">Regular</span>
+                                    <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
+
                                 </div>
-                                <div class="col-md-5 col-xs-12">
-                                    <span class="bold">Expedite</span> <span id="ChckIfhasExpedite" style="color: darkred"></span>
-                                    <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite spinnerRegular" id="qtyNbiClearanceExpedite">
+                                <div class="d-flex flex-column mr-auto ml-2">
+                                    <span class="bold" style="text-align:center">Expedite</span>
+                                    <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
                                 </div>
                             </div>
-                        </div>*@
-                            
-
-
-                        <div class="d-flex">
-                            <div class="d-flex flex-column ml-auto mr-2">
-                                <span class="bold" style="text-align:center">Regular</span>
-                                <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
-
-                            </div>
-                            <div class="d-flex flex-column mr-auto ml-2">
-                                <span class="bold" style="text-align:center">Expedite</span>
-                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
-                            </div>
-                        </div>
                         </div>
                         <div id="documentTypeSample" style="margin-top: 35px;">
                             <small class="bold">*Personal Copy is NOT valid</small>
@@ -2548,7 +2600,8 @@
                 <p class="mb-0">An appointment letter has been sent to your email.</p>
                 <p>Please check your inbox, span and other folder to view your Appointment Letter. Kindly PRINT and present your confirmed appointment letter to the Appointment Verification Counter.</p>
                 <p class="my-4 text-uppercase bold">Editing, revising or altering the appointment letter is considered falsification of public document and is punishable by law.</p>
-                <p>Didn't receive the email? Click <a id="resendEmail" class="pointer text-primary">here</a> to resend.</p>
+                <p id="DidntReceivedMail">Didn't receive the email? Click <a id="resendEmail" class="pointer text-primary">here</a> to resend.</p>
+                <p id="AlreadySent" style="display:none;">Successfully resend. Please check your inbox.</p>
                 <button id="schedAnother" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Schedule another appointment</button>
                 <button id="exit" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
             </div>
@@ -2630,7 +2683,7 @@
 
     <script>
 
-        
+
 
         //$("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
         //$("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })

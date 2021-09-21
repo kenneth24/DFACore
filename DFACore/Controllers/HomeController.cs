@@ -85,7 +85,16 @@ namespace DFACore.Controllers
             ViewData["ApplicantCount"] = applicantsCount;
             //ViewBag.User = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["DefaultBranch"] = defaultBranch;
-            ViewData["Branches"] = _applicantRepo.GetBranches();
+
+            var branches = _applicantRepo.GetBranches();
+
+            if (id == 0)
+            {
+                branches = branches.Where(a => a.Id == 1).ToList();
+            }
+
+            ViewData["Branches"] = branches;
+
             ViewData["Price"] = _applicantRepo.GetPrice();
             ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
 
@@ -96,6 +105,10 @@ namespace DFACore.Controllers
                 var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
                 documents.Remove(phEmbassy);
                 documents.Remove(foreignEmbassy);
+            }
+            else
+            {
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
             }
             ViewData["DocumentTypes"] = documents;
 
@@ -1025,7 +1038,18 @@ namespace DFACore.Controllers
         [HttpPost]
         public IActionResult ValidateAppointment(string code)
         {
-            var record = _administrationRepository.GetApplicantRecord(code);
+            var createdBy = new Guid(_userManager.GetUserId(User));
+
+            //check here if appointment alr cancelled.
+
+            var cancelled = _administrationRepository.GetCancelledApplicantRecord(createdBy, code).ToList();
+
+            if (cancelled.Any())
+            {
+                return Json(new { Status = "Error", ErrorMessage = "Appointment already cancelled", Message = "This appointment code was already cancelled. Please double-check the Appointment Code." });
+            }
+
+            var record = _administrationRepository.GetApplicantRecord(createdBy, code);
             if (record is null)
             {
                 return Json(new { Status = "Error", ErrorMessage = "Appointment not found", Message = "Please double-check the Appointment Code." });
@@ -1034,6 +1058,11 @@ namespace DFACore.Controllers
             if (record.ScheduleDate.ToShortDateString() == DateTime.Now.ToShortDateString())
             {
                 return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", date = DateTime.Now.ToShortDateString()});
+            }
+
+            if (record.ScheduleDate <= DateTime.Now)
+            {
+                return Json(new { Status = "Error", ErrorMessage = "Appointment has expired.", Message = "Please double-check the Appointment Code." });
             }
 
             return Json(new { Status = "Success", Data = record });
