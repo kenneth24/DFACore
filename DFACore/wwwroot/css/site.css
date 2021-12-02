@@ -343,3 +343,7 @@ select option {
 .btn-minus, .btn-plus {
     line-height: 0.5!important;
 }
+
+.docuSpinner {
+    height:auto
+}

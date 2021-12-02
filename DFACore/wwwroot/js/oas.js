@@ -96,7 +96,7 @@ siteAndScheduleButton.on('click', function () {
     if ($('#appointmentSchedule').val() == '') {
         return;
     }
-    
+
     loading.show();
     siteAndScheduleSelection.hide();
     applicationTypeSelection.show();
@@ -118,7 +118,7 @@ ownerButton.on('click', function () {
         $('.transactionQuantity.expedite').attr('disabled', false);
         $('.transactionQuantity.regular').attr('disabled', false);
     }
-    
+
     loading.hide();
 });
 
@@ -171,7 +171,7 @@ docTypeSelect.on('change', function () {
             documentTypeInfo.show();
             documentInfoText.text(selectedData.description);
         }
-        
+
         regularQuantityElement.attr('id', regularQuantity.id);
         expediteQuantityElement.attr('id', expediteQuantity.id);
 
@@ -194,7 +194,7 @@ docTypeSelect.on('change', function () {
                 }
                 var image = `<img id="${i}-img" class="w-100 mb-3 "/>`;
                 documentTypeSample.append(image);
-                var imageUrl = `${baseUrl}${selectedData.info[i].source}`;
+                var imageUrl = `${urlBase}${selectedData.info[i].source}`;
                 $(`#${i}-img`).attr('src', imageUrl);
             }
         }
@@ -339,7 +339,7 @@ addDocumentOwnerBtn.on('click', function () {
     window['documentObject' + docOwner] = [];
 
     $.ajax({
-        url: '/Home/PartialApplicant?i=' + docOwner + '&id=' + applicantType,
+        url: `${urlBase}Home/PartialApplicant?i=` + docOwner + '&id=' + applicantType,
         cache: false,
         success: function (html) {
 
@@ -358,7 +358,7 @@ addDocumentOwnerBtn.on('click', function () {
             //$(`#documentsTable${docOwner}`).append('<tr class="docsHeader"><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
             //$('#documentsCount').text(0);
 
-            
+
 
             $(`#docTypeSelect${docOwner}`).on('change', function () {
                 let $this = $(this),
@@ -384,7 +384,7 @@ addDocumentOwnerBtn.on('click', function () {
                     }
 
                     console.log(regularQuantity);
-                    
+
 
                     $(`#documentQuantity${docOwnerBase} .regular`).attr('id', `${regularQuantity.id}${docOwnerBase}`);
                     $(`#documentQuantity${docOwnerBase} .expedite`).attr('id', `${expediteQuantity.id}${docOwnerBase}`);
@@ -513,7 +513,7 @@ addDocumentOwnerBtn.on('click', function () {
     });
 
     loading.hide();
-   
+
 });
 
 goToStepFiveButton.on('click', function () {
@@ -561,43 +561,54 @@ sendPdfToEmail.on('click', function () {
     loading.show();
     $.ajax({
         type: "post",
-        url: "/Home/PostApplication",
+        url: `${urlBase}Home/PostApplication`, //"/Home/PostApplication",
         data: record,
         datatype: "json",
         cache: false,
         success: function (data) {
-            $('#formContainer').attr('style', 'display: none!important');
+
+            //$('#formContainer').attr('style', 'display: none!important');
             if (data.status == 'Success') {
+                $('#formContainer').attr('style', 'display: none!important');
                 $('#error').hide();
                 $('#success').show();
             }
             else {
+                $('#formContainer').attr('style', 'display: none!important');
                 $('#success').hide();
-                $('#error #errorMessage').val(data.Message);
+                $('#errMsg').text(data.message);
                 $('#error').show();
+
+                //setTimeout(function () {
+               // $('#errModal #errMsgModal').text(data.message);
+                //message.text(data.message);
+                //date.text(data.date);
+                //$('#closeLoading').click();
+                //$('#errModal').modal('show');
+                //}, 2000);
             }
             loading.hide();
         },
-        error: function (data){
+        error: function (data) {
             loading.hide();
         }
     });
 });
 
 schedAnother.on('click', function () {
-    window.location.href = '/Home/DocumentLocation';
+    window.location.href = `${urlBase}Home/DocumentLocation`;//'/Home/DocumentLocation';
 });
 
 exit.on('click', function () {
     let baseUrl = window.location.origin;
-    window.location = `${baseUrl}/Account/LogOff`;
+    window.location = `${urlBase}Account/LogOff`;
 });
 
 resendEmail.on('click', function () {
     loading.show();
     $.ajax({
         type: "post",
-        url: "/Home/ResendEmail",
+        url: `${urlBase}Home/ResendEmail`,//"/Home/ResendEmail",
         data: record,
         datatype: "json",
         cache: false,
@@ -617,17 +628,17 @@ resendEmail.on('click', function () {
 
 function addPartialView() {
     let baseUrl = window.location.origin;
-    window.location = `${baseUrl}/Account/LogOff`;
+    window.location = `${urlBase}Account/LogOff`;
 }
 
-function getDocumentsType() {
-    $.get("/Home/GetDocuments", function (data, status) {
+function getDocumentsType() { //"/Home/GetDocuments"
+    $.get(`${urlBase}Home/GetDocuments`, function (data, status) {
         documents = data;
     });
 };
 
 function getPrices() {
-    $.get("/Home/GetPrices", function (data, status) {
+    $.get(`${urlBase}Home/GetPrices`, function (data, status) {
         prices = data;
     });
 }

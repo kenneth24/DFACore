@@ -125,11 +125,12 @@ label,
 span,
 small,
 a {
-    font-family: Helvetica !important;
+    font-family: Arial, Helvetica !important;
 }
 
 .bold {
-    font-family: Helvetica-Bold !important;
+    font-family: Arial, Helvetica !important;
+    font-weight: bold
 }
 
 .p-label {

@@ -114,17 +114,21 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap-input-spinner.js"></script>
     <script src="~/lib/jquery/dist/moment.min.js"></script>
 
+    <script type="text/javascript">
+        var urlBase = '@string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host.Value , Url.Content("~/"))';
+    </script>
     <script>
         // call timerInterval function every 1 minute if mouse in idle
         // validate if no. of minutes idle is > 9
         // if true, logoff user
-        let baseUrl = window.location.origin;
+        let baseUrl = urlBase;
+        
         var idleInterval = null;
         var idleTime = 0;
 
         $(document).ready(function () {
             idleInterval = setInterval(timerIncrement, 60000); // 1m
-
+            //alert(urlBase);
             $(this).mousemove(function (e) {
                 idleTime = 0;
             });
@@ -141,7 +145,7 @@
                 if (idleTime > 9) {
                     clearInterval(idleInterval);
                     window.alert('You have been logged out due to inactivity!');
-                    window.location = `${baseUrl}/Account/LogOff`;
+                    window.location = `${urlBase}/Account/LogOff`;
                 }
             }
         }

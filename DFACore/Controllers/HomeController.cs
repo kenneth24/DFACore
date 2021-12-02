@@ -79,6 +79,7 @@ namespace DFACore.Controllers
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
+      
             ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
@@ -99,19 +100,20 @@ namespace DFACore.Controllers
             ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
 
             var documents = _documentsType.Get();
+            
             if (id == 1)
             {
                 var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
                 var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
                 documents.Remove(phEmbassy);
                 documents.Remove(foreignEmbassy);
+                
             }
             else
             {
                 documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
             }
             ViewData["DocumentTypes"] = documents;
-
             ViewBag.Location = id;
             return View();
         }
@@ -1032,6 +1034,7 @@ namespace DFACore.Controllers
 
         public ActionResult Cancellation()
         {
+            ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
             return View();
         }
 
@@ -1046,23 +1049,23 @@ namespace DFACore.Controllers
 
             if (cancelled.Any())
             {
-                return Json(new { Status = "Error", ErrorMessage = "Appointment already cancelled", Message = "This appointment code was already cancelled. Please double-check the Appointment Code." });
+                return Json(new { Status = "Error", ErrorMessage = "", Message = $"This appointment code was already cancelled on ", date = $"{cancelled.FirstOrDefault().ScheduleDate.ToString("MMMM dd, yyyy hh:mm tt")}" });
             }
 
             var record = _administrationRepository.GetApplicantRecord(createdBy, code);
             if (record is null)
             {
-                return Json(new { Status = "Error", ErrorMessage = "Appointment not found", Message = "Please double-check the Appointment Code." });
+                return Json(new { Status = "Error", ErrorMessage = "Appointment not found", Message = "Please double-check the Appointment Code.", date = "" });
             }
 
-            if (record.ScheduleDate.ToShortDateString() == DateTime.Now.ToShortDateString())
+            if (record.ScheduleDate.Date == DateTime.Now.Date)
             {
-                return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", date = DateTime.Now.ToShortDateString()});
+                return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", Message="", date = ""}); //DateTime.Now.ToShortDateString()
             }
 
             if (record.ScheduleDate <= DateTime.Now)
             {
-                return Json(new { Status = "Error", ErrorMessage = "Appointment has expired.", Message = "Please double-check the Appointment Code." });
+                return Json(new { Status = "Error", ErrorMessage = "Appointment has expired.", Message = "Please double-check the Appointment Code.", date = "" });
             }
 
             return Json(new { Status = "Success", Data = record });

@@ -1,4 +1,8 @@
 ﻿
+@{
+    var announcement = (Notice)@ViewData["NoticeMessage"];
+}
+
 <section class="header px-4 mt-3">
     <div class="text-center mt-3 w-100 mb-4">
         <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment Cancellation System</h3>
@@ -43,6 +47,26 @@
                     <button id="searchButton" class="btn btn-primary  w-100 d-block text-uppercase mb-3">SEARCH</button>
                     <button id="backButton" class="btn btn-secondary w-100 d-block text-uppercase">BACK</button>
                 </div>
+
+  
+                        <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
+
+                            <div class="card bg-light mb-3 w-100 white-bg mt-4">
+                                <div class="card-header text-uppercase bold p-1 white-bg">reminder to all users</div>
+                                <div style="margin-top:10px;">
+                                    <p class="card-text">
+                                        Appointments cannot be cancelled on the scheduled
+                                        day itself. Please allow at least one (1) day for appointment
+                                        cancellation. (ex. If your appointment is on 29 August you cannot
+                                        cancel it on the same day. The last day to cancel it will be
+                                        28 August) Previous appointments cannot be cancelled anymore.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+           
+
             </div>
         </div>
     </div>
@@ -151,10 +175,10 @@
             <div class="modal-body d-flex flex-column p-3 px-4 text-center">
                 <img src="~/dfa.png" class="mx-auto mb-4" style="height: 50px" />
                 <div class="mx-auto text-center px-2">
-                    <p class="text-danger text-uppercase bold mb-0" id="errorMessage"></p>
+                    <p class="text-danger text-uppercase bold mb-0" id="errorMessage" style="color:red!important"></p>
                 </div>
-                <small id="message"></small>
-                <p id="date" class="bold"></p>
+                <p id="message"></p>
+                <p id="date" class="bold" style="font-size:22px!important;"></p>
                 <button id="exitButton" data-dismiss="modal" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;">EXIT</button>
             </div>
         </div>

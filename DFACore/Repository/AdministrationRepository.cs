@@ -76,7 +76,7 @@ namespace DFACore.Repository
                  "inner join AspNetUsers u on ar.CreatedBy = u.Id  " +
                  "cross apply OpenJson(ar.apostiledata, N'$')  " +
                  "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
-                 $"where ar.LastName = '{searchText}' or u.Email = '{searchText}' or ar.ApplicationCode = '{searchText}'; " +
+                 $"where REPLACE(CONCAT(ar.FirstName+' ',ar.LastName+''),'  ',' ') like '%{searchText}%' or u.Email like '%{searchText}%' or ar.ApplicationCode = '{searchText}'; " +
                  "select * from #tmp " +
                      "order by ScheduleDate desc " +
                      $"OFFSET     {skip} ROWS " +
@@ -110,7 +110,7 @@ namespace DFACore.Repository
                 str = $"select count(1) [Count] from (" +
                     "select ar.ApplicationCode " +
                     "from ApplicantRecords ar inner join AspNetUsers u on ar.CreatedBy = u.Id  cross apply OpenJson(ar.apostiledata, N'$')  WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
-                    $"where ar.LastName = '{searchText}' or u.Email = '{searchText}' or ar.ApplicationCode = '{searchText}' " +
+                    $"where ar.LastName = '{searchText}' or ar.FirstName = '{searchText}' or ar.MiddleName = '{searchText}' or u.Email = '{searchText}' or ar.ApplicationCode = '{searchText}' " +
                     "group by applicationcode) a ";
             }
             else

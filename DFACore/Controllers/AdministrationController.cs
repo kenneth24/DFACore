@@ -1012,9 +1012,12 @@ namespace DFACore.Controllers
             var totalSum = model.ExportTemplates.Sum(a => a.TotalDocuments);
 
             double documentPercent = ((double)sum / (double)totalSum) * 100;
+            if (Double.IsNaN(documentPercent)) documentPercent = 0;
+            
             documentPercent = Math.Round(documentPercent, 2);
 
             double attendancePercent = ((double)count / (double)model.ExportTemplates.Count()) * 100;
+            if (Double.IsNaN(attendancePercent)) attendancePercent = 0;
             attendancePercent = Math.Round(attendancePercent, 2);
 
             //ViewBag.Sum = sum;
@@ -1528,7 +1531,7 @@ namespace DFACore.Controllers
                 DateCreated = get.DateCreated,
                 QRCode = _administrationRepository.GenerateQRCode($"{get.FirstName?.ToUpper()} {get.MiddleName?.ToUpper()} {get.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{get.ApplicationCode}{Environment.NewLine}{get.ScheduleDate.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{get.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{"DFA - Office of Consular Affairs (ASEANA)".ToUpper()}"),
+                            $"{Environment.NewLine}{get.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{get.ProcessingSite.ToUpper()}"),
                 Fees = get.Fees
             };
 

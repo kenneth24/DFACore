@@ -441,16 +441,18 @@
                                     <span asp-validation-for="Record.ContactNumber" class="text-danger contactnumber"></span>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <label asp-for="Record.CountryDestination">Country of Destinations <span class="red">*</span></label>
+
 
                                     @if (ViewBag.Location == 0)
                                     {
-                                        <select asp-for="Record.CountryDestination" class="form-control">
+                                        <label asp-for="Record.CountryDestination" hidden>Country of Destinations <span class="red">*</span></label>
+                                        <select asp-for="Record.CountryDestination" class="form-control" hidden>
                                             <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
                                         </select>
                                     }
                                     else
                                     {
+                                        <label asp-for="Record.CountryDestination">Country of Destinations <span class="red">*</span></label>
                                         <select asp-for="Record.CountryDestination" class="form-control">
                                             <partial name="_CountriesPartial" />
                                         </select>
@@ -2037,12 +2039,27 @@
                                 <option id="@item.Id" value="@item.Value">@item.Name</option>
                             }
                         </select>
-                        <div class="mb-3" id="documentTypeInfo">
-                            <small class="bold">Document Information:</small>
-                            <div class="card white-bg p-2 px-3">
-                                <span id="documentInfoText">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
+                        @if (ViewBag.Location == 1)
+                        {
+                            <div class="mb-3" id="documentTypeInfo">
+                                <small class="bold">Document Information:</small>
+                                <div class="card white-bg p-2 px-3">
+                                    <span id="documentInfoText">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+
+                            <div class="mb-3" id="documentTypeInfo">
+                                <small class="bold">Document Information:</small>
+                                <div class="card white-bg p-2 px-3">
+                                    <span id="documentInfoText">For issuance of DFA which will used in the Philippines only.</span>
+                                </div>
+                            </div>
+
+                        }
+
                         <div class="mb-3" id="documentQuantity">
                             <h5 class="bold text-center mb-3">No. of Documents</h5>
 
@@ -2068,21 +2085,28 @@
                             <div class="d-flex">
                                 <div class="d-flex flex-column ml-auto mr-2">
                                     <span class="bold" style="text-align:center">Regular</span>
-                                    <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important; height: 50px!important; font-size: 24px">
+                                    <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
 
                                 </div>
                                 <div class="d-flex flex-column mr-auto ml-2">
-                                    <span class="bold" style="text-align:center">Expedite</span>
-                                    <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px!important; height: 50px!important;">
+                                    <div>
+                                        <span class="bold" style="text-align:center">Expedite</span>
+                                        <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px !important; height: auto !important; font-size: 24px ">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="documentTypeSample" style="margin-top: 35px;">
-                            <small class="bold">*Personal Copy is NOT valid</small>
-                            <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
-                            <small class="bold">*Sample copy of NBI sundry</small>
-                            <img src="~/images/documents/1 Sample NBI Sundry-1.png" class="w-100" />
-                        </div>
+
+                        @if (ViewBag.Location == 1)
+                        {
+                            <div id="documentTypeSample" style="margin-top: 35px;">
+                                <small class="bold">*Personal Copy is NOT valid</small>
+                                <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
+                                <small class="bold">*Sample copy of NBI sundry</small>
+                                <img src="~/images/documents/1 Sample NBI Sundry-1.png" class="w-100" />
+                            </div>
+                        }
+
                     </div>
                     <div class="modal-footer">
                         <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Back</button></div>
@@ -2610,8 +2634,25 @@
 
     <div id="error" class="row" style="display: none">
         <div class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
-            <h3 class="text-center" style="margin-top:150px;">An error occurred while processing your request. Please try again.</h3>
-            <p id="errorMessage"></p>
+            @*<h3 class="text-center" style="margin-top:150px;">An error occurred while processing your request. Please try again.</h3>*@
+            <p class="text-danger bold mb-0"  id="errorMessage"></p>
+            <p class="text-danger bold mb-0" id="errMsg"></p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-column p-3 px-4 text-center">
+                <img src="~/dfa.png" class="mx-auto mb-4" style="height: 50px" />
+                <div class="mx-auto text-center px-2">
+                    <p class="text-danger bold mb-0" id="errMsgModal" style="color:red!important"></p>
+                </div>
+                <p id="message"></p>
+                <p id="date" class="bold" style="margin-top:15px!important; font-size:22px!important;"></p>
+                <button id="exitButton" data-dismiss="modal" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;">EXIT</button>
+            </div>
         </div>
     </div>
 </div>
@@ -2699,11 +2740,14 @@
         //$("#qtyNbiClearanceRegular9").inputSpinner({ buttonsOnly: true })
         //$("#qtyNbiClearanceRegular10").inputSpinner({ buttonsOnly: true })
     </script>
-    <script src="~/js/oas.js"></script>
+
     <script>
         $("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
         $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })
+
     </script>
+
+    <script src="~/js/oas.js"></script>
     <script>
 
 
@@ -2822,7 +2866,7 @@
                             HasExpedite(isBranchHasExpidite);
                             $('.form-check-input').prop("checked", false);
                             $('.transactionQuantity').val('');
-                            $('.transactionQuantity').attr("disabled", true);
+                            //$('.transactionQuantity.expedite').attr("disabled", true);
                             $("#documentsTable tbody > tr").empty();
                             $('#apostileData').val('');
                             if (result.hasExpidite) {
@@ -2908,15 +2952,15 @@
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
 
-            $('.dateOfBirthOwner').focusout(function () {
-                var bdate = new Date($('.dateOfBirthOwner').val());
-                var dateToday = new Date();
-                var age = dateToday.getFullYear() - bdate.getFullYear();
-                console.log(age);
-                if (age < 18) {
-                    $('#viewMinorReminder-modal').modal('show');
-                }
-            });
+            //$('.dateOfBirthOwner').focusout(function () {
+            //    var bdate = new Date($('.dateOfBirthOwner').val());
+            //    var dateToday = new Date();
+            //    var age = dateToday.getFullYear() - bdate.getFullYear();
+            //    console.log(age);
+            //    if (age < 18) {
+            //        $('#viewMinorReminder-modal').modal('show');
+            //    }
+            //});
             $('.transactionQuantity').keypress(function (e) {
                 if (this.value.length == 0 && e.which == 48) {
                     return false;
@@ -3052,7 +3096,8 @@
                 //$("#step-three").hide();
                 //document.body.scrollTop = 0;
                 //document.documentElement.scrollTop = 0;
-                window.location.href = '/Home/DocumentLocation'
+                //alert(urlBase);
+                window.location.href = `${urlBase}Home/DocumentLocation`; //'/Home/DocumentLocation'
             });
 
 

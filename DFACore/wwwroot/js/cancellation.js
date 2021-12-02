@@ -45,7 +45,7 @@ searchButton.on('click', function () {
 
     $.ajax({
         type: "post",
-        url: "/Home/ValidateAppointment",
+        url: `${urlBase}Home/ValidateAppointment`, //"/Home/ValidateAppointment",
         data: { 'code': code },
         datatype: "json",
         cache: false,
@@ -98,7 +98,7 @@ stepTwoBackButton.on('click', function () {
 });
 
 backButton.on('click', function () {
-    window.location.href = '/Home/LoginOptions';
+    window.location.href = `${urlBase}Home/LoginOptions`;//'/Home/LoginOptions';
 });
 
 cancelAppointment.on('click', function () {
@@ -113,7 +113,7 @@ cancelAppointment.on('click', function () {
 
     $.ajax({
         type: "post",
-        url: "/Home/CancelAppointment",
+        url: `${urlBase}Home/CancelAppointment`, //"/Home/CancelAppointment",
         data: { 'code': code },
         datatype: "json",
         cache: false,
@@ -128,18 +128,18 @@ cancelAppointment.on('click', function () {
 });
 
 cancelAnother.on('click', function () {
-    window.location.href = '/Home/Cancellation';
+    window.location.href = `${urlBase}Home/Cancellation`;//'/Home/Cancellation';
 });
 
 exit.on('click', function () {
     let baseUrl = window.location.origin;
-    window.location = `${baseUrl}/Account/LogOff`;
+    window.location = `${urlBase}/Account/LogOff`;
 });
 
 resendEmail.on('click', function () {
     $.ajax({
         type: "post",
-        url: "/Home/ResendCancellationEmail",
+        url: `${urlBase}Home/ResendCancellationEmail`,//"/Home/ResendCancellationEmail",
         data: record,
         datatype: "json",
         cache: false,

@@ -1,6 +1,6 @@
 ﻿
 function ResendApplication(applicationCode) {
-    alert(applicationCode);
+    /*alert(applicationCode);*/
     $('#loading').show();
     $.ajax({
         url: urlResend,
@@ -23,7 +23,7 @@ function ResendApplication(applicationCode) {
 };
 
 function ViewPDFApplication(applicationCode) {
-    alert(applicationCode);
+    /*alert(applicationCode);*/
     
     window.open(urlView + "?applicationCode=" + applicationCode, '_blank');
 };
