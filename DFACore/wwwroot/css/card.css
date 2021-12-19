@@ -6,6 +6,72 @@
     z-index: 6;
 }
 
-.card-panel.round {
-    border-radius: 13px;
-}
+    .card-panel.round {
+        border-radius: 13px;
+    }
+
+    .card-panel.db {
+        border-radius: 0 !important;
+        border-top-left-radius: 1rem !important;
+        margin-top: -100px !important;
+        padding: 0 !important;
+        overflow: hidden;
+        width: 155px !important;
+    }
+
+        .card-panel.db .dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            position: absolute;
+            right: 6px;
+            top: 6px;
+        }
+
+        .card-panel.db .ic-container {
+            height: 70px;
+            width: 70px;
+            border-radius: 50%;
+        }
+
+        .card-panel.db .header {
+            height: 77px;
+            padding: 15px;
+            color: white;
+        }
+
+        .card-panel.db.red .header {
+            background-color: #f75939 !important;
+        }
+
+        .card-panel.db.blue .header {
+            background-color: #1c71d9 !important;
+        }
+
+        .card-panel.db.teal .header {
+            background-color: #05a5ad !important;
+        }
+
+        .card-panel.db.blue .dot {
+            background-color: #00d0ff !important;
+        }
+
+        .card-panel.db.red .dot {
+            background-color: #e6b7a1 !important;
+        }
+
+        .card-panel.db.teal .dot {
+            background-color: #99ffff !important;
+        }
+
+        .card-panel.db.blue .ic-container {
+            border: 6px solid #1c71d9 !important;
+        }
+
+        .card-panel.db.red .ic-container {
+            border: 6px solid #f75939 !important;
+        }
+
+        .card-panel.db.teal .ic-container {
+            border: 6px solid #05a5ad !important;
+        }

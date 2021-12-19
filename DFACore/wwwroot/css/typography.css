@@ -149,6 +149,17 @@ p.card-text {
     line-height: 18px!important;
 }
 
+small {
+    font-size: 11px!important;
+}
+
+.mt-110 {
+    margin-top: 110px!important;
+}
+.mr-5rem {
+    margin-right: 5rem!important;
+}
+
 @media only screen and (max-width: 770px) {
     .h1 {
         font-size: 31.5px !important;
