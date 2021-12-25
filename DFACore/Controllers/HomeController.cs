@@ -1105,5 +1105,23 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public ActionResult SiteSelection()
+        {
+
+            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+        
+            ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;
+            ViewData["ApplicationCode"] = GetApplicantCode();
+            ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
+            
+            ViewData["DefaultBranch"] = defaultBranch;
+
+            var branches = _applicantRepo.GetBranches();
+
+            ViewData["Branches"] = branches;
+
+            return View();
+        }
+
     }
 }
