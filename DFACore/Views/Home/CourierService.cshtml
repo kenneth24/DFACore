@@ -1,0 +1,55 @@
+﻿@*@model DFACore.Models.DTO.ApplicantModelDTO*@
+
+<section class="header px-4 mt-3">
+    <div class="text-center mt-3 w-100 mb-4">
+        <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+    </div>
+</section>
+
+<div class="pageContainers px-0" id="application-form" style="padding: 20px;
+        height: auto;min-height:450px;">
+
+    <p style=" margin-bottom: 2rem;" class="show-on-large-only">
+        <span class="float-left grey-text-bold font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="hide-on-large">
+        <p class="p-label mb-1">
+            <span class="grey-text-bold">@User.Identity.Name</span>
+            <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+        </p>
+        <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
+    </div>
+
+
+    <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
+        <div class="location-container w-100 mx-auto px-4">
+            <div class="card-header bold p-1 white-bg text-center mt-4">
+                Would you like to avail the document pick-up and delivery services?
+                <br />
+                Additional fees may apply.
+            </div>
+
+            <div class="card-header bold p-1 white-bg text-center mt-4">
+                Nais mo bang mag-avail ng servisyo sa pagpick-up at paghatid ng documento?
+                <br />
+                May karagdagang bayad ang serbisyong ito.
+            </div>
+
+            <div class="card-body px-5 py-5">
+                <button asp-controller="Home" asp-action="Index" asp-route-id="0" id="philippines-button" class="btn btn-primary  w-50 d-block text-uppercase mb-4">Yes</button>
+                <button asp-controller="Home" asp-action="Index" asp-route-id="1" id="abroad-button" class="btn btn-secondary w-50 d-block text-uppercase">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/documentlocation.js"></script>

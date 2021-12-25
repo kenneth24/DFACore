@@ -1100,5 +1100,10 @@ namespace DFACore.Controllers
             }
         }
 
+        public ActionResult CourierService()
+        {
+            return View();
+        }
+
     }
 }
