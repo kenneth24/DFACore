@@ -30,4 +30,3 @@ packages/
 .sonarqube/
 .vs/
 *.orig
-appsettings.json
