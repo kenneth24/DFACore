@@ -1,6 +1,7 @@
 ﻿.card-panel {
     position: relative;
-    box-shadow: 0px 12px 23px 0px rgb(160 44 250 / 4%);
+    /*box-shadow: 0px 12px 23px 0px rgb(160 44 250 / 4%);*/
+    box-shadow: 0 14px 28px rgb(0 0 0 / -22%), 0 10px 10px rgb(0 0 0 / 10%);
     border-radius: .5rem;
     transition: 1s box-shadow;
     z-index: 6;
@@ -17,7 +18,12 @@
         padding: 0 !important;
         overflow: hidden;
         width: 155px !important;
+        transition: transform .2s;
     }
+
+        .card-panel.db:hover {
+            transform: scale(1.05);
+        }
 
         .card-panel.db .dot {
             height: 8px;

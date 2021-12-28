@@ -11,6 +11,33 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+a:link {
+    text-decoration: none !important;
+}
+
+
+a:visited {
+    text-decoration: none !important;
+}
+
+
+a:hover {
+    text-decoration: none !important;
+}
+
+
+a:active {
+    text-decoration: none !important;
+}
+
+button.bg-transparent {
+    background-color: transparent !important;
+    border: 1px solid #1c71d9 !important;
+    color: #1c71d9 !important;
+    font-weight: bold;
+    border-radius: 3px!important;
+}
+
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -186,17 +213,24 @@ body {
     border: 1px solid #FA4646;
 }
 
+.ic-box {
+    padding: 0 8px !important;
+    border-radius: 6px !important;
+    line-height: 21px !important;
+}
+
 /*For medium screens and below*/
 @media only screen and (max-width: 1000px) {
     .transactionQuantity {
         width: 50px !important;
         height: 30px !important;
     }
+
     .small {
         width: 50px !important;
         height: 30px !important;
     }
-/*
+    /*
     #documentOwners {
         width: 104.5% !important;
         margin-left: -2.3% !important;
@@ -228,19 +262,21 @@ body {
         margin-left: -15px;
         padding: 17px;
     }
+
     .fc-left {
         flex: 0 0 100%;
         max-width: 100%;
     }
+
     .fc-center {
         flex: 0 0 100%;
         max-width: 100%;
     }
+
     .fc-right {
         flex: 0 0 100%;
         max-width: 100%;
     }
-    
 }
 
 .red {
@@ -255,6 +291,7 @@ margin-left: -3.3%;*/
         font-size: 45px !important;
     }
 }
+
 .blinking {
     animation: blinker 3s linear infinite;
 }
@@ -270,11 +307,11 @@ margin-left: -3.3%;*/
 }
 
 .pointer {
-    cursor: pointer!important;
+    cursor: pointer !important;
 }
 
 .container.db {
-    max-width: 100%!important;
+    max-width: 100% !important;
     padding: 0;
 }
 
@@ -297,7 +334,7 @@ margin-left: -3.3%;*/
     padding-left: 15px !important;
     margin-right: auto !important;
     margin-left: auto !important;
-    max-width: 960px!important;
+    max-width: 960px !important;
 }
 
 .location-container {
@@ -310,7 +347,7 @@ body {
 }
 
 #viewRequirements {
-    height: 30px!important;
+    height: 30px !important;
 }
 
 .modal-autoheight .modal-body {
@@ -321,7 +358,7 @@ body {
 }
 
 .modal {
-    height: 100vh!important;
+    height: 100vh !important;
 }
 
 .success-message {
@@ -337,13 +374,13 @@ select option {
 }
 
 .transactionQuantity {
-    font-size: 24px!important;
+    font-size: 24px !important;
 }
 
 .btn-minus, .btn-plus {
-    line-height: 0.5!important;
+    line-height: 0.5 !important;
 }
 
 .docuSpinner {
-    height:auto
+    height: auto
 }
