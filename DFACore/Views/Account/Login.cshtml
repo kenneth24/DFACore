@@ -88,8 +88,8 @@
         <section class="loginSection" style="height:auto;margin-top: -55px;">
             <form id="account" method="post" asp-action="login" asp-controller="account">
                 @*<div style="background-color: #217ff3;color: white;height: 35px;">
-                        <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
-                    </div>*@
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
+            </div>*@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div style="padding:10px">
                     <div class="form-group col-md-12 col-sm-12">
@@ -103,46 +103,32 @@
                     </div>
 
                     @*<div class="form-group col-md-12 col-sm-12" style="text-align: center;">
-                            <div class="checkbox " >
-                                <label asp-for="RememberMe">
-                                    <input asp-for="RememberMe" />
-                                    @Html.DisplayNameFor(m => m.RememberMe)
-                                </label>
-                            </div>
-                        </div>*@
+                    <div class="checkbox " >
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>*@
 
                     <div class="form-group col-md-12 col-sm-12">
                         <button id="login-button" type="submit" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">LOGIN</button>
                     </div>
-                    <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
+                    <div class="form-group col-md-12 col-sm-12 mb-5" style="text-align: center;">
                         <h6>
                             <a id="forgot-password" asp-action="ForgotPassword">Forgot your password?</a>
                         </h6>
                         <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2" />
-                        <a asp-action="Dashboard" asp-controller="Home" class="float-right bold">Back to Home Page</a>
+                        <a asp-action="Register" asp-controller="Account" class="float-right bold">Create an account</a>
                         @*<button id="btnVideo" type="button" class="btn btn-outline-primary" style="font-size:12px;font-weight:bold;">CLICK HERE TO WATCH INSTRUCTIONAL VIDEO</button>*@
                         <br />
-
-                        @if (announcement != null)
-                        {
-                            @if (!string.IsNullOrEmpty(announcement.NoticeMessage))
-                            {
-                                <div class="card bg-light mb-3 w-100 white-bg mt-4">
-                                    <div class="card-header text-uppercase bold p-1 white-bg">reminder to all users</div>
-                                    <div class="card-body px-5 py-3">
-                                        @Html.Raw(@announcement.NoticeMessage)
-                                        @*<p class="card-text">Appointments cannot be cancelled on the scheduled day itself. Please allow at least (1) day for appointment cancellation. (ex. If your appointment is on 29 August you cannot cancel it on the same day. The last day to cancel it will be 28 August) Previous appointments cannot be cancelled anymore. There are no fees or charges in using the Appointment Cancellation System.</p>*@
-                                    </div>
-                                </div>
-                            }
-
-                        }
-
                     </div>
+
                 </div>
 
 
             </form>
+            <center><a asp-action="LoginLra" asp-controller="Account" class="btn-transparent text-center px-5 py-2">LOGIN AS LRA</a></center>
 
         </section>
 

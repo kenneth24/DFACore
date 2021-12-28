@@ -30,7 +30,7 @@ a:active {
     text-decoration: none !important;
 }
 
-button.bg-transparent {
+.btn-transparent {
     background-color: transparent !important;
     border: 1px solid #1c71d9 !important;
     color: #1c71d9 !important;
