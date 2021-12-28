@@ -20,7 +20,7 @@ using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
 {
-    public class AccountController : Controller
+    public class LraController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -34,7 +34,7 @@ namespace DFACore.Controllers
         private readonly ApplicantRecordRepository _applicantRepo;
         private RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
+        public LraController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailService emailService,
             GoogleCaptchaService googleCaptchaService,
@@ -44,7 +44,7 @@ namespace DFACore.Controllers
             IActionContextAccessor accessor,
             IBrowserDetector browserDetector,
             ApplicantRecordRepository applicantRepo,
-            RoleManager<IdentityRole>  roleManager)
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -305,87 +305,6 @@ namespace DFACore.Controllers
                 Log("Logged In", model.Email);
                 //return RedirectToAction("DocumentLocation", "Home");
                 return RedirectToAction("LoginOptions", "Home");
-            }
-
-            if (result.IsNotAllowed)
-            {
-                Log("Logged In but email is not activated.", model.Email);
-                ViewBag.errorMessage = "You must have a confirmed email to log on. "
-                              + "The confirmation token has been resent to your email account.";
-                return View("Error");
-            }
-            if (result.IsLockedOut)
-            {
-                //return View("Lockout");
-                Log("Logged In but account is locked.", model.Email);
-                ModelState.AddModelError("", "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website.");
-                return View(model);
-            }
-            else if (result.RequiresTwoFactor)
-            {
-                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            }
-            else
-            {
-                Log("Logged In but invalid username or password.", model.Email);
-                ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
-            }
-
-        }
-
-
-        [AllowAnonymous]
-        public async Task<ActionResult> LoginLra(string returnUrl = null)
-        {
-            if (User.Identity.IsAuthenticated)
-                await _signInManager.SignOutAsync();
-
-            Log("Visited");
-            return View();
-
-
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> LoginLra(LoginViewModel model, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = _userManager.Users.Where(a => a.Email == model.Email).FirstOrDefault();
-
-            if (user != null)
-            {
-                if (user.Type != 2)
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                    Log("Invalid username or password.", model.Email);
-                    return View(model);
-                }
-
-                if (!await _userManager.IsEmailConfirmedAsync(user))
-                {
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user, "Email Verification");
-
-                    var err = "You must have a confirmed email to log on. "
-                                         + "The confirmation token has been resent to your email account.";
-                    ViewBag.errorMessage = err;
-                    Log($"Logging in but with error {err}", model.Email);
-                    return View("Error");
-                }
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-            if (result.Succeeded)
-            {
-                Log("Logged In", model.Email);
-                return RedirectToAction("Index", "Lra");
             }
 
             if (result.IsNotAllowed)
@@ -712,4 +631,3 @@ namespace DFACore.Controllers
 
     }
 }
-
