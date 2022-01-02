@@ -26,3 +26,29 @@
 .blue-gray-bg {
     background-color: #b4c7d6!important;
 }
+
+.vibrant-blue-bg {
+    background-color: #1c71d9 !important;
+}
+
+.vibrant-red-bg {
+    background-color: #f75939 !important;
+}
+
+.teal-bg {
+    background-color: #05a5ad !important;
+}
+
+.light-blue-text {
+    color: #00d0ff !important;
+}
+
+.light-red-text {
+    color: #e6b7a1 !important;
+}
+.light-teal-text {
+    color: #99ffff !important;
+}
+.blue-gray-text {
+    color: #b4c7d6 !important;
+}

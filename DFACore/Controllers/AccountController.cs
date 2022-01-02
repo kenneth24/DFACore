@@ -343,8 +343,6 @@ namespace DFACore.Controllers
 
             Log("Visited");
             return View();
-
-
         }
 
         [HttpPost]
