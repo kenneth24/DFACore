@@ -7,9 +7,9 @@
         background-color: white !important;
     }
 </style>
-<div class="dashboard text-center">
-    <section class="header px-4 mt-5">
-        <div class="text-center mt-3 w-100 mb-60">
+<div class="dashboard text-center" style="overflow: hidden; height: 100vh">
+    <section class="header w-100 px-4 pt-4 bg-white " style="top: 44px!important;">
+        <div class="text-center mt-3 w-100 mb-5">
             <p class="black-text bold mb-0 p-label">Office of Consular Affairs</p>
             <p class="black-text bold p-label mb-2">Authentication Division</p>
             <small>Welcome to</small>
@@ -48,7 +48,7 @@
 
     </section>
 
-    <section class="blue-gray-bg p-4 mt-110">
+    <section class="blue-gray-bg p-4 mt-110 hide-on-small">
         <div class="hide-on-small">
             <div class="d-flex mb-5">
                 <div id="loginPanel" class="card-panel white-bg db blue mr-5rem ml-auto pointer">
@@ -154,8 +154,73 @@
             </a>
         </div>
     </section>
-    <div class="d-flex w-100">
-        <p class="p-label bold mb-0 mt-2 mx-auto">Contact Us  |  FAQs  |  Privacy Policy</p>
+
+    <div>
+        <section class="blue-gray-bg p-4 show-on-small-only">
+            <div class="show-on-small-only ">
+                <div class="d-flex flex-column mb-5">
+                    <div id="loginPanel" class="card-panel white-bg db mb-3 mt-0 blue mx-auto pointer">
+                        <a asp-action="Login" asp-controller="Account">
+                            <div class="circle dot"></div>
+                            <div class="header text-left">
+                                <p class="text-uppercase bold mb-0">Apply for </p>
+                                <p class="text-uppercase bold">an apostille</p>
+                            </div>
+                            <div class="body py-3 px-2 d-flex flex-column bg-white">
+                                <div class="ic-container m-auto">
+
+                                </div>
+                                <small class="mb-0 mt-3"><i>For existing users</i></small>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div id="verificationPanel" class="card-panel white-bg db mb-3 mt-0 red mx-auto pointer">
+                        <div class="circle dot"></div>
+                        <div class="header text-left">
+                            <p class="text-uppercase bold mb-0">Verify </p>
+                            <p class="text-uppercase bold">apostille</p>
+                        </div>
+                        <div class="body py-3 px-2 d-flex flex-column">
+                            <div class="ic-container m-auto">
+
+                            </div>
+                            <small class="mb-0 mt-3"><i>Online Apostille Verification</i></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="registrationPanel" class="card-panel white-bg db teal mr-auto pointer mx-auto mb-4" style="margin-top: -1.5rem!important">
+                    <div class="circle dot"></div>
+                    <div class="header text-left">
+                        <p class="text-uppercase bold mb-0">Create </p>
+                        <p class="text-uppercase bold">an account</p>
+                    </div>
+                    <div class="body py-3 d-flex flex-column">
+                        <div class="ic-container m-auto">
+
+                        </div>
+                        <small class="mb-0 mt-3"><i>For new users</i></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex w-100 justify-content-center">
+                <div class="vibrant-blue-bg mr-2 ic-box">
+                    <i class="fa fa-info blue-gray-text"></i>
+                </div>
+                <a class="pointer d-flex" asp-action="PlayVideo" asp-controller="Account" target="_blank">
+                    <p class="text-uppercase black-text p-label m-auto">Watch instructional video</p>
+                </a>
+            </div>
+        </section>
+    </div>
+    <div class="d-flex  w-100 justify-content-center pt-3">
+        <a href="#" class="p-label text-center">Contact Us</a>
+        <div class="divider-right mx-2"></div>
+        <a href="#" class="p-label text-center">Privacy Policy</a>
+        <div class="divider-right mx-2"></div>
+        <a href="#" class="p-label text-center">FAQs</a>
     </div>
 
 </div>
