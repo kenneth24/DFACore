@@ -1027,6 +1027,7 @@ namespace DFACore.Controllers
             return Json("Success");
         }
 
+        [AllowAnonymous]
         public ActionResult LoginOptions()
         {
             return View();

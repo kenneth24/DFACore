@@ -52,3 +52,29 @@
 .blue-gray-text {
     color: #b4c7d6 !important;
 }
+
+.btn-red {
+    background-color: #ff0000!important;
+}
+
+.btn-blue {
+    background-color: #155bab!important;
+}
+
+.btn-gray {
+    background-color: #899399!important;
+}
+
+.btn-ygreen {
+    background-color: #22bd53!important;
+}
+
+.btn-ctm {
+    border-radius: 3px;
+}
+
+.divider-right {
+    border-right: 2px solid #0366d6;
+    margin-top: -2px;
+}
+
