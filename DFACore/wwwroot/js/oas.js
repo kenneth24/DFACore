@@ -806,7 +806,7 @@ function docOwnerStepFive() {
             $('#LblPayment').text(`PHP ${totalFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
     }
 
-    $("#step-one").hide();
+    //$("#step-one").hide();
     $("#step-one-authorized").hide();
     $("#step-three").show();
 
@@ -1110,7 +1110,7 @@ function authorizedStepFive() {
 
     console.log(record);
 
-    $("#step-one").hide();
+    //$("#step-one").hide();
     $("#step-one-authorized").hide();
     $("#step-three").show();
     loading.hide();
@@ -1123,3 +1123,4 @@ function HasExpedite(ifHasExpedite) {
     console.log('hasExpedite');
     console.log(hasExpedite);
 }
+

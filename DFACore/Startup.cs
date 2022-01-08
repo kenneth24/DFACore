@@ -90,6 +90,11 @@ namespace DFACore
             services.AddMvc().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
             services.AddMailKit(config =>
             {
                 config.UseMailKit(Configuration.GetSection("Email").Get<MailKitOptions>());
@@ -149,7 +154,7 @@ namespace DFACore
             app.UseRouting();
 
             app.UseCookiePolicy();
-            //app.UseSession();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

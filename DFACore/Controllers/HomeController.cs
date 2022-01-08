@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using DFACore.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
-using DFACore.Repository;
-using Newtonsoft.Json;
-using Wkhtmltopdf.NetCore;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using DFACore.Data;
+using DFACore.Helpers;
+using DFACore.Models;
+using DFACore.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using shortid;
 using shortid.Configuration;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Shyjus.BrowserDetection;
-using System.Net;
-using DFACore.Data;
+using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
 {
@@ -1124,5 +1126,64 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public ActionResult PersonalInfo()
+        {
+            var documents = _documentsType.Get();
+            ViewData["DocumentTypes"] = documents;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PersonalInfo(SiteSelectionViewModel model)
+        {
+            MainViewModel main = new()
+            {
+                DocumentStatus = model.DocumentStatus,
+                DocumentType = model.DocumentType,
+                ApostileSite = model.ApostileSite
+            };
+
+            HttpContext.Session.SetComplexData("Model", main);
+
+            var documents = _documentsType.Get();
+            ViewData["DocumentTypes"] = documents;
+
+            return View();
+        }
+
+        public ActionResult ApostilleSchedule()
+        {
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ApostilleSchedule(ApplicantRecordViewModel model)
+        {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            main.FirstName = model.FirstName;
+            main.MiddleName = model.MiddleName;
+            main.LastName = model.LastName;
+            main.Suffix = model.Suffix;
+            main.DateOfBirth = model.DateOfBirth;
+            main.ContactNumber = model.ContactNumber;
+            main.CountryDestination = model.CountryDestination;
+            main.NameOfRepresentative = model.NameOfRepresentative;
+            main.RepresentativeContactNumber = model.RepresentativeContactNumber;
+            main.ApostileData = model.ApostileData;
+            main.ProcessingSite = model.ProcessingSite;
+            main.ProcessingSiteAddress = model.ProcessingSiteAddress;
+
+            HttpContext.Session.SetComplexData("Model", main);
+
+            return View();
+        }
+
+
     }
+
+
 }
