@@ -158,7 +158,7 @@ namespace DFACore
 
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseSession();
+            app.UseSession();
 
 
 
