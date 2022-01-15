@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/card.css" />
     <link rel="stylesheet" href="~/css/colors.css" />
     <link rel="stylesheet" href="~/css/responsiveness.css" />
+    <link rel="stylesheet" href="~/css/accordion.css" />
 
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">*@
@@ -170,8 +171,11 @@
 
         $(window).resize(function () {
             if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
-            else $homeIcon.removeClass('sticky-top');
+            else stickyHeader.removeClass('sticky-top');
         });
+
+        if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
+        else stickyHeader.removeClass('sticky-top');
 
     </script>
 

@@ -391,3 +391,8 @@ select option {
 .docuSpinner {
     height: auto
 }
+
+.w-290 {
+    width: 290px !important;
+}
+

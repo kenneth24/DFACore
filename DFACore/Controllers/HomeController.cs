@@ -1182,7 +1182,23 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
 
+        [AllowAnonymous]
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult FAQs()
+        {
+            return View();
+        }
     }
 
 
