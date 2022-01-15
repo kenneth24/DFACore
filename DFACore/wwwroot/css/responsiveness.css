@@ -140,6 +140,10 @@
         padding: 0 !important;
     }
 
+    .sm-pt-0 {
+        padding-top: 0 !important;
+    }
+
     #scheduleSelection .card {
         border: none !important;
         padding: 0 !important;
@@ -169,6 +173,20 @@
     .cancellation-container, .cancellation-container .card-body {
         max-width: 100% !important;
     }
+
+    #mainContainer.db {
+        padding: 0 !important
+    }
+
+    #loginPanel, #verificationPanel, #registrationPanel {
+        width: 80% !important;
+    }
+
+    .card-panel.db .ic-container {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+    }
 }
 
 @media (max-width: 400px) {
@@ -183,6 +201,20 @@
 
     .show-on-xs-only {
         display: block !important;
+    }
+
+    #mainContainer.db {
+        padding: 0 !important
+    }
+
+    #loginPanel, #verificationPanel, #registrationPanel {
+        width: 80% !important;
+    }
+
+    .card-panel.db .ic-container {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
     }
 }
 
