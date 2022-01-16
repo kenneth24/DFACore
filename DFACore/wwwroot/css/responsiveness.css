@@ -150,6 +150,10 @@
         padding-top: 0 !important;
     }
 
+    .sm-p-2 {
+        padding: 1rem !important;
+    }
+
     #scheduleSelection .card {
         border: none !important;
         padding: 0 !important;
@@ -193,6 +197,9 @@
         width: 90px;
         border-radius: 50%;
     }
+    #siteaddress {
+        margin-bottom: 150px !important;
+    }
 }
 
 @media (max-width: 400px) {
@@ -222,6 +229,13 @@
         width: 90px;
         border-radius: 50%;
     }
+    .sm-p-2 {
+        padding: 1rem !important;
+    }
+    #siteaddress {
+        margin-bottom: 150px!important;
+    }
+
 }
 
 @media (min-width: 559px) and (max-width: 769px) {

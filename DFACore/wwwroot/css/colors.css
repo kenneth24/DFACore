@@ -77,3 +77,11 @@
     border-right: 2px solid #0366d6;
     margin-top: -2px;
 }
+
+.entry-bg {
+    background-color: #e7edf0!important;    
+}
+
+.btn-green {
+    background-color: #339966!important;
+}
