@@ -39,6 +39,9 @@
     #quantityInputSelector .flex-column {
         max-width: 175px !important;
     }
+    .courier-btn {
+        width: 244px!important;
+    }
 }
 
 /* md */
@@ -89,6 +92,9 @@
 
     .mr-5rem {
         margin-right: 2rem !important;
+    }
+    .courier-btn {
+        width: 244px !important;
     }
 }
 
