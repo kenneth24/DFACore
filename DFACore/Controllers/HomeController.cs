@@ -1149,6 +1149,7 @@ namespace DFACore.Controllers
             var documents = _documentsType.Get();
             ViewData["DocumentTypes"] = documents;
 
+
             return View();
         }
 
@@ -1179,7 +1180,8 @@ namespace DFACore.Controllers
 
             HttpContext.Session.SetComplexData("Model", main);
 
-            return View();
+            return RedirectToAction("ApostilleSchedule");
+            //return View();
         }
 
 

@@ -156,19 +156,19 @@
                                 <div class="row">
                                     <div class="col-md-3 col-sm-12">
                                         <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                        <input asp-for="FirstName" class="form-control" />
+                                        <input asp-for="FirstName" id="FirstName" class="form-control" />
                                         <span asp-validation-for="FirstName" class="text-danger fname"></span>
                                     </div>
 
                                     <div class="col-md-3 col-sm-12">
                                         <label asp-for="MiddleName"></label>
-                                        <input asp-for="MiddleName" class="form-control" />
+                                        <input asp-for="MiddleName" id="MiddleName" class="form-control" />
                                         <span asp-validation-for="MiddleName" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-md-3 col-sm-12">
                                         <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                        <input asp-for="LastName" class="form-control" />
+                                        <input asp-for="LastName" id="LastName" class="form-control" />
                                         <span asp-validation-for="LastName" class="text-danger lname"></span>
                                     </div>
 
@@ -385,7 +385,7 @@
     <script>$("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
         $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })</script>
 
-    <script src="~/js/oas.js"></script>
+    <script src="~/js/personalinfo.js"></script>
     <script>
 
 
