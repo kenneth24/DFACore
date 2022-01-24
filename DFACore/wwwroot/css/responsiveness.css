@@ -39,8 +39,9 @@
     #quantityInputSelector .flex-column {
         max-width: 175px !important;
     }
+
     .courier-btn {
-        width: 244px!important;
+        width: 244px !important;
     }
 }
 
@@ -93,6 +94,7 @@
     .mr-5rem {
         margin-right: 2rem !important;
     }
+
     .courier-btn {
         width: 244px !important;
     }
@@ -197,8 +199,14 @@
         width: 90px;
         border-radius: 50%;
     }
+
     #siteaddress {
         margin-bottom: 150px !important;
+    }
+
+    .ic-container img {
+        height: 47px !important;
+        width: 47px !important;
     }
 }
 
@@ -229,13 +237,19 @@
         width: 90px;
         border-radius: 50%;
     }
+
     .sm-p-2 {
         padding: 1rem !important;
     }
+
     #siteaddress {
-        margin-bottom: 150px!important;
+        margin-bottom: 150px !important;
     }
 
+    .ic-container img {
+        height: 47px !important;
+        width: 47px !important;
+    }
 }
 
 @media (min-width: 559px) and (max-width: 769px) {

@@ -1108,6 +1108,11 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public ActionResult ShippingInformation()
+        {
+            return View();
+        }
+
         public ActionResult SiteSelection()
         {
 
@@ -1177,6 +1182,11 @@ namespace DFACore.Controllers
             main.ProcessingSite = model.ProcessingSite;
             main.ProcessingSiteAddress = model.ProcessingSiteAddress;
 
+
+            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+
+            ViewData["DefaultBranch"] = defaultBranch;
+
             HttpContext.Session.SetComplexData("Model", main);
 
             return View();
@@ -1199,6 +1209,29 @@ namespace DFACore.Controllers
         {
             return View();
         }
+
+        public ActionResult ApplicationSummary()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult PaymentMethod()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult OrderSummary()
+        {
+
+
+            return View();
+        }
+
+
     }
 
 

@@ -414,3 +414,37 @@ select {
 .no-shadow {
     box-shadow: none!important;
 }
+
+
+.ic-container img {
+    height: 40px!important;
+    width: 40px!important;
+}
+
+.options img {
+    height: 23px !important;
+    width: auto!important;
+}
+
+.border {
+    border: 1px solid #ced4da!important;
+    border-radius: 3px!important;
+}
+
+select {
+    cursor: pointer!important;
+}
+
+table th {
+    border-top: none !important;
+    border-bottom: 1px solid #ced4da !important;
+}
+
+.total-number {
+    bottom: -10px;
+}
+
+.doc-action img {
+    width: 45px!important;
+    height: auto!important;
+}
