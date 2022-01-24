@@ -95,42 +95,126 @@
             <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
         </div>
     </div>
-    <div id="formContainer">
-        <div asp-validation-summary="All" class="text-danger"></div>
+    <div id="formContainer" class="mt-5">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
 
-        <section class="header px-4 mt-3">
-            <div class="text-center mt-3 w-100 mb-4">
-                <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+
+        <div class="media">
+            <div class="media-body">
+                <p class="grey-text-bold font-weight-bold p-0 p-label">
+                    @User.Identity.Name<br />
+                    @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                </p>
             </div>
-        </section>
-
-        <p style="margin-bottom: 1rem;" class="show-on-large-only">
-            <span class="float-left grey-text-bold font-weight-bold">
-                @User.Identity.Name
-            </span>
-            <span class="float-right">
-                <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
-            </span>
-            <span class="float-right" style="padding-right:20px;">
-                @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
-            </span>
-        </p>
-
-        <br class="show-on-large-only" />
-
-        <div class="hide-on-large">
-            <p class="p-label mb-1">
-                <span class="grey-text-bold">@User.Identity.Name</span>
-                <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+            <p class="float-right text-right mt-auto p-label">
+                <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
             </p>
-            <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
         </div>
 
         @{
 
-            <p>FOR CALENDAR PAGE</p>
-            <form id="account" method="post" asp-action="PersonalInfo" asp-controller="Home">
+
+            <form id="account" method="post" asp-action="ApplicationSummary" asp-controller="Home">
+
+
+                <div>
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 4 of 5</p>
+                    </div>
+
+                    <div class="card-panel white-bg p-0">
+                                <div class="mb-3">
+                                    <div class="d-flex mb-0 px-4 pt-4 pb-2">
+                                        <label class="mb-0 bold mr-3"><i>Please select your preferred schedule of processing</i>  <span class="mb-0 p-alt p-label"><i>(Piliin ang iyong nais na schedule ng pagproseso)</i></span></label>
+
+                                    </div>
+
+                                    <div class="mt-3 px-4 pb-4">
+
+                                        <div id="scheduleSelection" class="row col-12 m-0 p-0" style="margin-top:10px;">
+                                            <div class="col-lg-6 col-md-12 col-sm-12 px-0" style="margin-bottom: 10px">
+                                                <div class="card bg-light white-bg h-100" style="padding: 10px;">
+                                                    <label class="black-text mb-0 bold">Select Available Schedule</label>
+
+                                                    <partial name="_CalendarPartial" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12 col-sm-12 px-0 px-lg-2 p-sm-0" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                                                <div class=" white-bg card bg-light " style="height:auto;padding:5px;margin-bottom: 10px">
+                                                    <label class="black-text bold">Select Time</label>
+                                                    <div class="row justify-content-center">
+                                                        <div id="AvailableTime" class="col-lg-10 col-md-12 col-sm-12">
+                                                            @foreach (var hour in defaultBranch.AvailableHours)
+                                                            {
+                                                                <label class="black-text mr-2"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
+                                                            }
+
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-12 col-sm-12"></div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-12 col-sm-12 px-0 card bg-light white-bg">
+                                                <div id="selectedDateAndTime" style="height:auto;padding:10px;">
+                                                    <p class="black-text">Selected Date and Time</p>
+                                                    <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
+                                                    <input  id="appointmentSchedule" class="form-control font-weight-bold" readonly>
+                                                    <p id="appointmentDate" style="display:none;"></p>
+                                                    <p id="appointmentScheduleTime" style="display:none;"></p>
+                                                    <div id="schedLoader" class="text-center" style="display:none;">
+                                                        <div class="spinner-border m-3" role="status">
+                                                            <span class="sr-only">Loading...</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
+                                                    <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose available time slot.</p>
+                                                    <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please select schedule date.</p>
+                                                    <p style="margin-top:10px;">Selected Site</p>
+                                                    <p class="font-weight-bold">(Site and Address)</p>
+                                                    <p id="siteAndNameAddress" class="font-weight" style="margin-bottom:0;font-weight:bold"></p>
+                                                    <p id="siteAndAddress" class="font-weight"></p>
+                                                    <div class="row">
+                                                        <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
+                                                            <button id="backToStepOne" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-2">
+
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-5">
+                                                            <button type="submit" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Confirm</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                    </div>
+
+                    @*<div>
+                        <div class="hide-on-small">
+                            <div class="card-body px-5 py-5 d-flex w-100">
+                                <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
+                            </div>
+                        </div>
+                        <div class="show-on-small-only mt-5 my-auto">
+                            <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                            <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                        </div>
+                    </div>*@
+
+
+
+                </div>
+
             </form>
+
 
         }
 

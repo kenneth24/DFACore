@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="~/css/card.css" />
     <link rel="stylesheet" href="~/css/colors.css" />
     <link rel="stylesheet" href="~/css/responsiveness.css" />
+    <link rel="stylesheet" href="~/css/accordion.css" />
+    <link rel="stylesheet" href="~/css/radiobutton.css" />
 
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">*@
@@ -59,7 +61,7 @@
 </head>
 <body>
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #217ff3 !important;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow" style="background-color: #217ff3 !important;">
             <div class="container">
                 <div id="dfa-banner" class="mx-auto">
                     <img src="~/Banner.png" class="img-fluid" style="width:50%!important" />
@@ -165,6 +167,16 @@
                 height: (winHeight - 200) + "px"
             });
         }
+
+        let stickyHeader = $('.hdr');
+
+        $(window).resize(function () {
+            if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
+            else stickyHeader.removeClass('sticky-top');
+        });
+
+        if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
+        else stickyHeader.removeClass('sticky-top');
 
     </script>
 

@@ -3,50 +3,56 @@
 }
 
 <style>
+    html {
+        background-color: transparent !important;
+    }
+
     body {
         background-color: white !important;
     }
 </style>
-<div class="dashboard text-center" style="overflow: hidden; height: 100vh">
-    <section class="header w-100 px-4 pt-4 bg-white " style="top: 44px!important;">
-        <div class="text-center mt-3 w-100 mb-5">
-            <p class="black-text bold mb-0 p-label">Office of Consular Affairs</p>
-            <p class="black-text bold p-label mb-2">Authentication Division</p>
-            <small>Welcome to</small>
-            <h2 class="blue-text bold mb-2 mt-0 h2">e-Apostille System</h2>
-            <p class="p-label bold">Apostille Application  |  Apostille Document Tracking  |  e-Payment  |  Courier Service</p>
-        </div>
-    </section>
+<div class="dashboard text-center">
+    <div class="hdr pb-1" style="top: 44px!important;">
+        <section class="header w-100 px-4 pt-4 bg-white py-2">
+            <div class="text-center mt-0 w-100 mb-0">
+                <p class="black-text bold mb-0 p-label">Office of Consular Affairs</p>
+                <p class="black-text bold p-label mb-3">Authentication Division</p>
+                <small>Welcome to</small>
+                <h2 class="blue-text bold mb-2 mt-0 h2">e-Apostille System</h2>
+                <p class="p-label bold">Apostille Application  |  Apostille Document Tracking  |  e-Payment  |  Courier Service</p>
+            </div>
+        </section>
+    </div>
 
-    <section class="content text-center mx-auto px-4 mb-70">
-        @*<div class="hide-on-small">
-                <div class="d-flex">
-                    <a asp-action="Login" asp-controller="Account">
-                        <div class="img-container ml-auto mr-5 pointer">
-                            <img src="~/images/MAIN PAGE ICON_1.png" class="h-100" />
+    @*<section class="content text-center mx-auto px-4 mb-70">
+            <div class="hide-on-small">
+                    <div class="d-flex">
+                        <a asp-action="Login" asp-controller="Account">
+                            <div class="img-container ml-auto mr-5 pointer">
+                                <img src="~/images/MAIN PAGE ICON_1.png" class="h-100" />
+                            </div>
+                        </a>
+                        <a asp-action="Register" asp-controller="Account">
+                            <div class="img-container mr-auto pointer">
+                                <img src="~/images/MAIN PAGE ICON_2.png" class="h-100" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="show-on-small-only">
+                    <a asp-action="Register" asp-controller="Account">
+                        <div class="img-container text-center mb-5">
+                            <img src="~/images/create_new.png" class="w-100" />
                         </div>
                     </a>
-                    <a asp-action="Register" asp-controller="Account">
-                        <div class="img-container mr-auto pointer">
-                            <img src="~/images/MAIN PAGE ICON_2.png" class="h-100" />
+                    <a asp-action="Login" asp-controller="Account">
+                        <div class="img-container mb-3 text-center">
+                            <img src="~/images/sched_cancel_new.png" class="w-100" />
                         </div>
                     </a>
                 </div>
-            </div>
-            <div class="show-on-small-only">
-                <a asp-action="Register" asp-controller="Account">
-                    <div class="img-container text-center mb-5">
-                        <img src="~/images/create_new.png" class="w-100" />
-                    </div>
-                </a>
-                <a asp-action="Login" asp-controller="Account">
-                    <div class="img-container mb-3 text-center">
-                        <img src="~/images/sched_cancel_new.png" class="w-100" />
-                    </div>
-                </a>
-            </div>*@
 
-    </section>
+        </section>*@
 
     <section class="blue-gray-bg p-4 mt-110 hide-on-small">
         <div class="hide-on-small">
@@ -59,10 +65,10 @@
                             <p class="text-uppercase bold">an apostille</p>
                         </div>
                         <div class="body py-3 d-flex flex-column bg-white">
-                            <div class="ic-container m-auto">
-
+                            <div class="ic-container m-auto d-flex">
+                                <img class="m-auto" src="~/images/icons/existing.png" />
                             </div>
-                            <small class="mb-0 mt-3"><i>For existing users</i></small>
+                            <small class="mb-0 mt-3"><i class="black-text">For existing users</i></small>
                         </div>
                     </a>
                 </div>
@@ -74,10 +80,10 @@
                         <p class="text-uppercase bold">apostille</p>
                     </div>
                     <div class="body py-3 d-flex flex-column">
-                        <div class="ic-container m-auto">
-
+                        <div class="ic-container m-auto d-flex">
+                            <img src="~/images/icons/verify.png" class="m-auto" />
                         </div>
-                        <small class="mb-0 mt-3"><i>Online Apostille Verification</i></small>
+                        <small class="mb-0 mt-3"><i class="black-text">Online Apostille Verification</i></small>
                     </div>
                 </div>
 
@@ -88,10 +94,10 @@
                         <p class="text-uppercase bold">an account</p>
                     </div>
                     <div class="body py-3 d-flex flex-column">
-                        <div class="ic-container m-auto">
-
+                        <div class="ic-container m-auto d-flex">
+                            <img src="~/images/icons/new_user.png" class="m-auto" />
                         </div>
-                        <small class="mb-0 mt-3"><i>For new users</i></small>
+                        <small class="mb-0 mt-3"><i class="black-text">For new users</i></small>
                     </div>
                 </div>
             </div>
@@ -156,36 +162,36 @@
     </section>
 
     <div>
-        <section class="blue-gray-bg p-4 show-on-small-only">
+        <section class="blue-gray-bg p-4 px-5 show-on-small-only ">
             <div class="show-on-small-only ">
-                <div class="d-flex flex-column mb-5">
-                    <div id="loginPanel" class="card-panel white-bg db mb-3 mt-0 blue mx-auto pointer">
+                <div class="d-flex flex-column mb-4">
+                    <div id="loginPanel" class="card-panel white-bg db mb-5 mt-0 blue mx-auto pointer">
                         <a asp-action="Login" asp-controller="Account">
                             <div class="circle dot"></div>
                             <div class="header text-left">
                                 <p class="text-uppercase bold mb-0">Apply for </p>
                                 <p class="text-uppercase bold">an apostille</p>
                             </div>
-                            <div class="body py-3 px-2 d-flex flex-column bg-white">
-                                <div class="ic-container m-auto">
-
+                            <div class="body py-5 px-2 d-flex flex-column bg-white">
+                                <div class="ic-container m-auto d-flex">
+                                    <img class="m-auto" src="~/images/icons/existing.png" />
                                 </div>
-                                <small class="mb-0 mt-3"><i>For existing users</i></small>
+                                <small class="mb-0 mt-3"><i class="black-text">For existing users</i></small>
                             </div>
                         </a>
                     </div>
 
-                    <div id="verificationPanel" class="card-panel white-bg db mb-3 mt-0 red mx-auto pointer">
+                    <div id="verificationPanel" class="card-panel white-bg db mb-5 mt-0 red mx-auto pointer">
                         <div class="circle dot"></div>
                         <div class="header text-left">
                             <p class="text-uppercase bold mb-0">Verify </p>
                             <p class="text-uppercase bold">apostille</p>
                         </div>
-                        <div class="body py-3 px-2 d-flex flex-column">
-                            <div class="ic-container m-auto">
-
+                        <div class="body py-5 px-2 d-flex flex-column">
+                            <div class="ic-container m-auto d-flex">
+                                <img src="~/images/icons/verify.png" class="m-auto" />
                             </div>
-                            <small class="mb-0 mt-3"><i>Online Apostille Verification</i></small>
+                            <small class="mb-0 mt-3"><i class="black-text">Online Apostille Verification</i></small>
                         </div>
                     </div>
                 </div>
@@ -196,11 +202,11 @@
                         <p class="text-uppercase bold mb-0">Create </p>
                         <p class="text-uppercase bold">an account</p>
                     </div>
-                    <div class="body py-3 d-flex flex-column">
-                        <div class="ic-container m-auto">
-
+                    <div class="body py-5 d-flex flex-column">
+                        <div class="ic-container m-auto d-flex">
+                            <img src="~/images/icons/new_user.png" class="m-auto" />
                         </div>
-                        <small class="mb-0 mt-3"><i>For new users</i></small>
+                        <small class="mb-0 mt-3"><i class="black-text">For new users</i></small>
                     </div>
                 </div>
             </div>
@@ -215,14 +221,25 @@
             </div>
         </section>
     </div>
-    <div class="d-flex  w-100 justify-content-center pt-3">
-        <a href="#" class="p-label text-center">Contact Us</a>
-        <div class="divider-right mx-2"></div>
-        <a href="#" class="p-label text-center">Privacy Policy</a>
-        <div class="divider-right mx-2"></div>
-        <a href="#" class="p-label text-center">FAQs</a>
+    <div class="hide-on-small">
+        <div class="d-flex w-100 justify-content-center pt-3">
+            <a asp-action="Contact Us" asp-controller="Home" class="p-label text-center">Contact Us</a>
+            <div class="divider-right mx-2"></div>
+            <a asp-action="PrivacyPolicy" asp-controller="Home" class="p-label text-center">Privacy Policy</a>
+            <div class="divider-right mx-2"></div>
+            <a href="#" class="p-label text-center">FAQs</a>
+        </div>
     </div>
 
+    <div class="show-on-small-only fixed-bottom py-3 white-bg">
+        <div class="d-flex w-100 justify-content-center pt-0  white-bg">
+            <a asp-action="Contact Us" asp-controller="Home" class="p-label text-center">Contact Us</a>
+            <div class="divider-right mx-2"></div>
+            <a asp-action="PrivacyPolicy" asp-controller="Home" class="p-label text-center">Privacy Policy</a>
+            <div class="divider-right mx-2"></div>
+            <a href="#" class="p-label text-center">FAQs</a>
+        </div>
+    </div>
 </div>
 
 <script>

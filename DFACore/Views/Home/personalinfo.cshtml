@@ -96,145 +96,144 @@
             <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
         </div>
     </div>
-    <div id="formContainer">
+    <div id="formContainer" class="mt-5">
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <section class="header px-4 mt-3">
-            <div class="text-center mt-3 w-100 mb-4">
-                <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+        @*<section class="header px-4 mt-3">
+                <div class="text-center mt-3 w-100 mb-4">
+                    <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+                </div>
+            </section>*@
+
+
+        <div class="media">
+            <div class="media-body">
+                <p class="grey-text-bold font-weight-bold p-0 p-label">
+                    @User.Identity.Name<br />
+                    @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                </p>
             </div>
-        </section>
-
-        <p style="margin-bottom: 1rem;" class="show-on-large-only">
-            <span class="float-left grey-text-bold font-weight-bold">
-                @User.Identity.Name
-            </span>
-            <span class="float-right">
-                <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
-            </span>
-            <span class="float-right" style="padding-right:20px;">
-                @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
-            </span>
-        </p>
-
-        <br class="show-on-large-only" />
-
-        <div class="hide-on-large">
-            <p class="p-label mb-1">
-                <span class="grey-text-bold">@User.Identity.Name</span>
-                <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+            <p class="float-right text-right mt-auto p-label">
+                <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
             </p>
-            <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
         </div>
 
+        @*<br class="show-on-large-only" />
+
+            <div class="hide-on-large">
+                <p class="p-label mb-1">
+                    <span class="grey-text-bold">@User.Identity.Name</span>
+                    <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+                </p>
+                <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
+            </div>*@
+
         @{
-            <form id="account" method="post" asp-action="ApostilleSchedule" asp-controller="Home">
+            <form id="account" method="post" asp-action="ShippingInformation" asp-controller="Home">
 
 
                 <div>
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
                         <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 5</p>
-                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2of 5</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 2 of 5</p>
                     </div>
 
                     <div class="card-panel white-bg p-4">
-                        <div>
-                            <div class="form-group">
-                                <p class="d-none d-lg-block">
-                                    <span style="font-weight: bold">Document Owner</span>
-                                    <span style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></span>
-                                </p>
-                                <p class="d-lg-none text-left" style="font-weight: bold">
-                                    Document Owner
-                                </p>
-                                <p class="d-lg-none text-left">
-                                    <i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i>
-                                </p>
+                        <div class="mb-3">
+                            <div class="d-flex mb-3">
+                                <div class="d-flex flex-column">
+                                    <label class="mb-0 bold"><i>Please provide the required information</i></label>
+                                    <p class="mb-0 p-alt p-label"><i>(Mangyaring ibigay ang kinakailangang impormasyon)</i></p>
+                                </div>
+                                <p class="mb-0 p-label black-text ml-auto mt-auto"><i>Fields with (<b class="red-text">*</b>) is required</i></p>
                             </div>
 
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="FirstName">First Name <span class="red">*</span></label>
-                                        <input asp-for="FirstName" id="FirstName" class="form-control" />
-                                        <span asp-validation-for="FirstName" class="text-danger fname"></span>
-                                    </div>
+                            <div class="border p-3 ">
+                                <p class="text-primary bold">Document Owner</p>
 
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="MiddleName"></label>
-                                        <input asp-for="MiddleName" id="MiddleName" class="form-control" />
-                                        <span asp-validation-for="MiddleName" class="text-danger"></span>
-                                    </div>
+                                <div class="form-group">
+                                    <div class="media">
+                                        <div class="row media-body">
+                                            <div class="col-md-4 col-sm-12">
+                                                <label class="p-label bold mb-0" asp-for="FirstName">First Name <span class="p-alt"><i>(Unang Pangalan)</i></span> <span class="red">*</span></label>
+                                                <input asp-for="FirstName" class="form-control" />
+                                                <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                                            </div>
 
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="LastName">Last Name <span class="red">*</span></label>
-                                        <input asp-for="LastName" id="LastName" class="form-control" />
-                                        <span asp-validation-for="LastName" class="text-danger lname"></span>
-                                    </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <label class="p-label bold mb-0" asp-for="MiddleName">Middle Name <span class="p-alt"><i>(Gitnang Pangalan)</i></span></label>
+                                                <input asp-for="MiddleName" class="form-control" />
+                                                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                            </div>
 
+                                            <div class="col-md-4 col-sm-12">
+                                                <label class="p-label bold mb-0" asp-for="LastName">Last Name <span class="p-alt"><i>(Apelyido)</i></span><span class="red">*</span></label>
+                                                <input asp-for="LastName" class="form-control" />
+                                                <span asp-validation-for="LastName" class="text-danger lname"></span>
+                                            </div>
+                                        </div>
 
-                                    <div class="col-md-3 col-sm-12">
-                                        <label asp-for="Suffix"></label>
-                                        @*<input asp-for="Suffix" class="form-control" />*@
-                                        <select asp-for="Suffix" class="form-control">
-                                            <option value="">N/A</option>
-                                            <option value="JR.">JR.</option>
-                                            <option value="SR.">SR.</option>
-                                            <option value="I">I</option>
-                                            <option value="II">II</option>
-                                            <option value="III">III</option>
-                                            <option value="IV">IV</option>
-                                            <option value="V">V</option>
-                                            <option value="VI">VI</option>
-                                            <option value="VII">VII</option>
-                                            <option value="VIII">VIII</option>
-                                            <option value="IX">IX</option>
-                                            <option value="X">X</option>
-                                            <option value="XI">XI</option>
-                                            <option value="XII">XII</option>
-                                            <option value="XIII">XIII</option>
-                                            <option value="XIV">XIV</option>
-                                            <option value="XV">XV</option>
-
-                                        </select>
-
-                                        <span asp-validation-for="Suffix" class="text-danger"></span>
+                                        <div class="ml-4">
+                                            <label class="p-label bold mb-0" asp-for="Suffix"></label>
+                                            @*<input asp-for="Suffix" class="form-control" />*@
+                                            <select asp-for="Suffix" class="form-control  entry-bg">
+                                                <option value="">N/A</option>
+                                                <option value="JR.">JR.</option>
+                                                <option value="SR.">SR.</option>
+                                                <option value="I">I</option>
+                                                <option value="II">II</option>
+                                                <option value="III">III</option>
+                                                <option value="IV">IV</option>
+                                                <option value="V">V</option>
+                                                <option value="VI">VI</option>
+                                                <option value="VII">VII</option>
+                                                <option value="VIII">VIII</option>
+                                                <option value="IX">IX</option>
+                                                <option value="X">X</option>
+                                                <option value="XI">XI</option>
+                                                <option value="XII">XII</option>
+                                                <option value="XIII">XIII</option>
+                                                <option value="XIV">XIV</option>
+                                                <option value="XV">XV</option>
+                                            </select>
+                                            <span asp-validation-for="Suffix" class="text-danger"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="row">
+                                <div class="form-group mb-0">
+                                    <div class="row">
 
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="DateOfBirth">Date of Birth <span class="red">*</span></label>
-                                        <input type="date" asp-for="DateOfBirth" class="form-control dateOfBirthOwner" />
-                                        <span asp-validation-for="DateOfBirth" class="text-danger dateofbirth"></span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <label asp-for="ContactNumber">Contact Number <span class="red">*</span></label>
-                                        <input asp-for="ContactNumber" class="form-control numberInput " type="tel" min="1" />
-                                        <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-4 col-sm-12">
+                                            <label class="p-label bold mb-0" asp-for="DateOfBirth">Date of Birth <span class="p-alt"><i>(Araw ng Kapanganakan)</i></span>  <span class="red">*</span></label>
+                                            <input type="date" asp-for="DateOfBirth" class="form-control dateOfBirthOwner entry-bg" />
+                                            <span asp-validation-for="DateOfBirth" class="text-danger dateofbirth"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label class="p-label bold mb-0" asp-for="ContactNumber">Contact Number <span class="p-alt"><i>(Numerong tawagan)</i></span>  <span class="red">*</span></label>
+                                            <input asp-for="ContactNumber" class="form-control numberInput " type="tel" min="1" />
+                                            <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
 
 
-                                        @if (ViewBag.Location == 0)
-                                        {
-                                            <label asp-for="CountryDestination" hidden>Country of Destinations <span class="red">*</span></label>
-                                            <select asp-for="CountryDestination" class="form-control" hidden>
-                                                <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
-                                            </select>
-                                        }
-                                        else
-                                        {
-                                            <label asp-for="CountryDestination">Country of Destinations <span class="red">*</span></label>
-                                            <select asp-for="CountryDestination" class="form-control">
-                                                <partial name="_CountriesPartial" />
-                                            </select>
-                                        }
+                                            @if (ViewBag.Location == 0)
+                                            {
+                                                <label class="p-label bold mb-0" asp-for="CountryDestination" hidden>Country of Destinations <span class="p-alt"><i>(Bansang pupuntahan)</i></span>  <span class="red">*</span></label>
+                                                <select asp-for="CountryDestination" class="form-control entry-bg" hidden>
+                                                    <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <label class="p-label bold mb-0" asp-for="CountryDestination">Country of Destinations <span class="p-alt"><i>(Bansang pupuntahan)</i></span> <span class="red">*</span></label>
+                                                <select asp-for="CountryDestination" class="form-control entry-bg">
+                                                    <partial name="_CountriesPartial" />
+                                                </select>
+                                            }
 
-                                        <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                            <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -242,46 +241,81 @@
 
                         </div>
 
-                        <div>
-                            <div>
-                                <a href="#" class="font-weight-bold button-other text-white" data-toggle="modal" data-target="#documentTypesModal" id="documentsSelectionBtn" style="font-size: 18px;padding: 8px;position: relative;top: 10px;">
-                                    (+) ADD DOCUMENTS HERE
-                                </a>
-                                <span asp-validation-for="ApostileData" class="text-danger apostiledata" style="position: relative;top: 20px;left: 10px;"></span>
-                                <div style="background-color: #217ff3;color: white;height: auto; position: relative;top: 20px;">
-                                    <p class="text-left " style="padding: 8px;font-size:14px;">Number of documents to be Apostillized: <span style="font-weight:bold;" id="documentsCount">0</span></p>
-                                </div>
-                                <div id="documentList" style="
-                            border: 1px solid #b7b7b7;
-                            padding: 10px;
-                            height: 150px;
-                            overflow: scroll;
-                            position: relative;
-                            top: 10px;">
+                        <div class="mb-4">
+                            <div class="position-relative  mx-3 px-0 mb-3">
+                                <div id="documentList" class="border" style="
+                                        padding: 10px;
+                                        height: 150px;
+                                        overflow-y: scroll;
+                                        position: relative;
+                                        top: 10px;">
+                                    <div class="px-5">
+                                        <table class="table" id="documentsTable">
+                                            <tr>
+                                                <th class="p-label bold">Document</th>
+                                                <th class="p-label bold">Quantity</th>
+                                                <th class="p-label bold">Transaction</th>
+                                            </tr>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                    <table class="table " id="documentsTable">
-                                        <tr>
-                                            <th>Document</th>
-                                            <th>Quantity</th>
-                                            <th>Transaction</th>
-                                        </tr>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
                                 </div>
-                            </div>
-                            <div>
-                                <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
+                                <div>
+                                    <input asp-for="ApostileData" id="apostileData" class="form-control" hidden />
+                                </div>
+
+                                <div class="bg-secondary px-5 position-absolute w-100 total-number">
+                                    <p class="text-left text-white bold p-label py-2 mb-0">Total Number of Documents for Apostolization: <span id="documentsCount">0</span></p>
+                                </div>
+
                             </div>
 
                         </div>
-                        <div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
-                            <div class="w-100">
-                                <button id="backToStepThreeBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12 mt-2" style="color: white;border: 1px solid darkgray;">Back</button>
-                                <input type="submit" value="Next" />
-                                <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-2" style="color: white;">Next</button>
 
+                        <section>
+                            <div class="doc-action d-flex">
+                                <button type="button" class="btn p-0 mr-3" data-toggle="modal" data-target="#documentTypesModal">
+                                    <img src="~/images/icons/adddoc.png" />
+                                </button>
+
+                                <div class="d-flex flex-column mr-5">
+                                    <p class="bold mb-0"><i>Add documents</i></p>
+                                    <p class="p-alt mb-0 p-label"><i>Magdagdag ng dokumento</i></p>
+                                </div>
+
+                                <button type="button" class="btn p-0 mr-3">
+                                    <img src="~/images/icons/addowner.png" />
+                                </button>
+
+                                <div class="d-flex flex-column mr-5">
+                                    <p class="bold mb-0"><i>Add document owner</i></p>
+                                    <p class="p-alt mb-0 p-label"><i>Magdagdag ng aplikante</i></p>
+                                </div>
                             </div>
+                        </section>
+                        @*<div class="row w-100 m-0 mt-4" style="margin-top: 20px;">
+                                <div class="w-100">
+                                    <button id="backToStepThreeBtn" type="button" class="btn button-secondary col-l-3 col-md-4 col-sm-12 mt-2" style="color: white;border: 1px solid darkgray;">Back</button>
+                                    <input type="submit" value="Next" />
+                                    <button id="stepOneNextBtn" type="button" class="btn button-primary col-l-3 col-md-4 col-sm-12 pull-right mt-2" style="color: white;">Next</button>
+
+                                </div>
+                            </div>*@
+
+                    </div>
+
+                    <div>
+                        <div class="hide-on-small">
+                            <div class="card-body px-5 py-5 d-flex w-100">
+                                <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
+                            </div>
+                        </div>
+                        <div class="show-on-small-only mt-5 my-auto">
+                            <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                            <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
                         </div>
                     </div>
 
@@ -347,13 +381,13 @@
                     <div class="d-flex">
                         <div class="d-flex flex-column ml-auto mr-2">
                             <span class="bold" style="text-align:center">Regular</span>
-                            <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-2 regular" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
+                            <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-0 regular" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
 
                         </div>
                         <div class="d-flex flex-column mr-auto ml-2">
                             <div>
                                 <span class="bold" style="text-align:center">Expedite</span>
-                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-2 expedite" id="qtyNbiClearanceExpedite" style="width: 50px !important; height: auto !important; font-size: 24px ">
+                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-0 expedite" id="qtyNbiClearanceExpedite" style="width: 50px !important; height: auto !important; font-size: 24px ">
                             </div>
                         </div>
                     </div>
@@ -382,10 +416,11 @@
 
 @section Scripts {
 
-    <script>$("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
+    <script>
+        $("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
         $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })</script>
 
-    <script src="~/js/personalinfo.js"></script>
+    <script src="~/js/oas.js"></script>
     <script>
 
 

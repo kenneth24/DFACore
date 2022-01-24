@@ -266,7 +266,7 @@ selectDocumentsBtn.on('click', function () {
     $("#documentsTable tbody > tr").empty();
     //documentsTableBody.empty();
     var header = $('.docsHeader');
-    documentsTable.append('<tr class="docsHeader"><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
+    documentsTable.append('<tr class="docsHeader"><th class="p-label bold">Document</th><th class="p-label bold">Quantity</th><th class="p-label bold">Transaction</th></tr>');
     //var tbodyContent = '';
     var numberOfDocuments = 0;
     var newDocument = [];
