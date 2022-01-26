@@ -516,7 +516,7 @@ addDocumentOwnerBtn.on('click', function () {
 
 });
 
-goToStepFiveButton.on('click', function () {
+$('.gotoApostileSchedule').on('click', function () {
     alert("test3");
 
    
@@ -530,11 +530,11 @@ goToStepFiveButton.on('click', function () {
 
         $.ajax({
             type: "POST",
-            url: `${urlBase}Home/ApostilleSchedule`,
+            url: `${urlBase}Home/ShippingInformation`,
             data: formData,
             success: function (data) {
 
-                window.location.href = `${urlBase}Home/ApostilleSchedule`
+                window.location.href = `${urlBase}Home/ShippingInformation`
             
             },
             error: function (data) {

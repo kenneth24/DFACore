@@ -1108,10 +1108,7 @@ namespace DFACore.Controllers
             return View();
         }
 
-        public ActionResult ShippingInformation()
-        {
-            return View();
-        }
+        
 
         public ActionResult SiteSelection()
         {
@@ -1154,10 +1151,38 @@ namespace DFACore.Controllers
             var documents = _documentsType.Get();
             ViewData["DocumentTypes"] = documents;
 
+            return RedirectToAction("PersonalInfo");
+        }
 
+        public ActionResult ShippingInformation()
+        {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult ShippingInformation(ApplicantRecordViewModel model)
+        {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            main.FirstName = model.FirstName;
+            main.MiddleName = model.MiddleName;
+            main.LastName = model.LastName;
+            main.Suffix = model.Suffix;
+            main.DateOfBirth = model.DateOfBirth;
+            main.ContactNumber = model.ContactNumber;
+            main.CountryDestination = model.CountryDestination;
+            main.NameOfRepresentative = model.NameOfRepresentative;
+            main.RepresentativeContactNumber = model.RepresentativeContactNumber;
+            main.ApostileData = model.ApostileData;
+            main.ProcessingSite = model.ProcessingSite;
+            main.ProcessingSiteAddress = model.ProcessingSiteAddress;
+
+            HttpContext.Session.SetComplexData("Model", main);
+
+            return RedirectToAction("ShippingInformation");
+        }
+
+        
         public ActionResult ApostilleSchedule()
         {
 
