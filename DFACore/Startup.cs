@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using DFACore.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using UnionBankPayment;
 
 namespace DFACore
 {
@@ -104,6 +105,7 @@ namespace DFACore
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();
             services.AddTransient<AdministrationRepository>();
+            services.AddSingleton<UnionBankPaymentClient>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddBrowserDetection();
             services.AddWkhtmltopdf();
