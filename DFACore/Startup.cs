@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using DFACore.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using UnionBankApi;
 
 namespace DFACore
 {
@@ -108,6 +109,8 @@ namespace DFACore
             services.AddBrowserDetection();
             services.AddWkhtmltopdf();
             //services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton<UnionBankClient>(serviceProvider => new UnionBankClient(Configuration.GetSection("UnionBankApiConfiguration").Get<UnionBankClientConfiguration>()));
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)
