@@ -1162,6 +1162,7 @@ namespace DFACore.Controllers
         [HttpPost]
         public ActionResult ShippingInformation(ApplicantRecordViewModel model)
         {
+
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
             main.FirstName = model.FirstName;
