@@ -16,10 +16,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using shortid;
 using shortid.Configuration;
 using Shyjus.BrowserDetection;
+using UnionBankPayment;
 using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
@@ -39,6 +41,7 @@ namespace DFACore.Controllers
         private readonly IBrowserDetector _browserDetector;
         private readonly DocumentTypes _documentsType;
         private readonly AdministrationRepository _administrationRepository;
+        private readonly UnionBankPaymentClient _unionBankPaymentService;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -50,7 +53,8 @@ namespace DFACore.Controllers
             GoogleCaptchaService googleCaptchaService,
             IActionContextAccessor accessor,
             IBrowserDetector browserDetector,
-            AdministrationRepository administrationRepository)
+            AdministrationRepository administrationRepository, 
+            UnionBankPaymentClient unionBankPaymentService)
         {
             _logger = logger;
             _userManager = userManager;
@@ -64,6 +68,7 @@ namespace DFACore.Controllers
             _browserDetector = browserDetector;
             _documentsType = new DocumentTypes();
             _administrationRepository = administrationRepository;
+            _unionBankPaymentService = unionBankPaymentService;
         }
         public IActionResult ApplicantTypeSelection()
         {
@@ -1187,6 +1192,9 @@ namespace DFACore.Controllers
         public ActionResult ApostilleSchedule()
         {
 
+            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+
+            ViewData["DefaultBranch"] = defaultBranch;
 
             return View();
         }
@@ -1252,10 +1260,22 @@ namespace DFACore.Controllers
             return View();
         }
 
-        public ActionResult OrderSummary()
+        public async Task<ActionResult> OrderSummary()        {
+            var code = HttpContext.Request.Query.TryGetValue("code", out StringValues value); //validate
+            var token = await _unionBankPaymentService.GetAccessToken(value);
+
+            var model = new CreateCustomerPaymentParameter { SenderRefId = "test005"};
+            var result = await _unionBankPaymentService.CreateCustomerPayment( model, token);
+            return View();
+        }
+
+        public ActionResult PaymentSuccess()
         {
+            return View();
+        }
 
-
+        public ActionResult PaymentFailed()
+        {
             return View();
         }
 

@@ -130,6 +130,7 @@
                             <div class="card-body px-5 pb-5 pt-3">
                                 <button asp-controller="Home" asp-action="OrderSummary" asp-route-id="0" id="philippines-button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4">Pay online</button>
                                 <button asp-controller="Home" asp-action="Index" asp-route-id="1" id="abroad-button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4">Payment centers</button>
+                                <button type="button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4" onclick="window.location.href = 'https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=fe667681-2650-4c0b-93fb-c365b2cc0953&redirect_uri=https://localhost:44332/Home/OrderSummary&scope=payments&type=single&partnerId=5dff2cdf-ef15-48fb-a87b-375ebff415bb'">UnionBank Payment</button>
                                 <button class="btn btn-secondary w-100 d-block text-uppercase bold">Back</button>
                             </div>
                         </div>
