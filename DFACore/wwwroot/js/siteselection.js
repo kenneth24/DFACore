@@ -3,14 +3,23 @@
 $(document).ready(function () {
     $('#loading').hide();
     let checkmark = $('.checkmark'),
-        documentStatusRadio = $('input[type=radio][name=DocumentStatus]');
+        siteButton = $('#site'),
+        documentStatusRadio = $('input[type=radio][name=DocumentStatus]'),
+        documentTypeRadio = $('input[type=radio][name=DocumentType]'),
+        lblProcessingSiteAddress = $('#lblProcessingSiteAddress'),
+        lblProcessingSiteOfficeHours = $('#lblProcessingSiteOfficeHours'),
+        lblProcessingSiteContactNumber = $('#lblProcessingSiteContactNumber'),
+        lblProcessingSiteEmail = $('#lblProcessingSiteEmail'),
+        addressInput = $('#address')
+        branches = [];
 
+    getBranches();
+    init();
 
     documentStatusRadio.change(function () {
         let $this = $(this),
             value = $this.val(),
             philippinesOptions = $('option.ph');
-        console.log(value);
 
         if (value == 'Abroad') {
             philippinesOptions.hide();
@@ -19,6 +28,31 @@ $(document).ready(function () {
             philippinesOptions.show();
         }
     });
+
+
+    siteButton.on('change', function () {
+        let $this = $(this),
+            selectedSite = $this.val(),
+            branchDetail = branches.filter(x => x.id == selectedSite)[0];
+
+
+        lblProcessingSiteAddress.text(branchDetail.branchAddress);
+        lblProcessingSiteOfficeHours.text(branchDetail.officeHours);
+        lblProcessingSiteContactNumber.text(branchDetail.contactNumber);
+        lblProcessingSiteEmail.text(branchDetail.email);
+        addressInput.val(branchDetail.branchAddress);
+    });
+
+    function init() {
+        documentStatusRadio.val('Abroad');
+        documentTypeRadio.val('Document Owner');
+    }
+
+    function getBranches() {
+        $.get(`${urlBase}Home/GetBranches`, function (data, status) {
+            branches = data;
+        });
+    };
 
 });
 
