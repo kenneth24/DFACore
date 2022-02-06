@@ -1130,7 +1130,9 @@ namespace DFACore.Controllers
 
             ViewData["Branches"] = branches;
 
-            return View();
+            var siteSelection = TempData["Review"] as SiteSelectionViewModel;
+
+            return View(siteSelection);
         }
 
         public ActionResult PersonalInfo()
@@ -1144,6 +1146,12 @@ namespace DFACore.Controllers
         [HttpPost]
         public ActionResult PersonalInfo(SiteSelectionViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                TempData["SiteSelection"] = model;
+                return RedirectToAction("SiteSelection");
+            }
+
             MainViewModel main = new()
             {
                 DocumentStatus = model.DocumentStatus,
@@ -1202,22 +1210,11 @@ namespace DFACore.Controllers
         }
 
         [HttpPost]
-        public ActionResult ApostilleSchedule(ApplicantRecordViewModel model)
+        public ActionResult ApostilleSchedule(ShippingInfoViewModel model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            main.FirstName = model.FirstName;
-            main.MiddleName = model.MiddleName;
-            main.LastName = model.LastName;
-            main.Suffix = model.Suffix;
-            main.DateOfBirth = model.DateOfBirth;
-            main.ContactNumber = model.ContactNumber;
-            main.CountryDestination = model.CountryDestination;
-            main.NameOfRepresentative = model.NameOfRepresentative;
-            main.RepresentativeContactNumber = model.RepresentativeContactNumber;
-            main.ApostileData = model.ApostileData;
-            main.ProcessingSite = model.ProcessingSite;
-            main.ProcessingSiteAddress = model.ProcessingSiteAddress;
+            
 
 
             //var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
@@ -1250,9 +1247,17 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
-
-
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult ApplicationSummary(ApostilleScheduleViewModel model)
+        {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            main.ScheduleDate = model.ScheduleDate;
+
+            return RedirectToAction("ApplicationSummary");
         }
 
         public ActionResult PaymentMethod()

@@ -21,5 +21,7 @@ namespace DFACore.Models
         public string ApostileData { get; set; }
         public string ProcessingSite { get; set; }
         public string ProcessingSiteAddress { get; set; }
+
+        public string ScheduleDate { get; set; }
     }
 }
