@@ -108,7 +108,7 @@ namespace DFACore.Repository
             //{ 
             //    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             //};
-            
+
             //foreach (var applicantRecord in applicantRecords)
             //{
             //    if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
@@ -119,7 +119,7 @@ namespace DFACore.Repository
             //}
             //applicantRecord.DateCreated = DateTime.UtcNow;
 
-            
+
         }
 
         public bool Delete(long id)
@@ -219,7 +219,7 @@ namespace DFACore.Repository
                     }
                 }
             }
-            
+
 
             //int type = 0;
 
@@ -346,7 +346,7 @@ namespace DFACore.Repository
                             //color = "#257e4a"
                         };
                     }
-                    
+
                     dates.Add(av);
                 }
             }
@@ -1556,7 +1556,7 @@ namespace DFACore.Repository
                 new City { municipality = "Nueva Vizcaya", city = "Sta. Fe" },
                 new City { municipality = "Nueva Vizcaya", city = "Solano" },
                 new City { municipality = "Nueva Vizcaya", city = "Villaverde" },
- 
+
                 new City { municipality = "Occidental Mindoro", city = "Abra de Ilog" },
                 new City { municipality = "Occidental Mindoro", city = "Calintaan" },
                 new City { municipality = "Occidental Mindoro", city = "Looc" },
@@ -2040,7 +2040,13 @@ namespace DFACore.Repository
 
         public BranchModel GetBranch(string branch)
         {
-            var raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+            var isParsable = long.TryParse(branch, out long value);
+            var raw = new Branch();
+            if (isParsable)
+                raw = _context.Branches.Where(a => a.IsActive && a.Id == value).FirstOrDefault();
+            else
+                raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+
             var availableDates = GenerateListOfDates(DateTime.Now, raw.Id);
 
             //DateTime dtFrom = DateTime.Parse(raw.StartTime);

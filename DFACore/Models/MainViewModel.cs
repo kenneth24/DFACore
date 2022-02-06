@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace DFACore.Models
 {
     public class MainViewModel
@@ -21,7 +23,11 @@ namespace DFACore.Models
         public string ApostileData { get; set; }
         public string ProcessingSite { get; set; }
         public string ProcessingSiteAddress { get; set; }
-
+        public bool HasExpedite { get; set; }
         public string ScheduleDate { get; set; }
+        public decimal TotalFees { get; set; }
+        public string ApplicationCode { get; set; }
+        public ShippingInfoViewModel Shipping { get; set; }
+        public List<ApplicantRecordViewModel> Applicants { get; set; }
     }
 }

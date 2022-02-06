@@ -1195,12 +1195,16 @@ namespace DFACore.Controllers
                 TempData["SiteSelection"] = model;
                 return RedirectToAction("SiteSelection");
             }
+            var branches = _applicantRepo.GetBranches();
+            var selectedBranch = branches.FirstOrDefault(x => x.Id == long.Parse(model.ApostileSite));
 
             MainViewModel main = new()
             {
                 DocumentStatus = model.DocumentStatus,
                 DocumentType = model.DocumentType,
-                ApostileSite = model.ApostileSite
+                ApostileSite = model.ApostileSite,
+                ProcessingSite = selectedBranch.BranchName,
+                ProcessingSiteAddress = selectedBranch.BranchAddress
             };
 
             HttpContext.Session.SetComplexData("Model", main);
@@ -1233,23 +1237,24 @@ namespace DFACore.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShippingInformation(ApplicantRecordViewModel model)
+        public ActionResult ShippingInformation(List<ApplicantRecordViewModel> model)
         {
 
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            main.FirstName = model.FirstName;
-            main.MiddleName = model.MiddleName;
-            main.LastName = model.LastName;
-            main.Suffix = model.Suffix;
-            main.DateOfBirth = model.DateOfBirth;
-            main.ContactNumber = model.ContactNumber;
-            main.CountryDestination = model.CountryDestination;
-            main.NameOfRepresentative = model.NameOfRepresentative;
-            main.RepresentativeContactNumber = model.RepresentativeContactNumber;
-            main.ApostileData = model.ApostileData;
-            main.ProcessingSite = model.ProcessingSite;
-            main.ProcessingSiteAddress = model.ProcessingSiteAddress;
+            //main.FirstName = model.FirstName;
+            //main.MiddleName = model.MiddleName;
+            //main.LastName = model.LastName;
+            //main.Suffix = model.Suffix;
+            //main.DateOfBirth = model.DateOfBirth;
+            //main.ContactNumber = model.ContactNumber;
+            //main.CountryDestination = model.CountryDestination;
+            //main.NameOfRepresentative = model.NameOfRepresentative;
+            //main.RepresentativeContactNumber = model.RepresentativeContactNumber;
+            //main.ApostileData = model.ApostileData;
+            //main.ProcessingSite = model.ProcessingSite;
+            //main.ProcessingSiteAddress = model.ProcessingSiteAddress;
+            main.Applicants = model;
 
             HttpContext.Session.SetComplexData("Model", main);
 
@@ -1273,9 +1278,7 @@ namespace DFACore.Controllers
         public ActionResult ApostilleSchedule(ShippingInfoViewModel model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-
-            
-
+            main.Shipping = model;
 
             //var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
 
@@ -1315,15 +1318,15 @@ namespace DFACore.Controllers
         public ActionResult ApplicationSummary(ApostilleScheduleViewModel model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-
             main.ScheduleDate = model.ScheduleDate;
+            HttpContext.Session.SetComplexData("Model", main);
+
 
             return RedirectToAction("ApplicationSummary");
         }
 
         public ActionResult PaymentMethod()
         {
-
 
             return View();
         }
@@ -1356,7 +1359,7 @@ namespace DFACore.Controllers
             var branches = _applicantRepo.GetBranches();
             var branch = branches.FirstOrDefault(x => x.Id == long.Parse(main.ApostileSite));
             main.HasExpedite = branch != null ? branch.HasExpidite : false;
-
+            main.ApplicationCode = GetApplicantCode();
             HttpContext.Session.SetComplexData("Model", main);
 
             return Json(main);

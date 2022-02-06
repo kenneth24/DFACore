@@ -1146,12 +1146,33 @@
                         <option id="@item.Id@(increment)" value="@item.Value">@item.Name</option>
                     }
                 </select>
-                <div class="mb-3" id="documentTypeInfo@(increment)">
+                @*<div class="mb-3" id="documentTypeInfo@(increment)">
                     <small class="bold">Document Information:</small>
                     <div class="card white-bg p-2 px-3">
                         <span id="documentInfoText@(increment)">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
                     </div>
-                </div>
+                </div>*@
+
+                @if (ViewBag.Location == 1)
+                {
+                    <div class="mb-3" id="documentTypeInfo@(increment)">
+                        <small class="bold">Document Information:</small>
+                        <div class="card white-bg p-2 px-3">
+                            <span id="documentInfoText@(increment)">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="mb-3" id="documentTypeInfo@(increment)">
+                        <small class="bold">Document Information:</small>
+                        <div class="card white-bg p-2 px-3">
+                            <span id="documentInfoText@(increment)">For issuance of DFA which will used in the Philippines only.</span>
+                        </div>
+                    </div>
+
+                }
                 <div class="mb-3" id="documentQuantity@(increment)">
                     <h5 class="bold text-center mb-3">No. of Documents</h5>
 
@@ -1167,12 +1188,15 @@
                         </div>
                     </div>
                 </div>
-                <div id="documentTypeSample@(increment)">
-                    <small class="bold">*Personal Copy is NOT valid</small>
-                    <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
-                    <small class="bold">*Sample copy of NBI sundry</small>
-                    <img src="~/images/documents/1 Sample NBI Sundry-1.png" class="w-100" />
-                </div>
+                @if (ViewBag.Location == 1)
+                {
+                    <div id="documentTypeSample@(increment)">
+                        <small class="bold">*Personal Copy is NOT valid</small>
+                        <img src="~/images/documents/1 NBI Personal Copy sample (Not Acceptable).png" class="w-100 mb-3 " />
+                        <small class="bold">*Sample copy of NBI sundry</small>
+                        <img src="~/images/documents/1 Sample NBI Sundry-1.png" class="w-100" />
+                    </div>
+                }
             </div>
             <div class="modal-footer">
                 <div class="col-md-5 col-sm-5" style="margin-left: -15px;"> <button type="button" class="btn button-secondary text-white col-md-12 col-sm-12" data-dismiss="modal">Back</button></div>

@@ -873,16 +873,35 @@ function docOwnerStepFive() {
     //ownerModel.ProcessingSiteAddress = $('#address').val();
     ownerModel.Suffix = $('#Suffix').val();
     //ownerModel.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
-
-    //record.ApplicationCode = code;
+    var records = [];
+    records.push(ownerModel);
+    record.ApplicationCode = code;
     record.ApplicantCount = 0;
     //record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
-    record.Records = null;
+    record.Records = records;
     record.Record = ownerModel;
+
     //record.Token = token;
 
     console.log(record);
     loading.hide();
+
+
+
+
+    $.ajax({
+        type: "POST",
+        url: `${urlBase}Home/ShippingInformation`,
+        data: { 'model': record.Records },
+        success: function () {
+            window.location.href = `${urlBase}Home/ShippingInformation`
+        },
+        error: function (data) {
+
+        }
+    }).done(function (data) {
+        console.log(data);
+    });
 }
 
 function authorizedStepFive() {
@@ -1075,8 +1094,8 @@ function authorizedStepFive() {
         let subFee = 0;
 
         for (var x = 0; x < window['documentObject' + i].length; x++) {
-          //  let documentText = `<p class="mb-0">(${window['documentObject' + i][x].Quantity}) (${window['documentObject' + i][x].Transaction}) ${window['documentObject' + i][x].Name}</p>`;
-         //   docsContainer.append(documentText);
+            //  let documentText = `<p class="mb-0">(${window['documentObject' + i][x].Quantity}) (${window['documentObject' + i][x].Transaction}) ${window['documentObject' + i][x].Name}</p>`;
+            //   docsContainer.append(documentText);
             if (window['documentObject' + i][x].Transaction == 'Regular')
                 subFee += prices.regular * window['documentObject' + i][x].Quantity;
             else
@@ -1093,9 +1112,10 @@ function authorizedStepFive() {
                 console.log('totalFees');
                 console.log(totalFees);
             }
+
         }
 
-      //  documentsParent.append('<hr />');
+        //  documentsParent.append('<hr />');
 
         console.log('docOwner');
         console.log(docOwner);
@@ -1104,22 +1124,25 @@ function authorizedStepFive() {
 
         let model = {
             ApostileData: JSON.stringify(window['documentObject' + i]),
-           // ApplicationCode: `${code}-${i}`,
+            ApplicationCode: `${code}-${i}`,
             CountryDestination: destination,
             DateOfBirth: bday,
             Fees: subFee,
             FirstName: fname,
             MiddleName: mname,
+            ContactNumber: "0",
             LastName: lname,
-           // ProcessingSite: $('#site').val(),
-           // ProcessingSiteAddress: $('#address').val(),
+            //ProcessingSite: $('#site').val(),
+            // ProcessingSiteAddress: $('#address').val(),
             Suffix: suffix,
-          //  ScheduleDate: `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`,
+            //  ScheduleDate: `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`,
             NameOfRepresentative: `${$(`#FirstName`).val()} ${$(`#MiddleName`).val()} ${$(`#LastName`).val()} ${$(`#Suffix`).val()}`,
             RepresentativeContactNumber: $('#ContactNumber').val()
         };
 
         records.push(model);
+
+
     }
 
 
@@ -1132,7 +1155,7 @@ function authorizedStepFive() {
         FirstName: $(`#FirstName`).val(),
         MiddleName: $(`#MiddleName`).val(),
         LastName: $(`#LastName`).val(),
-       // ProcessingSite: $('#site').val(),
+        // ProcessingSite: $('#site').val(),
         //ProcessingSiteAddress: $('#address').val(),
         Suffix: $(`#Suffix`).val()
     };
@@ -1144,13 +1167,28 @@ function authorizedStepFive() {
     record.Record = authorized;
     //record.Token = token;
 
-    console.log(record);
+    console.log(record.Records);
 
     //$("#step-one").hide();
     //$("#step-one-authorized").hide();
     //$("#step-three").show();
     loading.hide();
-    $(this).submit();
+
+    //model = JSON.stringify({ 'model': records });
+
+    $.ajax({
+        type: "POST",
+        url: `${urlBase}Home/ShippingInformation`,
+        data: { 'model': record.Records },
+        success: function () {
+            window.location.href = `${urlBase}Home/ShippingInformation`
+        },
+        error: function (data) {
+
+        }
+    }).done(function (data) {
+        console.log(data);
+    });
 
 }
 
@@ -1167,6 +1205,7 @@ function init() {
         info = data;
         console.log(info);
         hasExpedite = info.hasExpedite
+        code = info.applicationCode;
         if (hasExpedite)
             expediteQuantityElement.attr("disabled", false);
         if (info.documentType == 'Authorized') {
