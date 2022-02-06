@@ -1247,7 +1247,8 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
-            return View();
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            return View(main);
         }
 
         [HttpPost]
@@ -1267,13 +1268,16 @@ namespace DFACore.Controllers
             return View();
         }
 
-        public async Task<ActionResult> OrderSummary()        {
-            var code = HttpContext.Request.Query.TryGetValue("code", out StringValues value); //validate
-            var token = await _unionBankPaymentService.GetAccessToken(value);
+        public async Task<ActionResult> OrderSummary()
+        {
+            //this should be success page
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            //var code = HttpContext.Request.Query.TryGetValue("code", out StringValues value); //validate
+            //var token = await _unionBankPaymentService.GetAccessToken(value);
 
-            var model = new CreateCustomerPaymentParameter { SenderRefId = "test005"};
-            var result = await _unionBankPaymentService.CreateCustomerPayment( model, token);
-            return View();
+            //var model = new CreateCustomerPaymentParameter { SenderRefId = "test005"};
+            //var result = await _unionBankPaymentService.CreateCustomerPayment( model, token);
+            return View(main);
         }
 
         public ActionResult PaymentSuccess()
