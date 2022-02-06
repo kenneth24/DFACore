@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using UnionBankApi;
 
 namespace DFACore.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         private readonly UnionBankClient _unionBankClient;
@@ -39,6 +41,7 @@ namespace DFACore.Controllers
                 await _unionBankClient.CreateMerchantPaymentAsync(merchantPayment, accessToken).ConfigureAwait(false);
 
                 //return success page
+                return RedirectToAction("OrderSummary", "Home");
                 return View();
             }
             catch (Exception)
