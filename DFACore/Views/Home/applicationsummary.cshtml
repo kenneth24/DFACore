@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.SiteSelectionViewModel
+@model DFACore.Models.MainViewModel
 @using Microsoft.Extensions.Options
 @using System.Linq
 
@@ -141,7 +141,9 @@
                                     <div class="px-4">
                                         <label class="mb-0 bold p-label"><i>Application Details</i></label>
                                         <div style="height: 80px" class="entry-bg mb-3">
-
+                                            Document Owner : @Model.FirstName @Model.MiddleName @Model.LastName <br>
+                                            Date Of Birth : @Model.DateOfBirth <br />
+                                            Country Of Destination : @Model.CountryDestination
                                         </div>
                                         <label class="mb-0 bold p-label"><i>Shipping Information</i></label>
                                         <div style="height: 80px" class="entry-bg mb-3">

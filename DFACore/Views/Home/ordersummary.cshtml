@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.SiteSelectionViewModel
+@model DFACore.Models.MainViewModel
 @using Microsoft.Extensions.Options
 @using System.Linq
 
@@ -135,35 +135,35 @@
                                                     <p class="p-label bold mb-0 my-auto">Document Owner:</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
-                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">TEST</label>
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.LastName, @Model.FirstName @Model.MiddleName</label>
                                                     <input id="address" class="form-control" value="TEST" style="display:none" />
                                                 </div>
 
-                                                <div class="col-lg-6 d-flex mb-2">
+                                                @*<div class="col-lg-6 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Authorized Representative</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
                                                     <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteOfficeHours" class="p-0 p-label mb-0 my-auto">TEST</label>
-                                                </div>
+                                                </div>*@
 
                                                 <div class="col-lg-6 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
-                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">TEST</label>
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@Model.ContactNumber</label>
                                                 </div>
 
                                                 <div class="col-lg-6 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
-                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">TEST</label>
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.CountryDestination</label>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Type of Document/s</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-6 d-flex mb-2">
-                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">TEST</label>
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.DocumentType</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -37,4 +37,8 @@
     <Folder Include="Rotativa\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UnionBankApi\UnionBankApi.csproj" />
+  </ItemGroup>
+
 </Project>

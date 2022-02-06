@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.SiteSelectionViewModel
+@model DFACore.Models.ApostilleScheduleViewModel
 @using Microsoft.Extensions.Options
 @using System.Linq
 
@@ -157,7 +157,7 @@
                                         <div id="selectedDateAndTime" style="height:auto;padding:10px;">
                                             <p class="black-text">Selected Date and Time</p>
                                             <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
-                                            <input id="appointmentSchedule" class="form-control font-weight-bold" readonly>
+                                            <input id="appointmentSchedule" asp-for="ScheduleDate" class="form-control font-weight-bold" readonly>
                                             <p id="appointmentDate" style="display:none;"></p>
                                             <p id="appointmentScheduleTime" style="display:none;"></p>
                                             <div id="schedLoader" class="text-center" style="display:none;">
