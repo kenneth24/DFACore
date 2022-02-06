@@ -1191,10 +1191,12 @@ namespace DFACore.Controllers
         
         public ActionResult ApostilleSchedule()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+            var selectedBranch = _applicantRepo.GetBranch(main.ApostileSite);
 
-            ViewData["DefaultBranch"] = defaultBranch;
+            ViewData["SelectedBranch"] = selectedBranch;
+            ViewData["AvailableDates"] = selectedBranch.AvailableDates;
 
             return View();
         }
@@ -1218,9 +1220,9 @@ namespace DFACore.Controllers
             main.ProcessingSiteAddress = model.ProcessingSiteAddress;
 
 
-            var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+            //var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
 
-            ViewData["DefaultBranch"] = defaultBranch;
+            //ViewData["DefaultBranch"] = defaultBranch;
 
             HttpContext.Session.SetComplexData("Model", main);
 
