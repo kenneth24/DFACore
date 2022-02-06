@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using DFACore.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using UnionBankPayment;
+using UnionBankApi;
 
 namespace DFACore
 {
@@ -105,11 +105,12 @@ namespace DFACore
             services.AddTransient<GoogleCaptchaService>();
             services.AddTransient<ApplicantRecordRepository>();
             services.AddTransient<AdministrationRepository>();
-            services.AddSingleton<UnionBankPaymentClient>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddBrowserDetection();
             services.AddWkhtmltopdf();
             //services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddSingleton<UnionBankClient>(serviceProvider => new UnionBankClient(Configuration.GetSection("UnionBankApiConfiguration").Get<UnionBankClientConfiguration>()));
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)
