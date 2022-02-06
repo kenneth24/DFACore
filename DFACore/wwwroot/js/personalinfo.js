@@ -38,6 +38,8 @@ let token = '';
 let loading = $('#loading');
 let termsAndConditions = $('#terms-and-conditions-modal');
 let agreeterms = $('#terms-and-conditions-agree');
+let addDocumentOwnerButton = $('#addDocumentOwnerButton');
+let info = {};
 let hasTermsAndConditions = false;
 let hasExpedite = false;
 
@@ -90,7 +92,8 @@ let applicantType = 0;
 applicationTypeSelection.hide();
 ownerDocument.hide();
 authorizeDocument.hide();
-console.log($('#appointmentSchedule').val());
+init();
+//console.log($('#appointmentSchedule').val());
 
 siteAndScheduleButton.on('click', function () {
     if ($('#appointmentSchedule').val() == '') {
@@ -162,6 +165,7 @@ docTypeSelect.on('change', function () {
         expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
         baseUrl = window.location.origin;
 
+    console.log(selectedData);
     documentTypeSample.children().remove();
     if (selectedData != null) {
         // change displayed document info
@@ -178,6 +182,8 @@ docTypeSelect.on('change', function () {
         $("#" + regularQuantity.id).val("0");
         if (hasExpedite) {
             $("#" + expediteQuantity.id).val("0");
+            expediteQuantityElement.attr("disabled", false);
+            console.log('hererhehrehehr');
         }
 
         regularQuantityElement.attr('min', regularQuantity.min);
@@ -342,8 +348,6 @@ addDocumentOwnerBtn.on('click', function () {
         url: `${urlBase}Home/PartialApplicant?i=` + docOwner + '&id=' + applicantType,
         cache: false,
         success: function (html) {
-
-
             if (docOwner == 0) {
                 $("#documentOwners").append(html);
                 //alert(docOwner);
@@ -358,6 +362,14 @@ addDocumentOwnerBtn.on('click', function () {
             //$(`#documentsTable${docOwner}`).append('<tr class="docsHeader"><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
             //$('#documentsCount').text(0);
 
+            let addDocumentOwnerContainer = $('.addDocumentOwnerContainer');
+            let lastaddDocumentOwnerContainer = $(`#addDocumentOwnerContainer${docOwner}`);
+
+            addDocumentOwnerContainer.hide();
+            lastaddDocumentOwnerContainer.show();
+            lastaddDocumentOwnerContainer.on('click', function () {
+                addDocumentOwnerBtn.click();
+            });
 
 
             $(`#docTypeSelect${docOwner}`).on('change', function () {
@@ -519,32 +531,32 @@ addDocumentOwnerBtn.on('click', function () {
 $('.gotoApostileSchedule').on('click', function () {
     alert("test3");
 
-   
+
 
     //$("form").submit(function (event) {
-        var formData = {
-            firstName: $("#FirstName").val(),
-            middleName: $("#MiddleName").val(),
-            lastName: $("#LastName").val(),
-        };
+    var formData = {
+        firstName: $("#FirstName").val(),
+        middleName: $("#MiddleName").val(),
+        lastName: $("#LastName").val(),
+    };
 
-        $.ajax({
-            type: "POST",
-            url: `${urlBase}Home/ShippingInformation`,
-            data: formData,
-            success: function (data) {
+    $.ajax({
+        type: "POST",
+        url: `${urlBase}Home/ShippingInformation`,
+        data: formData,
+        success: function (data) {
 
-                window.location.href = `${urlBase}Home/ShippingInformation`
-            
-            },
-            error: function (data) {
-                
-            }
-        }).done(function (data) {
-            console.log(data);
-        });
+            window.location.href = `${urlBase}Home/ShippingInformation`
 
-        //event.preventDefault();
+        },
+        error: function (data) {
+
+        }
+    }).done(function (data) {
+        console.log(data);
+    });
+
+    //event.preventDefault();
     //});
 });
 
@@ -670,139 +682,139 @@ function getPrices() {
 function SetCode(codeParam, ifHasTerms) {
     code = codeParam;
     hasTermsAndConditions = ifHasTerms;
-    console.log(ifHasTerms);
+    //console.log(ifHasTerms);
 }
 
 function docOwnerStepFive() {
 
     loading.show();
     docuTotalCount = 0;
-    if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
-        || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
-        || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
-    ) {
-        if ($('.fNamePartial').val() == "") {
-            $('.fNamePartialValidation').text('This field is required.');
-        }
-        else
-            $('.fNamePartialValidation').text('');
+    //if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
+    //    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
+    //    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
+    //) {
+    //    if ($('.fNamePartial').val() == "") {
+    //        $('.fNamePartialValidation').text('This field is required.');
+    //    }
+    //    else
+    //        $('.fNamePartialValidation').text('');
 
-        if ($('.lNamePartial').val() == "") {
-            $('.lNamePartialValidation').text('This field is required.');
-        }
-        else
-            $('.lNamePartialValidation').text('');
+    //    if ($('.lNamePartial').val() == "") {
+    //        $('.lNamePartialValidation').text('This field is required.');
+    //    }
+    //    else
+    //        $('.lNamePartialValidation').text('');
 
-        if ($('.dateOfbirthPartial').val() == "") {
-            $('.dateOfbirthPartialValidation').text('This field is required.');
-        }
-        else
-            $('.dateOfbirthPartialValidation').text('');
+    //    if ($('.dateOfbirthPartial').val() == "") {
+    //        $('.dateOfbirthPartialValidation').text('This field is required.');
+    //    }
+    //    else
+    //        $('.dateOfbirthPartialValidation').text('');
 
-        if ($('.countrydestinationPartial').val() == "") {
-            $('.countrydestinationPartialValidation').text('This field is required.');
-        }
-        else
-            $('.countrydestinationPartialValidation').text('');
+    //    if ($('.countrydestinationPartial').val() == "") {
+    //        $('.countrydestinationPartialValidation').text('This field is required.');
+    //    }
+    //    else
+    //        $('.countrydestinationPartialValidation').text('');
 
-        if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
-            $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
-        }
-        else if ($('.apostiledataPartial').val() == "[]") {
-            $('.apostiledataPartialValidation').text('Please insert document quantity.');
-        }
-        else
-            $('.apostiledataPartialValidation').text('');
+    //    if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
+    //        $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
+    //    }
+    //    else if ($('.apostiledataPartial').val() == "[]") {
+    //        $('.apostiledataPartialValidation').text('Please insert document quantity.');
+    //    }
+    //    else
+    //        $('.apostiledataPartialValidation').text('');
 
-        if ($('#Record_FirstName').val() == "")
-            $('.fname').text('This field is required.');
-        else
-            $('.fname').text('');
+    //    if ($('#Record_FirstName').val() == "")
+    //        $('.fname').text('This field is required.');
+    //    else
+    //        $('.fname').text('');
 
-        if ($('#Record_LastName').val() == "")
-            $('.lname').text('This field is required.');
-        else
-            $('.lname').text('');
-
-
-        if ($('#Record_DateOfBirth').val() == "")
-            $('.dateofbirth').text('This field is required.');
-        else
-            $('.dateofbirth').text('');
-
-        if ($('#Record_ContactNumber').val() == "")
-            $('.contactnumber').text('This field is required.');
-        else
-            $('.contactnumber').text('');
-
-        if ($('#Record_CountryDestination').val() == "")
-            $('.countrydestination').text('This field is required.');
-        else
-            $('.countrydestination').text('');
-
-        if ($('#apostileData').val() == "")
-            $('.apostiledata').text('Please add documents for apostillization.');
-        else if ($('#apostileData').val() == "[]")
-            $('.apostiledata').text('Please insert document quantity.');
-        else
-            $('.apostiledata').text('');
-
-        loading.hide();
-        return;
-    }
-    else {
-        $('.title').text('');
-        $('.fname').text('');
-        $('.lname').text('');
-        $('.address').text('');
-        $('.contactnumber').text('');
-        $('.countrydestination').text('');
-        $('.apostiledata').text('');
-    }
-
-    var fnamePartialClassReq = $('.fNamePartial').length;
-    var fnamePartialClass = $('.fNamePartial').filter(function () {
-        return this.value != '';
-    });
-    if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
-        $('.fNamePartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
-
-    var lnamePartialClassReq = $('.lNamePartial').length;
-    var lnamePartialClass = $('.lNamePartial').filter(function () {
-        return this.value != '';
-    });
-    if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
-        $('.lNamePartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
-
-    var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
-    var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
-        return this.value != '';
-    });
-    if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
-        $('.dateOfbirthPartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
+    //    if ($('#Record_LastName').val() == "")
+    //        $('.lname').text('This field is required.');
+    //    else
+    //        $('.lname').text('');
 
 
-    var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
-    var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
-        return this.value != '';
-    });
-    if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
-        $('.countrydestinationPartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
+    //    if ($('#Record_DateOfBirth').val() == "")
+    //        $('.dateofbirth').text('This field is required.');
+    //    else
+    //        $('.dateofbirth').text('');
+
+    //    if ($('#Record_ContactNumber').val() == "")
+    //        $('.contactnumber').text('This field is required.');
+    //    else
+    //        $('.contactnumber').text('');
+
+    //    if ($('#Record_CountryDestination').val() == "")
+    //        $('.countrydestination').text('This field is required.');
+    //    else
+    //        $('.countrydestination').text('');
+
+    //    if ($('#apostileData').val() == "")
+    //        $('.apostiledata').text('Please add documents for apostillization.');
+    //    else if ($('#apostileData').val() == "[]")
+    //        $('.apostiledata').text('Please insert document quantity.');
+    //    else
+    //        $('.apostiledata').text('');
+
+    //    loading.hide();
+    //    return;
+    //}
+    //else {
+    //    $('.title').text('');
+    //    $('.fname').text('');
+    //    $('.lname').text('');
+    //    $('.address').text('');
+    //    $('.contactnumber').text('');
+    //    $('.countrydestination').text('');
+    //    $('.apostiledata').text('');
+    //}
+
+    //var fnamePartialClassReq = $('.fNamePartial').length;
+    //var fnamePartialClass = $('.fNamePartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
+    //    $('.fNamePartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+    //var lnamePartialClassReq = $('.lNamePartial').length;
+    //var lnamePartialClass = $('.lNamePartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
+    //    $('.lNamePartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+    //var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
+    //var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
+    //    $('.dateOfbirthPartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+
+    //var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
+    //var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
+    //    $('.countrydestinationPartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
 
     var reqlength = $('.apostiledataPartial').length;
-    console.log(reqlength);
+    //console.log(reqlength);
     var value = $('.apostiledataPartial').filter(function () {
         return this.value != '';
     });
@@ -813,26 +825,26 @@ function docOwnerStepFive() {
         return;
     }
 
-    $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
-    $('#LblCountryDestination').text($('#Record_CountryDestination').val());
-    $('#LblTypeOfDocument').empty();
+    //$('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
+    //$('#LblCountryDestination').text($('#Record_CountryDestination').val());
+    //$('#LblTypeOfDocument').empty();
     let totalFee = 0;
 
     for (var i = 0; i < documentObject.length; i++) {
         let documentText = `<p class="mb-0">(${documentObject[i].Quantity}) (${documentObject[i].Transaction}) ${documentObject[i].Name}</p>`;
-        $('#LblTypeOfDocument').append(documentText);
+        //$('#LblTypeOfDocument').append(documentText);
         if (documentObject[i].Transaction == 'Regular')
             totalFee += prices.regular * documentObject[i].Quantity;
         else
             totalFee += prices.expedite * documentObject[i].Quantity;
 
-        if (i == documentObject.length - 1)
-            $('#LblPayment').text(`PHP ${totalFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
+        //if (i == documentObject.length - 1)
+        //    $('#LblPayment').text(`PHP ${totalFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
     }
 
     //$("#step-one").hide();
-    $("#step-one-authorized").hide();
-    $("#step-three").show();
+    // $("#step-one-authorized").hide();
+    // $("#step-three").show();
 
     if (applicantType == 0) {
         if ($('#apostileData').val() !== '' || $('#apostileData').val() !== null) {
@@ -850,24 +862,24 @@ function docOwnerStepFive() {
 
     ownerModel.ApostileData = JSON.stringify(documentObject);
     ownerModel.ApplicationCode = code;
-    ownerModel.ContactNumber = $('#Record_ContactNumber').val();
-    ownerModel.CountryDestination = $('#Record_CountryDestination').val();
-    ownerModel.DateOfBirth = $('#Record_DateOfBirth').val();
+    ownerModel.ContactNumber = $('#ContactNumber').val();
+    ownerModel.CountryDestination = $('#CountryDestination').val();
+    ownerModel.DateOfBirth = $('#DateOfBirth').val();
     ownerModel.Fees = totalFee;
-    ownerModel.FirstName = $('#Record_FirstName').val();
-    ownerModel.MiddleName = $('#Record_MiddleName').val();
-    ownerModel.LastName = $('#Record_LastName').val();
-    ownerModel.ProcessingSite = $('#site').val();
-    ownerModel.ProcessingSiteAddress = $('#address').val();
-    ownerModel.Suffix = $('#Record_Suffix').val();
-    ownerModel.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
+    ownerModel.FirstName = $('#FirstName').val();
+    ownerModel.MiddleName = $('#MiddleName').val();
+    ownerModel.LastName = $('#LastName').val();
+    //ownerModel.ProcessingSite = $('#site').val();
+    //ownerModel.ProcessingSiteAddress = $('#address').val();
+    ownerModel.Suffix = $('#Suffix').val();
+    //ownerModel.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
 
-    record.ApplicationCode = code;
+    //record.ApplicationCode = code;
     record.ApplicantCount = 0;
-    record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
+    //record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
     record.Records = null;
     record.Record = ownerModel;
-    record.Token = token;
+    //record.Token = token;
 
     console.log(record);
     loading.hide();
@@ -880,162 +892,162 @@ function authorizedStepFive() {
     ownerContainer.attr('style', 'display: none');
     authContainer.show();
 
-    if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#AuthRecord_FirstName').val() == "" || $('#AuthRecord_LastName').val() == ""
-        || $('#AuthRecord_ContactNumber').val() == "" || $('#AuthRecord_CountryDestination').val() == "" || $('.apostiledataPartial').val() == "[]"
-        || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#AuthRecord_DateOfBirth').val() == ""
-    ) {
-        console.log('not valid');
-        if ($('.fNamePartial').val() == "") {
-            $('.fNamePartialValidation').text('This field is required.');
-            console.log(1);
+    //if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#AuthRecord_FirstName').val() == "" || $('#AuthRecord_LastName').val() == ""
+    //    || $('#AuthRecord_ContactNumber').val() == "" || $('#AuthRecord_CountryDestination').val() == "" || $('.apostiledataPartial').val() == "[]"
+    //    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#AuthRecord_DateOfBirth').val() == ""
+    //) {
+    //    // console.log('not valid');
+    //    if ($('.fNamePartial').val() == "") {
+    //        $('.fNamePartialValidation').text('This field is required.');
+    //        console.log(1);
 
-        }
-        else
-            $('.fNamePartialValidation').text('');
+    //    }
+    //    else
+    //        $('.fNamePartialValidation').text('');
 
-        if ($('.lNamePartial').val() == "") {
-            $('.lNamePartialValidation').text('This field is required.');
-            console.log(2);
-        }
-        else
-            $('.lNamePartialValidation').text('');
+    //    if ($('.lNamePartial').val() == "") {
+    //        $('.lNamePartialValidation').text('This field is required.');
+    //        console.log(2);
+    //    }
+    //    else
+    //        $('.lNamePartialValidation').text('');
 
-        if ($('.dateOfbirthPartial').val() == "") {
-            $('.dateOfbirthPartialValidation').text('This field is required.');
-            console.log(3);
-        }
-        else
-            $('.dateOfbirthPartialValidation').text('');
+    //    if ($('.dateOfbirthPartial').val() == "") {
+    //        $('.dateOfbirthPartialValidation').text('This field is required.');
+    //        console.log(3);
+    //    }
+    //    else
+    //        $('.dateOfbirthPartialValidation').text('');
 
-        if ($('.countrydestinationPartial').val() == "") {
-            $('.countrydestinationPartialValidation').text('This field is required.');
-            console.log(4);
-        }
-        else
-            $('.countrydestinationPartialValidation').text('');
+    //    if ($('.countrydestinationPartial').val() == "") {
+    //        $('.countrydestinationPartialValidation').text('This field is required.');
+    //        console.log(4);
+    //    }
+    //    else
+    //        $('.countrydestinationPartialValidation').text('');
 
-        if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
-            $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
-            console.log(5);
-        }
-        else if ($('.apostiledataPartial').val() == "[]") {
-            $('.apostiledataPartialValidation').text('Please insert document quantity.');
-            console.log(6);
-        }
-        else
-            $('.apostiledataPartialValidation').text('');
+    //    if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
+    //        $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
+    //        console.log(5);
+    //    }
+    //    else if ($('.apostiledataPartial').val() == "[]") {
+    //        $('.apostiledataPartialValidation').text('Please insert document quantity.');
+    //        console.log(6);
+    //    }
+    //    else
+    //        $('.apostiledataPartialValidation').text('');
 
-        if ($('#AuthRecord_FirstName').val() == "") {
-            $('.fname').text('This field is required.');
-            console.log(7);
-        }
-        else
-            $('.fname').text('');
+    //    if ($('#AuthRecord_FirstName').val() == "") {
+    //        $('.fname').text('This field is required.');
+    //        console.log(7);
+    //    }
+    //    else
+    //        $('.fname').text('');
 
-        if ($('#AuthRecord_LastName').val() == "") {
-            $('.lname').text('This field is required.');
-            console.log(8);
-        }
-        else
-            $('.lname').text('');
-
-
-        if ($('#AuthRecord_DateOfBirth').val() == "")
-            $('.dateofbirth').text('This field is required.');
-        else
-            $('.dateofbirth').text('');
-
-        if ($('#AuthRecord_ContactNumber').val() == "")
-            $('.contactnumber').text('This field is required.');
-        else
-            $('.contactnumber').text('');
-
-        if ($('#AuthRecord_CountryDestination').val() == "")
-            $('.countrydestination').text('This field is required.');
-        else
-            $('.countrydestination').text('');
-
-        //if ($('#apostileData').val() == "") {
-        //    $('.apostiledata').text('Please add documents for apostillization.');
-        //    console.log(9);
-        //}
-        //else if ($('#apostileData').val() == "[]") {
-        //    $('.apostiledata').text('Please insert document quantity.');
-        //    console.log(10);
-        //}
-        //else
-        //    $('.apostiledata').text('');
-
-        loading.hide();
-        return;
-    }
-    else {
-        $('.title').text('');
-        $('.fname').text('');
-        $('.lname').text('');
-        $('.address').text('');
-        $('.contactnumber').text('');
-        $('.countrydestination').text('');
-        $('.apostiledata').text('');
-    }
-
-    var fnamePartialClassReq = $('.fNamePartial').length;
-    var fnamePartialClass = $('.fNamePartial').filter(function () {
-        return this.value != '';
-    });
-    if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
-        $('.fNamePartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
-
-    var lnamePartialClassReq = $('.lNamePartial').length;
-    var lnamePartialClass = $('.lNamePartial').filter(function () {
-        return this.value != '';
-    });
-    if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
-        $('.lNamePartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
-
-    var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
-    var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
-        return this.value != '';
-    });
-    if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
-        $('.dateOfbirthPartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
+    //    if ($('#AuthRecord_LastName').val() == "") {
+    //        $('.lname').text('This field is required.');
+    //        console.log(8);
+    //    }
+    //    else
+    //        $('.lname').text('');
 
 
-    var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
-    var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
-        return this.value != '';
-    });
-    if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
-        $('.countrydestinationPartialValidation').text('This field is required.');
-        loading.hide();
-        return;
-    }
+    //    if ($('#AuthRecord_DateOfBirth').val() == "")
+    //        $('.dateofbirth').text('This field is required.');
+    //    else
+    //        $('.dateofbirth').text('');
 
-    var reqlength = $('.apostiledataPartial').length;
-    var value = $('.apostiledataPartial').filter(function () {
-        return this.value != '';
-    });
-    if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
-        alert('Please fill out all required fields.');
-        $('.apostiledataPartialValidation').text('Please insert document quantity.');
-        loading.hide();
-        return;
-    }
+    //    if ($('#AuthRecord_ContactNumber').val() == "")
+    //        $('.contactnumber').text('This field is required.');
+    //    else
+    //        $('.contactnumber').text('');
+
+    //    if ($('#AuthRecord_CountryDestination').val() == "")
+    //        $('.countrydestination').text('This field is required.');
+    //    else
+    //        $('.countrydestination').text('');
+
+    //    //if ($('#apostileData').val() == "") {
+    //    //    $('.apostiledata').text('Please add documents for apostillization.');
+    //    //    console.log(9);
+    //    //}
+    //    //else if ($('#apostileData').val() == "[]") {
+    //    //    $('.apostiledata').text('Please insert document quantity.');
+    //    //    console.log(10);
+    //    //}
+    //    //else
+    //    //    $('.apostiledata').text('');
+
+    //    loading.hide();
+    //    return;
+    //}
+    //else {
+    //    $('.title').text('');
+    //    $('.fname').text('');
+    //    $('.lname').text('');
+    //    $('.address').text('');
+    //    $('.contactnumber').text('');
+    //    $('.countrydestination').text('');
+    //    $('.apostiledata').text('');
+    //}
+
+    //var fnamePartialClassReq = $('.fNamePartial').length;
+    //var fnamePartialClass = $('.fNamePartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((fnamePartialClass.length >= 0 && (fnamePartialClass.length !== fnamePartialClassReq)) || fnamePartialClass == '[]') {
+    //    $('.fNamePartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+    //var lnamePartialClassReq = $('.lNamePartial').length;
+    //var lnamePartialClass = $('.lNamePartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((lnamePartialClass.length >= 0 && (lnamePartialClass.length !== lnamePartialClassReq)) || lnamePartialClass == '[]') {
+    //    $('.lNamePartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+    //var dateOfbirthPartialClassReq = $('.dateOfbirthPartial').length;
+    //var dateOfbirthClass = $('.dateOfbirthPartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((dateOfbirthClass.length >= 0 && (dateOfbirthClass.length !== dateOfbirthPartialClassReq)) || dateOfbirthClass == '[]') {
+    //    $('.dateOfbirthPartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+
+    //var countrydestinationPartialClassReq = $('.countrydestinationPartial').length;
+    //var countrydestinationClass = $('.countrydestinationPartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((countrydestinationClass.length >= 0 && (countrydestinationClass.length !== countrydestinationPartialClassReq)) || countrydestinationClass == '[]') {
+    //    $('.countrydestinationPartialValidation').text('This field is required.');
+    //    loading.hide();
+    //    return;
+    //}
+
+    //var reqlength = $('.apostiledataPartial').length;
+    //var value = $('.apostiledataPartial').filter(function () {
+    //    return this.value != '';
+    //});
+    //if ((value.length >= 0 && (value.length !== reqlength)) || value == '[]') {
+    //    alert('Please fill out all required fields.');
+    //    $('.apostiledataPartialValidation').text('Please insert document quantity.');
+    //    loading.hide();
+    //    return;
+    //}
 
     let totalFees = 0;
     let documentsParent = $('#documentsContainer');
     documentsParent.empty();
-    authNameLbl.text($('#AuthRecord_FirstName').val().toUpperCase() + ' ' + $('#AuthRecord_MiddleName').val().toUpperCase() + ' ' + $('#AuthRecord_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
-    authContactNumber.text($('#AuthRecord_ContactNumber').val());
+    //authNameLbl.text($('#AuthRecord_FirstName').val().toUpperCase() + ' ' + $('#AuthRecord_MiddleName').val().toUpperCase() + ' ' + $('#AuthRecord_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
+    authContactNumber.text($('#ContactNumber').val());
     let records = [];
 
     for (var i = 1; i <= docOwner; i++) {
@@ -1046,25 +1058,25 @@ function authorizedStepFive() {
         let suffix = $(`#Records_${i}__Suffix`).val();
         let destination = $(`#Records_${i}__CountryDestination`).val();
 
-        let codeContainer = `<div class="font-weight-bold mb-2"><span id="LblAppointmentCode-${i}">${code}-${i}</div>`;
-        let ownerContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Document Owner: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text text-uppercase" id="documentOwner-${i}">${fname} ${mname} ${lname} ${suffix}</span></div></div>`;
-        let destinationContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Country of Destination: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblCountryDestination-${i}">${destination}</span></div></div>`;
-        let documentsContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Documents: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblTypeOfDocument-${i}"></span></div></div>`;
-        let subTotalContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Sub-Total:</span></div><div class="col-lg-9 col-md-8 col-sm-12 font-weight-bold"><span class="black-text" id="LblPayment-${i}"></span></div></div>`;
+        //let codeContainer = `<div class="font-weight-bold mb-2"><span id="LblAppointmentCode-${i}">${code}-${i}</div>`;
+        //let ownerContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Document Owner: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text text-uppercase" id="documentOwner-${i}">${fname} ${mname} ${lname} ${suffix}</span></div></div>`;
+        //let destinationContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Country of Destination: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblCountryDestination-${i}">${destination}</span></div></div>`;
+        //let documentsContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Documents: </span></div><div class="col-lg-9 col-md-8 col-sm-12"><span class="black-text" id="LblTypeOfDocument-${i}"></span></div></div>`;
+        //let subTotalContainer = `<div class="row"><div class="step-three-field col-lg-3 col-md-4 col-sm-12"><span class="bold">Sub-Total:</span></div><div class="col-lg-9 col-md-8 col-sm-12 font-weight-bold"><span class="black-text" id="LblPayment-${i}"></span></div></div>`;
 
-        documentsParent.append(codeContainer);
-        documentsParent.append(ownerContainer);
-        documentsParent.append(destinationContainer);
-        documentsParent.append(documentsContainer);
-        documentsParent.append(subTotalContainer);
+        //documentsParent.append(codeContainer);
+        //documentsParent.append(ownerContainer);
+        //documentsParent.append(destinationContainer);
+        //documentsParent.append(documentsContainer);
+        //documentsParent.append(subTotalContainer);
 
         let docsContainer = $(`#LblTypeOfDocument-${i}`);
         let subTotalContainerElement = $(`#LblPayment-${i}`);
         let subFee = 0;
 
         for (var x = 0; x < window['documentObject' + i].length; x++) {
-            let documentText = `<p class="mb-0">(${window['documentObject' + i][x].Quantity}) (${window['documentObject' + i][x].Transaction}) ${window['documentObject' + i][x].Name}</p>`;
-            docsContainer.append(documentText);
+          //  let documentText = `<p class="mb-0">(${window['documentObject' + i][x].Quantity}) (${window['documentObject' + i][x].Transaction}) ${window['documentObject' + i][x].Name}</p>`;
+         //   docsContainer.append(documentText);
             if (window['documentObject' + i][x].Transaction == 'Regular')
                 subFee += prices.regular * window['documentObject' + i][x].Quantity;
             else
@@ -1083,46 +1095,46 @@ function authorizedStepFive() {
             }
         }
 
-        documentsParent.append('<hr />');
+      //  documentsParent.append('<hr />');
 
         console.log('docOwner');
         console.log(docOwner);
-        if (i == docOwner)
-            $('#totalFeesAuth').text(`PHP ${totalFees.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
+        //if (i == docOwner)
+        //    $('#totalFeesAuth').text(`PHP ${totalFees.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
 
         let model = {
             ApostileData: JSON.stringify(window['documentObject' + i]),
-            ApplicationCode: `${code}-${i}`,
+           // ApplicationCode: `${code}-${i}`,
             CountryDestination: destination,
             DateOfBirth: bday,
             Fees: subFee,
             FirstName: fname,
             MiddleName: mname,
             LastName: lname,
-            ProcessingSite: $('#site').val(),
-            ProcessingSiteAddress: $('#address').val(),
+           // ProcessingSite: $('#site').val(),
+           // ProcessingSiteAddress: $('#address').val(),
             Suffix: suffix,
-            ScheduleDate: `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`,
-            NameOfRepresentative: `${$(`#AuthRecord_FirstName`).val()} ${$(`#AuthRecord_MiddleName`).val()} ${$(`#AuthRecord_LastName`).val()} ${$(`#AuthRecord_Suffix`).val()}`,
-            RepresentativeContactNumber: $('#AuthRecord_ContactNumber').val()
+          //  ScheduleDate: `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`,
+            NameOfRepresentative: `${$(`#FirstName`).val()} ${$(`#MiddleName`).val()} ${$(`#LastName`).val()} ${$(`#Suffix`).val()}`,
+            RepresentativeContactNumber: $('#ContactNumber').val()
         };
 
         records.push(model);
     }
 
 
-    $('#LblTypeOfDocument').empty();
+    //$('#LblTypeOfDocument').empty();
 
     let authorized = {
         ApplicationCode: code,
-        ContactNumber: $('#AuthRecord_ContactNumber').val(),
+        ContactNumber: $('#ContactNumber').val(),
         Fees: totalFees,
-        FirstName: $(`#AuthRecord_FirstName`).val(),
-        MiddleName: $(`#AuthRecord_MiddleName`).val(),
-        LastName: $(`#AuthRecord_LastName`).val(),
-        ProcessingSite: $('#site').val(),
-        ProcessingSiteAddress: $('#address').val(),
-        Suffix: $(`#AuthRecord_Suffix`).val()
+        FirstName: $(`#FirstName`).val(),
+        MiddleName: $(`#MiddleName`).val(),
+        LastName: $(`#LastName`).val(),
+       // ProcessingSite: $('#site').val(),
+        //ProcessingSiteAddress: $('#address').val(),
+        Suffix: $(`#Suffix`).val()
     };
 
     record.ApplicationCode = code;
@@ -1130,14 +1142,15 @@ function authorizedStepFive() {
     record.ScheduleDate = `${$('#appointmentDate').text()} ${$('input[name=option1]:checked').val()}`;
     record.Records = records;
     record.Record = authorized;
-    record.Token = token;
+    //record.Token = token;
 
     console.log(record);
 
     //$("#step-one").hide();
-    $("#step-one-authorized").hide();
-    $("#step-three").show();
+    //$("#step-one-authorized").hide();
+    //$("#step-three").show();
     loading.hide();
+    $(this).submit();
 
 }
 
@@ -1148,3 +1161,29 @@ function HasExpedite(ifHasExpedite) {
     console.log(hasExpedite);
 }
 
+function init() {
+    loading.show();
+    $.get(`${urlBase}Home/GetInfo`, function (data, status) {
+        info = data;
+        console.log(info);
+        hasExpedite = info.hasExpedite
+        if (hasExpedite)
+            expediteQuantityElement.attr("disabled", false);
+        if (info.documentType == 'Authorized') {
+            applicantType = 1;
+            addDocumentOwnerBtn.click();
+        }
+        else {
+            applicantType = 0;
+        }
+        console.log(hasExpedite)
+        loading.hide();
+    });
+}
+
+$('#submitButton').on('click', function () {
+    if (applicantType == 0)
+        docOwnerStepFive();
+    else
+        authorizedStepFive();
+});

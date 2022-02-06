@@ -6,6 +6,7 @@ namespace DFACore.Models
         public string DocumentStatus { get; set; }
         public string DocumentType { get; set; }
         public string ApostileSite { get; set; }
+        public bool HasExpidite { get; set; }
     }
 
 }

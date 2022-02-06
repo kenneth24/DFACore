@@ -394,14 +394,23 @@ namespace DFACore.Controllers
             //ViewData[$"ApplicationCode{i}"] = applicationCode + (i + 1);
             ViewBag.Increment = i;
 
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             var documents = _documentsType.Get();
-            if (id == 1)
+
+            if (main.DocumentStatus == "Abroad")
             {
+                ViewBag.Location = 1;
                 var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
                 var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
                 documents.Remove(phEmbassy);
                 documents.Remove(foreignEmbassy);
             }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+            }
+
             ViewData["DocumentTypes"] = documents;
             return PartialView("PartialApplicant");
         }
@@ -753,7 +762,24 @@ namespace DFACore.Controllers
 
         public List<Documents> GetDocuments()
         {
-            return _documentsType.Get();
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            var documents = _documentsType.Get();
+
+            if (main.DocumentStatus == "Abroad")
+            {
+                ViewBag.Location = 1;
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);   
+            }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+            }
+
+            return documents;
         }
         public Price GetPrices()
         {
@@ -1136,6 +1162,24 @@ namespace DFACore.Controllers
         public ActionResult PersonalInfo()
         {
             var documents = _documentsType.Get();
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            if (main.DocumentStatus == "Abroad")
+            {
+                ViewBag.Location = 1;
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+
+            }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+            }
+
+            ViewBag.DocumentType = main.DocumentType;
             ViewData["DocumentTypes"] = documents;
 
             return View();
@@ -1154,7 +1198,23 @@ namespace DFACore.Controllers
             HttpContext.Session.SetComplexData("Model", main);
 
             var documents = _documentsType.Get();
-            ViewData["DocumentTypes"] = documents;
+
+            if (model.DocumentStatus == "Abroad")
+            {
+                ViewBag.Location = 1;
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+                ViewData["DocumentTypes"] = documents;
+            }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+                ViewData["DocumentTypes"] = documents;
+            }
+
 
             return RedirectToAction("PersonalInfo");
         }
@@ -1281,7 +1341,17 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public ActionResult GetInfo()
+        {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            var branches = _applicantRepo.GetBranches();
+            var branch = branches.FirstOrDefault(x => x.Id == long.Parse(main.ApostileSite));
+            main.HasExpedite = branch != null ? branch.HasExpidite : false;
 
+            HttpContext.Session.SetComplexData("Model", main);
+
+            return Json(main);
+        }
     }
 
 

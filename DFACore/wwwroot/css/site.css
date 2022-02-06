@@ -448,3 +448,7 @@ table th {
     width: 45px!important;
     height: auto!important;
 }
+
+/*.modal-backdrop {
+    z-index: 1;
+}*/

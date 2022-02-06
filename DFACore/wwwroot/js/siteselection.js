@@ -10,16 +10,18 @@ $(document).ready(function () {
         lblProcessingSiteOfficeHours = $('#lblProcessingSiteOfficeHours'),
         lblProcessingSiteContactNumber = $('#lblProcessingSiteContactNumber'),
         lblProcessingSiteEmail = $('#lblProcessingSiteEmail'),
-        addressInput = $('#address')
+        addressInput = $('#address'),
+        hasExpiditeInput = $('#HasExpidite'),
         branches = [];
 
     getBranches();
-    init();
 
     documentStatusRadio.change(function () {
         let $this = $(this),
             value = $this.val(),
             philippinesOptions = $('option.ph');
+
+        siteButton.val('1');
 
         if (value == 'Abroad') {
             philippinesOptions.hide();
@@ -36,17 +38,15 @@ $(document).ready(function () {
             branchDetail = branches.filter(x => x.id == selectedSite)[0];
 
 
+        console.log(branchDetail);
+        hasExpiditeInput.val(branchDetail.hasExpidite ? 1 : 0);
+        console.log(hasExpiditeInput.val());
         lblProcessingSiteAddress.text(branchDetail.branchAddress);
         lblProcessingSiteOfficeHours.text(branchDetail.officeHours);
         lblProcessingSiteContactNumber.text(branchDetail.contactNumber);
         lblProcessingSiteEmail.text(branchDetail.email);
         addressInput.val(branchDetail.branchAddress);
     });
-
-    function init() {
-        documentStatusRadio.val('Abroad');
-        documentTypeRadio.val('Document Owner');
-    }
 
     function getBranches() {
         $.get(`${urlBase}Home/GetBranches`, function (data, status) {
