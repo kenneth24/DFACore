@@ -1241,19 +1241,6 @@ namespace DFACore.Controllers
         {
 
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-
-            //main.FirstName = model.FirstName;
-            //main.MiddleName = model.MiddleName;
-            //main.LastName = model.LastName;
-            //main.Suffix = model.Suffix;
-            //main.DateOfBirth = model.DateOfBirth;
-            //main.ContactNumber = model.ContactNumber;
-            //main.CountryDestination = model.CountryDestination;
-            //main.NameOfRepresentative = model.NameOfRepresentative;
-            //main.RepresentativeContactNumber = model.RepresentativeContactNumber;
-            //main.ApostileData = model.ApostileData;
-            //main.ProcessingSite = model.ProcessingSite;
-            //main.ProcessingSiteAddress = model.ProcessingSiteAddress;
             main.Applicants = model;
 
             HttpContext.Session.SetComplexData("Model", main);
@@ -1274,17 +1261,30 @@ namespace DFACore.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //public ActionResult ApostilleSchedule(ShippingInfoViewModel model)
+        //{
+        //    var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+        //    main.Shipping = model;
+
+        //    //var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
+
+        //    //ViewData["DefaultBranch"] = defaultBranch;
+
+        //    HttpContext.Session.SetComplexData("Model", main);
+
+        //    return RedirectToAction("ApostilleSchedule");
+        //    //return View();
+        //}
+
         [HttpPost]
-        public ActionResult ApostilleSchedule(ShippingInfoViewModel model)
+        public ActionResult ApostilleSchedule(List<ApplicantRecordViewModel> model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            main.Shipping = model;
-
-            //var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
-
-            //ViewData["DefaultBranch"] = defaultBranch;
+            main.Applicants = model;
 
             HttpContext.Session.SetComplexData("Model", main);
+
 
             return RedirectToAction("ApostilleSchedule");
             //return View();

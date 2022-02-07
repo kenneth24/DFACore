@@ -1178,10 +1178,10 @@ function authorizedStepFive() {
 
     $.ajax({
         type: "POST",
-        url: `${urlBase}Home/ShippingInformation`,
+        url: `${urlBase}Home/ApostilleSchedule`,
         data: { 'model': record.Records },
         success: function () {
-            window.location.href = `${urlBase}Home/ShippingInformation`
+            window.location.href = `${urlBase}Home/ApostilleSchedule`
         },
         error: function (data) {
 

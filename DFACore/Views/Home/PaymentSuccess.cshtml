@@ -8,13 +8,17 @@
     ViewData["Title"] = "Success";
 }
 <div id="success" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
-    <h5 class="mb-3 bold text-primary">Your Appointment has been successfully created.</h5>
+    <center><i class="fa fa-check-square text-primary" style="font-size: 20px"></i></center>
+    <h5 class="mb-3 bold text-primary">PAYMENT SUCCESSFUL</h5>
+    @*<h5 class="mb-3 bold text-primary">Your Appointment has been successfully created.</h5>*@
     <div class="success-message mx-auto">
-        <p class="mb-0">An appointment letter has been sent to your email.</p>
+        @*<p class="mb-0">An appointment letter has been sent to your email.</p>
         <p>Please check your inbox, span and other folder to view your Appointment Letter. Kindly PRINT and present your confirmed appointment letter to the Appointment Verification Counter.</p>
-        <p class="my-4 text-uppercase bold">Editing, revising or altering the appointment letter is considered falsification of public document and is punishable by law.</p>
-        <p>Didn't receive the email? Click <a class="pointer text-primary">here</a> to resend.</p>
-        <button id="schedAnother" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Schedule another appointment</button>
-        <button id="exit" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
+        <p class="my-4 text-uppercase bold">Editing, revising or altering the appointment letter is considered falsification of public document and is punishable by law.</p>*@
+        @*<p>Didn't receive the email? Click <a class="pointer text-primary">here</a> to resend.</p>*@
+        <button onclick="window.location.href='/Home/SiteSelection'" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Schedule another appointment</button>
+        <button onclick="window.location.href='/Account/Logout'" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
     </div>
 </div>
+
+
