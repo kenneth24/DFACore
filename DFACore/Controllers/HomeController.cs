@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -42,6 +43,7 @@ namespace DFACore.Controllers
         private readonly DocumentTypes _documentsType;
         private readonly AdministrationRepository _administrationRepository;
         private readonly UnionBankPaymentClient _unionBankPaymentService;
+        private readonly IConfiguration _configuration;
 
         public HomeController(ILogger<HomeController> logger,
             UserManager<ApplicationUser> userManager,
@@ -54,7 +56,8 @@ namespace DFACore.Controllers
             IActionContextAccessor accessor,
             IBrowserDetector browserDetector,
             AdministrationRepository administrationRepository, 
-            UnionBankPaymentClient unionBankPaymentService)
+            UnionBankPaymentClient unionBankPaymentService,
+            IConfiguration configuration)
         {
             _logger = logger;
             _userManager = userManager;
@@ -69,6 +72,7 @@ namespace DFACore.Controllers
             _documentsType = new DocumentTypes();
             _administrationRepository = administrationRepository;
             _unionBankPaymentService = unionBankPaymentService;
+            _configuration = configuration;
         }
         public IActionResult ApplicantTypeSelection()
         {
@@ -1327,7 +1331,8 @@ namespace DFACore.Controllers
 
         public ActionResult PaymentMethod()
         {
-
+            var url = _configuration.GetConnectionString("ReturnUrl");
+            ViewBag.ReturnUrl = url;
             return View();
         }
 
