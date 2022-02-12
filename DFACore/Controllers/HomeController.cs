@@ -1257,7 +1257,10 @@ namespace DFACore.Controllers
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            var selectedBranch = _applicantRepo.GetBranch(main.ApostileSite);
+            var user = _userManager.Users.Where(a => a.Email == User.Identity.Name).FirstOrDefault();
+
+            // 0 for user, 2 for LRA
+            var selectedBranch = _applicantRepo.GetBranch(main.ApostileSite, user.Type);
 
             ViewData["SelectedBranch"] = selectedBranch;
             ViewData["AvailableDates"] = selectedBranch.AvailableDates;
@@ -1289,7 +1292,7 @@ namespace DFACore.Controllers
 
             HttpContext.Session.SetComplexData("Model", main);
 
-
+            
             return RedirectToAction("ApostilleSchedule");
             //return View();
         }

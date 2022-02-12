@@ -885,21 +885,21 @@ function docOwnerStepFive() {
 
     console.log(record);
     loading.hide();
+    //alert("a");
 
+    //$.ajax({
+    //    type: "POST",
+    //    url: `${urlBase}Home/ApostilleSchedule`,
+    //    data: { 'model': record.Records },
+    //    success: function () {
+    //        window.location.href = `${urlBase}Home/ApostilleSchedule`
+    //    },
+    //    error: function (data) {
 
-    $.ajax({
-        type: "POST",
-        url: `${urlBase}Home/ApostilleSchedule`,
-        data: { 'model': record.Records },
-        success: function () {
-            window.location.href = `${urlBase}Home/ApostilleSchedule`
-        },
-        error: function (data) {
-
-        }
-    }).done(function (data) {
-        console.log(data);
-    });
+    //    }
+    //}).done(function (data) {
+    //    console.log(data);
+    //});
 }
 
 function authorizedStepFive() {
@@ -1173,20 +1173,21 @@ function authorizedStepFive() {
     loading.hide();
 
     //model = JSON.stringify({ 'model': records });
+    //b
 
-    $.ajax({
-        type: "POST",
-        url: `${urlBase}Home/ApostilleSchedule`,
-        data: { 'model': record.Records },
-        success: function () {
-            window.location.href = `${urlBase}Home/ApostilleSchedule`
-        },
-        error: function (data) {
+    //$.ajax({
+    //    type: "POST",
+    //    url: `${urlBase}Home/ApostilleSchedule`,
+    //    data: { 'model': record.Records },
+    //    success: function () {
+    //        window.location.href = `${urlBase}Home/ApostilleSchedule`
+    //    },
+    //    error: function (data) {
 
-        }
-    }).done(function (data) {
-        console.log(data);
-    });
+    //    }
+    //}).done(function (data) {
+    //    console.log(data);
+    //});
 
 }
 
@@ -1218,9 +1219,9 @@ function init() {
     });
 }
 
-$('#submitButton').on('click', function () {
-    if (applicantType == 0)
-        docOwnerStepFive();
-    else
-        authorizedStepFive();
-});
+//$('#submitButton').on('click', function () {
+//    if (applicantType == 0)
+//        docOwnerStepFive();
+//    else
+//        authorizedStepFive();
+//});

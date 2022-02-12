@@ -383,7 +383,8 @@ namespace DFACore.Controllers
             if (result.Succeeded)
             {
                 Log("Logged In", model.Email);
-                return RedirectToAction("Index", "Lra");
+                return RedirectToAction("SiteSelection", "Home");
+                //return RedirectToAction("Index", "Lra");
             }
 
             if (result.IsNotAllowed)
