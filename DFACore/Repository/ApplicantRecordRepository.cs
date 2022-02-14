@@ -108,7 +108,7 @@ namespace DFACore.Repository
             //{ 
             //    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)
             //};
-            
+
             //foreach (var applicantRecord in applicantRecords)
             //{
             //    if (applicantRecord.ScheduleDate.TimeOfDay == applicantRecord.ScheduleDate.TimeOfDay)
@@ -119,7 +119,7 @@ namespace DFACore.Repository
             //}
             //applicantRecord.DateCreated = DateTime.UtcNow;
 
-            
+
         }
 
         public bool Delete(long id)
@@ -219,7 +219,7 @@ namespace DFACore.Repository
                     }
                 }
             }
-            
+
 
             //int type = 0;
 
@@ -261,7 +261,7 @@ namespace DFACore.Repository
 
         }
 
-        public List<AvailableDAtes> GenerateListOfDates(DateTime start, long branchId)
+        public List<AvailableDAtes> GenerateListOfDates(DateTime start, long branchId, int userType = 0)
         {
             var range = _context.Branches.Where(a => a.Id == branchId).FirstOrDefault();
             var now = DateTime.UtcNow.ToLocalTime();
@@ -311,7 +311,7 @@ namespace DFACore.Repository
             }
 
             var dates = new List<AvailableDAtes>();
-            var unAvailable = GetUnAvailableDates(branchId);
+            var unAvailable = GetUnAvailableDates(branchId, userType);
 
             //this should be optimize by date between now and end of date you want
             //var holidays = _context.Holidays.Where(h => h.Date.Year == now.Year && (h.BranchId == 0 || h.BranchId == branchId))
@@ -346,7 +346,7 @@ namespace DFACore.Repository
                             //color = "#257e4a"
                         };
                     }
-                    
+
                     dates.Add(av);
                 }
             }
@@ -360,26 +360,29 @@ namespace DFACore.Repository
             return dates;
         }
 
-        public List<DateTime> GetUnAvailableDates(long branchId)
+        public List<DateTime> GetUnAvailableDates(long branchId, int userType = 0)
         {
-            var limitPerDay = _context.ScheduleCapacities.Where(s => s.BranchId == branchId).Sum(s => s.Capacity);
-            var raw = _context.Set<UnavailableDate>().FromSqlRaw("Select * from " +
-                "(Select " +
-                "count(distinct(Id)) as ApplicantCount, " +
-                "count(Id) as DocuTypes, " +
-                "CAST(ScheduleDate as Date) as ScheduleDate, " +
-                "sum(dataCount.Quantity) as DocuCount " +
-                "from " +
-                "(select Id, ScheduleDate, ApostileData " +
-                "from ApplicantRecords " +
-                "where BranchId={1} and CAST(ScheduleDate as Date) >= {0}) ApplicantRecords " +
-                "CROSS APPLY OPENJSON (ApostileData) " +
-                "WITH " +
-                "(Quantity int) " +
-                "AS dataCount " +
-                "group by " +
-                "CAST(ScheduleDate as Date)) a " +
-                "where a.DocuCount >= {2}", DateTime.Now.Date, branchId, limitPerDay).AsEnumerable();
+            int type = 1;
+            if (userType != 2) type = 0;
+            var limitPerDay = _context.ScheduleCapacities.Where(s => s.BranchId == branchId && s.Type == type).Sum(s => s.Capacity);
+            //string sql = "Select * from " +
+            //    "(Select " +
+            //    "count(distinct(Id)) as ApplicantCount, " +
+            //    "count(Id) as DocuTypes, " +
+            //    "CAST(ScheduleDate as Date) as ScheduleDate, " +
+            //    "sum(dataCount.Quantity) as DocuCount " +
+            //    "from " +
+            //    "(select Id, ScheduleDate, ApostileData " +
+            //    "from ApplicantRecords " +
+            //    "where BranchId={0} and CAST(ScheduleDate as Date) >= CAST(GETDATE() as DATE)) ApplicantRecords " +
+            //    "CROSS APPLY OPENJSON (ApostileData) " +
+            //    "WITH " +
+            //    "(Quantity int) " +
+            //    "AS dataCount " +
+            //    "group by " +
+            //    "CAST(ScheduleDate as Date)) a " +
+            //    "where a.DocuCount >= {1}";
+            var raw = _context.Set<UnavailableDate>().FromSqlRaw("EXEC sp_GetUnavailableDates {0}, {1}", branchId, limitPerDay, userType).AsEnumerable();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 
@@ -1556,7 +1559,7 @@ namespace DFACore.Repository
                 new City { municipality = "Nueva Vizcaya", city = "Sta. Fe" },
                 new City { municipality = "Nueva Vizcaya", city = "Solano" },
                 new City { municipality = "Nueva Vizcaya", city = "Villaverde" },
- 
+
                 new City { municipality = "Occidental Mindoro", city = "Abra de Ilog" },
                 new City { municipality = "Occidental Mindoro", city = "Calintaan" },
                 new City { municipality = "Occidental Mindoro", city = "Looc" },
@@ -2040,7 +2043,36 @@ namespace DFACore.Repository
 
         public BranchModel GetBranch(string branch)
         {
-            var raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+            var isParsable = long.TryParse(branch, out long value);
+            var raw = new Branch();
+            if (isParsable)
+                raw = _context.Branches.Where(a => a.IsActive && a.Id == value).FirstOrDefault();
+            else
+                raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+
+            var result = new BranchModel
+            {
+                Id = raw.Id,
+                BranchName = raw.BranchName,
+                BranchAddress = raw.BranchAddress,
+                MapAddress = raw.MapAddress,
+                OfficeHours = raw.OfficeHours,
+                ContactNumber = raw.ContactNumber,
+                Email = raw.Email,
+                HasExpidite = raw.HasExpidite
+            };
+            return result;
+        }
+
+        public BranchModel GetBranch(string branch, int userType = 0)
+        {
+            var isParsable = long.TryParse(branch, out long value);
+            var raw = new Branch();
+            if (isParsable)
+                raw = _context.Branches.Where(a => a.IsActive && a.Id == value).FirstOrDefault();
+            else
+                raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
+
             var availableDates = GenerateListOfDates(DateTime.Now, raw.Id);
 
             //DateTime dtFrom = DateTime.Parse(raw.StartTime);

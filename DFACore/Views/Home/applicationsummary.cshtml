@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.SiteSelectionViewModel
+@model DFACore.Models.MainViewModel
 @using Microsoft.Extensions.Options
 @using System.Linq
+@using Newtonsoft.Json
 
 @{
     ViewData["Title"] = "Home Page";
-
     var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
 
 
@@ -124,51 +124,204 @@
                     </div>
 
                     <div class="card-panel white-bg p-0">
-                                <div class="mb-3 pb-4">
-                                    <div class="d-flex mb-0 px-4 pt-4 pb-0">
-                                        <label class="mb-0 bold mr-3 mx-auto">Summary of Application</label>
-                                    </div>
+                        <div class="mb-3 pb-4">
+                            <div class="d-flex mb-0 px-4 pt-4 pb-0">
+                                <label class="mb-0 bold mr-3 mx-auto">Summary of Application</label>
+                            </div>
 
-                                    <div class="px-0 mb-4">
-                                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 mt-0" />
-                                    </div>
+                            <div class="px-0 mb-4">
+                                <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 mt-0" />
+                            </div>
 
-                                    <div class="mt-3 px-4 pb-4">
-                                        <p class="p-label red-text text-center mb-1"><i>Please ensure that all the information/details are correct before clicking the GENERATE APPLICATION CODE button.</i></p>
-                                        <p class="p-alt p-label text-center mb-0"><i>Mangyaring tiyaking lahat ng impormasyon / mga detalye ay tama bago i-click anf GENERATE APPLICATION CODE button.</i></p>
-                                    </div>
+                            <div class="mt-3 px-4 pb-4">
+                                <p class="p-label red-text text-center mb-1"><i>Please ensure that all the information/details are correct before clicking the GENERATE APPLICATION CODE button.</i></p>
+                                <p class="p-alt p-label text-center mb-0"><i>Mangyaring tiyaking lahat ng impormasyon / mga detalye ay tama bago i-click anf GENERATE APPLICATION CODE button.</i></p>
+                            </div>
 
-                                    <div class="px-4">
-                                        <label class="mb-0 bold p-label"><i>Application Details</i></label>
-                                        <div style="height: 80px" class="entry-bg mb-3">
+                            <div class="px-4">
+                                <label class="mb-0 bold p-label ml-3"><i>Application Details</i></label>
+                                <div class="entry-bg mb-3 p-3">
+                                            <div class="row">
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Document Owner:</p><b class="p-label hide-on-large">:</b>
+                                                </div>
 
+
+
+                                                @if (Model.DocumentType != "DocumentOwner")
+                                                {
+
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].LastName.ToUpper(), @Model.Applicants[0].FirstName.ToUpper() @Model.Applicants[0].MiddleName.ToUpper()</label>
+                                                        <input id="address" class="form-control" value="TEST" style="display:none" />
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].DateOfBirth</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Authorized Representative</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].NameOfRepresentative.ToUpper()</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].ContactNumber</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].CountryDestination</label>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    var applicant = Model.Applicants.FirstOrDefault();
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@applicant.LastName.ToUpper(), @applicant.FirstName.ToUpper() @applicant.MiddleName?.ToUpper()</label>
+                                                        <input id="address" class="form-control" value="TEST" style="display:none" />
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@applicant.DateOfBirth</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@applicant.ContactNumber</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2">
+                                                        <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-6 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicant.CountryDestination</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 d-flex mb-2 align-self-start">
+                                                        <p class="p-label bold mb-0 my-auto">Document/s</p><b class="p-label hide-on-large">:</b>
+                                                    </div>
+                                                    <div class="col-lg-8 d-flex mb-2">
+                                                        <b class="mr-4 bold show-on-large-only p-label">:</b>
+                                                        <div class="d-flex flex-column">
+                                                            @{
+                                                                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(@Model.Applicants.FirstOrDefault().ApostileData);
+
+                                                                foreach (var item in data)
+                                                                {
+                                                                    <label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">(@item.Quantity) (@item.Transaction) @item.Name </label>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+
+
+
+                                                <div class="col-lg-4 d-flex mb-0">
+                                                    <p class="p-label bold mb-0 my-auto">Processing Date and Time</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-0">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.ScheduleDate</label>
+                                                </div>
+
+                                            </div>
+                                </div>
+                                @*<label class="mb-0 bold p-label ml-3"><i>Shipping Information</i></label>
+                                <div class="entry-bg mb-3 p-3">
+                                    <div class="row">
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Processing Site:</p><b class="p-label hide-on-large">:</b>
                                         </div>
-                                        <label class="mb-0 bold p-label"><i>Shipping Information</i></label>
-                                        <div style="height: 80px" class="entry-bg mb-3">
-
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSite</label>
+                                            <input id="processingSite" class="form-control" value="@Model.ProcessingSite.ToUpper()" style="display:none" />
                                         </div>
-                                        <label class="mb-0 bold p-label"><i>Fees</i></label>
-                                        <div style="height: 80px" class="entry-bg">
 
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="address" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSiteAddress</label>
+                                        </div>
+
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Name of Shipper</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="shipper" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ShippersName</label>
+                                        </div>
+
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Addres for document pickup</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.PickupAddress</label>
+                                        </div>
+
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Addres for document delivery</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.DeliveryAddress</label>
+                                        </div>
+
+                                        <div class="col-lg-4 d-flex mb-0">
+                                            <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-0">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="number" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ContactNumber</label>
+                                        </div>
+
+                                    </div>
+                                </div>*@
+                                <label class="mb-0 bold p-label ml-3" ><i>Fees</i></label>
+                                <div class="entry-bg p-3">
+
+                                    <div class="row">
+                                        <div class="col-lg-4 d-flex mb-2">
+                                            <p class="p-label bold mb-0 my-auto">Total Fees:</p><b class="p-label hide-on-large">:</b>
+                                        </div>
+                                        <div class="col-lg-6 d-flex mb-2">
+                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@String.Format("{0:n}", @Model.Applicants.Sum(x => decimal.Parse(x.Fees)))</label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
 
                     </div>
 
                     <div>
-                            <div class="hide-on-small">
-                                <div class="card-body px-5 py-5 d-flex w-100">
-                                    <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
-                                    <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="PAYMENT">
-                                </div>
-                            </div>
-                            <div class="show-on-small-only mt-5 my-auto">
-                                <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                                <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="PAYMENT">
+                        <div class="hide-on-small">
+                            <div class="card-body px-5 py-5 d-flex w-100">
+                                <button onclick="history.back()" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="PAYMENT">
                             </div>
                         </div>
+                        <div class="show-on-small-only mt-5 my-auto">
+                            <button onclick="history.back()" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                            <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="PAYMENT">
+                        </div>
+                    </div>
                 </div>
 
             </form>

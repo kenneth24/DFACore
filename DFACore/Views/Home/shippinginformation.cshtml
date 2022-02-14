@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model DFACore.Models.SiteSelectionViewModel
+@model DFACore.Models.ShippingInfoViewModel
 @using Microsoft.Extensions.Options
 @using System.Linq
 
@@ -137,12 +137,12 @@
                                     <div class="row px-4 mb-5">
                                         <div class="col-md-8 col-sm-12">
                                             <label for="ShippersName" class="p-label bold mb-0">Shipper's Name <span class="p-alt"><i>(Pangalan ng magpapadala)</i></span> <span class="red">*</span></label>
-                                            <input id="ShippersName" class="form-control" />
+                                            <input id="ShippersName" name="ShippersName" class="form-control" />
                                             <span for="ShippersName" class="text-danger fname"></span>
                                         </div>
                                         <div class="col-md-4 col-sm-12">
                                             <label for="ContactNumber" class="p-label bold mb-0">Contact No. <span class="p-alt"><i>(Numerong tatawagan)</i></span> <span class="red">*</span></label>
-                                            <input id="ContactNumber" class="form-control" />
+                                            <input id="ContactNumber" name="ContactNumber" class="form-control" />
                                             <span for="ContactNumber" class="text-danger fname"></span>
                                         </div>
                                     </div>
@@ -153,12 +153,12 @@
                                     <div class="row px-4 mb-5">
                                         <div class="col-md-6 col-sm-12">
                                             <label for="PickupAddress" class="p-label bold mb-0">Address for pick-up <span class="p-alt"><i>(Address sa pag pick-up ng dokumento)</i></span> <span class="red">*</span></label>
-                                            <input id="PickupAddress" class="form-control" />
+                                            <input id="PickupAddress" name="PickupAddress" class="form-control" />
                                             <span for="PickupAddress" class="text-danger fname"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <label for="DeliveryAddress" class="p-label bold mb-0">Address for delivery of Apostille <span class="p-alt"><i>(Address sa pag deliver ng Apostille)</i></span> <span class="red">*</span></label>
-                                            <input id="DeliveryAddress" class="form-control" />
+                                            <input id="DeliveryAddress" name="DeliveryAddress" class="form-control" />
                                             <span for="DeliveryAddress" class="text-danger fname"></span>
                                         </div>
                                     </div>
@@ -170,12 +170,12 @@
                         <div>
                             <div class="hide-on-small">
                                 <div class="card-body px-5 py-5 d-flex w-100">
-                                    <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                    <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
                                     <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
                                 </div>
                             </div>
                             <div class="show-on-small-only mt-5 my-auto">
-                                <button id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                                <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
                                 <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
                             </div>
                         </div>

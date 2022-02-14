@@ -543,6 +543,7 @@ agreeterms.on('click', function () {
     }
 });
 
+
 stepFiveBackBtn.on('click', function () {
     loading.show();
     if (applicantType == 0) {
@@ -650,7 +651,6 @@ function SetCode(codeParam, ifHasTerms) {
 }
 
 function docOwnerStepFive() {
-
     loading.show();
     docuTotalCount = 0;
     if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
