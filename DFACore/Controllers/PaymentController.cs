@@ -33,7 +33,6 @@ namespace DFACore.Controllers
 
             try
             {
-
                 var accessToken = await _unionBankClient.GetAccessTokenAsync(authorizationCode).ConfigureAwait(false);
                 //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
                 //main.TotalFees = 200;
@@ -56,6 +55,63 @@ namespace DFACore.Controllers
             catch (Exception)
             {
                 // return error page
+                return RedirectToAction("PaymentFailed", "Home");
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("confirm-payment")]
+        public async Task<IActionResult> ConfirmPayment([FromQuery] string code)
+        {
+            if (string.IsNullOrEmpty(code) || string.IsNullOrWhiteSpace(code))
+            {
+                return RedirectToAction("PaymentFailed", "Home");
+            }
+
+            try
+            {
+                var accessToken = await _unionBankClient.GetAccessTokenAsync(code).ConfigureAwait(false);
+                var requestOtpResult = await _unionBankClient.RequestOtpAsync(accessToken).ConfigureAwait(false);
+                var confirmPaymentViewModel = new ConfirmPaymentViewModel
+                {
+                    PaymentToken = accessToken,
+                    PaymentRequestId = requestOtpResult.RequestId
+                };
+
+                return View("ConfirmPayment", confirmPaymentViewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("PaymentFailed", "Home");
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("confirm-payment")]
+        public async Task<IActionResult> ConfirmPayment(ConfirmPaymentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("ConfirmPayment", model);
+            }
+
+            try
+            {
+                var merchantPayment = new MerchantPayment
+                {
+                    SenderRefId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    TranRequestDate = DateTime.UtcNow,
+                    Amount = new PaymentAmount(1),
+                    RequestId = model.PaymentRequestId,
+                    Otp = model.Otp
+                };
+
+                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, model.PaymentToken).ConfigureAwait(false);
+
+                return RedirectToAction("PaymentSuccess", "Home");
+            }
+            catch (Exception)
+            {
                 return RedirectToAction("PaymentFailed", "Home");
             }
         }
