@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace DFACore.Controllers
         }
 
         [HttpGet("process-merchant-payment")]
+        [Authorize]
         public async Task<IActionResult> ProcessMerchantPayment()
         {
             var hasAuthorizationCode = HttpContext.Request.Query.TryGetValue("code", out StringValues authorizationCode);
