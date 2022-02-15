@@ -59,7 +59,7 @@ namespace DFACore.Controllers
             }
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet("confirm-payment")]
         public async Task<IActionResult> ConfirmPayment([FromQuery] string code)
         {
@@ -86,7 +86,7 @@ namespace DFACore.Controllers
             }
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPost("confirm-payment")]
         public async Task<IActionResult> ConfirmPayment(ConfirmPaymentViewModel model)
         {
