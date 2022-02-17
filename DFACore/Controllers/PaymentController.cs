@@ -106,7 +106,12 @@ namespace DFACore.Controllers
                     Otp = model.Otp
                 };
 
+                //save data
+
+
                 await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, model.PaymentToken).ConfigureAwait(false);
+
+
 
                 return RedirectToAction("PaymentSuccess", "Home");
             }

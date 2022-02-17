@@ -1339,6 +1339,174 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> PaymentMethod(string returnUrl = null)
+        {
+            var applicantRecords = new List<ApplicantRecord>();
+            var attachments = new List<Attachment>();
+
+            bool generatePowerOfAttorney = false;
+            bool generateAuthLetter = false;
+
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            ApplicantsViewModel model = new();
+            if (main.DocumentType == "DocumentOwner")
+            {
+                var appDocOwner = main.Applicants.First();
+
+                model.ScheduleDate = main.ScheduleDate;
+                model.Record.FirstName = appDocOwner.FirstName;
+                model.Record.MiddleName = appDocOwner.MiddleName;
+                model.Record.LastName = appDocOwner.LastName;
+                model.Record.Suffix = appDocOwner.Suffix;
+                model.Record.DateOfBirth = appDocOwner.DateOfBirth;
+                model.Record.ContactNumber = appDocOwner.ContactNumber;
+                model.Record.CountryDestination = appDocOwner.CountryDestination;
+                model.Record.ApostileData = appDocOwner.ApostileData;
+                model.ProcessingSite = main.ProcessingSite;
+                model.ProcessingSiteAddress = main.ProcessingSiteAddress;
+                model.Record.ApplicationCode = appDocOwner.ApplicationCode;
+                model.Record.Fees = appDocOwner.Fees;
+                // to be cont
+            }
+
+
+
+            var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+
+            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {model.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+
+            var branch = _applicantRepo.GetBranch(model.ProcessingSite);
+
+            List<string> apptCode = new List<string>();
+
+            var total = 0;
+            if (model.Records == null || model.Records.Count == 0)
+            {
+                var applicantRecord = new ApplicantRecord
+                {
+                    BranchId = branch != null ? branch.Id : 0,
+                    FirstName = model.Record.FirstName?.ToUpper(),
+                    MiddleName = model.Record.MiddleName?.ToUpper(),
+                    LastName = model.Record.LastName?.ToUpper(),
+                    Suffix = model.Record.Suffix?.ToUpper(),
+                    DateOfBirth = model.Record.DateOfBirth,
+                    ContactNumber = model.Record.ContactNumber,
+                    CountryDestination = model.Record.CountryDestination?.ToUpper(),
+                    ApostileData = model.Record.ApostileData,
+                    ProcessingSite = model.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
+                    ScheduleDate = dateTimeSched, //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture),
+                    ApplicationCode = model.Record.ApplicationCode,
+                    CreatedBy = new Guid(_userManager.GetUserId(User)),
+                    Fees = model.Record.Fees,
+                    Type = 0,
+                    DateCreated = DateTime.Now,
+                    QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
+                        $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                };
+                applicantRecords.Add(applicantRecord);
+
+                //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                if (age < 18)
+                    generatePowerOfAttorney = true;
+
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.Record.ApostileData);
+                total = data.Sum(a => a.Quantity);
+
+                apptCode.Add(model.Record.ApplicationCode);
+            }
+            else
+            {
+                foreach (var record in model.Records)
+                {
+                    var applicantRecord = new ApplicantRecord
+                    {
+                        BranchId = branch != null ? branch.Id : 0,
+                        FirstName = record.FirstName?.ToUpper(),
+                        MiddleName = record.MiddleName?.ToUpper(),
+                        LastName = record.LastName?.ToUpper(),
+                        Suffix = record.Suffix?.ToUpper(),
+                        DateOfBirth = record.DateOfBirth,
+                        ContactNumber = record.ContactNumber,
+                        CountryDestination = record.CountryDestination?.ToUpper(),
+                        NameOfRepresentative = $"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}",
+                        RepresentativeContactNumber = model.Record.ContactNumber,
+                        ApostileData = record.ApostileData,
+                        ProcessingSite = model.ProcessingSite?.ToUpper(),
+                        ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
+                        ScheduleDate = dateTimeSched,
+                        ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
+                        CreatedBy = new Guid(_userManager.GetUserId(User)),
+                        Fees = record.Fees,
+                        Type = 1,
+                        DateCreated = DateTime.Now,
+                        QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                    };
+
+                    applicantRecords.Add(applicantRecord);
+                    attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+
+                    var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                    if (age < 18)
+                        generatePowerOfAttorney = true;
+
+                    generateAuthLetter = true;
+
+                    var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
+                    total += data.Sum(a => a.Quantity);
+
+                    apptCode.Add(record.ApplicationCode);
+                }
+            };
+
+            var validate = ValidateScheduleDate3(model.ScheduleDate, total, branch.Id);
+            if (!validate)
+            {
+                ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
+                return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
+            }
+
+            var result = _applicantRepo.AddRange(applicantRecords);
+            if (!result)
+            {
+                Log("Generate appointment but an error occured while saving data.", User.Identity.Name);
+                return Json(new { Status = "Error", Message = "" });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+            }
+
+            if (generatePowerOfAttorney)
+            {
+                //attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            }
+
+            if (generateAuthLetter)
+            {
+                //attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            }
+
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
+                    HtmlTemplate());
+                    //attachments.ToArray());
+            ViewData["ApplicantCount"] = model.ApplicantCount;
+            ViewData["Attachments"] = attachments;
+            ViewData["ApptCode"] = apptCode;
+
+            Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
+            return Json(new { Status = "Success", Message = "" });
+        }
+
         public async Task<ActionResult> OrderSummary()
         {
             //this should be success page
@@ -1351,7 +1519,7 @@ namespace DFACore.Controllers
             return View(main);
         }
 
-        public ActionResult PaymentSuccess()
+        public ActionResult PaymentSuccess1()
         {
             return View();
         }
@@ -1360,6 +1528,11 @@ namespace DFACore.Controllers
         {
             return View();
         }
+
+        
+
+
+
 
         public ActionResult GetInfo()
         {
