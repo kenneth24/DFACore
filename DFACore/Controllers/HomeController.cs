@@ -578,6 +578,9 @@ namespace DFACore.Controllers
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
             var result = _applicantRepo.ValidateScheduleDate(date);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return Json(result);
         }
@@ -589,6 +592,9 @@ namespace DFACore.Controllers
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return Json(result);
         }
@@ -600,6 +606,9 @@ namespace DFACore.Controllers
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return result;
         }
