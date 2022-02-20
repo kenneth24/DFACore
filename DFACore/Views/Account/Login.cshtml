@@ -89,11 +89,16 @@
         <section class="loginSection" style="height:auto;margin-top: -55px;">
             <form id="account" method="post" asp-action="login" asp-controller="account">
                 @*<div style="background-color: #217ff3;color: white;height: 35px;">
-            <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
-        </div>*@
+                        <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
+                    </div>*@
                 @*<div asp-validation-summary="All" class="text-danger"></div>*@
                 <div style="padding:10px">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger  p-label bold ml-0" })
+                    @{
+                        if (!String.IsNullOrEmpty(ViewBag.errorMessage))
+                        {
+                            <span class="text-danger p-label bold ml-3">@ViewBag.errorMessage</span>
+                        }
+                    }
                     <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Email" class="form-control no-border" placeholder="Email" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
                         <span asp-validation-for="Email" class="text-danger p-label bold"></span>

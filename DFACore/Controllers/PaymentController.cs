@@ -9,7 +9,7 @@ using UnionBankApi;
 
 namespace DFACore.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PaymentController : Controller
     {
         private readonly UnionBankClient _unionBankClient;

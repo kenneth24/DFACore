@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Log in LRA";
- 
+
 }
 <style>
 
@@ -74,7 +74,12 @@
 
                 @*<div asp-validation-summary="All" class="text-danger"></div>*@
                 <div style="padding:10px">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger  p-label bold ml-0" })
+                    @{
+                        if (!String.IsNullOrEmpty(ViewBag.errorMessage))
+                        {
+                            <span class="text-danger p-label bold ml-3">@ViewBag.errorMessage</span>
+                        }
+                    }
                     <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Email" class="form-control no-border" placeholder="Email" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
                         <span asp-validation-for="Email" class="text-danger p-label bold"></span>

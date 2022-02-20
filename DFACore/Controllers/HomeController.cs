@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -1145,7 +1147,7 @@ namespace DFACore.Controllers
 
 
 
-        public ActionResult SiteSelection()
+        public ActionResult SiteSelection(List<FormErrorModel> model = null)
         {
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
@@ -1157,8 +1159,19 @@ namespace DFACore.Controllers
             ViewData["DefaultBranch"] = defaultBranch;
 
             var branches = _applicantRepo.GetBranches();
+            List<FormErrorModel> errorData = new List<FormErrorModel>();
+            if (TempData["ErrorModel"] != null)
+            {
+                var data = TempData["ErrorModel"].ToString();
+                if (!String.IsNullOrEmpty(data))
+                {
+                    errorData = JsonConvert.DeserializeObject<List<FormErrorModel>>(TempData["ErrorModel"].ToString());
+                }
+            }
 
             ViewData["Branches"] = branches;
+            //ViewBag.errorMessage = model;
+            ViewData["ErrorMessages"] = errorData;
 
             var siteSelection = TempData["Review"] as SiteSelectionViewModel;
 
@@ -1192,15 +1205,30 @@ namespace DFACore.Controllers
         }
 
         [HttpPost]
-        public ActionResult PersonalInfo(SiteSelectionViewModel model)
+        public ActionResult SiteSelection(SiteSelectionViewModel model)
         {
+            var branches = _applicantRepo.GetBranches();
             if (!ModelState.IsValid)
             {
-                TempData["SiteSelection"] = model;
+                List<FormErrorModel> errorModel = new List<FormErrorModel>();
+                var errors = ModelState.Select(x => new { ErrorMessage = x.Value.Errors, Property = x.Key })
+                              .Where(y => y.ErrorMessage.Count > 0)
+                              .ToList();
+                var errorMessage = errors;
+                foreach (var error in errors)
+                {
+                    errorModel.Add(new FormErrorModel
+                    {
+                        ErrorMessage = error.ErrorMessage[0].ErrorMessage,
+                        Property = error.Property
+                    });
+                }
+
+                TempData["ErrorModel"] = JsonConvert.SerializeObject(errorModel);
                 return RedirectToAction("SiteSelection");
             }
+
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            var branches = _applicantRepo.GetBranches();
             var selectedBranch = branches.FirstOrDefault(x => x.Id == long.Parse(model.ApostileSite));
 
             main.DocumentStatus = model.DocumentStatus;
@@ -1263,6 +1291,26 @@ namespace DFACore.Controllers
             ViewData["SelectedBranch"] = selectedBranch;
             ViewData["AvailableDates"] = selectedBranch.AvailableDates;
 
+            if (main.IsLRA)
+            {
+                List<Models.DTO.ScheduleDates> list = new List<Models.DTO.ScheduleDates>();
+                List<AvailableHour> hours = new List<AvailableHour>();
+                foreach (DateTime day in EachDay(DateTime.Now, DateTime.Now.AddYears(2)))
+                {
+                    list.Add(new Models.DTO.ScheduleDates { title = "Available", start = day, color = null });
+                }
+
+                for (int i = 9; i <= 17; i++)
+                {
+                    int from = i > 12 ? i - 12 : i;
+                    int to = (i + 1) > 12 ? (i + 1) - 12 : (i + 1);
+                    string meridiem = i > 11 ? "PM" : "AM";
+                    string stringHour = from < 10 ? $"0{from}" : $"{from}";
+                    hours.Add(new AvailableHour { Caption = $"{from}-{to} {meridiem}", Value = $"{stringHour}:00 {meridiem}" });
+                }
+                selectedBranch.AvailableHours = hours;
+                ViewData["AvailableDates"] = JsonConvert.SerializeObject(list).Replace("T00:00:00+08:00", "");
+            }
             return View();
         }
 
@@ -1384,7 +1432,7 @@ namespace DFACore.Controllers
                     ApostileData = appDocOwner.ApostileData,
                     ProcessingSite = main.ProcessingSite?.ToUpper(),
                     ProcessingSiteAddress = main.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = dateTimeSched, 
+                    ScheduleDate = dateTimeSched,
                     ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = appDocOwner.Fees,
@@ -1511,10 +1559,6 @@ namespace DFACore.Controllers
         }
 
 
-
-
-
-
         public ActionResult GetInfo()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
@@ -1525,6 +1569,11 @@ namespace DFACore.Controllers
             HttpContext.Session.SetComplexData("Model", main);
 
             return Json(main);
+        }
+        public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
         }
     }
 
