@@ -14,7 +14,7 @@ namespace DFACore.Models
         public bool IsActive { get; set; }
         //public List<string> AvailableHours { get; set; }
         public string AvailableDates { get; set; }
-        public List<AvailableHour> AvailableHours { get; set; }
+        public List<AvailableHour> AvailableHours { get; set; } = new();
         public string MapAddress { get; set; }
         public string OfficeHours { get; set; }
         public string ContactNumber { get; set; }

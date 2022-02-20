@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model DFACore.Models.ConfirmPaymentViewModel
+
+<form method="post" asp-route="test-process-payment">
+    <input type="hidden" asp-for="PaymentToken" />
+    <input type="hidden" asp-for="PaymentRequestId" />
+
+    <label>Please enter otp:</label>
+    <input type="text" asp-for="Otp"/>
+    <span asp-validation-for="Otp"></span>
+    <button type="submit">Continue</button>
+</form>
+
+@{
+}

@@ -885,7 +885,7 @@ function docOwnerStepFive() {
 
     console.log(record);
     loading.hide();
-    //alert("a");
+    alert("a");
 
     $.ajax({
         type: "POST",
@@ -1174,6 +1174,7 @@ function authorizedStepFive() {
 
     //model = JSON.stringify({ 'model': records });
     //b
+    alert("b");
 
     $.ajax({
         type: "POST",
@@ -1219,9 +1220,9 @@ function init() {
     });
 }
 
-//$('#submitButton').on('click', function () {
-//    if (applicantType == 0)
-//        docOwnerStepFive();
-//    else
-//        authorizedStepFive();
-//});
+$('#submitButton').on('click', function () {
+    if (applicantType == 0)
+        docOwnerStepFive();
+    else
+        authorizedStepFive();
+});

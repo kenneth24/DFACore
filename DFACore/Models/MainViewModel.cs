@@ -27,7 +27,7 @@ namespace DFACore.Models
         public string ScheduleDate { get; set; }
         public decimal TotalFees { get; set; }
         public string ApplicationCode { get; set; }
-        public ShippingInfoViewModel Shipping { get; set; }
+        //public ShippingInfoViewModel Shipping { get; set; }
         public List<ApplicantRecordViewModel> Applicants { get; set; }
     }
 }

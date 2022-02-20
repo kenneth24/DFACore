@@ -9,8 +9,6 @@ namespace UnionBankApi
 
         public DateTime TranRequestDate { get; set; }
 
-        public string AccountNo { get; set; }
-
         public string Remarks { get; set; }
 
         public string Particulars { get; set; }
@@ -18,6 +16,10 @@ namespace UnionBankApi
         public PaymentAmount Amount { get; set; }
 
         public List<PaymentInformation> Info { get; set; }
+
+        public string RequestId { get; set; }
+
+        public string Otp { get; set; }
 
         public MerchantPayment()
         {
