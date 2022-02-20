@@ -55,7 +55,7 @@ namespace DFACore.Controllers
             GoogleCaptchaService googleCaptchaService,
             IActionContextAccessor accessor,
             IBrowserDetector browserDetector,
-            AdministrationRepository administrationRepository, 
+            AdministrationRepository administrationRepository,
             UnionBankPaymentClient unionBankPaymentService,
             IConfiguration configuration)
         {
@@ -90,7 +90,7 @@ namespace DFACore.Controllers
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now, defaultBranch.Id));
-      
+
             ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
@@ -111,14 +111,14 @@ namespace DFACore.Controllers
             ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
 
             var documents = _documentsType.Get();
-            
+
             if (id == 1)
             {
                 var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
                 var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
                 documents.Remove(phEmbassy);
                 documents.Remove(foreignEmbassy);
-                
+
             }
             else
             {
@@ -142,7 +142,7 @@ namespace DFACore.Controllers
             //}
 
 
-            
+
 
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
@@ -466,7 +466,7 @@ namespace DFACore.Controllers
         private string AddtnlCode(ApplicantRecord model)
         {
             var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.ApostileData);
-            
+
             var addtnlCode = $"{data.Sum(a => a.Quantity)}-{model.BranchId}{model.ScheduleDate.ToString("HH")}{model.CountryDestination.Length}-" +
                 $"{model.DateCreated.ToString("dd")}{model.DateCreated.ToString("MM")}{model.DateCreated.ToString("yy")}" +
                 $"{model.DateCreated.ToString("HH")}{model.DateCreated.ToString("mm")}-{model.FirstName.Length}";
@@ -775,7 +775,7 @@ namespace DFACore.Controllers
                 var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
                 var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
                 documents.Remove(phEmbassy);
-                documents.Remove(foreignEmbassy);   
+                documents.Remove(foreignEmbassy);
             }
             else
             {
@@ -929,7 +929,7 @@ namespace DFACore.Controllers
             ViewData["ApptCode"] = apptCode;
 
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
-            return Json(new { Status = "Success", Message = ""});
+            return Json(new { Status = "Success", Message = "" });
         }
 
         [HttpPost]
@@ -1098,7 +1098,7 @@ namespace DFACore.Controllers
 
             if (record.ScheduleDate.Date == DateTime.Now.Date)
             {
-                return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", Message="", date = ""}); //DateTime.Now.ToShortDateString()
+                return Json(new { Status = "Error", ErrorMessage = "Appointments cannot be cancelled on the scheduled date itself. Previous appointments cannot be cancelled anymore.", Message = "", date = "" }); //DateTime.Now.ToShortDateString()
             }
 
             if (record.ScheduleDate <= DateTime.Now)
@@ -1116,7 +1116,7 @@ namespace DFACore.Controllers
             var success = await _administrationRepository.CancelApplication($"'{code}'");
             if (success)
             {
-                return Json(new { Status = "Success"});
+                return Json(new { Status = "Success" });
             }
             else
             {
@@ -1143,17 +1143,17 @@ namespace DFACore.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult SiteSelection()
         {
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
-        
+
             ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;
             ViewData["ApplicationCode"] = GetApplicantCode();
             ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-            
+
             ViewData["DefaultBranch"] = defaultBranch;
 
             var branches = _applicantRepo.GetBranches();
@@ -1252,7 +1252,7 @@ namespace DFACore.Controllers
             return RedirectToAction("ShippingInformation");
         }
 
-        
+
         public ActionResult ApostilleSchedule()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
@@ -1290,9 +1290,14 @@ namespace DFACore.Controllers
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             main.Applicants = model;
 
+            if (main.DocumentType == "Authorized")
+            {
+                main.NameOfRepresentative = model.FirstOrDefault().NameOfRepresentative;
+                main.RepresentativeContactNumber = model.FirstOrDefault().RepresentativeContactNumber;
+            }
+
             HttpContext.Session.SetComplexData("Model", main);
 
-            
             return RedirectToAction("ApostilleSchedule");
             //return View();
         }
@@ -1350,68 +1355,46 @@ namespace DFACore.Controllers
 
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            ApplicantsViewModel model = new();
-            if (main.DocumentType == "DocumentOwner")
-            {
-                var appDocOwner = main.Applicants.First();
-
-                model.ScheduleDate = main.ScheduleDate;
-                model.Record.FirstName = appDocOwner.FirstName;
-                model.Record.MiddleName = appDocOwner.MiddleName;
-                model.Record.LastName = appDocOwner.LastName;
-                model.Record.Suffix = appDocOwner.Suffix;
-                model.Record.DateOfBirth = appDocOwner.DateOfBirth;
-                model.Record.ContactNumber = appDocOwner.ContactNumber;
-                model.Record.CountryDestination = appDocOwner.CountryDestination;
-                model.Record.ApostileData = appDocOwner.ApostileData;
-                model.ProcessingSite = main.ProcessingSite;
-                model.ProcessingSiteAddress = main.ProcessingSiteAddress;
-                model.Record.ApplicationCode = appDocOwner.ApplicationCode;
-                model.Record.Fees = appDocOwner.Fees;
-                // to be cont
-            }
-
-
-
-            var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+            var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
 
             var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
 
             if (isSchedExist)
             {
-                ViewBag.errorMessage = $"The schedule {model.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
                 return View("Error");
             }
 
-            var branch = _applicantRepo.GetBranch(model.ProcessingSite);
+            var branch = _applicantRepo.GetBranch(main.ProcessingSite);
 
             List<string> apptCode = new List<string>();
 
             var total = 0;
-            if (model.Records == null || model.Records.Count == 0)
+            if (main.DocumentType == "DocumentOwner")
             {
+                var appDocOwner = main.Applicants.First();
                 var applicantRecord = new ApplicantRecord
                 {
                     BranchId = branch != null ? branch.Id : 0,
-                    FirstName = model.Record.FirstName?.ToUpper(),
-                    MiddleName = model.Record.MiddleName?.ToUpper(),
-                    LastName = model.Record.LastName?.ToUpper(),
-                    Suffix = model.Record.Suffix?.ToUpper(),
-                    DateOfBirth = model.Record.DateOfBirth,
-                    ContactNumber = model.Record.ContactNumber,
-                    CountryDestination = model.Record.CountryDestination?.ToUpper(),
-                    ApostileData = model.Record.ApostileData,
-                    ProcessingSite = model.ProcessingSite?.ToUpper(),
-                    ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = dateTimeSched, //DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture),
-                    ApplicationCode = model.Record.ApplicationCode,
+                    FirstName = appDocOwner.FirstName?.ToUpper(),
+                    MiddleName = appDocOwner.MiddleName?.ToUpper(),
+                    LastName = appDocOwner.LastName?.ToUpper(),
+                    Suffix = appDocOwner.Suffix?.ToUpper(),
+                    DateOfBirth = appDocOwner.DateOfBirth,
+                    ContactNumber = appDocOwner.ContactNumber,
+                    CountryDestination = appDocOwner.CountryDestination?.ToUpper(),
+                    ApostileData = appDocOwner.ApostileData,
+                    ProcessingSite = main.ProcessingSite?.ToUpper(),
+                    ProcessingSiteAddress = main.ProcessingSiteAddress?.ToUpper(),
+                    ScheduleDate = dateTimeSched, 
+                    ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
-                    Fees = model.Record.Fees,
+                    Fees = appDocOwner.Fees,
                     Type = 0,
                     DateCreated = DateTime.Now,
-                    QRCode = _applicantRepo.GenerateQRCode($"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}" +
-                        $"{Environment.NewLine}{model.Record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                    QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
+                        $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
 
@@ -1421,14 +1404,14 @@ namespace DFACore.Controllers
                 if (age < 18)
                     generatePowerOfAttorney = true;
 
-                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.Record.ApostileData);
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                 total = data.Sum(a => a.Quantity);
 
-                apptCode.Add(model.Record.ApplicationCode);
+                apptCode.Add(applicantRecord.ApplicationCode);
             }
             else
             {
-                foreach (var record in model.Records)
+                foreach (var record in main.Applicants)
                 {
                     var applicantRecord = new ApplicantRecord
                     {
@@ -1440,11 +1423,11 @@ namespace DFACore.Controllers
                         DateOfBirth = record.DateOfBirth,
                         ContactNumber = record.ContactNumber,
                         CountryDestination = record.CountryDestination?.ToUpper(),
-                        NameOfRepresentative = $"{model.Record.FirstName?.ToUpper()} {model.Record.MiddleName?.ToUpper()} {model.Record.LastName?.ToUpper()}",
-                        RepresentativeContactNumber = model.Record.ContactNumber,
+                        NameOfRepresentative = $"{main.Applicants.First().FirstName?.ToUpper()} {main.Applicants.First().MiddleName?.ToUpper()} {main.Applicants.First().LastName?.ToUpper()}",
+                        RepresentativeContactNumber = main.Applicants.First().ContactNumber,
                         ApostileData = record.ApostileData,
-                        ProcessingSite = model.ProcessingSite?.ToUpper(),
-                        ProcessingSiteAddress = model.ProcessingSiteAddress?.ToUpper(),
+                        ProcessingSite = main.ProcessingSite?.ToUpper(),
+                        ProcessingSiteAddress = main.ProcessingSiteAddress?.ToUpper(),
                         ScheduleDate = dateTimeSched,
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
@@ -1453,11 +1436,11 @@ namespace DFACore.Controllers
                         DateCreated = DateTime.Now,
                         QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                             $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
+                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
                     };
 
                     applicantRecords.Add(applicantRecord);
-                    attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+                    //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                     var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                     if (age < 18)
@@ -1472,7 +1455,7 @@ namespace DFACore.Controllers
                 }
             };
 
-            var validate = ValidateScheduleDate3(model.ScheduleDate, total, branch.Id);
+            var validate = ValidateScheduleDate3(main.ScheduleDate, total, branch.Id);
             if (!validate)
             {
                 ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
@@ -1498,10 +1481,10 @@ namespace DFACore.Controllers
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
                     HtmlTemplate());
-                    //attachments.ToArray());
-            ViewData["ApplicantCount"] = model.ApplicantCount;
-            ViewData["Attachments"] = attachments;
-            ViewData["ApptCode"] = apptCode;
+            //attachments.ToArray());
+            //ViewData["ApplicantCount"] = model.ApplicantCount;
+            //ViewData["Attachments"] = attachments;
+            //ViewData["ApptCode"] = apptCode;
 
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return Json(new { Status = "Success", Message = "" });
@@ -1529,7 +1512,7 @@ namespace DFACore.Controllers
             return View();
         }
 
-        
+
 
 
 
