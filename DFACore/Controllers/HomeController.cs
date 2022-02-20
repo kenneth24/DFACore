@@ -1199,17 +1199,15 @@ namespace DFACore.Controllers
                 TempData["SiteSelection"] = model;
                 return RedirectToAction("SiteSelection");
             }
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             var branches = _applicantRepo.GetBranches();
             var selectedBranch = branches.FirstOrDefault(x => x.Id == long.Parse(model.ApostileSite));
 
-            MainViewModel main = new()
-            {
-                DocumentStatus = model.DocumentStatus,
-                DocumentType = model.DocumentType,
-                ApostileSite = model.ApostileSite,
-                ProcessingSite = selectedBranch.BranchName,
-                ProcessingSiteAddress = selectedBranch.BranchAddress
-            };
+            main.DocumentStatus = model.DocumentStatus;
+            main.DocumentType = model.DocumentType;
+            main.ApostileSite = model.ApostileSite;
+            main.ProcessingSite = selectedBranch.BranchName;
+            main.ProcessingSiteAddress = selectedBranch.BranchAddress;
 
             HttpContext.Session.SetComplexData("Model", main);
 

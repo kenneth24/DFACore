@@ -72,16 +72,17 @@
         <section class="loginSection" style="height:auto;margin-top: -55px;">
             <form id="account" method="post" asp-action="loginlra" asp-controller="account">
 
-                <div asp-validation-summary="All" class="text-danger"></div>
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
                 <div style="padding:10px">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger  p-label bold ml-0" })
                     <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Email" class="form-control no-border" placeholder="Email" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                        <span asp-validation-for="Email" class="text-danger p-label bold"></span>
                     </div>
                     <div class="form-group col-md-12 col-sm-12">
                         <input asp-for="Password" class="form-control no-border" placeholder="Password" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
                         <i toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password float-right" style="position: relative;top: -27px;right: 10px;"></i>
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <span asp-validation-for="Password" class="text-danger p-label bold"></span>
                     </div>
 
                     <div class="form-group col-md-12 col-sm-12">

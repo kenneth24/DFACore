@@ -1,4 +1,5 @@
-﻿using DFACore.Models;
+﻿using DFACore.Helpers;
+using DFACore.Models;
 using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -256,7 +257,6 @@ namespace DFACore.Controllers
 
             //await _userManager.SetLockoutEnabledAsync(user, true);
             //await _userManager.SetLockoutEndDateAsync(user, DateTime.Today.AddYears(100));
-
             if (user != null)
             {
                 if (user.Type != 0)
@@ -304,6 +304,14 @@ namespace DFACore.Controllers
                 //return RedirectToAction("Index", "Home");
                 Log("Logged In", model.Email);
                 //return RedirectToAction("DocumentLocation", "Home");
+
+                MainViewModel main = new()
+                {
+                    IsLRA = false
+                };
+
+                HttpContext.Session.SetComplexData("Model", main);
+
                 return RedirectToAction("SiteSelection", "Home");
             }
 
@@ -383,6 +391,12 @@ namespace DFACore.Controllers
             if (result.Succeeded)
             {
                 Log("Logged In", model.Email);
+                MainViewModel main = new()
+                {
+                    IsLRA = true
+                };
+
+                HttpContext.Session.SetComplexData("Model", main);
                 return RedirectToAction("SiteSelection", "Home");
                 //return RedirectToAction("Index", "Lra");
             }
