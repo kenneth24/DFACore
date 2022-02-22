@@ -33,7 +33,7 @@ namespace DFACore.Controllers
 
             try
             {
-                var accessToken = await _unionBankClient.GetAccessTokenAsync(authorizationCode).ConfigureAwait(false);
+                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(authorizationCode).ConfigureAwait(false);
                 //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
                 //main.TotalFees = 200;
                 //HttpContext.Session.SetComplexData("Model", main);
@@ -70,12 +70,12 @@ namespace DFACore.Controllers
 
             try
             {
-                var accessToken = await _unionBankClient.GetAccessTokenAsync(code).ConfigureAwait(false);
-                var requestOtpResult = await _unionBankClient.RequestOtpAsync(accessToken).ConfigureAwait(false);
+                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(code).ConfigureAwait(false);
+                var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync(accessToken).ConfigureAwait(false);
                 var confirmPaymentViewModel = new ConfirmPaymentViewModel
                 {
-                    PaymentToken = accessToken,
-                    PaymentRequestId = requestOtpResult.RequestId
+                    Caac = code,
+                    OtpRequestId = requestOtpResult.RequestId
                 };
 
                 return View("ConfirmPayment", confirmPaymentViewModel);
@@ -102,14 +102,14 @@ namespace DFACore.Controllers
                     SenderRefId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     TranRequestDate = DateTime.UtcNow,
                     Amount = new PaymentAmount(1),
-                    RequestId = model.PaymentRequestId,
+                    RequestId = model.OtpRequestId,
                     Otp = model.Otp
                 };
 
                 //save data
 
-
-                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, model.PaymentToken).ConfigureAwait(false);
+                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(model.Caac).ConfigureAwait(false);
+                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, accessToken).ConfigureAwait(false);
 
 
 
