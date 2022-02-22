@@ -4,9 +4,10 @@ namespace DFACore.Models
 {
     public class ConfirmPaymentViewModel
     {
-        public string PaymentToken { get; set; }
+        //Customer Account Authorization Code
+        public string Caac { get; set; }
 
-        public string PaymentRequestId { get; set; }
+        public string OtpRequestId { get; set; }
 
         [Required(ErrorMessage = "Field is required.")]
         [RegularExpression("^[0-9]+$", MatchTimeoutInMilliseconds = 3000, ErrorMessage = "Invalid otp.")]

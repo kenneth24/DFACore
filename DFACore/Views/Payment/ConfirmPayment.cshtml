@@ -5,8 +5,8 @@
 @model DFACore.Models.ConfirmPaymentViewModel
 
 <form method="post" asp-route="test-process-payment">
-    <input type="hidden" asp-for="PaymentToken" />
-    <input type="hidden" asp-for="PaymentRequestId" />
+    <input type="hidden" asp-for="Caac" />
+    <input type="hidden" asp-for="OtpRequestId" />
 
     <label>Please enter otp:</label>
     <input type="text" asp-for="Otp"/>
