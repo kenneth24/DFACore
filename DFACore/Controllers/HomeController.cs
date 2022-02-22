@@ -1557,7 +1557,7 @@ namespace DFACore.Controllers
             return View(main);
         }
 
-        public ActionResult PaymentSuccess1()
+        public ActionResult PaymentSuccess()
         {
             return View();
         }
