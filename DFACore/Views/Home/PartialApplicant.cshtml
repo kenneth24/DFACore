@@ -28,7 +28,7 @@
                         <div class="col-md-4 col-sm-12">
                             <label class="p-label bold mb-0" asp-for="Records[increment].FirstName">First Name <span class="p-alt"><i>(Unang Pangalan)</i></span> <span class="red">*</span></label>
                             <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
-                            <span id="fnamePartialValidation-@increment" asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
+                            <span id="fnamePartialValidation-@increment" asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation bold p-label   "></span>
                         </div>
 
                         <div class="col-md-4 col-sm-12">
@@ -40,7 +40,7 @@
                         <div class="col-md-4 col-sm-12">
                             <label class="p-label bold mb-0" asp-for="Records[increment].LastName">Last Name <span class="p-alt"><i>(Apelyido)</i></span><span class="red">*</span></label>
                             <input asp-for="Records[increment].LastName" class="form-control lNamePartial" />
-                            <span asp-validation-for="Records[increment].LastName" class="text-danger lNamePartialValidation"></span>
+                            <span asp-validation-for="Records[increment].LastName" class="text-danger lNamePartialValidation bold p-label"></span>
                         </div>
                     </div>
 
@@ -99,7 +99,7 @@
                     <div class="col-md-4 col-sm-12">
                         <label class="p-label bold mb-0" asp-for="Records[increment].DateOfBirth">Date of Birth <span class="p-alt"><i>(Araw ng Kapanganakan)</i></span>  <span class="red">*</span></label>
                         <input type="date" asp-for="Records[increment].DateOfBirth" class="form-control dateOfbirthPartial entry-bg" />
-                        <span asp-validation-for="Records[increment].DateOfBirth" class="text-danger dateOfbirthPartialValidation"></span>
+                        <span asp-validation-for="Records[increment].DateOfBirth" class="text-danger dateOfbirthPartialValidation bold p-label"></span>
                     </div>
                     @*<div class="col-md-4 col-sm-12">
                             <label asp-for="Records[increment].DateOfBirth">Date of Birth <span class="red">*</span></label>
@@ -111,7 +111,7 @@
                         <select asp-for="Records[increment].CountryDestination" class="form-control countrydestinationPartial entry-bg">
                             <partial name="_CountriesPartial" />
                         </select>
-                        <span asp-validation-for="Records[increment].CountryDestination" class="text-danger countrydestinationPartialValidation"></span>
+                        <span asp-validation-for="Records[increment].CountryDestination" class="text-danger bold p-label countrydestinationPartialValidation"></span>
                     </div>
                 </div>
             </div>
@@ -159,6 +159,7 @@
         </div>
     </div>
     <div class="mb-4">
+        <span id="dataValidation@(increment)" class="text-danger documentsDataPartialValidation bold p-label"></span>
         <div class="position-relative  mx-3 px-0 mb-3">
             <div id="documentList" class="border" style="
                                         padding: 10px;
@@ -1147,11 +1148,11 @@
                     }
                 </select>
                 @*<div class="mb-3" id="documentTypeInfo@(increment)">
-                    <small class="bold">Document Information:</small>
-                    <div class="card white-bg p-2 px-3">
-                        <span id="documentInfoText@(increment)">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
-                    </div>
-                </div>*@
+                        <small class="bold">Document Information:</small>
+                        <div class="card white-bg p-2 px-3">
+                            <span id="documentInfoText@(increment)">*Original document issued by National Bureau of Investigation (NBI) with dry seal.</span>
+                        </div>
+                    </div>*@
 
                 @if (ViewBag.Location == 1)
                 {
@@ -1207,6 +1208,18 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

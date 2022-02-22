@@ -5,11 +5,11 @@ namespace DFACore.Models
 {
     public class SiteSelectionViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Document Status is required.")]
         public string DocumentStatus { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Document Type is required.")]
         public string DocumentType { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Apostille Site is required.")]
         public string ApostileSite { get; set; }
         public bool HasExpidite { get; set; }
     }
