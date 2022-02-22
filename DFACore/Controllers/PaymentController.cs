@@ -33,7 +33,7 @@ namespace DFACore.Controllers
 
             try
             {
-                var accessToken = await _unionBankClient.GetAccessTokenAsync(authorizationCode).ConfigureAwait(false);
+                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(authorizationCode).ConfigureAwait(false);
                 //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
                 //main.TotalFees = 200;
                 //HttpContext.Session.SetComplexData("Model", main);
@@ -70,8 +70,8 @@ namespace DFACore.Controllers
 
             try
             {
-                var accessToken = await _unionBankClient.GetAccessTokenAsync(code).ConfigureAwait(false);
-                var requestOtpResult = await _unionBankClient.RequestOtpAsync(accessToken).ConfigureAwait(false);
+                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(code).ConfigureAwait(false);
+                var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync(accessToken).ConfigureAwait(false);
                 var confirmPaymentViewModel = new ConfirmPaymentViewModel
                 {
                     PaymentToken = accessToken,

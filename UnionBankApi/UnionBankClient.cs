@@ -43,7 +43,63 @@ namespace UnionBankApi
             GC.SuppressFinalize(this);
         }
 
-        public async Task<string> GetAccessTokenAsync(string authorizationCode)
+        public async Task<string> GetPartnerAccountAccessTokenAsync(string username, string password)
+        {
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{_configuration.BaseUri}/partners/v1/oauth2/token"))
+            {
+                var formUrlEncodedContentValue = new Dictionary<string, string>();
+                formUrlEncodedContentValue.Add("grant_type", "password");
+                formUrlEncodedContentValue.Add("client_id", _configuration.ClientId);
+                formUrlEncodedContentValue.Add("username", username);
+                formUrlEncodedContentValue.Add("password", password);
+                formUrlEncodedContentValue.Add("scope", "account_inquiry");
+
+                httpRequestMessage.Content = new FormUrlEncodedContent(formUrlEncodedContentValue);
+
+                var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                var jsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    var jsonObject = JObject.Parse(jsonContent);
+
+                    return jsonObject["access_token"].ToString();
+                }
+                else
+                {
+                    throw new UnionBankApiException(jsonContent);
+                }
+            }
+        }
+
+        public async Task<PartnerAccountTransactionHistory> GetPartnerAccountTransactionHistoryAsync(DateTime fromDate, DateTime toDate, string transactionType, int limit, string accessToken)
+        {
+            const string jsonContentType = "application/json";
+
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{_configuration.BaseUri}/portal/accounts/v1/transactions?fromDate={fromDate.Date.ToString("yyyy-MM-dd")}&toDate={toDate.Date.ToString("yyyy-MM-dd")}&tranType={transactionType}&limit={limit}"))
+            {
+                httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(jsonContentType));
+                httpRequestMessage.Headers.Add("x-ibm-client-id", _configuration.ClientId);
+                httpRequestMessage.Headers.Add("x-ibm-client-secret", _configuration.ClientSecret);
+                httpRequestMessage.Headers.Add("x-partner-id", _configuration.PartnerId);
+
+                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+                var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
+                var content = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<PartnerAccountTransactionHistory>(content);
+                }
+                else
+                {
+                    throw new UnionBankApiException(content);
+                }
+            }
+        }
+
+        public async Task<string> GetCustomerAccountAccessTokenAsync(string authorizationCode)
         {
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{_configuration.BaseUri}/customers/v1/oauth2/token"))
             {
@@ -70,7 +126,7 @@ namespace UnionBankApi
             }
         }
 
-        public async Task<RequestOtpResult> RequestOtpAsync(string accessToken)
+        public async Task<RequestOtpResult> RequestMerchantPaymentOtpAsync(string accessToken)
         {
             const string jsonContentType = "application/json";
 
