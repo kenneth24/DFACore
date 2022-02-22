@@ -362,8 +362,8 @@ namespace DFACore.Repository
 
         public List<DateTime> GetUnAvailableDates(long branchId, int userType = 0)
         {
-            int type = 1;
-            if (userType != 2) type = 0;
+            int type = 0;
+            if (userType == 2) type = 1;
             var limitPerDay = _context.ScheduleCapacities.Where(s => s.BranchId == branchId && s.Type == type).Sum(s => s.Capacity);
             //string sql = "Select * from " +
             //    "(Select " +
@@ -2073,7 +2073,7 @@ namespace DFACore.Repository
             else
                 raw = _context.Branches.Where(a => a.IsActive && a.BranchName == branch).FirstOrDefault();
 
-            var availableDates = GenerateListOfDates(DateTime.Now, raw.Id);
+            var availableDates = GenerateListOfDates(DateTime.Now, raw.Id, userType);
 
             //DateTime dtFrom = DateTime.Parse(raw.StartTime);
             //DateTime dtTo = DateTime.Parse(raw.EndTime);
