@@ -94,6 +94,18 @@
 
                         <div class="form-group black-text">
                             <div class="row">
+                                @if (Model.ScheduleCapacities[i].Name == "07 AM" && Model.ScheduleCapacities[i].Type == 0)
+                                {
+                                    <div class="col-md-12 col-sm-12">
+                                        <p><span style="font-weight:bold">Applicant:</span></p>
+                                    </div>
+                                }
+                                @if (Model.ScheduleCapacities[i].Name == "07 AM" && Model.ScheduleCapacities[i].Type == 1)
+                                {
+                                    <div class="col-md-12 col-sm-12">
+                                        <p><span style="font-weight:bold">LRA:</span></p>
+                                    </div>
+                                }
                                 <div class="col-md-3 col-sm-12">
                                     <p><span style="font-weight:bold">Time:</span> @Html.DisplayFor(model => model.ScheduleCapacities[i].Name)</p>
                                 </div>

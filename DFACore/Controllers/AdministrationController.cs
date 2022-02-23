@@ -263,7 +263,9 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
                     Email = model.Email,
-                    Type = 1,
+                    Type = model.Role == "b532523f-19bb-435f-97e4-0119b91e203b" ||
+                           model.Role == "987b68fe-3498-43a7-b366-7a9ae59cba58" ? 1 :
+                           model.Role == "f194cac6-9666-433a-ac7f-a53ccedf24a2" ? 2 : 0,
                     CreatedDate = DateTime.Now,
                     //EmailConfirmed = false,
                     BranchId = model.BranchId
