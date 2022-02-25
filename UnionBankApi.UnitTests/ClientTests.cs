@@ -32,7 +32,7 @@ namespace UnionBankApi.UnitTests
             //Request authorization code
             //https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=fe667681-2650-4c0b-93fb-c365b2cc0953&scope=payments&type=single&partnerId=5dff2cdf-ef15-48fb-a87b-375ebff415bb
 
-            var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync("AAK80_Q0Irt-LrepHa8ha7hcdS1SdFrJumrZk_RWBMgf8YKz6ohIQz1hgwnt5tFVi8ogsifNAQuV2odIDBNG9oSHndVAYvP-3ugJfiw45HLwOTHfr5pyj0oz3J4hLCLdv_DMS30zfWqRnZgz9HYdxs-67qcL4NHPH_VzSegwIo8UUAPSK9HyQkAllSXfg_UNSbf6y2mXNbb3wzcmyGK1hmfkesMUS6flMehIHSfS5UsesZ5ROZnowUO_dSizA45tqMot7JRMX8t5j2X4S9Oa2v6HVAwk2QRPTYgHp5X-mA3-c_v_L4iE8bpGXl8Mr2l79lAl4TjMFIZPy2pvA_NqsoLhepUrVzH8DQFrX-RgFPtubw");
+            var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync("AAKUyw409rVRhpvjpTVBm5amKW6J4mKA28N_kZGBTSLXa5grsMHcUKsaba2LEUVQqY-vgZj59UF7WruvPqMioLfuUFRzg_oZvtBDNN6qkgdug1OA7QcGaM65qeUbFeukeZCPHbELMYvbxY2Pn1-6TKCH-YA5pjy-anrlSkAliGXD9_odToWnqeLqkYc5WM8yNETkaFnoch2JrrDr2IgcL1LxaK1YpCu9rCiKSU41uFbSOJ4zeGBFACdcC9gipVi17uMxlH1mI4NLcl_nKtTPN2ZbaJUfQFpwBvDTRNFxv2-duno18MjmY8ldEuT-2ozP4ggqHikepye6Ii6Em6aRT6wjkddD4SklicUZsMktTKEqug");
 
             Assert.IsNotNull(accessToken);
         }
@@ -58,10 +58,10 @@ namespace UnionBankApi.UnitTests
                     Value = "1"
                 },
                 RequestId = "",
-                Otp = "222222"
+                Otp = "222221"
             };
 
-            var merchantPaymentResult = await _unionBankClient.CreateMerchantPaymentAsync(merchantPayment, "AAIkZmU2Njc2ODEtMjY1MC00YzBiLTkzZmItYzM2NWIyY2MwOTUzWs8Ejv1dL8g6goHjppL1iXHsGQq4IKp15BUyuNkvqtcxWzBg39WxIuGrSHIRhzkmLWng1ntJp-0q5eJ8L0ghoUP13e7VLeeUw_AhnOA8kuYaJ5HMyrY71rtQG2dAyYlP5id5WlDva53757QvcklYJwt7NTsd_uUriBLH6FV9GAyiwFeT1kU-tnZlzIB4LMFxx7FKcOZDwjDhXz5Omx3ke7ZhHSTd8ilHFQRCBjEPbqghn-SDi48zMqmICbNgA8VGufwjPMNnwoAb69NJaqD4iJKJtwO-3EelTX4bHubKH1fci02APo5lAnltJ7WMKUxEBMEMScxeHqCig8TA0iPQFh00UFGNYxR6MCBgISf1bqQ");
+            var merchantPaymentResult = await _unionBankClient.CreateMerchantPaymentAsync(merchantPayment, "AAIkZmU2Njc2ODEtMjY1MC00YzBiLTkzZmItYzM2NWIyY2MwOTUz4rQcHhpEbKhHy6irQVBb-jfdfUXPHKB7jlXce8PXG3xLPOBPMuMuH8-QDkkzMyBY1NNkByYZVa4k9IPjFyqaAiV7Q8sHRsZNFoMnz4h7g9bqTZescj-PGSbpD8d7FMgLQsga6QePOaCWiB0LT0FJkZS0775kF1zjO0JAw4SS13BdV81Ervn5Rj_xBsxljDPrcmRXGqDz9U5VK5oFxLiEiPjYA_JSqiz5baxAl-0nW0qDDNf8lOcrpQh_M71GxYmJ6APn-OCqGOKvOOBL3bZbMGc7QCyqf7pVUGEwKy3zsK1ojqgdnVRcFG_qlgOwh0tfV8e9K9J4ZgvcZe3sq98vLTEpX0igB1XL4jTBthFaaWs");
 
             Assert.IsNotNull(merchantPaymentResult);
             Assert.AreEqual(merchantPayment.SenderRefId, merchantPaymentResult.Payload.SenderRefId);

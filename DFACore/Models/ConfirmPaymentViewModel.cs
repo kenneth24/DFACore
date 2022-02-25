@@ -4,8 +4,8 @@ namespace DFACore.Models
 {
     public class ConfirmPaymentViewModel
     {
-        //Customer Account Authorization Code
-        public string Caac { get; set; }
+        //Customer Account Access Token
+        public string Caat { get; set; }
 
         public string OtpRequestId { get; set; }
 

@@ -70,11 +70,11 @@ namespace DFACore.Controllers
 
             try
             {
-                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(code).ConfigureAwait(false);
-                var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync(accessToken).ConfigureAwait(false);
+                var customerAccountAccessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(code).ConfigureAwait(false);
+                var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync(customerAccountAccessToken).ConfigureAwait(false);
                 var confirmPaymentViewModel = new ConfirmPaymentViewModel
                 {
-                    Caac = code,
+                    Caat = customerAccountAccessToken,
                     OtpRequestId = requestOtpResult.RequestId
                 };
 
@@ -108,8 +108,7 @@ namespace DFACore.Controllers
 
                 //save data
 
-                var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(model.Caac).ConfigureAwait(false);
-                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, accessToken).ConfigureAwait(false);
+                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, model.Caat).ConfigureAwait(false);
 
 
 
