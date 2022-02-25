@@ -452,3 +452,11 @@ table th {
 /*.modal-backdrop {
     z-index: 1;
 }*/
+
+.validation-summary-errors {
+    margin-left: -10px!important;
+}
+
+.validation-summary-errors ul {
+    margin-bottom: 5px!important;
+}

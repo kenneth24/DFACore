@@ -9,7 +9,7 @@ using UnionBankApi;
 
 namespace DFACore.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PaymentController : Controller
     {
         private readonly UnionBankClient _unionBankClient;
@@ -33,6 +33,12 @@ namespace DFACore.Controllers
 
             try
             {
+                var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+                if (string.IsNullOrEmpty(main.ApplicationCode))
+                {
+                    RedirectToAction("SiteSelection", "Home");
+                }
+
                 var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(authorizationCode).ConfigureAwait(false);
                 //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
                 //main.TotalFees = 200;
@@ -40,7 +46,7 @@ namespace DFACore.Controllers
 
                 var merchantPayment = new MerchantPayment
                 {
-                    SenderRefId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    SenderRefId = main.ApplicationCode,  //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     TranRequestDate = DateTime.UtcNow,
                     Amount = new PaymentAmount(1)
                     //Amount = new PaymentAmount { Value = main.TotalFees.ToString() }
@@ -97,9 +103,15 @@ namespace DFACore.Controllers
 
             try
             {
+                var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+                if (string.IsNullOrEmpty(main.ApplicationCode))
+                {
+                    RedirectToAction("SiteSelection", "Home");
+                }
+
                 var merchantPayment = new MerchantPayment
                 {
-                    SenderRefId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    SenderRefId = main.ApplicationCode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     TranRequestDate = DateTime.UtcNow,
                     Amount = new PaymentAmount(1),
                     RequestId = model.OtpRequestId,
@@ -114,7 +126,7 @@ namespace DFACore.Controllers
 
                 return RedirectToAction("PaymentSuccess", "Home");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("PaymentFailed", "Home");
             }

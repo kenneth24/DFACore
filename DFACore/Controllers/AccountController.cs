@@ -1,4 +1,5 @@
-﻿using DFACore.Models;
+﻿using DFACore.Helpers;
+using DFACore.Models;
 using DFACore.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -220,7 +221,7 @@ namespace DFACore.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<ActionResult> Login(string returnUrl = null)
+        public async Task<ActionResult> Login(string returnUrl = null, string errorMessage = null)
         {
 
 
@@ -228,6 +229,7 @@ namespace DFACore.Controllers
             ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
             ViewData["DeclarationMessage"] = _applicantRepo.GetNotice(2);
             ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
+            ViewBag.errorMessage = errorMessage;
             if (User.Identity.IsAuthenticated)
                 await _signInManager.SignOutAsync();
 
@@ -256,14 +258,13 @@ namespace DFACore.Controllers
 
             //await _userManager.SetLockoutEnabledAsync(user, true);
             //await _userManager.SetLockoutEndDateAsync(user, DateTime.Today.AddYears(100));
-
             if (user != null)
             {
                 if (user.Type != 0)
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
                     Log("Invalid username or password.", model.Email);
-                    return View(model);
+                    return RedirectToAction("Login", new { errorMessage = "Invalid username or password." });
                 }
 
                 if (!await _userManager.IsEmailConfirmedAsync(user))
@@ -276,7 +277,8 @@ namespace DFACore.Controllers
                                          + "The confirmation token has been resent to your email account.";
                     ViewBag.errorMessage = err;
                     Log($"Logging in but with error {err}", model.Email);
-                    return View("Error");
+                    //return View("Error");
+                    return RedirectToAction("Login", new { errorMessage = ViewBag.errorMessage });
                 }
             }
 
@@ -304,6 +306,14 @@ namespace DFACore.Controllers
                 //return RedirectToAction("Index", "Home");
                 Log("Logged In", model.Email);
                 //return RedirectToAction("DocumentLocation", "Home");
+
+                MainViewModel main = new()
+                {
+                    IsLRA = false
+                };
+
+                HttpContext.Session.SetComplexData("Model", main);
+
                 return RedirectToAction("SiteSelection", "Home");
             }
 
@@ -312,14 +322,14 @@ namespace DFACore.Controllers
                 Log("Logged In but email is not activated.", model.Email);
                 ViewBag.errorMessage = "You must have a confirmed email to log on. "
                               + "The confirmation token has been resent to your email account.";
-                return View("Error");
+                return RedirectToAction("Login", new { errorMessage = ViewBag.errorMessage });
             }
             if (result.IsLockedOut)
             {
                 //return View("Lockout");
                 Log("Logged In but account is locked.", model.Email);
                 ModelState.AddModelError("", "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website.");
-                return View(model);
+                return RedirectToAction("Login", new { errorMessage = "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website." });
             }
             else if (result.RequiresTwoFactor)
             {
@@ -329,18 +339,19 @@ namespace DFACore.Controllers
             {
                 Log("Logged In but invalid username or password.", model.Email);
                 ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
+                return RedirectToAction("Login", new { errorMessage = "Invalid username or password." });
             }
 
         }
 
 
         [AllowAnonymous]
-        public async Task<ActionResult> LoginLra(string returnUrl = null)
+        public async Task<ActionResult> LoginLra(string returnUrl = null, string errorMessage = null)
         {
             if (User.Identity.IsAuthenticated)
                 await _signInManager.SignOutAsync();
 
+            ViewBag.errorMessage = errorMessage;
             Log("Visited");
             return View();
         }
@@ -363,7 +374,7 @@ namespace DFACore.Controllers
                 {
                     ModelState.AddModelError("", "Invalid username or password.");
                     Log("Invalid username or password.", model.Email);
-                    return View(model);
+                    return RedirectToAction("LoginLra", new { errorMessage = "Invalid username or password." });
                 }
 
                 if (!await _userManager.IsEmailConfirmedAsync(user))
@@ -374,7 +385,7 @@ namespace DFACore.Controllers
                                          + "The confirmation token has been resent to your email account.";
                     ViewBag.errorMessage = err;
                     Log($"Logging in but with error {err}", model.Email);
-                    return View("Error");
+                    return RedirectToAction("LoginLra", new { errorMessage = ViewBag.errorMessage });
                 }
             }
 
@@ -383,6 +394,12 @@ namespace DFACore.Controllers
             if (result.Succeeded)
             {
                 Log("Logged In", model.Email);
+                MainViewModel main = new()
+                {
+                    IsLRA = true
+                };
+
+                HttpContext.Session.SetComplexData("Model", main);
                 return RedirectToAction("SiteSelection", "Home");
                 //return RedirectToAction("Index", "Lra");
             }
@@ -392,14 +409,14 @@ namespace DFACore.Controllers
                 Log("Logged In but email is not activated.", model.Email);
                 ViewBag.errorMessage = "You must have a confirmed email to log on. "
                               + "The confirmation token has been resent to your email account.";
-                return View("Error");
+                return RedirectToAction("LoginLra", new { errorMessage = ViewBag.errorMessage });
             }
             if (result.IsLockedOut)
             {
                 //return View("Lockout");
                 Log("Logged In but account is locked.", model.Email);
                 ModelState.AddModelError("", "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website.");
-                return View(model);
+                return RedirectToAction("LoginLra", new { errorMessage = "You are no longer authorized to use the Online Appointment System because you have violated and continue to violate the terms and conditions of this website." });
             }
             else if (result.RequiresTwoFactor)
             {
@@ -409,7 +426,7 @@ namespace DFACore.Controllers
             {
                 Log("Logged In but invalid username or password.", model.Email);
                 ModelState.AddModelError("", "Invalid username or password.");
-                return View(model);
+                return RedirectToAction("LoginLra", new { errorMessage = "Invalid username or password." });
             }
 
         }

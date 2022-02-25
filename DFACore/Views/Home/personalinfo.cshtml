@@ -164,20 +164,20 @@
                                             <div class="row media-body">
                                                 <div class="col-md-4 col-sm-12">
                                                     <label class="p-label bold mb-0" asp-for="FirstName">First Name <span class="p-alt"><i>(Unang Pangalan)</i></span> <span class="red">*</span></label>
-                                                    <input asp-for="FirstName" class="form-control" />
-                                                    <span asp-validation-for="FirstName" class="text-danger fname"></span>
+                                                    <input asp-for="FirstName" class="form-control fname" />
+                                                    <span class="text-danger fnameValidation bold p-label"></span>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-12">
                                                     <label class="p-label bold mb-0" asp-for="MiddleName">Middle Name <span class="p-alt"><i>(Gitnang Pangalan)</i></span></label>
-                                                    <input asp-for="MiddleName" class="form-control" />
+                                                    <input asp-for="MiddleName" class="form-control lname" />
                                                     <span asp-validation-for="MiddleName" class="text-danger"></span>
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-12">
                                                     <label class="p-label bold mb-0" asp-for="LastName">Last Name <span class="p-alt"><i>(Apelyido)</i></span><span class="red">*</span></label>
                                                     <input asp-for="LastName" class="form-control" />
-                                                    <span asp-validation-for="LastName" class="text-danger lname"></span>
+                                                    <span class="text-danger lnameValidation bold p-label"></span>
                                                 </div>
                                             </div>
 
@@ -216,33 +216,36 @@
                                                 <div class="col-md-4 col-sm-12">
                                                     <label class="p-label bold mb-0" asp-for="DateOfBirth">Date of Birth <span class="p-alt"><i>(Araw ng Kapanganakan)</i></span>  <span class="red">*</span></label>
                                                     <input type="date" asp-for="DateOfBirth" class="form-control dateOfBirthOwner entry-bg" />
-                                                    <span asp-validation-for="DateOfBirth" class="text-danger dateofbirth"></span>
+                                                    <span class="text-danger dateofbirthValidation bold p-label"></span>
                                                 </div>
                                             }
                                             <div class="col-md-4 col-sm-12">
                                                 <label class="p-label bold mb-0" asp-for="ContactNumber">Contact Number <span class="p-alt"><i>(Numerong tawagan)</i></span>  <span class="red">*</span></label>
                                                 <input asp-for="ContactNumber" class="form-control numberInput " type="tel" min="1" />
-                                                <span asp-validation-for="ContactNumber" class="text-danger contactnumber"></span>
+                                                <span class="text-danger contactnumberValidation bold p-label"></span>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
 
-
-                                                @if (ViewBag.Location == 0)
+                                                @if (ViewBag.DocumentType != "Authorized")
                                                 {
-                                                    <label class="p-label bold mb-0" asp-for="CountryDestination" hidden>Country of Destination <span class="p-alt"><i>(Bansang pupuntahan)</i></span>  <span class="red">*</span></label>
-                                                    <select asp-for="CountryDestination" class="form-control entry-bg" hidden>
-                                                        <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
-                                                    </select>
-                                                }
-                                                else
-                                                {
-                                                    <label class="p-label bold mb-0" asp-for="CountryDestination">Country of Destination <span class="p-alt"><i>(Bansang pupuntahan)</i></span> <span class="red">*</span></label>
-                                                    <select asp-for="CountryDestination" class="form-control entry-bg">
-                                                        <partial name="_CountriesPartial" />
-                                                    </select>
+
+                                                    @if (ViewBag.Location == 0)
+                                                    {
+                                                        <label class="p-label bold mb-0" asp-for="CountryDestination" hidden>Country of Destination <span class="p-alt"><i>(Bansang pupuntahan)</i></span>  <span class="red">*</span></label>
+                                                        <select asp-for="CountryDestination" class="form-control entry-bg" hidden>
+                                                            <option value="Philippines, Republic of (PHL)">Philippines, Republic of (PHL)</option>
+                                                        </select>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="p-label bold mb-0" asp-for="CountryDestination">Country of Destination <span class="p-alt"><i>(Bansang pupuntahan)</i></span> <span class="red">*</span></label>
+                                                        <select asp-for="CountryDestination" class="form-control entry-bg">
+                                                            <partial name="_CountriesPartial" />
+                                                        </select>
+                                                    }
                                                 }
 
-                                                <span asp-validation-for="CountryDestination" class="text-danger countrydestination"></span>
+                                                <span asp-validation-for="CountryDestination" class="text-danger countrydestinationValidation  bold p-label"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -252,6 +255,7 @@
                             </div>
                             @if (ViewBag.DocumentType != "Authorized")
                             {
+                                <span class="text-danger documentsDataValidation bold p-label"></span>
                                 <div class="mb-4">
                                     <div class="position-relative  mx-3 px-0 mb-3">
                                         <div id="documentList" class="border" style="
@@ -333,7 +337,7 @@
                         </div>
                         <div class="show-on-small-only mt-5 my-auto">
                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                            <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                            <input type="button" id="submitButton" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
                         </div>
                     </div>
 

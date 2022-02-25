@@ -221,6 +221,11 @@ selectDocumentsBtn.on('click', function () {
         regularQuantity = parseInt(regularQuantityElement.val()),
         expediteQuantity = parseInt(expediteQuantityElement.val());
 
+    if (regularQuantity == 0 && expediteQuantity == 0) {
+        alert('Please ADD and/or INSERT number of documents.');
+        loading.hide();
+        return;
+    }
 
     if (regularQuantity > 51 || expediteQuantity > 51) {
         loading.hide();
@@ -289,7 +294,7 @@ selectDocumentsBtn.on('click', function () {
     $('#documentsCount').text(numberOfDocuments);
     $('#apostileData').val(JSON.stringify(newDocument));
     console.log(JSON.stringify(newDocument));
-    console.log(documentObject);
+    console.log(documentObject.length);
     if (documentObject.length === 0)
         alert('Please ADD and/or INSERT number of documents.');
     else
@@ -689,7 +694,40 @@ function docOwnerStepFive() {
 
     loading.show();
     docuTotalCount = 0;
-    //if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#Record_FirstName').val() == "" || $('#Record_LastName').val() == ""
+    let fname = $('#FirstName'),
+        lname = $('#LastName'),
+        dateOfBirth = $('#DateOfBirth'),
+        contactNumber = $('#ContactNumber'),
+        countryDestination = $('#CountryDestination'),
+        fnameValidation = $('.fnameValidation'),
+        lnameValidation = $('.lnameValidation'),
+        dateOfBirthValidation = $('.dateofbirthValidation'),
+        contactNumberValidation = $('.contactnumberValidation'),
+        documentsDataValidation = $('.documentsDataValidation'),
+        countryDestinationValidation = $('.countrydestinationValidation');
+
+    if (fname.val() == '' ||
+        lname.val() == '' ||
+        dateOfBirth.val() == '' ||
+        contactNumber.val() == '' ||
+        countryDestination.val() == '') {
+
+        fnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        lnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        dateOfBirthValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        contactNumberValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        countryDestinationValidation.text(countryDestination.val() == '' ? 'This field is required.' : '');
+
+        loading.hide();
+        return;
+    }
+
+    if (documentObject.length <= 0) {
+        documentsDataValidation.text(documentObject.length <= 0 ? 'Please add documents for apostillization.' : '');
+        loading.hide();
+        return;
+    }
+    //if ($('.fname').val() == "" || $('.lname').val() == "" || $('#Title').val() == "" || $('dateOfBirthOwner').val() == "" || $('#Record_LastName').val() == ""
     //    || $('#Record_ContactNumber').val() == "" || $('#Record_CountryDestination').val() == "" || $('#apostileData').val() == "" || $('#apostileData').val() == "[]" || $('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == "[]"
     //    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#Record_DateOfBirth').val() == ""
     //) {
@@ -908,7 +946,73 @@ function authorizedStepFive() {
     docuTotalCount = 0;
     ownerContainer.attr('style', 'display: none');
     authContainer.show();
+    let fname = $('#FirstName'),
+        lname = $('#LastName'),
+        dateOfBirth = $('#DateOfBirth'),
+        contactNumber = $('#ContactNumber'),
+        countryDestination = $('#CountryDestination'),
+        fNamePartial = $('.fNamePartial'),
+        lNamePartial = $('.lNamePartial'),
+        dateOfbirthPartial = $('.dateOfbirthPartial'),
+        countrydestinationPartial = $('.countrydestinationPartial'),
+        fnameValidation = $('.fnameValidation'),
+        lnameValidation = $('.lnameValidation'),
+        dateOfBirthValidation = $('.dateofbirthValidation'),
+        contactNumberValidation = $('.contactnumberValidation');    
+    if (fname.val() == '' ||
+        lname.val() == '' ||
+        dateOfBirth.val() == '' ||
+        contactNumber.val() == '' ||
+        fNamePartial.val() == '' ||
+        lNamePartial.val() == '' ||
+        dateOfbirthPartial.val() == '' ||
+        countrydestinationPartial.val() == '' ) {
 
+        fnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        lnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        dateOfBirthValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        contactNumberValidation.text(fname.val() == '' ? 'This field is required.' : '');
+
+        fNamePartial.each(function () {
+            let $this = $(this);
+            let span = $this.siblings('.fNamePartialValidation');
+            span.text($this.val() == '' ? 'This field is required.' : '');
+        });
+
+        lNamePartial.each(function () {
+            let $this = $(this);
+            let span = $this.siblings('.lNamePartialValidation');
+            span.text($this.val() == '' ? 'This field is required.' : '');
+        });
+
+        dateOfbirthPartial.each(function () {
+            let $this = $(this);
+            let span = $this.siblings('.dateOfbirthPartialValidation');
+            span.text($this.val() == '' ? 'This field is required.' : '');
+        });
+
+        countrydestinationPartial.each(function () {
+            let $this = $(this);
+            let span = $this.siblings('.countrydestinationPartialValidation');
+            span.text($this.val() == '' ? 'This field is required.' : '');
+        });
+
+        loading.hide();
+        return;
+    }
+
+    let hasEmptyData = false;
+    for (var i = 1; i <= docOwner; i++) {
+        let span = $(`#dataValidation${i}`),
+            count = window['documentObject' + i].length;
+        span.text(count == 0 ? 'Please add documents for apostillization.' : '');
+        if (count == 0) hasEmptyData = true;
+    }
+
+    if (hasEmptyData) {
+        loading.hide();
+        return;
+    }
     //if ($('.fNamePartial').val() == "" || $('.lNamePartial').val() == "" || $('#Title').val() == "" || $('#AuthRecord_FirstName').val() == "" || $('#AuthRecord_LastName').val() == ""
     //    || $('#AuthRecord_ContactNumber').val() == "" || $('#AuthRecord_CountryDestination').val() == "" || $('.apostiledataPartial').val() == "[]"
     //    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#AuthRecord_DateOfBirth').val() == ""

@@ -23,5 +23,6 @@ namespace DFACore.Helpers
             var str = JsonConvert.SerializeObject(value);
             session.SetString(key, str);
         }
+
     }
 }

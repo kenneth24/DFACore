@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -315,82 +317,6 @@ namespace DFACore.Controllers
 
         }
 
-        //[HttpPost]
-        //[
-        //AntiForgeryToken]
-        //public async Task<IActionResult> Index(IEnumerable<ApplicantRecordViewModel> records, string returnUrl = null)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-
-        //    var attachments = new List<Attachment>();
-
-        //    foreach (var record in records)
-        //    {
-        //        var applicantRecord = new ApplicantRecord
-        //        {
-        //            Title = record.Title?.ToUpper(),
-        //            FirstName = record.FirstName?.ToUpper(),
-        //            MiddleName = record.MiddleName?.ToUpper(),
-        //            LastName = record.LastName?.ToUpper(),
-        //            Suffix = record.Suffix?.ToUpper(),
-        //            Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
-        //            Nationality = record.Nationality?.ToUpper(),
-        //            ContactNumber = record.ContactNumber,
-        //            CompanyName = record.CompanyName?.ToUpper(),
-        //            CountryDestination = record.CountryDestination?.ToUpper(),
-        //            NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
-        //            RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
-        //            ApostileData = record.ApostileData,
-        //            ProcessingSite = record.ProcessingSite?.ToUpper(),
-        //            ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
-        //            ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-        //                               System.Globalization.CultureInfo.InvariantCulture),
-        //            ApplicationCode = record.ApplicationCode,
-        //            CreatedBy = new Guid(_userManager.GetUserId(User)),
-        //            Fees = record.Fees
-        //        };
-
-        //        var result = _applicantRepo.Add(applicantRecord);
-        //        if (!result)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
-        //        }
-
-        //        attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
-        //    }
-
-        //    await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
-        //                $"Download the attachment and present to the selected branch.",
-        //                attachments.ToArray());
-
-        //    return RedirectToAction("Success");
-        //}
-
-
-        //public IActionResult Authorized()
-        //{
-        //    var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
-        //    ViewData["AvailableDates"] = stringify;
-        //    ViewData["ApplicationCode"] = GetApplicantCode();
-        //    ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Authorized(ApplicantsViewModel record, string returnUrl = null)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-
-        //    return RedirectToAction("Success");
-        //}
-
         public IActionResult PartialApplicant(int i, int id = 0)
         {
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
@@ -576,6 +502,9 @@ namespace DFACore.Controllers
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
             var result = _applicantRepo.ValidateScheduleDate(date);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return Json(result);
         }
@@ -587,6 +516,9 @@ namespace DFACore.Controllers
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return Json(result);
         }
@@ -598,6 +530,9 @@ namespace DFACore.Controllers
                                        System.Globalization.CultureInfo.InvariantCulture);
 
             var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.IsLRA)
+                result = true;
 
             return result;
         }
@@ -696,7 +631,6 @@ namespace DFACore.Controllers
         {
             using (StreamReader SourceReader = System.IO.File.OpenText(_env.WebRootFileProvider.GetFileInfo("template.html")?.PhysicalPath))
             {
-
                 return SourceReader.ReadToEnd();
             }
 
@@ -1145,7 +1079,7 @@ namespace DFACore.Controllers
 
 
 
-        public ActionResult SiteSelection()
+        public ActionResult SiteSelection(List<FormErrorModel> model = null)
         {
 
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
@@ -1157,59 +1091,57 @@ namespace DFACore.Controllers
             ViewData["DefaultBranch"] = defaultBranch;
 
             var branches = _applicantRepo.GetBranches();
+            List<FormErrorModel> errorData = new List<FormErrorModel>();
+            if (TempData["ErrorModel"] != null)
+            {
+                var data = TempData["ErrorModel"].ToString();
+                if (!String.IsNullOrEmpty(data))
+                {
+                    errorData = JsonConvert.DeserializeObject<List<FormErrorModel>>(TempData["ErrorModel"].ToString());
+                }
+            }
 
             ViewData["Branches"] = branches;
+            //ViewBag.errorMessage = model;
+            ViewData["ErrorMessages"] = errorData;
 
             var siteSelection = TempData["Review"] as SiteSelectionViewModel;
 
             return View(siteSelection);
         }
 
-        public ActionResult PersonalInfo()
-        {
-            var documents = _documentsType.Get();
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-
-            if (main.DocumentStatus == "Abroad")
-            {
-                ViewBag.Location = 1;
-                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
-                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
-                documents.Remove(phEmbassy);
-                documents.Remove(foreignEmbassy);
-
-            }
-            else
-            {
-                ViewBag.Location = 0;
-                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
-            }
-
-            ViewBag.DocumentType = main.DocumentType;
-            ViewData["DocumentTypes"] = documents;
-
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult PersonalInfo(SiteSelectionViewModel model)
+        public ActionResult SiteSelection(SiteSelectionViewModel model)
         {
+            var branches = _applicantRepo.GetBranches();
             if (!ModelState.IsValid)
             {
-                TempData["SiteSelection"] = model;
+                List<FormErrorModel> errorModel = new List<FormErrorModel>();
+                var errors = ModelState.Select(x => new { ErrorMessage = x.Value.Errors, Property = x.Key })
+                              .Where(y => y.ErrorMessage.Count > 0)
+                              .ToList();
+                var errorMessage = errors;
+                foreach (var error in errors)
+                {
+                    errorModel.Add(new FormErrorModel
+                    {
+                        ErrorMessage = error.ErrorMessage[0].ErrorMessage,
+                        Property = error.Property
+                    });
+                }
+
+                TempData["ErrorModel"] = JsonConvert.SerializeObject(errorModel);
                 return RedirectToAction("SiteSelection");
             }
-            var branches = _applicantRepo.GetBranches();
+
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             var selectedBranch = branches.FirstOrDefault(x => x.Id == long.Parse(model.ApostileSite));
 
-            MainViewModel main = new()
-            {
-                DocumentStatus = model.DocumentStatus,
-                DocumentType = model.DocumentType,
-                ApostileSite = model.ApostileSite,
-                ProcessingSite = selectedBranch.BranchName,
-                ProcessingSiteAddress = selectedBranch.BranchAddress
-            };
+            main.DocumentStatus = model.DocumentStatus;
+            main.DocumentType = model.DocumentType;
+            main.ApostileSite = model.ApostileSite;
+            main.ProcessingSite = selectedBranch.BranchName;
+            main.ProcessingSiteAddress = selectedBranch.BranchAddress;
 
             HttpContext.Session.SetComplexData("Model", main);
 
@@ -1235,6 +1167,38 @@ namespace DFACore.Controllers
             return RedirectToAction("PersonalInfo");
         }
 
+        public ActionResult PersonalInfo()
+        {
+            var documents = _documentsType.Get();
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            if (main.DocumentType is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
+
+            if (main.DocumentStatus == "Abroad")
+            {
+                ViewBag.Location = 1;
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+
+            }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+            }
+
+            ViewBag.DocumentType = main.DocumentType;
+            ViewData["DocumentTypes"] = documents;
+
+            return View();
+        }
+
+
         public ActionResult ShippingInformation()
         {
             return View();
@@ -1257,6 +1221,11 @@ namespace DFACore.Controllers
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
+            if (main.Applicants is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
+
             var user = _userManager.Users.Where(a => a.Email == User.Identity.Name).FirstOrDefault();
 
             // 0 for user, 2 for LRA
@@ -1265,6 +1234,26 @@ namespace DFACore.Controllers
             ViewData["SelectedBranch"] = selectedBranch;
             ViewData["AvailableDates"] = selectedBranch.AvailableDates;
 
+            //if (main.IsLRA)
+            //{
+            //    List<Models.DTO.ScheduleDates> list = new List<Models.DTO.ScheduleDates>();
+            //    List<AvailableHour> hours = new List<AvailableHour>();
+            //    foreach (DateTime day in EachDay(DateTime.Now, DateTime.Now.AddYears(2)))
+            //    {
+            //        list.Add(new Models.DTO.ScheduleDates { title = "Available", start = day, color = null });
+            //    }
+
+            //    for (int i = 9; i <= 17; i++)
+            //    {
+            //        int from = i > 12 ? i - 12 : i;
+            //        int to = (i + 1) > 12 ? (i + 1) - 12 : (i + 1);
+            //        string meridiem = i > 11 ? "PM" : "AM";
+            //        string stringHour = from < 10 ? $"0{from}" : $"{from}";
+            //        hours.Add(new AvailableHour { Caption = $"{from}-{to} {meridiem}", Value = $"{stringHour}:00 {meridiem}" });
+            //    }
+            //    selectedBranch.AvailableHours = hours;
+            //    ViewData["AvailableDates"] = JsonConvert.SerializeObject(list).Replace("T00:00:00+08:00", "");
+            //}
             return View();
         }
 
@@ -1322,7 +1311,12 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
+      
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             return View(main);
         }
 
@@ -1339,6 +1333,11 @@ namespace DFACore.Controllers
 
         public ActionResult PaymentMethod()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             var url = _configuration.GetConnectionString("ReturnUrl");
             ViewBag.ReturnUrl = url;
             return View();
@@ -1347,22 +1346,28 @@ namespace DFACore.Controllers
         [HttpPost]
         public async Task<IActionResult> PaymentMethod(string returnUrl = null)
         {
+            return await SaveApostille();
+        }
+
+        public async Task<JsonResult> SaveApostille()
+        {
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
-            bool generatePowerOfAttorney = false;
-            bool generateAuthLetter = false;
+            //bool generatePowerOfAttorney = false;
+            //bool generateAuthLetter = false;
 
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+            var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
 
             var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
 
             if (isSchedExist)
             {
                 ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
-                return View("Error");
+                //return View("Error");
+                return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
             }
 
             var branch = _applicantRepo.GetBranch(main.ProcessingSite);
@@ -1386,23 +1391,23 @@ namespace DFACore.Controllers
                     ApostileData = appDocOwner.ApostileData,
                     ProcessingSite = main.ProcessingSite?.ToUpper(),
                     ProcessingSiteAddress = main.ProcessingSiteAddress?.ToUpper(),
-                    ScheduleDate = dateTimeSched, 
+                    ScheduleDate = dateTimeSched,
                     ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = appDocOwner.Fees,
                     Type = 0,
                     DateCreated = DateTime.Now,
-                    QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
-                        $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                        $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
+                    //QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
+                    //    $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                    //    $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
                 };
                 applicantRecords.Add(applicantRecord);
 
                 //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
-                var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
-                if (age < 18)
-                    generatePowerOfAttorney = true;
+                //var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                //if (age < 18)
+                //    generatePowerOfAttorney = true;
 
                 var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                 total = data.Sum(a => a.Quantity);
@@ -1423,8 +1428,8 @@ namespace DFACore.Controllers
                         DateOfBirth = record.DateOfBirth,
                         ContactNumber = record.ContactNumber,
                         CountryDestination = record.CountryDestination?.ToUpper(),
-                        NameOfRepresentative = $"{main.Applicants.First().FirstName?.ToUpper()} {main.Applicants.First().MiddleName?.ToUpper()} {main.Applicants.First().LastName?.ToUpper()}",
-                        RepresentativeContactNumber = main.Applicants.First().ContactNumber,
+                        NameOfRepresentative = main.NameOfRepresentative.ToUpper(),
+                        RepresentativeContactNumber = main.RepresentativeContactNumber,
                         ApostileData = record.ApostileData,
                         ProcessingSite = main.ProcessingSite?.ToUpper(),
                         ProcessingSiteAddress = main.ProcessingSiteAddress?.ToUpper(),
@@ -1434,19 +1439,19 @@ namespace DFACore.Controllers
                         Fees = record.Fees,
                         Type = 1,
                         DateCreated = DateTime.Now,
-                        QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
-                            $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
-                            $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
+                        //QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
+                        //    $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
+                        //    $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{main.ProcessingSite?.ToUpper()}")
                     };
 
                     applicantRecords.Add(applicantRecord);
                     //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
-                    var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
-                    if (age < 18)
-                        generatePowerOfAttorney = true;
+                    //var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
+                    //if (age < 18)
+                    //    generatePowerOfAttorney = true;
 
-                    generateAuthLetter = true;
+                    //generateAuthLetter = true;
 
                     var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantRecord.ApostileData);
                     total += data.Sum(a => a.Quantity);
@@ -1466,22 +1471,22 @@ namespace DFACore.Controllers
             if (!result)
             {
                 Log("Generate appointment but an error occured while saving data.", User.Identity.Name);
-                return Json(new { Status = "Error", Message = "" });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+                return Json(new { Status = "Error", Message = "An error occured file saving data. Please try again." });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
 
-            if (generatePowerOfAttorney)
-            {
-                //attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            }
+            //if (generatePowerOfAttorney)
+            //{
+            //    attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            //}
 
-            if (generateAuthLetter)
-            {
-                //attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            }
+            //if (generateAuthLetter)
+            //{
+            //    attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            //}
 
-            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
-                    HtmlTemplate());
-            //attachments.ToArray());
+            //await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
+            //        HtmlTemplate(), attachments.ToArray());
+            await SendApostilleToEmail();
             //ViewData["ApplicantCount"] = model.ApplicantCount;
             //ViewData["Attachments"] = attachments;
             //ViewData["ApptCode"] = apptCode;
@@ -1490,7 +1495,42 @@ namespace DFACore.Controllers
             return Json(new { Status = "Success", Message = "" });
         }
 
-        public async Task<ActionResult> OrderSummary()
+        public async Task<bool> SendApostilleToEmail()
+        {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");            
+            var apostilleDocs = _applicantRepo.GetByCode(main.ApplicationCode);
+            var attachments = new List<Attachment>();
+            bool generatePowerOfAttorney = false;
+            bool generateAuthLetter = false;
+            foreach (var item in apostilleDocs)
+            {
+                item.QRCode = _applicantRepo.GenerateQRCode($"{item.FirstName?.ToUpper()} {item.MiddleName?.ToUpper()} {item.LastName?.ToUpper()}" +
+                            $"{Environment.NewLine}{item.ApplicationCode}{Environment.NewLine}{item.ScheduleDate.ToString("MM/dd/yyyy")}" +
+                            $"{Environment.NewLine}{item.ScheduleDate.ToString("hh:mm tt")}{Environment.NewLine}{item.ProcessingSite?.ToUpper()}");
+
+                attachments.Add(new Attachment($"{item.ApplicationCode} Apostille Appointment.pdf", await GeneratePDF(item), new MimeKit.ContentType("application", "pdf")));
+                var age = DateTime.Today.Year - item.DateOfBirth.Year;
+                if (age < 18)
+                    generatePowerOfAttorney = true;
+                if (!string.IsNullOrEmpty(item.NameOfRepresentative))
+                    generateAuthLetter = true;
+            }
+
+            //attach only 1 pdf for this
+            if (generatePowerOfAttorney)
+                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            
+            if (generateAuthLetter)
+                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+            
+            await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
+                    HtmlTemplate(), attachments.ToArray());
+            return true;
+        }
+
+
+
+        public ActionResult OrderSummary()
         {
             //this should be success page
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
@@ -1502,19 +1542,26 @@ namespace DFACore.Controllers
             return View(main);
         }
 
-        public ActionResult PaymentSuccess1()
+        public ActionResult PaymentSuccess()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
+            HttpContext.Session.Remove("Model");
             return View();
         }
 
         public ActionResult PaymentFailed()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             return View();
         }
-
-
-
-
 
 
         public ActionResult GetInfo()
@@ -1527,6 +1574,11 @@ namespace DFACore.Controllers
             HttpContext.Session.SetComplexData("Model", main);
 
             return Json(main);
+        }
+        public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
         }
     }
 

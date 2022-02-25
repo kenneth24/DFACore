@@ -7,7 +7,7 @@
     ViewData["Title"] = "Home Page";
 
     var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
-
+    var errorMessages = (List<FormErrorModel>)ViewData["ErrorMessages"];
 
 }
 <style>
@@ -96,7 +96,7 @@
         </div>
     </div>
     <div id="formContainer">
-        <div asp-validation-summary="All" class="text-danger"></div>
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
 
         @*<section class="header px-4 mt-3">
                 <div class="text-center mt-3 w-100 mb-4">
@@ -118,7 +118,7 @@
         </section>
 
         @{
-            <form id="account" method="post" asp-action="PersonalInfo" asp-controller="Home">
+            <form id="account" method="post" asp-action="SiteSelection" asp-controller="Home">
 
                 <div id="step-select-processing-site" class="tabcontent">
                     <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
@@ -142,7 +142,7 @@
                                                 <label class="radio-container">
                                                     Abroad<br />
                                                     <i class="p-alt p-label font-italic">(Ibang bansa)</i>
-                                                    <input id="DocumentStatus" type="radio" checked name="DocumentStatus" value="Abroad" >
+                                                    <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Abroad">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -150,7 +150,7 @@
                                                 <label class="radio-container">
                                                     Philippines<br />
                                                     <i class="p-alt p-label font-italic">(Pilipinas)</i>
-                                                    <input id="DocumentStatus" type="radio" name="DocumentStatus" value="Philippines" >
+                                                    <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Philippines">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -161,7 +161,7 @@
                                                     <label class="radio-container">
                                                         Abroad<br />
                                                         <i class="p-alt p-label font-italic">(Ibang bansa)</i>
-                                                        <input id="DocumentStatus" type="radio" checked name="DocumentStatus" value="Abroad">
+                                                        <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Abroad">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
@@ -169,12 +169,19 @@
                                                     <label class="radio-container">
                                                         Philippines<br />
                                                         <i class="p-alt p-label font-italic">(Pilipinas)</i>
-                                                        <input id="DocumentStatus" type="radio" name="DocumentStatus" value="Philippines">
+                                                        <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Philippines">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+                                        @{
+                                            var error = errorMessages.FirstOrDefault(x => x.Property == "DocumentStatus");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
                                     </div>
 
 
@@ -190,7 +197,7 @@
                                                 <label class="radio-container">
                                                     Document Owner<br />
                                                     <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
-                                                    <input id="DocumentType" type="radio" checked="checked" name="DocumentType" value="DocumentOwner">
+                                                    <input id="DocumentType" type="radio"  name="DocumentType" value="DocumentOwner">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -209,7 +216,7 @@
                                                     <label class="radio-container">
                                                         Document Owner<br />
                                                         <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
-                                                        <input id="DocumentType" type="radio" checked="checked" name="DocumentType" value="DocumentOwner">
+                                                        <input id="DocumentType" type="radio" name="DocumentType" value="DocumentOwner">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
@@ -223,12 +230,27 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @{
+                                            error = errorMessages.FirstOrDefault(x => x.Property == "DocumentType");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
                                     </div>
 
 
                                     <div id="siteaddress" class="card-panel px-5 py-3 sm-p-2 mb-3">
                                         <label class="mb-0 bold">Please select the site where you wish to process your Apostille</label>
                                         <p class="mb-0 p-alt p-label"><i>(Piliin ang site kung saan mo nais iproseso ang iyong Apostille)</i></p>
+
+                                        @{
+                                            error = errorMessages.FirstOrDefault(x => x.Property == "ApostileSite");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
 
                                         <select id="site" class="form-control my-3 entry-bg" asp-for="ApostileSite">
 
@@ -244,12 +266,11 @@
                                                 }
 
                                             }
-
                                         </select>
 
                                         @*<input id="HasExpidite" name="HasExpidite" class="form-control" value="0" style="display:none" />*@
                                         <div class="card-panel no-shadow p-3 entry-bg">
-                                            <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="btn bold text-white btn-green p-label mb-3" onclick="window.location.href(@defaultBranch.MapAddress, _blank)">View Map</button>
+                                            <a class="btn bold text-white btn-green p-label mb-3" href="@defaultBranch.MapAddress" target="_blank">View Map</a>
                                             <div class="row">
                                                 <div class="col-lg-2 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
@@ -338,12 +359,12 @@
                                         <div class="hide-on-small">
                                             <div class="card-body px-5 py-5 d-flex w-100">
                                                 <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
-                                                <input type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
+                                                <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3"> Next</button>
                                             </div>
                                         </div>
                                         <div class="show-on-small-only mt-5 my-auto">
                                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                                            <input type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                                            <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3"> Next</button>
                                         </div>
                                     </div>
 

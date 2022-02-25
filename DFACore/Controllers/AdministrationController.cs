@@ -23,6 +23,7 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using UnionBankApi;
 using Wkhtmltopdf.NetCore;
 
 namespace DFACore.Controllers
@@ -40,6 +41,11 @@ namespace DFACore.Controllers
         private readonly IMessageService _messageService;
         private readonly IActionContextAccessor _accessor;
         private readonly IBrowserDetector _browserDetector;
+
+        private const string PartnerAccountUsername = "partner_sb";
+        private const string PartnerAccountPassword = "p@ssw0rd";
+
+        private UnionBankClient _unionBankClient;
 
 
         public AdministrationController(UserManager<ApplicationUser> userManager,
@@ -63,6 +69,17 @@ namespace DFACore.Controllers
             _messageService = messageService;
             _accessor = accessor;
             _browserDetector = browserDetector;
+
+
+            var unionBankClientConfiguration = new UnionBankClientConfiguration
+            {
+                BaseUri = "https://api-uat.unionbankph.com/partners/sb",
+                ClientId = "fe667681-2650-4c0b-93fb-c365b2cc0953",
+                ClientSecret = "J8wF8tY1jM4bN5eN6kO4wM7sP3lB0aG8yN8yT6aQ5aI8sN1aD4",
+                PartnerId = "5dff2cdf-ef15-48fb-a87b-375ebff415bb"
+            };
+
+            _unionBankClient = new UnionBankClient(unionBankClientConfiguration);
         }
 
         [Authorize(Roles = "Super Administrator, Administrator")]
@@ -263,7 +280,9 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
                     Email = model.Email,
-                    Type = 1,
+                    Type = model.Role == "b532523f-19bb-435f-97e4-0119b91e203b" ||
+                           model.Role == "987b68fe-3498-43a7-b366-7a9ae59cba58" ? 1 :
+                           model.Role == "f194cac6-9666-433a-ac7f-a53ccedf24a2" ? 2 : 0,
                     CreatedDate = DateTime.Now,
                     //EmailConfirmed = false,
                     BranchId = model.BranchId
@@ -1683,6 +1702,13 @@ namespace DFACore.Controllers
             return View(result);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> PaymentTransaction()
+        {
+            var accessToken = await _unionBankClient.GetPartnerAccountAccessTokenAsync(PartnerAccountUsername, PartnerAccountPassword);
+            var result = await _unionBankClient.GetPartnerAccountTransactionHistoryAsync(new DateTime(2017, 1, 1), new DateTime(2017, 12, 31), PartnerAccountTransactionType.Debit, 4, accessToken);
+            return Json(result);
+        }
 
         public void Log(string data, string email = null)
         {
@@ -1703,6 +1729,8 @@ namespace DFACore.Controllers
                 _administrationRepository.AddActivityLog(activity);
             }
         }
+
+
 
 
     }
