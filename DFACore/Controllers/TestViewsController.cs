@@ -57,7 +57,7 @@ namespace DFACore.Controllers
             //    QRCode = _applicantRepo.GenerateQRCode($"Kenneth Villafuerte {Environment.NewLine} 0212124 {Environment.NewLine} May 24, 2020 {Environment.NewLine} 10am {Environment.NewLine} DFA-OCA")
             //};
 
-            var get = _applicantRepo.Get(205494);
+            var get = _applicantRepo.Get(283598);
 
             var model2 = new ApplicantRecord
             {

@@ -317,82 +317,6 @@ namespace DFACore.Controllers
 
         }
 
-        //[HttpPost]
-        //[
-        //AntiForgeryToken]
-        //public async Task<IActionResult> Index(IEnumerable<ApplicantRecordViewModel> records, string returnUrl = null)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-
-        //    var attachments = new List<Attachment>();
-
-        //    foreach (var record in records)
-        //    {
-        //        var applicantRecord = new ApplicantRecord
-        //        {
-        //            Title = record.Title?.ToUpper(),
-        //            FirstName = record.FirstName?.ToUpper(),
-        //            MiddleName = record.MiddleName?.ToUpper(),
-        //            LastName = record.LastName?.ToUpper(),
-        //            Suffix = record.Suffix?.ToUpper(),
-        //            Address = $"{record.Barangay?.ToUpper()} {record.City?.ToUpper()} {record.Region?.ToUpper()} ",
-        //            Nationality = record.Nationality?.ToUpper(),
-        //            ContactNumber = record.ContactNumber,
-        //            CompanyName = record.CompanyName?.ToUpper(),
-        //            CountryDestination = record.CountryDestination?.ToUpper(),
-        //            NameOfRepresentative = record.NameOfRepresentative?.ToUpper(),
-        //            RepresentativeContactNumber = record.RepresentativeContactNumber?.ToUpper(),
-        //            ApostileData = record.ApostileData,
-        //            ProcessingSite = record.ProcessingSite?.ToUpper(),
-        //            ProcessingSiteAddress = record.ProcessingSiteAddress?.ToUpper(),
-        //            ScheduleDate = DateTime.ParseExact(record.ScheduleDate, "MM/dd/yyyy hh:mm tt",
-        //                               System.Globalization.CultureInfo.InvariantCulture),
-        //            ApplicationCode = record.ApplicationCode,
-        //            CreatedBy = new Guid(_userManager.GetUserId(User)),
-        //            Fees = record.Fees
-        //        };
-
-        //        var result = _applicantRepo.Add(applicantRecord);
-        //        if (!result)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
-        //        }
-
-        //        attachments.Add(new Attachment("DFA-Application.pdf", await GeneratePDF(record), new MimeKit.ContentType("application", "pdf")));
-        //    }
-
-        //    await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
-        //                $"Download the attachment and present to the selected branch.",
-        //                attachments.ToArray());
-
-        //    return RedirectToAction("Success");
-        //}
-
-
-        //public IActionResult Authorized()
-        //{
-        //    var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
-        //    ViewData["AvailableDates"] = stringify;
-        //    ViewData["ApplicationCode"] = GetApplicantCode();
-        //    ViewData["GetMunicipality"] = _applicantRepo.GetCity().Select(a => a.municipality).Distinct().ToList();
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Authorized(ApplicantsViewModel record, string returnUrl = null)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View();
-        //    }
-
-        //    return RedirectToAction("Success");
-        //}
-
         public IActionResult PartialApplicant(int i, int id = 0)
         {
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
@@ -707,7 +631,6 @@ namespace DFACore.Controllers
         {
             using (StreamReader SourceReader = System.IO.File.OpenText(_env.WebRootFileProvider.GetFileInfo("template.html")?.PhysicalPath))
             {
-
                 return SourceReader.ReadToEnd();
             }
 
@@ -1187,32 +1110,6 @@ namespace DFACore.Controllers
             return View(siteSelection);
         }
 
-        public ActionResult PersonalInfo()
-        {
-            var documents = _documentsType.Get();
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-
-            if (main.DocumentStatus == "Abroad")
-            {
-                ViewBag.Location = 1;
-                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
-                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
-                documents.Remove(phEmbassy);
-                documents.Remove(foreignEmbassy);
-
-            }
-            else
-            {
-                ViewBag.Location = 0;
-                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
-            }
-
-            ViewBag.DocumentType = main.DocumentType;
-            ViewData["DocumentTypes"] = documents;
-
-            return View();
-        }
-
         [HttpPost]
         public ActionResult SiteSelection(SiteSelectionViewModel model)
         {
@@ -1270,6 +1167,38 @@ namespace DFACore.Controllers
             return RedirectToAction("PersonalInfo");
         }
 
+        public ActionResult PersonalInfo()
+        {
+            var documents = _documentsType.Get();
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            if (main.DocumentType is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
+
+            if (main.DocumentStatus == "Abroad")
+            {
+                ViewBag.Location = 1;
+                var phEmbassy = documents.FirstOrDefault(x => x.Id == "phEmbassy");
+                var foreignEmbassy = documents.FirstOrDefault(x => x.Id == "foreignEmbassy");
+                documents.Remove(phEmbassy);
+                documents.Remove(foreignEmbassy);
+
+            }
+            else
+            {
+                ViewBag.Location = 0;
+                documents = documents.Where(a => (a.Id == "phEmbassy" || a.Id == "foreignEmbassy")).ToList();
+            }
+
+            ViewBag.DocumentType = main.DocumentType;
+            ViewData["DocumentTypes"] = documents;
+
+            return View();
+        }
+
+
         public ActionResult ShippingInformation()
         {
             return View();
@@ -1291,6 +1220,11 @@ namespace DFACore.Controllers
         public ActionResult ApostilleSchedule()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            if (main.LastName is null || main.FirstName is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
 
             var user = _userManager.Users.Where(a => a.Email == User.Identity.Name).FirstOrDefault();
 
@@ -1377,7 +1311,12 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
+      
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             return View(main);
         }
 
@@ -1394,6 +1333,11 @@ namespace DFACore.Controllers
 
         public ActionResult PaymentMethod()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             var url = _configuration.GetConnectionString("ReturnUrl");
             ViewBag.ReturnUrl = url;
             return View();
@@ -1559,11 +1503,22 @@ namespace DFACore.Controllers
 
         public ActionResult PaymentSuccess()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main.ScheduleDate is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
+            HttpContext.Session.Remove("Model");
             return View();
         }
 
         public ActionResult PaymentFailed()
         {
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            if (main is null)
+            {
+                return RedirectToAction("SiteSelection");
+            }
             return View();
         }
 
