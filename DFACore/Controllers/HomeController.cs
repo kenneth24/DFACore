@@ -1221,7 +1221,7 @@ namespace DFACore.Controllers
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            if (main.LastName is null || main.FirstName is null)
+            if (main.Applicants is null)
             {
                 return RedirectToAction("SiteSelection");
             }
@@ -1361,7 +1361,8 @@ namespace DFACore.Controllers
             if (isSchedExist)
             {
                 ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
-                return View("Error");
+                //return View("Error");
+                return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
             }
 
             var branch = _applicantRepo.GetBranch(main.ProcessingSite);
@@ -1397,7 +1398,7 @@ namespace DFACore.Controllers
                 };
                 applicantRecords.Add(applicantRecord);
 
-                //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+                attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                 var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                 if (age < 18)
@@ -1439,7 +1440,7 @@ namespace DFACore.Controllers
                     };
 
                     applicantRecords.Add(applicantRecord);
-                    //attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
+                    attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
                     var age = DateTime.Today.Year - applicantRecord.DateOfBirth.Year;
                     if (age < 18)
@@ -1465,22 +1466,21 @@ namespace DFACore.Controllers
             if (!result)
             {
                 Log("Generate appointment but an error occured while saving data.", User.Identity.Name);
-                return Json(new { Status = "Error", Message = "" });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
+                return Json(new { Status = "Error", Message = "An error occured file saving data. Please try again." });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
 
             if (generatePowerOfAttorney)
             {
-                //attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+                attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
             }
 
             if (generateAuthLetter)
             {
-                //attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
+                attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
             }
 
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
-                    HtmlTemplate());
-            //attachments.ToArray());
+                    HtmlTemplate(), attachments.ToArray());
             //ViewData["ApplicantCount"] = model.ApplicantCount;
             //ViewData["Attachments"] = attachments;
             //ViewData["ApptCode"] = apptCode;
@@ -1489,7 +1489,7 @@ namespace DFACore.Controllers
             return Json(new { Status = "Success", Message = "" });
         }
 
-        public async Task<ActionResult> OrderSummary()
+        public ActionResult OrderSummary()
         {
             //this should be success page
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
@@ -1515,7 +1515,7 @@ namespace DFACore.Controllers
         public ActionResult PaymentFailed()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main is null)
+            if (main.ScheduleDate is null)
             {
                 return RedirectToAction("SiteSelection");
             }
