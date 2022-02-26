@@ -1265,6 +1265,10 @@ namespace DFACore.Controllers
                 main.NameOfRepresentative = model.FirstOrDefault().NameOfRepresentative;
                 main.RepresentativeContactNumber = model.FirstOrDefault().RepresentativeContactNumber;
 
+            }else
+            {
+                main.FirstName = model.FirstOrDefault().FirstName;
+                main.LastName = model.FirstOrDefault().LastName;
             }
 
             HttpContext.Session.SetComplexData("Model", main);
