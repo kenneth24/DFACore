@@ -104,14 +104,16 @@ namespace DFACore.Controllers
             try
             {
                 var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
                 if (string.IsNullOrEmpty(main.ApplicationCode))
                 {
                     RedirectToAction("SiteSelection", "Home");
                 }
+                var appcode = main.ApplicationCode.Replace("-", string.Empty);
 
                 var merchantPayment = new MerchantPayment
                 {
-                    SenderRefId = main.ApplicationCode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    SenderRefId = appcode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     TranRequestDate = DateTime.UtcNow,
                     Amount = new PaymentAmount(1),
                     RequestId = model.OtpRequestId,
