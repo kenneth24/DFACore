@@ -1221,7 +1221,7 @@ namespace DFACore.Controllers
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
-            if (main.LastName is null || main.FirstName is null)
+            if ((main.LastName is null || main.FirstName is null) && main.DocumentType != "Authorized")
             {
                 return RedirectToAction("SiteSelection");
             }
@@ -1234,26 +1234,7 @@ namespace DFACore.Controllers
             ViewData["SelectedBranch"] = selectedBranch;
             ViewData["AvailableDates"] = selectedBranch.AvailableDates;
 
-            if (main.IsLRA)
-            {
-                List<Models.DTO.ScheduleDates> list = new List<Models.DTO.ScheduleDates>();
-                List<AvailableHour> hours = new List<AvailableHour>();
-                foreach (DateTime day in EachDay(DateTime.Now, DateTime.Now.AddYears(2)))
-                {
-                    list.Add(new Models.DTO.ScheduleDates { title = "Available", start = day, color = null });
-                }
-
-                for (int i = 9; i <= 17; i++)
-                {
-                    int from = i > 12 ? i - 12 : i;
-                    int to = (i + 1) > 12 ? (i + 1) - 12 : (i + 1);
-                    string meridiem = i > 11 ? "PM" : "AM";
-                    string stringHour = from < 10 ? $"0{from}" : $"{from}";
-                    hours.Add(new AvailableHour { Caption = $"{from}-{to} {meridiem}", Value = $"{stringHour}:00 {meridiem}" });
-                }
-                selectedBranch.AvailableHours = hours;
-                ViewData["AvailableDates"] = JsonConvert.SerializeObject(list).Replace("T00:00:00+08:00", "");
-            }
+          
             return View();
         }
 
@@ -1283,6 +1264,7 @@ namespace DFACore.Controllers
             {
                 main.NameOfRepresentative = model.FirstOrDefault().NameOfRepresentative;
                 main.RepresentativeContactNumber = model.FirstOrDefault().RepresentativeContactNumber;
+
             }
 
             HttpContext.Session.SetComplexData("Model", main);

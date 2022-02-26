@@ -140,100 +140,130 @@
 
                             <div class="px-4">
                                 <label class="mb-0 bold p-label ml-3"><i>Application Details</i></label>
-                                <div class="entry-bg mb-3 p-3">
+                                @if (Model.DocumentType != "DocumentOwner")
+                                {
+
+                                    var index = 1;
+                                    foreach (var applicantAuth in Model.Applicants)
+                                    {
+                                        <div class="entry-bg mb-3 p-3">
                                             <div class="row">
                                                 <div class="col-lg-4 d-flex mb-2">
-                                                    <p class="p-label bold mb-0 my-auto">Document Owner:</p><b class="p-label hide-on-large">:</b>
+                                                    <p class="p-label bold mb-0 my-auto">Document Owner @index:</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@applicantAuth.LastName.ToUpper(), @applicantAuth.FirstName.ToUpper() @applicantAuth.MiddleName?.ToUpper()</label>
+                                                    <input id="address" class="form-control" value="TEST" style="display:none" />
                                                 </div>
 
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@applicantAuth.DateOfBirth.ToShortDateString()</label>
+                                                </div>
 
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Name of Representative</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@applicantAuth.NameOfRepresentative</label>
+                                                </div>
 
-                                                @if (Model.DocumentType != "DocumentOwner")
-                                                {
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Representative Contact Number</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@applicantAuth.RepresentativeContactNumber</label>
+                                                </div>
 
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].LastName.ToUpper(), @Model.Applicants[0].FirstName.ToUpper() @Model.Applicants[0].MiddleName.ToUpper()</label>
-                                                        <input id="address" class="form-control" value="TEST" style="display:none" />
-                                                    </div>
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicantAuth.CountryDestination</label>
+                                                </div>
 
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].DateOfBirth</label>
-                                                    </div>
+                                                <div class="col-lg-4 d-flex mb-2 align-self-start">
+                                                    <p class="p-label bold mb-0 my-auto">Document/s</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-8 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b>
+                                                    <div class="d-flex flex-column">
+                                                        @{
+                                                            var dataAuth = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(applicantAuth.ApostileData);
 
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Authorized Representative</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].NameOfRepresentative.ToUpper()</label>
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].ContactNumber</label>
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.Applicants[0].CountryDestination</label>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    var applicant = Model.Applicants.FirstOrDefault();
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@applicant.LastName.ToUpper(), @applicant.FirstName.ToUpper() @applicant.MiddleName?.ToUpper()</label>
-                                                        <input id="address" class="form-control" value="TEST" style="display:none" />
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@applicant.DateOfBirth</label>
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@applicant.ContactNumber</label>
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2">
-                                                        <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-6 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicant.CountryDestination</label>
-                                                    </div>
-
-                                                    <div class="col-lg-4 d-flex mb-2 align-self-start">
-                                                        <p class="p-label bold mb-0 my-auto">Document/s</p><b class="p-label hide-on-large">:</b>
-                                                    </div>
-                                                    <div class="col-lg-8 d-flex mb-2">
-                                                        <b class="mr-4 bold show-on-large-only p-label">:</b>
-                                                        <div class="d-flex flex-column">
-                                                            @{
-                                                                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(@Model.Applicants.FirstOrDefault().ApostileData);
-
-                                                                foreach (var item in data)
-                                                                {
-                                                                    <label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">(@item.Quantity) (@item.Transaction) @item.Name </label>
-                                                                }
+                                                            foreach (var item in dataAuth)
+                                                            {
+                                                                <label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">(@item.Quantity) (@item.Transaction) @item.Name </label>
                                                             }
-                                                        </div>
+                                                        }
                                                     </div>
-                                                }
+                                                </div>
 
+                                                <div class="col-lg-4 d-flex mb-0">
+                                                    <p class="p-label bold mb-0 my-auto">Fees</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-0">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicantAuth.Fees</label>
+                                                </div>
 
+                                            </div>
+                                        </div>
+                                        index++;
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="entry-bg mb-3 p-3">
+                                        <div class="row">
+                                            <div class="col-lg-4 d-flex mb-2">
+                                                <p class="p-label bold mb-0 my-auto">Document Owner:</p><b class="p-label hide-on-large">:</b>
+                                            </div>
+                                            @{
+                                                var applicant = Model.Applicants.FirstOrDefault();
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@applicant.LastName.ToUpper(), @applicant.FirstName.ToUpper() @applicant.MiddleName?.ToUpper()</label>
+                                                    <input id="address" class="form-control" value="TEST" style="display:none" />
+                                                </div>
 
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Date of Birth</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteDateOfBirth" class="p-0 p-label mb-0 my-auto">@applicant.DateOfBirth.ToShortDateString()</label>
+                                                </div>
 
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@applicant.ContactNumber</label>
+                                                </div>
+
+                                                <div class="col-lg-4 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Country of Destiantion</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicant.CountryDestination</label>
+                                                </div>
+
+                                                <div class="col-lg-4 d-flex mb-2 align-self-start">
+                                                    <p class="p-label bold mb-0 my-auto">Document/s</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-8 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b>
+                                                    <div class="d-flex flex-column">
+                                                        @{
+                                                            var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(@Model.Applicants.FirstOrDefault().ApostileData);
+
+                                                            foreach (var item in data)
+                                                            {
+                                                                <label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">(@item.Quantity) (@item.Transaction) @item.Name </label>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-lg-4 d-flex mb-0">
                                                     <p class="p-label bold mb-0 my-auto">Processing Date and Time</p><b class="p-label hide-on-large">:</b>
@@ -242,64 +272,72 @@
                                                     <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@Model.ScheduleDate</label>
                                                 </div>
 
-                                            </div>
-                                </div>
-                                @*<label class="mb-0 bold p-label ml-3"><i>Shipping Information</i></label>
-                                <div class="entry-bg mb-3 p-3">
-                                    <div class="row">
-                                        <div class="col-lg-4 d-flex mb-2">
-                                            <p class="p-label bold mb-0 my-auto">Processing Site:</p><b class="p-label hide-on-large">:</b>
+                                                <div class="col-lg-4 d-flex mb-0">
+                                                    <p class="p-label bold mb-0 my-auto">Fees</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-6 d-flex mb-0">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@applicant.Fees</label>
+                                                </div>
+                                            }
                                         </div>
-                                        <div class="col-lg-6 d-flex mb-2">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSite</label>
-                                            <input id="processingSite" class="form-control" value="@Model.ProcessingSite.ToUpper()" style="display:none" />
-                                        </div>
-
-                                        <div class="col-lg-4 d-flex mb-2">
-                                            <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
-                                        </div>
-                                        <div class="col-lg-6 d-flex mb-2">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="address" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSiteAddress</label>
-                                        </div>
-
-                                        <div class="col-lg-4 d-flex mb-2">
-                                            <p class="p-label bold mb-0 my-auto">Name of Shipper</p><b class="p-label hide-on-large">:</b>
-                                        </div>
-                                        <div class="col-lg-6 d-flex mb-2">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="shipper" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ShippersName</label>
-                                        </div>
-
-                                        <div class="col-lg-4 d-flex mb-2">
-                                            <p class="p-label bold mb-0 my-auto">Addres for document pickup</p><b class="p-label hide-on-large">:</b>
-                                        </div>
-                                        <div class="col-lg-6 d-flex mb-2">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.PickupAddress</label>
-                                        </div>
-
-                                        <div class="col-lg-4 d-flex mb-2">
-                                            <p class="p-label bold mb-0 my-auto">Addres for document delivery</p><b class="p-label hide-on-large">:</b>
-                                        </div>
-                                        <div class="col-lg-6 d-flex mb-2">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.DeliveryAddress</label>
-                                        </div>
-
-                                        <div class="col-lg-4 d-flex mb-0">
-                                            <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
-                                        </div>
-                                        <div class="col-lg-6 d-flex mb-0">
-                                            <b class="mr-4 bold show-on-large-only p-label">:</b><label id="number" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ContactNumber</label>
-                                        </div>
-
                                     </div>
-                                </div>*@
-                                <label class="mb-0 bold p-label ml-3" ><i>Fees</i></label>
+                                }
+                                @*<label class="mb-0 bold p-label ml-3"><i>Shipping Information</i></label>
+        <div class="entry-bg mb-3 p-3">
+            <div class="row">
+                <div class="col-lg-4 d-flex mb-2">
+                    <p class="p-label bold mb-0 my-auto">Processing Site:</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-2">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSite</label>
+                    <input id="processingSite" class="form-control" value="@Model.ProcessingSite.ToUpper()" style="display:none" />
+                </div>
+
+                <div class="col-lg-4 d-flex mb-2">
+                    <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-2">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="address" class="p-0 p-label mb-0 my-auto">@Model.ProcessingSiteAddress</label>
+                </div>
+
+                <div class="col-lg-4 d-flex mb-2">
+                    <p class="p-label bold mb-0 my-auto">Name of Shipper</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-2">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="shipper" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ShippersName</label>
+                </div>
+
+                <div class="col-lg-4 d-flex mb-2">
+                    <p class="p-label bold mb-0 my-auto">Addres for document pickup</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-2">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.PickupAddress</label>
+                </div>
+
+                <div class="col-lg-4 d-flex mb-2">
+                    <p class="p-label bold mb-0 my-auto">Addres for document delivery</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-2">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="pickup" class="p-0 p-label mb-0 my-auto">@Model.Shipping.DeliveryAddress</label>
+                </div>
+
+                <div class="col-lg-4 d-flex mb-0">
+                    <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                </div>
+                <div class="col-lg-6 d-flex mb-0">
+                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="number" class="p-0 p-label mb-0 my-auto">@Model.Shipping.ContactNumber</label>
+                </div>
+
+            </div>
+        </div>*@
+                                <label class="mb-0 bold p-label ml-3"><i>Fees</i></label>
                                 <div class="entry-bg p-3">
 
                                     <div class="row">
-                                        <div class="col-lg-4 d-flex mb-2">
+                                        <div class="col-lg-4 d-flex mb-0">
                                             <p class="p-label bold mb-0 my-auto">Total Fees:</p><b class="p-label hide-on-large">:</b>
                                         </div>
-                                        <div class="col-lg-6 d-flex mb-2">
+                                        <div class="col-lg-6 d-flex mb-0">
                                             <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@String.Format("{0:n}", @Model.Applicants.Sum(x => decimal.Parse(x.Fees)))</label>
                                         </div>
                                     </div>
