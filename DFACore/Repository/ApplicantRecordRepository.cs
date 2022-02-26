@@ -133,6 +133,12 @@ namespace DFACore.Repository
             return applicant;
         }
 
+        public List<ApplicantRecord> GetByCode(string code)
+        {
+            var applicant = _context.ApplicantRecords.Where(a => a.ApplicationCode.Contains(code)).ToList();
+            return applicant;
+        }
+
         public IEnumerable<ApplicantRecord> GetAll()
         {
             throw new NotImplementedException();
