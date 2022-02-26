@@ -127,7 +127,7 @@ namespace DFACore.Controllers
 
                 return RedirectToAction("PaymentSuccess", "Home");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("PaymentFailed", "Home");
             }

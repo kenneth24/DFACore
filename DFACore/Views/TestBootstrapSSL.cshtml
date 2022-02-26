@@ -152,7 +152,7 @@
                                             <td>Address:</td>
                                             <td class="padding30">@Model.Barangay?.ToUpper() @Model.City?.ToUpper() @Model.Region?.ToUpper()</td>
                                         </tr>*@
-                                        @if (!string.IsNullOrEmpty(Model.ContactNumber))
+                                        @if (string.IsNullOrEmpty(Model.NameOfRepresentative))
                                         {
                                             <tr>
                                                 <td>Contact No.:</td>
