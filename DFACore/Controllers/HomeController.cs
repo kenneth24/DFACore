@@ -1081,7 +1081,7 @@ namespace DFACore.Controllers
 
         public ActionResult SiteSelection(List<FormErrorModel> model = null)
         {
-
+            HttpContext.Session.SetComplexData("Model", new MainViewModel());
             var defaultBranch = _applicantRepo.GetBranch("DFA - OCA (ASEANA)");
 
             ViewData["AvailableDates"] = defaultBranch.AvailableDates; //stringify;

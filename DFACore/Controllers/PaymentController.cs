@@ -116,6 +116,7 @@ namespace DFACore.Controllers
                 {
                     RedirectToAction("SiteSelection", "Home");
                 }
+                var appcode = main.ApplicationCode.Replace("-", string.Empty);
 
                 var paymentData = _paymentDataCache.GetData(_userManager.GetUserId(User));
 
@@ -127,7 +128,7 @@ namespace DFACore.Controllers
                 {
                     var merchantPayment = new MerchantPayment
                     {
-                        SenderRefId = main.ApplicationCode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                    SenderRefId = appcode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                         TranRequestDate = DateTime.UtcNow,
                         Amount = new PaymentAmount(1),
                         RequestId = paymentData.OtpRequestId,
