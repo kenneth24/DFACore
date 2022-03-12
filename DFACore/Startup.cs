@@ -112,7 +112,8 @@ namespace DFACore
             services.AddWkhtmltopdf();
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton<UnionBankClient>(serviceProvider => new UnionBankClient(Configuration.GetSection("UnionBankApiConfiguration").Get<UnionBankClientConfiguration>()));
+            services.AddSingleton(serviceProvider => new UnionBankClient(Configuration.GetSection("UnionBankApiConfiguration").Get<UnionBankClientConfiguration>()));
+            services.AddSingleton<Helpers.Payment.PaymentDataCache>();
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)

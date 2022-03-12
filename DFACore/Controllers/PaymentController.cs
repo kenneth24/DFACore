@@ -1,6 +1,7 @@
 ﻿using DFACore.Helpers;
 using DFACore.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -13,10 +14,14 @@ namespace DFACore.Controllers
     public class PaymentController : Controller
     {
         private readonly UnionBankClient _unionBankClient;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Helpers.Payment.PaymentDataCache _paymentDataCache;
 
-        public PaymentController(UnionBankClient unionBankClient)
+        public PaymentController(UnionBankClient unionBankClient, UserManager<ApplicationUser> userManger, Helpers.Payment.PaymentDataCache paymentDataCache)
         {
             _unionBankClient = unionBankClient;
+            _userManager = userManger;
+            _paymentDataCache = paymentDataCache;
         }
 
         [HttpGet("process-merchant-payment")]
@@ -78,13 +83,15 @@ namespace DFACore.Controllers
             {
                 var customerAccountAccessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync(code).ConfigureAwait(false);
                 var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync(customerAccountAccessToken).ConfigureAwait(false);
-                var confirmPaymentViewModel = new ConfirmPaymentViewModel
+                var paymentData = new Helpers.Payment.PaymentData
                 {
-                    Caat = customerAccountAccessToken,
+                    AccessToken = customerAccountAccessToken,
                     OtpRequestId = requestOtpResult.RequestId
                 };
 
-                return View("ConfirmPayment", confirmPaymentViewModel);
+                _paymentDataCache.SetData(_userManager.GetUserId(User), paymentData);
+
+                return View("ConfirmPayment", new ConfirmPaymentViewModel());
             }
             catch (Exception)
             {
@@ -104,29 +111,37 @@ namespace DFACore.Controllers
             try
             {
                 var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
                 if (string.IsNullOrEmpty(main.ApplicationCode))
                 {
                     RedirectToAction("SiteSelection", "Home");
                 }
 
-                var merchantPayment = new MerchantPayment
+                var paymentData = _paymentDataCache.GetData(_userManager.GetUserId(User));
+
+                if (paymentData is null)
                 {
-                    SenderRefId = main.ApplicationCode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
-                    TranRequestDate = DateTime.UtcNow,
-                    Amount = new PaymentAmount(1),
-                    RequestId = model.OtpRequestId,
-                    Otp = model.Otp
-                };
+                    return RedirectToAction("PaymentFailed", "Home");
+                }
+                else
+                {
+                    var merchantPayment = new MerchantPayment
+                    {
+                        SenderRefId = main.ApplicationCode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                        TranRequestDate = DateTime.UtcNow,
+                        Amount = new PaymentAmount(1),
+                        RequestId = paymentData.OtpRequestId,
+                        Otp = model.Otp
+                    };
 
-                //save data
+                    //save data
 
-                await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, model.Caat).ConfigureAwait(false);
+                    await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, paymentData.AccessToken).ConfigureAwait(false);
 
-
-
-                return RedirectToAction("PaymentSuccess", "Home");
+                    return RedirectToAction("PaymentSuccess", "Home");
+                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToAction("PaymentFailed", "Home");
             }

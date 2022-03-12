@@ -5,8 +5,6 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace UnionBankApi
@@ -74,27 +72,27 @@ namespace UnionBankApi
 
         public async Task<PartnerAccountTransactionHistory> GetPartnerAccountTransactionHistoryAsync(DateTime fromDate, DateTime toDate, string transactionType, int limit, string accessToken)
         {
-            const string jsonContentType = "application/json";
+            const string queryDateFormat = "yyyy-MM-dd";
 
-            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{_configuration.BaseUri}/portal/accounts/v1/transactions?fromDate={fromDate.Date.ToString("yyyy-MM-dd")}&toDate={toDate.Date.ToString("yyyy-MM-dd")}&tranType={transactionType}&limit={limit}"))
+            using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{_configuration.BaseUri}/portal/accounts/v1/transactions?fromDate={fromDate.Date.ToString(queryDateFormat)}&toDate={toDate.Date.ToString(queryDateFormat)}&tranType={transactionType}&limit={limit}"))
             {
-                httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(jsonContentType));
-                httpRequestMessage.Headers.Add("x-ibm-client-id", _configuration.ClientId);
-                httpRequestMessage.Headers.Add("x-ibm-client-secret", _configuration.ClientSecret);
-                httpRequestMessage.Headers.Add("x-partner-id", _configuration.PartnerId);
+                httpRequestMessage.Headers.Accept.Add(Utilities.HttpHeaderUtility.CreateJsonContentHeaderValue());
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientId, _configuration.ClientId);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientSecret, _configuration.ClientSecret);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.PartnerId, _configuration.PartnerId);
 
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpRequestMessage.Headers.Authorization = Utilities.HttpHeaderUtility.CreateAuthorizationHeaderValue(accessToken);
 
                 var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                var content = await httpResponseMessage.Content.ReadAsStringAsync();
+                var jsonContent = await httpResponseMessage.Content.ReadAsStringAsync();
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<PartnerAccountTransactionHistory>(content);
+                    return JsonConvert.DeserializeObject<PartnerAccountTransactionHistory>(jsonContent);
                 }
                 else
                 {
-                    throw new UnionBankApiException(content);
+                    throw new UnionBankApiException(jsonContent);
                 }
             }
         }
@@ -128,43 +126,39 @@ namespace UnionBankApi
 
         public async Task<RequestOtpResult> RequestMerchantPaymentOtpAsync(string accessToken)
         {
-            const string jsonContentType = "application/json";
-
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{_configuration.BaseUri}/merchants/v5/payments/otp/single"))
             {
-                httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(jsonContentType));
-                httpRequestMessage.Headers.Add("x-ibm-client-id", _configuration.ClientId);
-                httpRequestMessage.Headers.Add("x-ibm-client-secret", _configuration.ClientSecret);
-                httpRequestMessage.Headers.Add("x-partner-id", _configuration.PartnerId);
+                httpRequestMessage.Headers.Accept.Add(Utilities.HttpHeaderUtility.CreateJsonContentHeaderValue());
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientId, _configuration.ClientId);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientSecret, _configuration.ClientSecret);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.PartnerId, _configuration.PartnerId);
 
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpRequestMessage.Headers.Authorization = Utilities.HttpHeaderUtility.CreateAuthorizationHeaderValue(accessToken);
 
                 var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                var content = await httpResponseMessage.Content.ReadAsStringAsync();
+                var jsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<RequestOtpResult>(content);
+                    return JsonConvert.DeserializeObject<RequestOtpResult>(jsonContent);
                 }
                 else
                 {
-                    throw new UnionBankApiException(content);
+                    throw new UnionBankApiException(jsonContent);
                 }
             }
         }
 
         public async Task<MerchantPaymentResult> CreateMerchantPaymentAsync(MerchantPayment payment, string accessToken)
         {
-            const string jsonContentType = "application/json";
-
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{_configuration.BaseUri}/merchants/v4/payments/single"))
             {
-                httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(jsonContentType));
-                httpRequestMessage.Headers.Add("x-ibm-client-id", _configuration.ClientId);
-                httpRequestMessage.Headers.Add("x-ibm-client-secret", _configuration.ClientSecret);
-                httpRequestMessage.Headers.Add("x-partner-id", _configuration.PartnerId);
+                httpRequestMessage.Headers.Accept.Add(Utilities.HttpHeaderUtility.CreateJsonContentHeaderValue());
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientId, _configuration.ClientId);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientSecret, _configuration.ClientSecret);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.PartnerId, _configuration.PartnerId);
 
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpRequestMessage.Headers.Authorization = Utilities.HttpHeaderUtility.CreateAuthorizationHeaderValue(accessToken);
 
                 var isoDateTimeConverter = new IsoDateTimeConverter
                 {
@@ -179,34 +173,32 @@ namespace UnionBankApi
                 jsonSerializerSettings.Converters.Add(isoDateTimeConverter);
 
                 var requestJsonContent = JsonConvert.SerializeObject(payment, jsonSerializerSettings);
-                httpRequestMessage.Content = new StringContent(requestJsonContent, Encoding.UTF8, jsonContentType);
+                httpRequestMessage.Content = Utilities.HttpContentUtility.CreateJsonContent(requestJsonContent);
 
                 var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                var responsejsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var responseJsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<MerchantPaymentResult>(responsejsonContent, isoDateTimeConverter);
+                    return JsonConvert.DeserializeObject<MerchantPaymentResult>(responseJsonContent, isoDateTimeConverter);
                 }
                 else
                 {
-                    throw new UnionBankApiException(responsejsonContent);
+                    throw new UnionBankApiException(responseJsonContent);
                 }
             }
         }
 
         public async Task<MerchantPaymentResult> CreateV5MerchantPaymentAsync(MerchantPayment payment, string accessToken)
         {
-            const string jsonContentType = "application/json";
-
             using (var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, $"{_configuration.BaseUri}/merchants/v4/payments/single"))
             {
-                httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(jsonContentType));
-                httpRequestMessage.Headers.Add("x-ibm-client-id", _configuration.ClientId);
-                httpRequestMessage.Headers.Add("x-ibm-client-secret", _configuration.ClientSecret);
-                httpRequestMessage.Headers.Add("x-partner-id", _configuration.PartnerId);
+                httpRequestMessage.Headers.Accept.Add(Utilities.HttpHeaderUtility.CreateJsonContentHeaderValue());
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientId, _configuration.ClientId);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.ClientSecret, _configuration.ClientSecret);
+                httpRequestMessage.Headers.Add(Utilities.HttpHeaderNames.PartnerId, _configuration.PartnerId);
 
-                httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                httpRequestMessage.Headers.Authorization = Utilities.HttpHeaderUtility.CreateAuthorizationHeaderValue(accessToken);
 
                 var isoDateTimeConverter = new IsoDateTimeConverter
                 {
@@ -221,18 +213,18 @@ namespace UnionBankApi
                 jsonSerializerSettings.Converters.Add(isoDateTimeConverter);
 
                 var requestJsonContent = JsonConvert.SerializeObject(payment, jsonSerializerSettings);
-                httpRequestMessage.Content = new StringContent(requestJsonContent, Encoding.UTF8, jsonContentType);
+                httpRequestMessage.Content = Utilities.HttpContentUtility.CreateJsonContent(requestJsonContent);
 
                 var httpResponseMessage = await _httpClient.SendAsync(httpRequestMessage).ConfigureAwait(false);
-                var responsejsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var responseJsonContent = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {
-                    return JsonConvert.DeserializeObject<MerchantPaymentResult>(responsejsonContent, isoDateTimeConverter);
+                    return JsonConvert.DeserializeObject<MerchantPaymentResult>(responseJsonContent, isoDateTimeConverter);
                 }
                 else
                 {
-                    throw new UnionBankApiException(responsejsonContent);
+                    throw new UnionBankApiException(responseJsonContent);
                 }
             }
         }

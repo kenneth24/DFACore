@@ -63,7 +63,6 @@ namespace DFACore.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(string returnUrl = null)
         {
-
             ViewData["ReturnUrl"] = returnUrl;
             if (User.Identity.IsAuthenticated)
                 await _signInManager.SignOutAsync();
