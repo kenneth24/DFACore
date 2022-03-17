@@ -7,20 +7,34 @@ namespace UnionBankApi.UnitTests
     [TestFixture]
     public class ClientTests
     {
-        private const string PartnerAccountUsername = "partner_sb";
-        private const string PartnerAccountPassword = "p@ssw0rd";
+        //sandbox
+        //private const string PartnerAccountUsername = "partner_sb";
+        //private const string PartnerAccountPassword = "p@ssw0rd";
+
+        private const string PartnerAccountUsername = "omni_uat";
+        private const string PartnerAccountPassword = "0mniu@T0Gvv#$u6xxS!H44I";
 
         private UnionBankClient _unionBankClient;
 
         [SetUp]
         public void SetUp()
         {
+            //sandbox
+            //var unionBankClientConfiguration = new UnionBankClientConfiguration
+            //{
+            //    BaseUri = "https://api-uat.unionbankph.com/partners/sb",
+            //    ClientId = "fe667681-2650-4c0b-93fb-c365b2cc0953",
+            //    ClientSecret = "J8wF8tY1jM4bN5eN6kO4wM7sP3lB0aG8yN8yT6aQ5aI8sN1aD4",
+            //    PartnerId = "5dff2cdf-ef15-48fb-a87b-375ebff415bb"
+            //};
+
+            //uat
             var unionBankClientConfiguration = new UnionBankClientConfiguration
             {
-                BaseUri = "https://api-uat.unionbankph.com/partners/sb",
-                ClientId = "fe667681-2650-4c0b-93fb-c365b2cc0953",
-                ClientSecret = "J8wF8tY1jM4bN5eN6kO4wM7sP3lB0aG8yN8yT6aQ5aI8sN1aD4",
-                PartnerId = "5dff2cdf-ef15-48fb-a87b-375ebff415bb"
+                BaseUri = "https://api-uat.unionbankph.com/ubp/external",
+                ClientId = "608e9f9c-b412-49ae-9d02-7ae6e23d1764",
+                ClientSecret = "X5oF8rK7mJ0uK0uE5sE4rL0jH1nQ5oV7vO0gA4tI7rY3aU3wU4",
+                PartnerId = "4af3d4f5-1bba-4cf5-8715-8bab7af59229"
             };
 
             _unionBankClient = new UnionBankClient(unionBankClientConfiguration);
@@ -29,8 +43,11 @@ namespace UnionBankApi.UnitTests
         [Test]
         public async Task GetCustomerAccountAccessTokenTest()
         {
-            //Request authorization code
+            //sandbox request authorization code
             //https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=fe667681-2650-4c0b-93fb-c365b2cc0953&scope=payments&type=single&partnerId=5dff2cdf-ef15-48fb-a87b-375ebff415bb
+
+            //uat request authorization code
+            //https://api-uat.unionbankph.com/ubp/external/customers/v1/oauth2/authorize?response_type=code&client_id=608e9f9c-b412-49ae-9d02-7ae6e23d1764&scope=payments&type=single&partnerId=4af3d4f5-1bba-4cf5-8715-8bab7af59229
 
             var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync("AAKUyw409rVRhpvjpTVBm5amKW6J4mKA28N_kZGBTSLXa5grsMHcUKsaba2LEUVQqY-vgZj59UF7WruvPqMioLfuUFRzg_oZvtBDNN6qkgdug1OA7QcGaM65qeUbFeukeZCPHbELMYvbxY2Pn1-6TKCH-YA5pjy-anrlSkAliGXD9_odToWnqeLqkYc5WM8yNETkaFnoch2JrrDr2IgcL1LxaK1YpCu9rCiKSU41uFbSOJ4zeGBFACdcC9gipVi17uMxlH1mI4NLcl_nKtTPN2ZbaJUfQFpwBvDTRNFxv2-duno18MjmY8ldEuT-2ozP4ggqHikepye6Ii6Em6aRT6wjkddD4SklicUZsMktTKEqug");
 
