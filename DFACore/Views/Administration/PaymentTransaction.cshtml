@@ -7,118 +7,111 @@
     ViewData["Title"] = "Branches";
 }
 
-<h3 style="margin-top:50px;">Accounts</h3>
 
-<div class="row">
-    <div class="col-12">
-        <a class="btn btn-primary pull-right" asp-action="Register">Create Admin Account</a>
-        @if (User.IsInRole("Super Administrator"))
-        {
-            <a class="btn btn-primary pull-right" asp-action="UserAccount" style="margin-right:10px;">View Users</a>
-        }
+<div>
 
-    </div>
-</div>
+    <h3 style="margin-top:50px;">Payment Transaction History</h3>
 
-<p>Last Running Balance: @Model.LastRunningBalance</p>
-<p>Total Records: @Model.TotalRecords</p>
+    <p>Last Running Balance: @Model.LastRunningBalance</p>
+    <p>Total Records: @Model.TotalRecords</p>
 
-<table class="table table-responsive" style="font-size:12px;margin-top:10px;">
-    <thead>
-        <tr style="background-color: #217ff3 !important; color: white;">
-            <th style="display:none">
-                RecordNumber
-            </th>
-            <th>
-                TranId
-            </th>
-            <th>
-                TranType
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                Currency
-            </th>
-            <th>
-                TranDate
-            </th>
+    <table class="table" style="font-size:12px;margin-top:10px;">
+        <thead>
+            <tr style="background-color: #217ff3 !important; color: white;">
+                <th>
+                    RecordNumber
+                </th>
+                <th>
+                    TranId
+                </th>
+                <th>
+                    TranType
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Currency
+                </th>
+                <th>
+                    TranDate
+                </th>
 
-            <th>
-                Remarks
-            </th>
-            <th>
-                Remarks2
-            </th>
-            <th>
-                Balance
-            </th>
-            <th>
-                BalanceCurrency
-            </th>
+                <th>
+                    Remarks
+                </th>
+                <th>
+                    Remarks2
+                </th>
+                <th>
+                    Balance
+                </th>
+                <th>
+                    BalanceCurrency
+                </th>
 
-            <th>
-                PostedDate
-            </th>
-            <th>
-                TranDescription
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Records)
-        {
-            <tr>
-                <td style="display:none">
-                    @Html.DisplayFor(modelItem => item.RecordNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TranId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TranType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Currency)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TranDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Remarks)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Remarks2)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Balance)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BalanceCurrency)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TranDescription)
-                </td>
-
-                @*@if (item.Roles != "Super Administrator")
-                    {
-                        <td>
-                            <a asp-action="EditAccount" asp-route-userId="@item.Id">Edit</a> |
-                            <a asp-action="DeleteAccount" asp-route-userId="@item.Id">Delete</a>
-                        </td>*@
-
-                }
-
+                <th>
+                    PostedDate
+                </th>
+                <th>
+                    TranDescription
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Records)
+            {
+                <tr>
+                    <td style="display:none">
+                        @Html.DisplayFor(modelItem => item.RecordNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TranId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TranType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TranDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remarks2)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BalanceCurrency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PostedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TranDescription)
+                    </td>
+
+                    @*@if (item.Roles != "Super Administrator")
+                        {
+                            <td>
+                                <a asp-action="EditAccount" asp-route-userId="@item.Id">Edit</a> |
+                                <a asp-action="DeleteAccount" asp-route-userId="@item.Id">Delete</a>
+                            </td>*@
+
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

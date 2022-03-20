@@ -1702,11 +1702,11 @@ namespace DFACore.Controllers
             return View(result);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> PaymentTransaction()
         {
             var accessToken = await _unionBankClient.GetPartnerAccountAccessTokenAsync(PartnerAccountUsername, PartnerAccountPassword);
-            var result = await _unionBankClient.GetPartnerAccountTransactionHistoryAsync(new DateTime(2017, 1, 1), new DateTime(2017, 12, 31), PartnerAccountTransactionType.Debit, 4, accessToken);
+            var result = await _unionBankClient.GetPartnerAccountTransactionHistoryAsync(new DateTime(2017, 1, 1), new DateTime(2017, 12, 31), PartnerAccountTransactionType.Debit, 100, accessToken);
             return View(result);
         }
 

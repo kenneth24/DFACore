@@ -86,8 +86,9 @@
                         <a asp-action="Price" asp-controller="Administration" class="list-inline-item" style="color:white">Set Price</a>
                         <a asp-action="Holiday" asp-controller="Administration" class="list-inline-item" style="color:white">Calendar</a>
                         <a asp-action="Account" asp-controller="Administration" class="list-inline-item" style="color:white">Accounts</a>
+                        <a asp-action="PaymentTransaction" asp-controller="Administration" class="list-inline-item" style="color:white">Payment History</a>
                     }
-                    <a asp-action="ActivityLog" asp-controller="Administration" class="list-inline-item" style="color:white">History</a>
+                    <a asp-action="ActivityLog" asp-controller="Administration" class="list-inline-item" style="color:white">Logs</a>
 
                     @if (User.IsInRole("Administrator"))
                     {
