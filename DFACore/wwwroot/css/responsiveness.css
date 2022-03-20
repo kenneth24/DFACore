@@ -208,6 +208,16 @@
         height: 47px !important;
         width: 47px !important;
     }
+
+    .card-panel.db .header p {
+        font-size: 23px !important;
+    }
+
+    .card-panel.db .header {
+        height: 77px;
+        padding: 7px 15px;
+        color: white;
+    }
 }
 
 @media (max-width: 400px) {
@@ -249,6 +259,16 @@
     .ic-container img {
         height: 47px !important;
         width: 47px !important;
+    }
+
+    .card-panel.db .header p {
+        font-size: 23px !important;
+    }
+
+    .card-panel.db .header {
+        height: 77px;
+        padding: 7px 15px;
+        color: white;
     }
 }
 

@@ -117,7 +117,7 @@ ownerButton.on('click', function () {
         $("#ChckIfhasExpedite").text("");
 
         $('.transactionQuantity.expedite').val("0");
-        console.log('hasExpedite');
+        //console.log('hasExpedite');
         $('.transactionQuantity.expedite').attr('disabled', false);
         $('.transactionQuantity.regular').attr('disabled', false);
     }
@@ -130,7 +130,7 @@ authorizedButton.on('click', function () {
     loading.show();
     applicantType = 1;
     applicationTypeSelection.hide();
-    console.log('pass');
+    //console.log('pass');
     authorizeDocument.show();
     addDocumentOwnerBtn.click();
     loading.hide();
@@ -165,7 +165,7 @@ docTypeSelect.on('change', function () {
         expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
         baseUrl = window.location.origin;
 
-    console.log(selectedData);
+    //console.log(selectedData);
     documentTypeSample.children().remove();
     if (selectedData != null) {
         // change displayed document info
@@ -183,7 +183,7 @@ docTypeSelect.on('change', function () {
         if (hasExpedite) {
             $("#" + expediteQuantity.id).val("0");
             expediteQuantityElement.attr("disabled", false);
-            console.log('hererhehrehehr');
+            //console.log('hererhehrehehr');
         }
 
         regularQuantityElement.attr('min', regularQuantity.min);
@@ -237,8 +237,8 @@ selectDocumentsBtn.on('click', function () {
         return;
     }
 
-    console.log('passed here');
-    console.log(documentObject);
+    //console.log('passed here');
+    //console.log(documentObject);
     var docIndex = documentObject.findIndex(x => x.Name == $this.val());
     var doc = documentObject.find(x => x.Name == $this.val());
 
@@ -293,8 +293,8 @@ selectDocumentsBtn.on('click', function () {
     //$('#documentsTable tbody').append(tbodyContent);
     $('#documentsCount').text(numberOfDocuments);
     $('#apostileData').val(JSON.stringify(newDocument));
-    console.log(JSON.stringify(newDocument));
-    console.log(documentObject.length);
+    //console.log(JSON.stringify(newDocument));
+    //console.log(documentObject.length);
     if (documentObject.length === 0)
         alert('Please ADD and/or INSERT number of documents.');
     else
@@ -338,14 +338,14 @@ addDocumentOwnerBtn.on('click', function () {
         loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('.modal #errorMessage');
-        console.log(errorMessageElement);
+        //console.log(errorMessageElement);
         errorMessageElement.text('You have exceeded the maximum no. of document owners!');
         errorModal.modal('show');
         return;
     }
 
     loading.show();
-    console.log('clicked');
+    //console.log('clicked');
     docOwner += 1;
     window['documentObject' + docOwner] = [];
 
@@ -388,8 +388,8 @@ addDocumentOwnerBtn.on('click', function () {
                     expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
                     baseUrl = window.location.origin;
 
-                console.log('docOwner');
-                console.log(docOwnerBase);
+                //console.log('docOwner');
+                //console.log(docOwnerBase);
                 $(`#documentTypeSample${docOwnerBase}`).children().remove();
                 if (selectedData != null) {
                     // change displayed document info
@@ -400,7 +400,7 @@ addDocumentOwnerBtn.on('click', function () {
                         $(`#documentInfoText${docOwnerBase}`).text(selectedData.description);
                     }
 
-                    console.log(regularQuantity);
+                    //console.log(regularQuantity);
 
 
                     $(`#documentQuantity${docOwnerBase} .regular`).attr('id', `${regularQuantity.id}${docOwnerBase}`);
@@ -442,8 +442,8 @@ addDocumentOwnerBtn.on('click', function () {
                     regularQuantity = parseInt($(`#documentQuantity${docOwnerBase} .regular`).val()),
                     expediteQuantity = parseInt($(`#documentQuantity${docOwnerBase} .expedite`).val());
 
-                console.log('docOwner');
-                console.log(docOwnerBase);
+                //console.log('docOwner');
+                //console.log(docOwnerBase);
 
                 if (regularQuantity > 51 || expediteQuantity > 51) {
                     loading.hide();
@@ -509,9 +509,9 @@ addDocumentOwnerBtn.on('click', function () {
                 //$('#documentsTable tbody').append(tbodyContent);
                 $(`#documentsCount${docOwnerBase}`).text(numberOfDocuments);
                 $(`#apostileData${docOwnerBase}`).val(JSON.stringify(newDocument));
-                console.log(JSON.stringify(newDocument));
-                console.log('DOC');
-                console.log(window['documentObject' + docOwnerBase]);
+                //console.log(JSON.stringify(newDocument));
+                //console.log('DOC');
+                //console.log(window['documentObject' + docOwnerBase]);
                 if (window['documentObject' + docOwnerBase].length === 0)
                     alert('Please ADD and/or INSERT number of documents.');
                 else
@@ -521,7 +521,7 @@ addDocumentOwnerBtn.on('click', function () {
 
 
             if (hasExpedite) {
-                console.log('hasExpedite');
+                //console.log('hasExpedite');
                 $('.transactionQuantity.expedite').attr('disabled', false);
                 $('.transactionQuantity.regular').attr('disabled', false);
             }
@@ -534,7 +534,7 @@ addDocumentOwnerBtn.on('click', function () {
 });
 
 $('.gotoApostileSchedule').on('click', function () {
-    alert("test3");
+    //alert("test3");
 
 
 
@@ -558,7 +558,7 @@ $('.gotoApostileSchedule').on('click', function () {
 
         }
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
     });
 
     //event.preventDefault();
@@ -921,9 +921,9 @@ function docOwnerStepFive() {
 
     //record.Token = token;
 
-    console.log(record);
+    //console.log(record);
     loading.hide();
-    alert("a");
+    //alert("a");
 
     $.ajax({
         type: "POST",
@@ -936,7 +936,7 @@ function docOwnerStepFive() {
 
         }
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
     });
 }
 
@@ -1017,10 +1017,10 @@ function authorizedStepFive() {
     //    || $('#AuthRecord_ContactNumber').val() == "" || $('#AuthRecord_CountryDestination').val() == "" || $('.apostiledataPartial').val() == "[]"
     //    || $('#dateOfbirthPartial').val() == "" || $('.countrydestinationPartial').val() == "" || $('#AuthRecord_DateOfBirth').val() == ""
     //) {
-    //    // console.log('not valid');
+    //    // //console.log('not valid');
     //    if ($('.fNamePartial').val() == "") {
     //        $('.fNamePartialValidation').text('This field is required.');
-    //        console.log(1);
+    //        //console.log(1);
 
     //    }
     //    else
@@ -1028,46 +1028,46 @@ function authorizedStepFive() {
 
     //    if ($('.lNamePartial').val() == "") {
     //        $('.lNamePartialValidation').text('This field is required.');
-    //        console.log(2);
+    //        //console.log(2);
     //    }
     //    else
     //        $('.lNamePartialValidation').text('');
 
     //    if ($('.dateOfbirthPartial').val() == "") {
     //        $('.dateOfbirthPartialValidation').text('This field is required.');
-    //        console.log(3);
+    //        //console.log(3);
     //    }
     //    else
     //        $('.dateOfbirthPartialValidation').text('');
 
     //    if ($('.countrydestinationPartial').val() == "") {
     //        $('.countrydestinationPartialValidation').text('This field is required.');
-    //        console.log(4);
+    //        //console.log(4);
     //    }
     //    else
     //        $('.countrydestinationPartialValidation').text('');
 
     //    if ($('.apostiledataPartial').val() == "" || $('.apostiledataPartial').val() == null) {
     //        $('.apostiledataPartialValidation').text('Please add documents for apostillization.');
-    //        console.log(5);
+    //        //console.log(5);
     //    }
     //    else if ($('.apostiledataPartial').val() == "[]") {
     //        $('.apostiledataPartialValidation').text('Please insert document quantity.');
-    //        console.log(6);
+    //        //console.log(6);
     //    }
     //    else
     //        $('.apostiledataPartialValidation').text('');
 
     //    if ($('#AuthRecord_FirstName').val() == "") {
     //        $('.fname').text('This field is required.');
-    //        console.log(7);
+    //        //console.log(7);
     //    }
     //    else
     //        $('.fname').text('');
 
     //    if ($('#AuthRecord_LastName').val() == "") {
     //        $('.lname').text('This field is required.');
-    //        console.log(8);
+    //        //console.log(8);
     //    }
     //    else
     //        $('.lname').text('');
@@ -1090,11 +1090,11 @@ function authorizedStepFive() {
 
     //    //if ($('#apostileData').val() == "") {
     //    //    $('.apostiledata').text('Please add documents for apostillization.');
-    //    //    console.log(9);
+    //    //    //console.log(9);
     //    //}
     //    //else if ($('#apostileData').val() == "[]") {
     //    //    $('.apostiledata').text('Please insert document quantity.');
-    //    //    console.log(10);
+    //    //    //console.log(10);
     //    //}
     //    //else
     //    //    $('.apostiledata').text('');
@@ -1204,23 +1204,23 @@ function authorizedStepFive() {
                 subFee += prices.expedite * window['documentObject' + i][x].Quantity;
 
 
-            console.log('subFee');
-            console.log(subFee);
+            //console.log('subFee');
+            //console.log(subFee);
 
             if (x == window['documentObject' + i].length - 1) {
                 totalFees += subFee;
                 subTotalContainerElement.text(`PHP ${subFee.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
 
-                console.log('totalFees');
-                console.log(totalFees);
+                //console.log('totalFees');
+                //console.log(totalFees);
             }
 
         }
 
         //  documentsParent.append('<hr />');
 
-        console.log('docOwner');
-        console.log(docOwner);
+        //console.log('docOwner');
+        //console.log(docOwner);
         //if (i == docOwner)
         //    $('#totalFeesAuth').text(`PHP ${totalFees.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`);
 
@@ -1269,7 +1269,7 @@ function authorizedStepFive() {
     record.Record = authorized;
     //record.Token = token;
 
-    console.log(record.Records);
+    //console.log(record.Records);
 
     //$("#step-one").hide();
     //$("#step-one-authorized").hide();
@@ -1278,7 +1278,7 @@ function authorizedStepFive() {
 
     //model = JSON.stringify({ 'model': records });
     //b
-    alert("b");
+    //alert("b");
 
     $.ajax({
         type: "POST",
@@ -1291,7 +1291,7 @@ function authorizedStepFive() {
 
         }
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
     });
 
 }
@@ -1299,15 +1299,15 @@ function authorizedStepFive() {
 function HasExpedite(ifHasExpedite) {
     hasExpedite = ifHasExpedite;
 
-    console.log('hasExpedite');
-    console.log(hasExpedite);
+    //console.log('hasExpedite');
+    //console.log(hasExpedite);
 }
 
 function init() {
     loading.show();
     $.get(`${urlBase}Home/GetInfo`, function (data, status) {
         info = data;
-        console.log(info);
+        //console.log(info);
         hasExpedite = info.hasExpedite
         code = info.applicationCode;
         if (hasExpedite)
@@ -1319,7 +1319,7 @@ function init() {
         else {
             applicantType = 0;
         }
-        console.log(hasExpedite)
+        //console.log(hasExpedite)
         loading.hide();
     });
 }
