@@ -80,8 +80,8 @@
 
         <section class="loginSection" style="height:auto;margin-top: -55px;">
             <form method="post" asp-route="test-process-payment">
-                <input type="hidden" asp-for="Caat" />
-                <input type="hidden" asp-for="OtpRequestId" />
+                @*<input type="hidden" asp-for="Caac" />
+                <input type="hidden" asp-for="OtpRequestId" />*@
                 <div style="padding:10px">
                     @{ if (!String.IsNullOrEmpty(ViewBag.errorMessage))
                         {
