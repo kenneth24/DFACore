@@ -11,6 +11,10 @@
         text-transform: uppercase;
         font-weight: 500;
     }
+
+    input {
+        text-transform: uppercase!important;
+    }
 </style>
 <div dat-worth="@increment" id="documentOwners-@increment" class="p-0">
     <div class="w-100 mb-3 white-bg border p-3">
@@ -44,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="ml-4">
+                    <div class="ml-4 hide-on-small">
                         <label class="p-label bold mb-0" asp-for="Records[increment].Suffix"></label>
                         @*<input asp-for="Suffix" class="form-control" />*@
                         <select asp-for="Records[increment].Suffix" class="form-control  entry-bg">
@@ -71,27 +75,53 @@
                     </div>
                 </div>
 
+                <div class="show-on-small-only">
+                    <label class="p-label bold mb-0" asp-for="Records[increment].Suffix"></label>
+                    @*<input asp-for="Suffix" class="form-control" />*@
+                    <select asp-for="Records[increment].Suffix" class="form-control  entry-bg">
+                        <option value="">N/A</option>
+                        <option value="JR.">JR.</option>
+                        <option value="SR.">SR.</option>
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="V">V</option>
+                        <option value="VI">VI</option>
+                        <option value="VII">VII</option>
+                        <option value="VIII">VIII</option>
+                        <option value="IX">IX</option>
+                        <option value="X">X</option>
+                        <option value="XI">XI</option>
+                        <option value="XII">XII</option>
+                        <option value="XIII">XIII</option>
+                        <option value="XIV">XIV</option>
+                        <option value="XV">XV</option>
+                    </select>
+                    <span asp-validation-for="Records[increment].Suffix" class="text-danger"></span>
+                </div>
+
                 @*<div class="row">
-                        <div class="col-md-3 col-sm-12">
-                                <label asp-for="Records[increment].FirstName">First Name <span class="red">*</span></label>
-                                <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
-                                <span id="fnamePartialValidation-@increment" asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
-                            </div>
+            <div class="col-md-3 col-sm-12">
+                    <label asp-for="Records[increment].FirstName">First Name <span class="red">*</span></label>
+                    <input asp-for="Records[increment].FirstName" class="form-control fNamePartial" />
+                    <span id="fnamePartialValidation-@increment" asp-validation-for="Records[increment].FirstName" class="text-danger fNamePartialValidation"></span>
+                </div>
 
-                        <div class="col-md-3 col-sm-12">
-                            <label asp-for="Records[increment].MiddleName"></label>
-                                <input asp-for="Records[increment].MiddleName" class="form-control " />
-                                <span asp-validation-for="Records[increment].MiddleName" class="text-danger "></span>
-                        </div>
+            <div class="col-md-3 col-sm-12">
+                <label asp-for="Records[increment].MiddleName"></label>
+                    <input asp-for="Records[increment].MiddleName" class="form-control " />
+                    <span asp-validation-for="Records[increment].MiddleName" class="text-danger "></span>
+            </div>
 
-                        <div class="col-md-3 col-sm-12">
-                            <label asp-for="Records[increment].LastName">Last Name <span class="red">*</span></label>
-                                <input asp-for="Records[increment].LastName" class="form-control lNamePartial" />
-                                <span asp-validation-for="Records[increment].LastName" class="text-danger lNamePartialValidation"></span>
-                        </div>
+            <div class="col-md-3 col-sm-12">
+                <label asp-for="Records[increment].LastName">Last Name <span class="red">*</span></label>
+                    <input asp-for="Records[increment].LastName" class="form-control lNamePartial" />
+                    <span asp-validation-for="Records[increment].LastName" class="text-danger lNamePartialValidation"></span>
+            </div>
 
 
-                    </div>*@
+        </div>*@
             </div>
 
             <div class="form-group mb-0">

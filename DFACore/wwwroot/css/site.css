@@ -460,3 +460,12 @@ table th {
 .validation-summary-errors ul {
     margin-bottom: 5px!important;
 }
+
+.pageContainers {
+    margin-top: 25px!important;
+}
+
+
+.show-on-small-only button {
+    margin-left: 0 !important;
+}

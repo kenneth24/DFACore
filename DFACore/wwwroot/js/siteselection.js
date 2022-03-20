@@ -10,6 +10,7 @@ $(document).ready(function () {
         lblProcessingSiteOfficeHours = $('#lblProcessingSiteOfficeHours'),
         lblProcessingSiteContactNumber = $('#lblProcessingSiteContactNumber'),
         lblProcessingSiteEmail = $('#lblProcessingSiteEmail'),
+        mapAddressButton = $('#mapAddress')
         addressInput = $('#address'),
         hasExpiditeInput = $('#HasExpidite'),
         branches = [];
@@ -23,7 +24,7 @@ $(document).ready(function () {
 
         siteButton.val('1');
 
-        if (value == 'Abroad') {
+        if (value != 'Abroad') {
             philippinesOptions.hide();
         }
         else {
@@ -41,6 +42,8 @@ $(document).ready(function () {
         console.log(branchDetail);
         hasExpiditeInput.val(branchDetail.hasExpidite ? 1 : 0);
         console.log(hasExpiditeInput.val());
+
+        mapAddressButton.attr('href', branchDetail.mapAddress);
         lblProcessingSiteAddress.text(branchDetail.branchAddress);
         lblProcessingSiteOfficeHours.text(branchDetail.officeHours);
         lblProcessingSiteContactNumber.text(branchDetail.contactNumber);
