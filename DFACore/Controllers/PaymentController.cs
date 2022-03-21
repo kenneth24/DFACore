@@ -53,11 +53,13 @@ namespace DFACore.Controllers
                 {
                     SenderRefId = main.ApplicationCode,  //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                     TranRequestDate = DateTime.UtcNow,
-                    Amount = new PaymentAmount(1)
+                    Amount = new PaymentAmount(Convert.ToInt32(main.TotalFees))
                     //Amount = new PaymentAmount { Value = main.TotalFees.ToString() }
                 };
 
                 await _unionBankClient.CreateMerchantPaymentAsync(merchantPayment, accessToken).ConfigureAwait(false);
+
+                main.IsPaymentSuccess = true;
 
                 //return success page
                 return RedirectToAction("PaymentSuccess", "Home");
@@ -93,7 +95,7 @@ namespace DFACore.Controllers
 
                 return View("ConfirmPayment", new ConfirmPaymentViewModel());
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("PaymentFailed", "Home");
             }
@@ -130,19 +132,22 @@ namespace DFACore.Controllers
                     {
                     SenderRefId = appcode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                         TranRequestDate = DateTime.UtcNow,
-                        Amount = new PaymentAmount(1),
+                        Amount = new PaymentAmount(1), //new PaymentAmount(Convert.ToInt32(main.TotalFees)),
                         RequestId = paymentData.OtpRequestId,
                         Otp = model.Otp
                     };
 
                     //save data
-
+                    
                     await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, paymentData.AccessToken).ConfigureAwait(false);
+
+                    main.IsPaymentSuccess = true;
+                    HttpContext.Session.SetComplexData("Model", main);
 
                     return RedirectToAction("PaymentSuccess", "Home");
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return RedirectToAction("PaymentFailed", "Home");
             }

@@ -2081,19 +2081,7 @@ namespace DFACore.Repository
 
             var availableDates = GenerateListOfDates(DateTime.Now, raw.Id, userType);
 
-            //DateTime dtFrom = DateTime.Parse(raw.StartTime);
-            //DateTime dtTo = DateTime.Parse(raw.EndTime);
-
-            //var dates = new List<AvailableHour>();
-            //for (var dt = dtFrom; dt <= dtTo; dt = dt.AddHours(1))
-            //{
-            //    dates.Add(new AvailableHour { 
-            //        Caption = $"{dt.ToString("%h")}-{dt.AddHours(1).ToString("h tt")}",
-            //        Value = dt.ToString("hh:mm tt")
-            //    });
-            //}
-
-            var availTime = _context.ScheduleCapacities.Where(a => a.BranchId == raw.Id && a.Capacity != 0)
+            var availTime = _context.ScheduleCapacities.Where(a => a.BranchId == raw.Id && a.Capacity != 0 && a.Type == (userType != 0 ? 1 : 0))
                 .OrderBy(a => a.Id)
                 .Select(a => new AvailableHour
                 {

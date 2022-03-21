@@ -28,6 +28,9 @@ namespace DFACore.Models
         public decimal TotalFees { get; set; }
         public string ApplicationCode { get; set; }
         //public ShippingInfoViewModel Shipping { get; set; }
+
+        public bool IsPaymentSuccess { get; set; }
+
         public List<ApplicantRecordViewModel> Applicants { get; set; }
     }
 }

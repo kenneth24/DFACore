@@ -1276,8 +1276,14 @@ namespace DFACore.Controllers
         [HttpPost]
         public ActionResult ApostilleSchedule(List<ApplicantRecordViewModel> model)
         {
+            var totalFees = 0;
+            model.ForEach(x => {
+                totalFees += Convert.ToInt32(x.Fees);
+            });
+            
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             main.Applicants = model;
+            main.TotalFees = model.Sum(x => Convert.ToInt32(x.Fees));
 
             if (main.DocumentType == "Authorized")
             {
@@ -1285,10 +1291,13 @@ namespace DFACore.Controllers
                 main.RepresentativeContactNumber = model.FirstOrDefault().RepresentativeContactNumber;
             }
 
+
+
             HttpContext.Session.SetComplexData("Model", main);
 
-            return RedirectToAction("ApostilleSchedule");
-            //return View();
+            return Ok();
+            //return RedirectToAction("ApostilleSchedule");
+       
         }
 
         [AllowAnonymous]
@@ -1324,6 +1333,17 @@ namespace DFACore.Controllers
         public ActionResult ApplicationSummary(ApostilleScheduleViewModel model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+
+            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+
             main.ScheduleDate = model.ScheduleDate;
             HttpContext.Session.SetComplexData("Model", main);
 
@@ -1361,14 +1381,14 @@ namespace DFACore.Controllers
 
             var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
 
-            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+            //var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
 
-            if (isSchedExist)
-            {
-                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
-                //return View("Error");
-                return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
-            }
+            //if (isSchedExist)
+            //{
+            //    ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+            //    //return View("Error");
+            //    return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
+            //}
 
             var branch = _applicantRepo.GetBranch(main.ProcessingSite);
 
@@ -1460,12 +1480,12 @@ namespace DFACore.Controllers
                 }
             };
 
-            var validate = ValidateScheduleDate3(main.ScheduleDate, total, branch.Id);
-            if (!validate)
-            {
-                ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
-                return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
-            }
+            //var validate = ValidateScheduleDate3(main.ScheduleDate, total, branch.Id);
+            //if (!validate)
+            //{
+            //    ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
+            //    return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
+            //}
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
@@ -1474,22 +1494,7 @@ namespace DFACore.Controllers
                 return Json(new { Status = "Error", Message = "An error occured file saving data. Please try again." });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
 
-            //if (generatePowerOfAttorney)
-            //{
-            //    attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            //}
-
-            //if (generateAuthLetter)
-            //{
-            //    attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            //}
-
-            //await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
-            //        HtmlTemplate(), attachments.ToArray());
             await SendApostilleToEmail();
-            //ViewData["ApplicantCount"] = model.ApplicantCount;
-            //ViewData["Attachments"] = attachments;
-            //ViewData["ApptCode"] = apptCode;
 
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return Json(new { Status = "Success", Message = "" });
@@ -1542,13 +1547,16 @@ namespace DFACore.Controllers
             return View(main);
         }
 
-        public ActionResult PaymentSuccess()
+        public async Task<ActionResult> PaymentSuccess()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main.ScheduleDate is null)
+            if (main.ScheduleDate is null || main.IsPaymentSuccess == false)
             {
                 return RedirectToAction("SiteSelection");
             }
+
+            await SaveApostille();
+
             HttpContext.Session.Remove("Model");
             return View();
         }
