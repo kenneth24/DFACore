@@ -88,6 +88,12 @@ namespace DFACore.Data
                 e.HasNoKey();
                 e.ToView(null);
             });
+
+            builder.Entity<TrackingApplication>(e =>
+            {
+                e.HasNoKey();
+                e.ToView(null);
+            });
         }
 
     }

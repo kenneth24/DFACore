@@ -387,8 +387,6 @@ namespace DFACore.Controllers
             return applicantCode;
         }
 
-
-
         private string AddtnlCode(ApplicantRecord model)
         {
             var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.ApostileData);
@@ -584,8 +582,6 @@ namespace DFACore.Controllers
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
             return Json("");
         }
-
-
 
         public int SetNumberOfApplicants(int applicantsCount)
         {
@@ -1077,8 +1073,6 @@ namespace DFACore.Controllers
             return View();
         }
 
-
-
         public ActionResult SiteSelection(List<FormErrorModel> model = null)
         {
             HttpContext.Session.SetComplexData("Model", new MainViewModel());
@@ -1198,7 +1192,6 @@ namespace DFACore.Controllers
             return View();
         }
 
-
         public ActionResult ShippingInformation()
         {
             return View();
@@ -1215,7 +1208,6 @@ namespace DFACore.Controllers
 
             return RedirectToAction("ShippingInformation");
         }
-
 
         public ActionResult ApostilleSchedule()
         {
@@ -1276,11 +1268,6 @@ namespace DFACore.Controllers
         [HttpPost]
         public ActionResult ApostilleSchedule(List<ApplicantRecordViewModel> model)
         {
-            var totalFees = 0;
-            model.ForEach(x => {
-                totalFees += Convert.ToInt32(x.Fees);
-            });
-            
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             main.Applicants = model;
             main.TotalFees = model.Sum(x => Convert.ToInt32(x.Fees));
@@ -1291,13 +1278,9 @@ namespace DFACore.Controllers
                 main.RepresentativeContactNumber = model.FirstOrDefault().RepresentativeContactNumber;
             }
 
-
-
             HttpContext.Session.SetComplexData("Model", main);
-
             return Ok();
             //return RedirectToAction("ApostilleSchedule");
-       
         }
 
         [AllowAnonymous]
@@ -1373,9 +1356,6 @@ namespace DFACore.Controllers
         {
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
-
-            //bool generatePowerOfAttorney = false;
-            //bool generateAuthLetter = false;
 
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
@@ -1533,8 +1513,6 @@ namespace DFACore.Controllers
             return true;
         }
 
-
-
         public ActionResult OrderSummary()
         {
             //this should be success page
@@ -1571,6 +1549,25 @@ namespace DFACore.Controllers
             return View();
         }
 
+        public ActionResult TrackApplication()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult TrackApplication(string code)
+        {
+            var data = _administrationRepository.TrackApplication(code, _userManager.GetUserId(User));
+            if (data is null)
+            {
+                return Json(new { Status = "Error", Message = "No record found." });
+            }
+            else
+            {
+                return Json(new { Status = "Success", data = data });
+            }
+            
+        }
 
         public ActionResult GetInfo()
         {

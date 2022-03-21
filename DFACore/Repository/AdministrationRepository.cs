@@ -1169,6 +1169,12 @@ namespace DFACore.Repository
             return true;
         }
 
+        public TrackingApplication TrackApplication(string applicationCode, string userId)
+        {
+            var result = _context.Set<TrackingApplication>().FromSqlRaw($"exec sp_TrackApplication '{applicationCode}', '{userId}'").ToList();
+            return result.FirstOrDefault();
+        }
+
     }
 }
 

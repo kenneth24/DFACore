@@ -313,7 +313,7 @@ namespace DFACore.Controllers
 
                 HttpContext.Session.SetComplexData("Model", main);
 
-                return RedirectToAction("SiteSelection", "Home");
+                return RedirectToAction("LoginOptions", "Home");
             }
 
             if (result.IsNotAllowed)
