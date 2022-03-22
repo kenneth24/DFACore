@@ -80,6 +80,9 @@
                 <th>
                     Type
                 </th>
+                <th>
+                    DateCreated
+                </th>
 
 
 
@@ -90,22 +93,26 @@
             @foreach (var item in Model)
             {
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @*<a asp-action="EditHoliday" asp-route-holidayId="@item.Id">Edit</a> |*@
-                        <a asp-action="DeleteHoliday" asp-route-holidayId="@item.Id">Delete</a>
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+             
+                <td>
+                    @*<a asp-action="EditHoliday" asp-route-holidayId="@item.Id">Edit</a> |*@
+                    <a asp-action="DeleteHoliday" asp-route-holidayId="@item.Id">Delete</a>
+                </td>
 
-                </tr>
+            </tr>
             }
         </tbody>
     </table>

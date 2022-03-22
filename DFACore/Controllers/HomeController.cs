@@ -677,7 +677,8 @@ namespace DFACore.Controllers
                     OS = browser.OS,
                     DeviceType = browser.DeviceType,
                     Remarks = data,
-                    Email = email
+                    Email = email,
+                    UserType = 0
                 };
                 _applicantRepo.AddActivityLog(activity);
             }
@@ -1361,6 +1362,7 @@ namespace DFACore.Controllers
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
             var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+            var user = await _userManager.GetUserAsync(User);
 
             //var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
 
@@ -1396,7 +1398,7 @@ namespace DFACore.Controllers
                     ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = appDocOwner.Fees,
-                    Type = 0,
+                    Type = user.Type == 2? 2 : 0,
                     DateCreated = DateTime.Now,
                     //QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
                     //    $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
@@ -1438,7 +1440,7 @@ namespace DFACore.Controllers
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
-                        Type = 1,
+                        Type = user.Type == 2 ? 2 : 1,
                         DateCreated = DateTime.Now,
                         //QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                         //    $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +

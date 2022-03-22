@@ -544,6 +544,8 @@ namespace DFACore.Repository
 
         public Holiday AddHoliday(Holiday holiday)
         {
+            holiday.DateCreated = DateTime.Now;
+            holiday.DateUpdated = DateTime.Now;
             _context.Holidays.Add(holiday);
             _context.SaveChanges();
             return holiday;

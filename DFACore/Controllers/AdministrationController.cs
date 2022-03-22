@@ -251,10 +251,21 @@ namespace DFACore.Controllers
         [HttpGet]
         public IActionResult Register(string returnUrl = null)
         {
-            ViewBag.Roles = _roleManager.Roles;
+            ViewBag.Roles = _roleManager.Roles.Where(a => a.Name == "Administrator" || a.Name == "Super Administrator");
             ViewBag.Branches = _administrationRepository.GetBranches();
             ViewData["ReturnUrl"] = returnUrl;
             Log($"Visit Registration page for new admin user.", User.Identity.Name);
+            return View();
+        }
+
+        [Authorize(Roles = "Super Administrator")]
+        [HttpGet]
+        public IActionResult RegisterLRA(string returnUrl = null)
+        {
+            ViewBag.Roles = _roleManager.Roles.Where(a => a.Name == "LRA");
+            //ViewBag.Branches = _administrationRepository.GetBranches();
+            ViewData["ReturnUrl"] = returnUrl;
+            Log($"Visit Registration page for new LRA user.", User.Identity.Name);
             return View();
         }
 
@@ -269,6 +280,15 @@ namespace DFACore.Controllers
             if (ModelState.IsValid)
             {
                 //Copy data from RegisterViewModel to ApplicationUser
+
+                var role = await _roleManager.FindByIdAsync(model.Role);
+
+                if (role == null)
+                {
+                    ViewBag.errorMessage = "Role cannot be found.";
+                    return View("Error");
+                }
+
                 var user = new ApplicationUser
                 {
                     FirstName = model.FirstName,
@@ -280,9 +300,7 @@ namespace DFACore.Controllers
                     DateOfBirth = model.DateOfBirth,
                     UserName = model.Email,
                     Email = model.Email,
-                    Type = model.Role == "b532523f-19bb-435f-97e4-0119b91e203b" ||
-                           model.Role == "987b68fe-3498-43a7-b366-7a9ae59cba58" ? 1 :
-                           model.Role == "f194cac6-9666-433a-ac7f-a53ccedf24a2" ? 2 : 0,
+                    Type = role.Name == "Super Administrator" || role.Name == "Administrator"? 1 : role.Name == "LRA"? 2 : 0,
                     CreatedDate = DateTime.Now,
                     //EmailConfirmed = false,
                     BranchId = model.BranchId
@@ -296,13 +314,7 @@ namespace DFACore.Controllers
                 if (result.Succeeded)
                 {
                     var newAddedUser = _userManager.Users.Where(a => a.Email == model.Email).FirstOrDefault();
-                    var role = await _roleManager.FindByIdAsync(model.Role);
-
-                    if (role == null)
-                    {
-                        ViewBag.errorMessage = "Role cannot be found.";
-                        return View("Error");
-                    }
+                    
 
                     if (!await _userManager.IsInRoleAsync(newAddedUser, role.Name))
                     {
@@ -716,6 +728,7 @@ namespace DFACore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddHoliday(Holiday holiday)
         {
+            Log($"Update holiday: {holiday.Title}", User.Identity.Name);
             _administrationRepository.AddHoliday(holiday);
             return RedirectToAction("Holiday");
         }
@@ -723,6 +736,7 @@ namespace DFACore.Controllers
         [HttpGet]
         public IActionResult DeleteHoliday(long holidayId)
         {
+            Log($"DeleteHoliday: {holidayId}", User.Identity.Name);
             _administrationRepository.DeleteHoliday(holidayId);
             return RedirectToAction("Holiday");
         }
@@ -730,6 +744,7 @@ namespace DFACore.Controllers
         [HttpGet]
         public IActionResult DeleteExceptionDay(long holidayId)
         {
+            Log($"DeleteExceptionDay: {holidayId}", User.Identity.Name);
             _administrationRepository.DeleteHoliday(holidayId);
             return RedirectToAction("ExceptionDay");
         }
@@ -1727,7 +1742,8 @@ namespace DFACore.Controllers
                     OS = browser.OS,
                     DeviceType = browser.DeviceType,
                     Remarks = data,
-                    Email = email
+                    Email = email,
+                    UserType = 1
                 };
                 _administrationRepository.AddActivityLog(activity);
             }
