@@ -85,14 +85,13 @@ namespace DFACore.Repository
             }
             else
             {
-                str = $"select ar.Id, ar.ApplicationCode, ar.ScheduleDate, ar.DateCreated, ar.FirstName, IsNull(ar.MiddleName, '') MiddleName, ar.LastName, IsNull(ar.Suffix, '') Suffix, IsNull(ar.ContactNumber, '') ContactNumber, IsNull(ar.NameOfRepresentative, '') NameOfRepresentative, IsNull(ar.RepresentativeContactNumber, '') RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
-                     "from ApplicantRecords ar " +
+                str = $"select * into #tmp from ApplicantRecords order by ScheduleDate desc OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY " + 
+                    $"select ar.Id, ar.ApplicationCode, ar.ScheduleDate, ar.DateCreated, ar.FirstName, IsNull(ar.MiddleName, '') MiddleName, ar.LastName, IsNull(ar.Suffix, '') Suffix, IsNull(ar.ContactNumber, '') ContactNumber, IsNull(ar.NameOfRepresentative, '') NameOfRepresentative, IsNull(ar.RepresentativeContactNumber, '') RepresentativeContactNumber, ar.ProcessingSite, u.Email, ar.CountryDestination, ad.* " +
+                     "from #tmp ar " +
                      "inner join AspNetUsers u on ar.CreatedBy = u.Id  " +
                      "cross apply OpenJson(ar.apostiledata, N'$')  " +
                      "WITH (DocumentName VARCHAR(200) N'$.Name', Quantity Int N'$.Quantity', [Transaction] VARCHAR(200) N'$.Transaction') AS ad " +
-                     "order by ar.ScheduleDate desc " +
-                     $"OFFSET {skip} ROWS " +
-                     $"FETCH NEXT {take} ROWS ONLY; ";
+                     "order by ar.ScheduleDate desc ";
             }
 
             raw = _context.Set<ApplicantModel>().FromSqlRaw(str);

@@ -351,7 +351,7 @@ namespace DFACore.Controllers
                 await _signInManager.SignOutAsync();
 
             ViewBag.errorMessage = errorMessage;
-            Log("Visited");
+            Log("Visited LRA");
             return View();
         }
 
@@ -693,6 +693,7 @@ namespace DFACore.Controllers
         ///[ValidateAntiForgeryToken]
         public async Task<ActionResult> LogOff(string returnUrl = null)
         {
+            HttpContext.Session.Remove("Model");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }

@@ -160,7 +160,7 @@ namespace DFACore
             app.UseRouting();
 
             app.UseCookiePolicy();
-            app.UseSession();
+            //app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

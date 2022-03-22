@@ -507,16 +507,17 @@ namespace DFACore.Controllers
             return Json(result);
         }
 
-        public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount, long branchId)
+        public async Task<ActionResult> ValidateScheduleDate2(string scheduleDate, int applicationCount, long branchId)
         {
 
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
-            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main.IsLRA)
-                result = true;
+            var user = await _userManager.GetUserAsync(User);
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId, user.Type);
+            //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            //if (main.IsLRA)
+            //    result = true;
 
             return Json(result);
         }

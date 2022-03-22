@@ -202,7 +202,7 @@ namespace DFACore.Repository
                 return false;
         }
 
-        public bool ValidateScheduleDate(DateTime date, int applicationCount, long branchId)
+        public bool ValidateScheduleDate(DateTime date, int applicationCount, long branchId, long userType = 0)
         {
             if (applicationCount == 0)
                 applicationCount = 1;
@@ -213,7 +213,13 @@ namespace DFACore.Repository
             }
 
             var totalCount = applicationCount;
-            var applicantRecords = _context.ApplicantRecords.Where(a => a.BranchId == branchId && a.ScheduleDate == date).AsEnumerable();
+            IEnumerable<ApplicantRecord> applicantRecords;
+
+            if (userType != 2)
+                applicantRecords = _context.ApplicantRecords.Where(a => a.BranchId == branchId && a.ScheduleDate == date && (a.Type ==  0 || a.Type == 1)).AsEnumerable();
+            else
+                applicantRecords = _context.ApplicantRecords.Where(a => a.BranchId == branchId && a.ScheduleDate == date && a.Type == userType).AsEnumerable();
+
             if (applicantRecords.Count() != 0)
             {
                 foreach (var applicantRecord in applicantRecords)
@@ -252,7 +258,7 @@ namespace DFACore.Repository
             //    type = 9;
 
             //var totalCount = _context.ApplicantRecords.Select(a => a.ScheduleDate).Count() + applicationCount;
-            var a = $"{date.ToString("hh tt")}";
+            //var a = $"{date.ToString("hh tt")}";
             var scheduleCapacity = _context.ScheduleCapacities.Where(c => c.BranchId == branchId && c.Name == $"{date.ToString("hh tt")}").FirstOrDefault();
 
             if (scheduleCapacity != null)
@@ -388,7 +394,7 @@ namespace DFACore.Repository
             //    "group by " +
             //    "CAST(ScheduleDate as Date)) a " +
             //    "where a.DocuCount >= {1}";
-            var raw = _context.Set<UnavailableDate>().FromSqlRaw("EXEC sp_GetUnavailableDates {0}, {1}", branchId, limitPerDay, userType).AsEnumerable();
+            var raw = _context.Set<UnavailableDate>().FromSqlRaw("EXEC sp_GetUnavailableDates {0}, {1}, {2}", branchId, limitPerDay, userType).AsEnumerable();
 
             var result = raw.Select(a => a.ScheduleDate).ToList();
 

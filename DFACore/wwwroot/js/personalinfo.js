@@ -163,7 +163,7 @@ docTypeSelect.on('change', function () {
         selectedData = documents.filter(x => x.id == id)[0],
         regularQuantity = selectedData.quantities.filter(x => x.name == 'Regular')[0],
         expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
-        baseUrl = window.location.origin;
+        baseUrl = urlBase;//window.location.origin;
 
     //console.log(selectedData);
     documentTypeSample.children().remove();
@@ -386,7 +386,7 @@ addDocumentOwnerBtn.on('click', function () {
                 selectedData = documents.filter(x => x.id == id)[0],
                     regularQuantity = selectedData.quantities.filter(x => x.name == 'Regular')[0],
                     expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
-                    baseUrl = window.location.origin;
+                    baseUrl = urlBase; //window.location.origin;
 
                 //console.log('docOwner');
                 //console.log(docOwnerBase);
@@ -641,7 +641,7 @@ schedAnother.on('click', function () {
 });
 
 exit.on('click', function () {
-    let baseUrl = window.location.origin;
+    let baseUrl = urlBase; //window.location.origin;
     window.location = `${urlBase}Account/LogOff`;
 });
 
@@ -668,7 +668,7 @@ resendEmail.on('click', function () {
 });
 
 function addPartialView() {
-    let baseUrl = window.location.origin;
+    let baseUrl = urlBase; //window.location.origin;
     window.location = `${urlBase}Account/LogOff`;
 }
 

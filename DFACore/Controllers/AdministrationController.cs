@@ -1309,7 +1309,7 @@ namespace DFACore.Controllers
 
             var branch = _administrationRepository.GetBranch(model.ProcessingSite);
 
-            if (model.Type != 1)
+            if (model.NameOfRepresentative is null)
             {
                 var applicantRecord = new ApplicantRecord
                 {
@@ -1334,6 +1334,8 @@ namespace DFACore.Controllers
                     $"{Environment.NewLine}{model.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
                     $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
                 };
+
+                applicantRecord.AdditionalCode = AddtnlCode(model);
 
                 attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
@@ -1372,6 +1374,7 @@ namespace DFACore.Controllers
                                 $"{Environment.NewLine}{dateTimeSched.ToString("hh:mm tt")}{Environment.NewLine}{model.ProcessingSite?.ToUpper()}")
                 };
 
+                applicantRecord.AdditionalCode = AddtnlCode(model);
 
                 attachments.Add(new Attachment("Apostille Appointment.pdf", await GeneratePDF(applicantRecord), new MimeKit.ContentType("application", "pdf")));
 
