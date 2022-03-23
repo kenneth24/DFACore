@@ -2148,6 +2148,19 @@ namespace DFACore.Repository
             return isExist;
         }
 
+        public bool CheckIfSchedExist(DateTime schedule, string processingSite = "")
+        {
+            var branch = _context.Branches.Where(x => x.BranchName == processingSite).FirstOrDefault();
+
+            if (branch is null)
+                return true;
+            
+            if (branch.EndTime.Date < schedule.Date)
+                return true;
+            
+            return false;
+        }
+
 
     }
 }

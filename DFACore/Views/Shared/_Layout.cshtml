@@ -15,13 +15,17 @@
     <link rel="stylesheet" href="~/css/accordion.css" />
     <link rel="stylesheet" href="~/css/radiobutton.css" />
 
+    @*<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    
+
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
     @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">*@
     @*<link href="~/lib/bootstrap/dist/css/font-awesome.css" rel="stylesheet" />*@
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
-    @*<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>*@
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
 
     <style>
         .navbar-toggler {
@@ -124,7 +128,7 @@
         // validate if no. of minutes idle is > 9
         // if true, logoff user
         let baseUrl = urlBase;
-        
+
         var idleInterval = null;
         var idleTime = 0;
 

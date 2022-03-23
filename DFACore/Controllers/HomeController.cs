@@ -633,17 +633,6 @@ namespace DFACore.Controllers
 
         }
 
-        [AllowAnonymous]
-        public string GetIP()
-        {
-            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
-            var ip2 = HttpContext.Connection.RemoteIpAddress.ToString();
-
-            GetUserCountryByIp("136.158.28.217");
-            var browser = _browserDetector.Browser;
-            return ip;
-        }
-
         public IpInfo GetUserCountryByIp(string ip)
         {
             //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
@@ -1271,8 +1260,42 @@ namespace DFACore.Controllers
         public ActionResult ApostilleSchedule(List<ApplicantRecordViewModel> model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            main.Applicants = model;
-            main.TotalFees = model.Sum(x => Convert.ToInt32(x.Fees));
+            var price = _applicantRepo.GetPrice();
+            var branch = _applicantRepo.GetBranch(main.ProcessingSite);
+
+            List<ApplicantRecordViewModel> processedModel = new();
+
+            foreach (var item in model)
+            {
+                int fees = 0;
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(item.ApostileData);
+                foreach (var i in data)
+                {
+                    if (i.Transaction == "Regular")
+                        fees += (i.Quantity * Convert.ToInt32(price.Regular));
+                    else if (i.Transaction == "Expedite")
+                    {
+                        if (branch.HasExpidite == false)
+                        {
+                            HttpContext.Session.Remove("Model");
+                            throw new Exception();
+                        }
+                        fees += (i.Quantity * Convert.ToInt32(price.Expedite));
+                    }
+                    else
+                    {
+                        // if someone alter data in UI/model
+                        HttpContext.Session.Remove("Model");
+                        throw new Exception();
+                    }
+                }
+
+                item.Fees = $"{fees}";
+                processedModel.Add(item);
+            }
+            
+            main.Applicants = processedModel;
+            main.TotalFees = processedModel.Sum(x => Convert.ToInt32(x.Fees));
 
             if (main.DocumentType == "Authorized")
             {
@@ -1321,9 +1344,16 @@ namespace DFACore.Controllers
 
             var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
 
-            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+            var isSchedExist = _applicantRepo.CheckIfSchedExist(dateTimeSched, main.ProcessingSite);
 
             if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+            var isSchedExistInHoliday = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExistInHoliday)
             {
                 ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
                 return View("Error");
@@ -1531,7 +1561,7 @@ namespace DFACore.Controllers
         public async Task<ActionResult> PaymentSuccess()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main.ScheduleDate is null || main.IsPaymentSuccess == false)
+            if (string.IsNullOrEmpty(main.ScheduleDate) || main.IsPaymentSuccess == false)
             {
                 return RedirectToAction("SiteSelection");
             }

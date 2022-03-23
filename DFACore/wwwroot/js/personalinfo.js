@@ -745,7 +745,7 @@ function docOwnerStepFive() {
 
     for (var i = 0; i < documentObject.length; i++) {
         let documentText = `<p class="mb-0">(${documentObject[i].Quantity}) (${documentObject[i].Transaction}) ${documentObject[i].Name}</p>`;
-     
+
         if (documentObject[i].Transaction == 'Regular')
             totalFee += prices.regular * documentObject[i].Quantity;
         else
@@ -784,7 +784,7 @@ function docOwnerStepFive() {
     record.Records = records;
     record.Record = ownerModel;
 
-    
+
 
     $.ajax({
         type: "POST",
@@ -820,7 +820,7 @@ function authorizedStepFive() {
         fnameValidation = $('.fnameValidation'),
         lnameValidation = $('.lnameValidation'),
         dateOfBirthValidation = $('.dateofbirthValidation'),
-        contactNumberValidation = $('.contactnumberValidation');    
+        contactNumberValidation = $('.contactnumberValidation');
     if (fname.val() == '' ||
         lname.val() == '' ||
         dateOfBirth.val() == '' ||
@@ -828,7 +828,7 @@ function authorizedStepFive() {
         fNamePartial.val() == '' ||
         lNamePartial.val() == '' ||
         dateOfbirthPartial.val() == '' ||
-        countrydestinationPartial.val() == '' ) {
+        countrydestinationPartial.val() == '') {
 
         fnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
         lnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
@@ -896,7 +896,7 @@ function authorizedStepFive() {
         let subFee = 0;
 
         for (var x = 0; x < window['documentObject' + i].length; x++) {
-          
+
             if (window['documentObject' + i][x].Transaction == 'Regular')
                 subFee += prices.regular * window['documentObject' + i][x].Quantity;
             else
@@ -960,7 +960,7 @@ function authorizedStepFive() {
             loading.hide();
         }
     }).done(function (data) {
-        
+
     });
 
 }
@@ -968,11 +968,26 @@ function authorizedStepFive() {
 function HasExpedite(ifHasExpedite) {
     hasExpedite = ifHasExpedite;
 
-    //console.log('hasExpedite');
-    //console.log(hasExpedite);
 }
 
 function init() {
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $(".dateOfBirthOwner").attr("max", today);
+
     loading.show();
     $.get(`${urlBase}Home/GetInfo`, function (data, status) {
         info = data;
