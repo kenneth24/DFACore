@@ -49,7 +49,7 @@ namespace UnionBankApi.UnitTests
             //uat request authorization code
             //https://api-uat.unionbankph.com/ubp/external/customers/v1/oauth2/authorize?response_type=code&client_id=608e9f9c-b412-49ae-9d02-7ae6e23d1764&scope=payments&type=single&partnerId=4af3d4f5-1bba-4cf5-8715-8bab7af59229
 
-            var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync("AAKUyw409rVRhpvjpTVBm5amKW6J4mKA28N_kZGBTSLXa5grsMHcUKsaba2LEUVQqY-vgZj59UF7WruvPqMioLfuUFRzg_oZvtBDNN6qkgdug1OA7QcGaM65qeUbFeukeZCPHbELMYvbxY2Pn1-6TKCH-YA5pjy-anrlSkAliGXD9_odToWnqeLqkYc5WM8yNETkaFnoch2JrrDr2IgcL1LxaK1YpCu9rCiKSU41uFbSOJ4zeGBFACdcC9gipVi17uMxlH1mI4NLcl_nKtTPN2ZbaJUfQFpwBvDTRNFxv2-duno18MjmY8ldEuT-2ozP4ggqHikepye6Ii6Em6aRT6wjkddD4SklicUZsMktTKEqug");
+            var accessToken = await _unionBankClient.GetCustomerAccountAccessTokenAsync("AAKkxJK_1-s3_WmdrEpqtuzbVFueO96vAMjeRAk8gK07Te5-STtAV_sezCyWW0qz5iugyPCOf4h4h99nmZpWt4jQhM14055IRfrS_Xy5sBSEe_pGuRbpmm511mlPXZr2pdti8r4gx7HftuxbowENktv4B4hfb3tPjdnnBqoPD2gOyxT7Ytr-ba8G6ZINlgptrjbXjuh45126sXjmc5lskTv1Tkl8LpB0ZDInikOz77yXEgzTMf8Xn3zxV_qRSAL2dQfOpIDRiMCV0cvoa9jH0MvtVFas5ESDiLwPMaRhDE_P4u9aeMchArvEs4CwSTs6uuo7htGbSM-EPO_pAXrlOTIhcblgj2xg_X-WAQ4hweGZHw");
 
             Assert.IsNotNull(accessToken);
         }
@@ -57,7 +57,7 @@ namespace UnionBankApi.UnitTests
         [Test]
         public async Task RequestOtpAsyncTest()
         {
-            var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync("AAIkZmU2Njc2ODEtMjY1MC00YzBiLTkzZmItYzM2NWIyY2MwOTUzJVh1x5xoruP8hRosJBA5g-LZnB-bb_hK8VP_vY0-NpGjiBXkowsFvvBHk8bvQ2mmf5bwalk5mfJdMcMDDpxfrSBDipyjZrpveL9G2FBpmox-GHwy1i1ygzRPmHYJDN0e-F0dBgyxuN80qfoSqIwkA5Z8OpUbGyuy89UaPFT5xrwRx_2F3y_1BKe2atQ63mzQVe5YTrFeNa2M3omlj6e5vOM8JcGEIf8PdbvWHka2jClt5IH3eyDVFfosaAc9V9NGriprKbMAiJO-cLn6vcS5SX9BHgnLB3pAYYMoTcBbqN9o7uSb6_ZeiTwyYR1KjE7D6Olag0KXP5SAqpGy3j7S8H1D_4PZ14fk-vzxmBEcTE8");
+            var requestOtpResult = await _unionBankClient.RequestMerchantPaymentOtpAsync("AAIkNjA4ZTlmOWMtYjQxMi00OWFlLTlkMDItN2FlNmUyM2QxNzY0EnzCsiDUrGhjuchWQ81iNvXcxlmwtTuuGJUQ2wRvvZbsrA8uhyooFmmbo6aWZSVMx5dtLtnPC-UKpLe9dxw66Ej-b_U4SRMalxhfUIiGaFXLOqErGjj7wPRU00JLq55HmdeSJSkFVdnjL13kyyN-zRTJwDCjuQ1gcTwW09E69x1G_sDXFV97G356vO1SInXPlrj7krnrqM5Sz8-dDrSu9d67dzoBF1pTtAisxlfBZfwt8ruUNfKDgXcs5TqAjJvadlhZKWn1mAgQTM_PLdb8sMJyT8oRIbJ6vHIPS2xf_kw8epLInOa-1jqFsu9Ej5Hkmknk-QcKnG_6nCaXos_4UNUvaN1oIdo3jjS76Fp5DME");
 
             Assert.IsNotNull(requestOtpResult);
         }
@@ -74,11 +74,11 @@ namespace UnionBankApi.UnitTests
                     Currency = "PHP",
                     Value = "1"
                 },
-                RequestId = "",
-                Otp = "222221"
+                RequestId = "1648274312924639266078027",
+                Otp = "111111"
             };
 
-            var merchantPaymentResult = await _unionBankClient.CreateMerchantPaymentAsync(merchantPayment, "AAIkZmU2Njc2ODEtMjY1MC00YzBiLTkzZmItYzM2NWIyY2MwOTUz4rQcHhpEbKhHy6irQVBb-jfdfUXPHKB7jlXce8PXG3xLPOBPMuMuH8-QDkkzMyBY1NNkByYZVa4k9IPjFyqaAiV7Q8sHRsZNFoMnz4h7g9bqTZescj-PGSbpD8d7FMgLQsga6QePOaCWiB0LT0FJkZS0775kF1zjO0JAw4SS13BdV81Ervn5Rj_xBsxljDPrcmRXGqDz9U5VK5oFxLiEiPjYA_JSqiz5baxAl-0nW0qDDNf8lOcrpQh_M71GxYmJ6APn-OCqGOKvOOBL3bZbMGc7QCyqf7pVUGEwKy3zsK1ojqgdnVRcFG_qlgOwh0tfV8e9K9J4ZgvcZe3sq98vLTEpX0igB1XL4jTBthFaaWs");
+            var merchantPaymentResult = await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, "AAIkNjA4ZTlmOWMtYjQxMi00OWFlLTlkMDItN2FlNmUyM2QxNzY0EnzCsiDUrGhjuchWQ81iNvXcxlmwtTuuGJUQ2wRvvZbsrA8uhyooFmmbo6aWZSVMx5dtLtnPC-UKpLe9dxw66Ej-b_U4SRMalxhfUIiGaFXLOqErGjj7wPRU00JLq55HmdeSJSkFVdnjL13kyyN-zRTJwDCjuQ1gcTwW09E69x1G_sDXFV97G356vO1SInXPlrj7krnrqM5Sz8-dDrSu9d67dzoBF1pTtAisxlfBZfwt8ruUNfKDgXcs5TqAjJvadlhZKWn1mAgQTM_PLdb8sMJyT8oRIbJ6vHIPS2xf_kw8epLInOa-1jqFsu9Ej5Hkmknk-QcKnG_6nCaXos_4UNUvaN1oIdo3jjS76Fp5DME");
 
             Assert.IsNotNull(merchantPaymentResult);
             Assert.AreEqual(merchantPayment.SenderRefId, merchantPaymentResult.Payload.SenderRefId);
