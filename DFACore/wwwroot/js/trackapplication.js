@@ -33,6 +33,7 @@ let record;
 stepTwo.hide();
 
 searchButton.on('click', function () {
+    console.log('click');
     let code = codeInput.val();
     
     if (code == null || code == '') {
@@ -76,11 +77,38 @@ searchButton.on('click', function () {
                 $("#ownerEmail").text(record.email);
                 $("#totalFees").text(`PhP ${record.fees}.00`);
 
-                $("#recevingStatus").text(`Receiving Status: ${record.receivingStatus}`);
-                $("#assessmentStatus").text(`Assessment Status: ${record.assessmentStatus}`);
-                $("#encodingStatus").text(`Encoding Status: ${record.encodingStatus}`);
-                $("#printingStatus").text(`Printing Status: ${record.printingStatus}`);
-                $("#releasingStatus").text(`Releasing Status: ${record.releasingStatus}`);
+                $('.status-container p').removeClass('green');
+                $('.status-container p').removeClass('red');
+                $('.status-container p').removeClass('orange');
+
+                if (record.receivingStatus) {
+                    $("#recevingStatus").parent().addClass('green');
+                    $("#recevingStatus").text(`Document/s was received by the Authentication Division`);
+                }
+                if (record.assessmentStatus) {
+                    $("#assessmentStatus").parent().addClass('green');
+                    $("#assessmentStatus").text(`Document/s was received by the Processing Section`);
+                }
+                if (record.encodingStatus) {
+                    $("#encodingStatus").parent().addClass('green');
+                    $("#encodingStatus").text(`Document/s was encoded`);
+                }
+                if (record.printingStatus) {
+                    $("#printingStatus").parent().addClass('green');
+                    $("#printingStatus").text(`Document/s was printed`);
+                }
+                if (record.releasingStatus) {
+                    $("#releasingStatus").parent().addClass('green');
+                    $("#releasingStatus").text(`Document/s was received by the Authentication Officer`);
+                }
+
+
+
+                //$("#recevingStatus").text(`Receiving Status: ${record.receivingStatus}`);
+                //$("#assessmentStatus").text(`Assessment Status: ${record.assessmentStatus}`);
+                //$("#encodingStatus").text(`Encoding Status: ${record.encodingStatus}`);
+                //$("#printingStatus").text(`Printing Status: ${record.printingStatus}`);
+                //$("#releasingStatus").text(`Releasing Status: ${record.releasingStatus}`);
 
                 stepTwo.show();
             }
