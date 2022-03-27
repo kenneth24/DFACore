@@ -130,7 +130,7 @@ namespace DFACore.Controllers
                 {
                     var merchantPayment = new MerchantPayment
                     {
-                    SenderRefId = appcode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
+                        SenderRefId = appcode, //DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(),
                         TranRequestDate = DateTime.UtcNow,
                         Amount = new PaymentAmount(1), //new PaymentAmount(Convert.ToInt32(main.TotalFees)),
                         RequestId = paymentData.OtpRequestId,
