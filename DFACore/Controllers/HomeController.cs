@@ -1293,7 +1293,7 @@ namespace DFACore.Controllers
                 item.Fees = $"{fees}";
                 processedModel.Add(item);
             }
-            
+
             main.Applicants = processedModel;
             main.TotalFees = processedModel.Sum(x => Convert.ToInt32(x.Fees));
 
@@ -1328,7 +1328,7 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
-      
+
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             if (main.ScheduleDate is null)
             {
@@ -1428,7 +1428,7 @@ namespace DFACore.Controllers
                     ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = appDocOwner.Fees,
-                    Type = user.Type == 2? 2 : 0,
+                    Type = user.Type == 2 ? 2 : 0,
                     DateCreated = DateTime.Now,
                     //QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
                     //    $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
@@ -1515,7 +1515,7 @@ namespace DFACore.Controllers
 
         public async Task<bool> SendApostilleToEmail()
         {
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");            
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             var apostilleDocs = _applicantRepo.GetByCode(main.ApplicationCode);
             var attachments = new List<Attachment>();
             bool generatePowerOfAttorney = false;
@@ -1537,10 +1537,10 @@ namespace DFACore.Controllers
             //attach only 1 pdf for this
             if (generatePowerOfAttorney)
                 attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            
+
             if (generateAuthLetter)
                 attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            
+
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     HtmlTemplate(), attachments.ToArray());
             return true;
@@ -1582,15 +1582,17 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult TrackApplication()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult TrackApplication(string code)
-        {
-            var data = _administrationRepository.TrackApplication(code, _userManager.GetUserId(User));
+            {
+            var data = _administrationRepository.TrackApplication(code, "B6BB2B27-BA30-4CBD-A0BB-CEDC3B0DBE79"); //_userManager.GetUserId(User)
             if (data is null)
             {
                 return Json(new { Status = "Error", Message = "No record found." });
