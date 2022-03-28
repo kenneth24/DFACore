@@ -86,6 +86,17 @@
     .img-fluid {
         width: 100% !important;
     }
+
+    @@media only screen and (max-width: 1400px) {
+        .siteInfo {
+            margin-bottom: 150px!important;
+        }
+    }
+    @@media only screen and (max-width: 600px) {
+        .siteInfo {
+            margin-bottom: 0 !important;
+        }
+    }
 </style>
 
 <div class="pageContainers" id="application-form" padding: 20px;
@@ -197,7 +208,7 @@
                                                 <label class="radio-container">
                                                     Document Owner<br />
                                                     <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
-                                                    <input id="DocumentType" type="radio"  name="DocumentType" value="DocumentOwner">
+                                                    <input id="DocumentType" type="radio" name="DocumentType" value="DocumentOwner">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -269,7 +280,7 @@
                                         </select>
 
                                         @*<input id="HasExpidite" name="HasExpidite" class="form-control" value="0" style="display:none" />*@
-                                        <div class="card-panel no-shadow p-3 entry-bg">
+                                        <div class="card-panel no-shadow p-3 entry-bg siteInfo">
                                             <a id="mapAddress" class="btn bold text-white btn-green p-label mb-3" href="@defaultBranch.MapAddress" target="_blank">View Map</a>
                                             <div class="row">
                                                 <div class="col-lg-2 d-flex mb-2">
