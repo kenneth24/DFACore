@@ -53,7 +53,7 @@
                         <input id="code" class="form-control no-border" placeholder="Appointment Code" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
                         <span id="codeError" class="text-danger"></span>
                     </div>
-                    <button id="searchButton" class="btn btn-primary  w-100 d-block text-uppercase mb-3">TRACK</button>
+                    <button id="searchButton" class="btn btn-primary  w-100 d-block text-uppercase mb-3 searchButton">TRACK</button>
 
                 </div>
 
@@ -209,7 +209,7 @@
                 </div>*@
                     </div>
                     <div class="cancellation-container w-100 mx-auto p-4">
-                        <button id="searchButton" class="btn w-50 btn-primary d-block text-uppercase mb-3">REFRESH</button>
+                        <button id="searchButton" class="btn w-50 btn-primary d-block text-uppercase mb-3 searchButton">REFRESH</button>
                         <button id="backButton" class="btn btn-secondary w-50 d-block text-uppercase">EXIT</button>
                     </div>
                 </div>
@@ -219,20 +219,6 @@
 
     </div>
 
-    <hr />
-
-    <div id="success" style="display: none">
-        <div class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
-            <h5 class="mb-3 bold text-primary">Your Appointment has been successfully cancelled.</h5>
-            <div class="success-message mx-auto">
-                <p>Please check your inbox, span and other folder to view the confirmation receipt of cancellation.</p>
-                <p id="DidntReceivedMail">Didn't receive the email? Click <a id="resendEmail" class="pointer text-primary">here</a> to resend.</p>
-                <p id="AlreadySent" style="display:none;">Successfully resend. Please check your inbox.</p>
-                <button id="cancelAnother" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Cancel another appointment</button>
-                <button id="exit" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">

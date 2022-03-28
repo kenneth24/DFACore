@@ -21,10 +21,10 @@ namespace DFACore.Models
         public string ApostileData { get; set; }
         public string Email { get; set; }
         public string Fees { get; set; }
-        public bool ReceivingStatus { get; set; }
-        public bool AssessmentStatus { get; set; }
-        public bool EncodingStatus { get; set; }
-        public bool PrintingStatus { get; set; }
-        public bool ReleasingStatus { get; set; }
+        public bool? ReceivingStatus { get; set; }
+        public bool? AssessmentStatus { get; set; }
+        public bool? EncodingStatus { get; set; }
+        public bool? PrintingStatus { get; set; }
+        public bool? ReleasingStatus { get; set; }
     }
 }

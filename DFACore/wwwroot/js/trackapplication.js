@@ -1,5 +1,5 @@
 ﻿let codeInput = $('#code');
-let searchButton = $('#searchButton');
+let searchButton = $('.searchButton');
 let backButton = $('#backButton');
 let returnModal = $('#returnModal');
 let errorMessage = $('#errorMessage');
@@ -82,24 +82,98 @@ searchButton.on('click', function () {
                 $('.status-container p').removeClass('orange');
 
                 if (record.receivingStatus) {
+                    $("#recevingStatus").parent().removeClass('orange');
+                    $("#recevingStatus").parent().removeClass('gray');
                     $("#recevingStatus").parent().addClass('green');
                     $("#recevingStatus").text(`Document/s was received by the Authentication Division`);
                 }
+                else if (record.receivingStatus == false) {
+                    $("#recevingStatus").parent().removeClass('green');
+                    $("#recevingStatus").parent().removeClass('gray');
+                    $("#recevingStatus").parent().addClass('orange');
+                    $("#recevingStatus").text(`Document/s was received by the Authentication Division`);
+                }
+                else if (record.receivingStatus == null) {
+                    $("#recevingStatus").parent().removeClass('green');
+                    $("#recevingStatus").parent().removeClass('orange');
+                    $("#recevingStatus").parent().addClass('gray');
+                    $("#recevingStatus").text(`Document/s was received by the Authentication Division`);
+                }
+
                 if (record.assessmentStatus) {
+                    $("#assessmentStatus").parent().removeClass('gray');
+                    $("#assessmentStatus").parent().removeClass('orange');
                     $("#assessmentStatus").parent().addClass('green');
                     $("#assessmentStatus").text(`Document/s was received by the Processing Section`);
                 }
+                else if (record.assessmentStatus == false) {
+                    $("#assessmentStatus").parent().removeClass('green');
+                    $("#assessmentStatus").parent().removeClass('gray');
+                    $("#assessmentStatus").parent().addClass('orange');
+                    $("#assessmentStatus").text(`Document/s was received by the Processing Section`);
+                }
+                else if (record.assessmentStatus == null) {
+                    $("#assessmentStatus").parent().removeClass('green');
+                    $("#assessmentStatus").parent().removeClass('orange');
+                    $("#assessmentStatus").parent().addClass('gray');
+                    $("#assessmentStatus").text(`Document/s was received by the Processing Section`);
+                }
+
                 if (record.encodingStatus) {
+                    $("#encodingStatus").parent().removeClass('orange');
+                    $("#encodingStatus").parent().removeClass('gray');
                     $("#encodingStatus").parent().addClass('green');
                     $("#encodingStatus").text(`Document/s was encoded`);
                 }
+                else if (record.encodingStatus == false) {
+                    $("#encodingStatus").parent().removeClass('green');
+                    $("#encodingStatus").parent().removeClass('gray');
+                    $("#encodingStatus").parent().addClass('orange');
+                    $("#encodingStatus").text(`Document/s was encoded`);
+                }
+                else if (record.encodingStatus == null) {
+                    $("#encodingStatus").parent().removeClass('green');
+                    $("#encodingStatus").parent().removeClass('orange');
+                    $("#encodingStatus").parent().addClass('gray');
+                    $("#encodingStatus").text(`Document/s was encoded`);
+                }
+
                 if (record.printingStatus) {
+                    $("#printingStatus").parent().removeClass('orange');
+                    $("#printingStatus").parent().removeClass('gray');
                     $("#printingStatus").parent().addClass('green');
                     $("#printingStatus").text(`Document/s was printed`);
                 }
+                else if (record.printingStatus == false) {
+                    $("#printingStatus").parent().removeClass('green');
+                    $("#printingStatus").parent().removeClass('gray');
+                    $("#printingStatus").parent().addClass('orange');
+                    $("#printingStatus").text(`Document/s was printed`);
+                }
+                else if (record.printingStatus == null) {
+                    $("#printingStatus").parent().removeClass('green');
+                    $("#printingStatus").parent().removeClass('orange');
+                    $("#printingStatus").parent().addClass('gray');
+                    $("#printingStatus").text(`Document/s was printed`);
+                }
+
                 if (record.releasingStatus) {
+                    $("#releasingStatus").parent().removeClass('orange');
+                    $("#releasingStatus").parent().removeClass('gray');
                     $("#releasingStatus").parent().addClass('green');
                     $("#releasingStatus").text(`Document/s was received by the Authentication Officer`);
+                }
+                else if (record.releasingStatus == false) {
+                    $("#releasingStatus").parent().removeClass('green');
+                    $("#releasingStatus").parent().removeClass('gray');
+                    $("#releasingStatus").parent().addClass('orange');
+                    $("#releasingStatus").text(`Document/s was printed`);
+                }
+                else if (record.releasingStatus == null) {
+                    $("#releasingStatus").parent().removeClass('green');
+                    $("#releasingStatus").parent().removeClass('orange');
+                    $("#releasingStatus").parent().addClass('gray');
+                    $("#releasingStatus").text(`Document/s was printed`);
                 }
 
 

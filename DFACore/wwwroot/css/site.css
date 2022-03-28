@@ -507,6 +507,26 @@ table th {
         background-color: green;
     }
 
+    .status-container .status.gray::after {
+        background-color: gray;
+    }
+
+    .status-container .status.orange::after {
+        background-color: orange;
+    }
+
+    .status-container .status.orange {
+        color: orange;
+    }
+
+    .status-container .status.red::after {
+        background-color: red;
+    }
+
+    .status-container .status.red {
+        color: red;
+    }
+
     .status-container .status {
         padding-left: 20px !important;
     }
