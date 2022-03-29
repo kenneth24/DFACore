@@ -1008,7 +1008,7 @@ function init() {
     });
 }
 
-$('#submitButton').on('click', function () {
+$('#submitButton, #submitButtonSM').on('click', function () {
     if (applicantType == 0)
         docOwnerStepFive();
     else
