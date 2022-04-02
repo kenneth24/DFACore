@@ -116,7 +116,7 @@ namespace DFACore
             services.AddSingleton(serviceProvider =>
             {
                 var keysRepository = serviceProvider.GetRequiredService<UnionBankApiKeysRepository>();
-                var keys = keysRepository.GetKeys(Models.Enums.UnionBankApiKeysEnviroment.Sandbox);
+                var keys = keysRepository.GetKeys(Models.Enums.UnionBankApiKeysEnviroment.Uat);
                 var configuration = new UnionBankClientConfiguration
                 {
                     ClientId = keys.ClientId,
@@ -128,7 +128,7 @@ namespace DFACore
             });
 
             services.AddSingleton<Helpers.Payment.PaymentDataCache>();
-            services.AddSingleton<UnionBankApiKeysRepository>();
+            services.AddSingleton(serviceProvider => new UnionBankApiKeysRepository(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)

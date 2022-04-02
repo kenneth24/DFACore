@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Linq;
 
@@ -11,9 +12,12 @@ namespace DFACore.Repository
 
         private bool isDisposed;
 
-        public UnionBankApiKeysRepository(Data.ApplicationDbContext applicationDbContext)
+        public UnionBankApiKeysRepository(string databaseConnectionString)
         {
-            _applicationDbContext = applicationDbContext;
+            var optionsBuilder = new DbContextOptionsBuilder<Data.ApplicationDbContext>();
+            optionsBuilder.UseSqlServer(databaseConnectionString);
+
+            _applicationDbContext = new Data.ApplicationDbContext(optionsBuilder.Options);
 
             var memoryCacheOptions = new MemoryCacheOptions
             {
@@ -50,12 +54,12 @@ namespace DFACore.Repository
             {
                 keys = _applicationDbContext.UnionBankApiKeys.FirstOrDefault(keys => keys.Environment == enviroment);
 
-                var memoryCacheItemOptions = new MemoryCacheEntryOptions
+                var cacheItemOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.UtcNow.AddMinutes(30)
                 };
 
-                _memoryCache.Set(enviroment, keys, memoryCacheItemOptions);
+                _memoryCache.Set(enviroment, keys, cacheItemOptions);
             }
 
             return keys;
