@@ -107,13 +107,28 @@ namespace DFACore
             services.AddTransient<ApplicantRecordRepository>();
             services.AddTransient<AdministrationRepository>();
             services.AddTransient<UnionBankPaymentClient>();
+            services.AddTransient<PaymentRepository>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddBrowserDetection();
             services.AddWkhtmltopdf();
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton(serviceProvider => new UnionBankClient(Configuration.GetSection("UnionBankApiConfiguration").Get<UnionBankClientConfiguration>()));
+            services.AddSingleton(serviceProvider =>
+            {
+                var keysRepository = serviceProvider.GetRequiredService<UnionBankApiKeysRepository>();
+                var keys = keysRepository.GetKeys(Models.Enums.UnionBankApiKeysEnviroment.Sandbox);
+                var configuration = new UnionBankClientConfiguration
+                {
+                    ClientId = keys.ClientId,
+                    ClientSecret = keys.ClientSecret,
+                    PartnerId = keys.PartnerId
+                };
+
+                return new UnionBankClient(configuration);
+            });
+
             services.AddSingleton<Helpers.Payment.PaymentDataCache>();
+            services.AddSingleton<UnionBankApiKeysRepository>();
         }
 
         private void CheckSameSite(HttpContext httpContext, CookieOptions options)

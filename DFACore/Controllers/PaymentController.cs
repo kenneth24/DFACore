@@ -10,14 +10,19 @@ using UnionBankApi;
 
 namespace DFACore.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PaymentController : Controller
     {
         private readonly UnionBankClient _unionBankClient;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly Helpers.Payment.PaymentDataCache _paymentDataCache;
+        private readonly Repository.PaymentRepository _paymentRepository;
 
-        public PaymentController(UnionBankClient unionBankClient, UserManager<ApplicationUser> userManger, Helpers.Payment.PaymentDataCache paymentDataCache)
+        public PaymentController(
+            UnionBankClient unionBankClient,
+            UserManager<ApplicationUser> userManger,
+            Helpers.Payment.PaymentDataCache paymentDataCache,
+            Repository.PaymentRepository paymentRepository)
         {
             _unionBankClient = unionBankClient;
             _userManager = userManger;
@@ -139,7 +144,17 @@ namespace DFACore.Controllers
 
                     //save data
                     
-                    await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, paymentData.AccessToken).ConfigureAwait(false);
+                    var merchantPaymentResult = await _unionBankClient.CreateV5MerchantPaymentAsync(merchantPayment, paymentData.AccessToken).ConfigureAwait(false);
+                    var payment = new Payment
+                    {
+                        TransactionDate = merchantPayment.TranRequestDate,
+                        TransactionReferenceId = merchantPayment.SenderRefId,
+                        TransactionId = merchantPaymentResult.Payload.UbpTranId,
+                        Amount = decimal.Parse(merchantPayment.Amount.Value),
+                        UserId = new Guid(_userManager.GetUserId(User))
+                    };
+
+                    _paymentRepository.CreatePayment(payment);
 
                     main.IsPaymentSuccess = true;
                     HttpContext.Session.SetComplexData("Model", main);
