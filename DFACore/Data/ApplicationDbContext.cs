@@ -27,6 +27,8 @@ namespace DFACore.Data
         public DbSet<Models.Price> Prices { get; set; }
         public DbSet<Models.Notice> Notices { get; set; }
         public DbSet<Models.tbl_attendance> tbl_attendance { get; set; } // see comments on class
+        public DbSet<Models.UnionBankApiKeys> UnionBankApiKeys { get; set; }
+        public DbSet<Models.Payment> PaymentHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
