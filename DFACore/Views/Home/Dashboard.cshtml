@@ -87,21 +87,23 @@
                             <small class="mb-0 mt-3"><i class="black-text">Online Apostille Verification</i></small>
                         </div>
                     </a>
-                    
+
                 </div>
 
                 <div id="registrationPanel" class="card-panel white-bg db teal mr-auto pointer">
-                    <div class="circle dot"></div>
-                    <div class="header text-left">
-                        <p class="text-uppercase bold mb-0">Create </p>
-                        <p class="text-uppercase bold">an account</p>
-                    </div>
-                    <div class="body py-3 d-flex flex-column">
-                        <div class="ic-container m-auto d-flex">
-                            <img src="~/images/icons/new_user.png" class="m-auto" />
+                    <a asp-action="Register" asp-controller="Account">
+                        <div class="circle dot"></div>
+                        <div class="header text-left">
+                            <p class="text-uppercase bold mb-0">Create </p>
+                            <p class="text-uppercase bold">an account</p>
                         </div>
-                        <small class="mb-0 mt-3"><i class="black-text">For new users</i></small>
-                    </div>
+                        <div class="body py-3 d-flex flex-column">
+                            <div class="ic-container m-auto d-flex">
+                                <img src="~/images/icons/new_user.png" class="m-auto" />
+                            </div>
+                            <small class="mb-0 mt-3"><i class="black-text">For new users</i></small>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -140,17 +142,19 @@
             </div>
 
             <div id="registrationPanel" class="card-panel white-bg db teal mr-auto pointer mx-auto mb-4" style="margin-top: -1.5rem!important">
-                <div class="circle dot"></div>
-                <div class="header text-left">
-                    <p class="text-uppercase bold mb-0">Create </p>
-                    <p class="text-uppercase bold">an account</p>
-                </div>
-                <div class="body py-3 d-flex flex-column">
-                    <div class="ic-container m-auto">
-
+                <a asp-action="Register" asp-controller="Account">
+                    <div class="circle dot"></div>
+                    <div class="header text-left">
+                        <p class="text-uppercase bold mb-0">Create </p>
+                        <p class="text-uppercase bold">an account</p>
                     </div>
-                    <small class="mb-0 mt-3"><i>For new users</i></small>
-                </div>
+                    <div class="body py-3 d-flex flex-column">
+                        <div class="ic-container m-auto">
+
+                        </div>
+                        <small class="mb-0 mt-3"><i>For new users</i></small>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -226,21 +230,21 @@
     </div>
     <div class="hide-on-small">
         <div class="d-flex w-100 justify-content-center pt-3">
-            <a asp-action="Contact Us" asp-controller="Home" class="p-label text-center">Contact Us</a>
+            <a asp-action="ContactUs" asp-controller="Home" class="p-label text-center">Contact Us</a>
             <div class="divider-right mx-2"></div>
             <a asp-action="PrivacyPolicy" asp-controller="Home" class="p-label text-center">Privacy Policy</a>
             <div class="divider-right mx-2"></div>
-            <a href="#" class="p-label text-center">FAQs</a>
+            <a href="https://consular.dfa.gov.ph/advisories/97-faqs-authentication" class="p-label text-center">FAQs</a>
         </div>
     </div>
 
     <div class="show-on-small-only fixed-bottom py-3 white-bg">
         <div class="d-flex w-100 justify-content-center pt-0  white-bg">
-            <a asp-action="Contact Us" asp-controller="Home" class="p-label text-center">Contact Us</a>
+            <a asp-action="ContactUs" asp-controller="Home" class="p-label text-center">Contact Us</a>
             <div class="divider-right mx-2"></div>
             <a asp-action="PrivacyPolicy" asp-controller="Home" class="p-label text-center">Privacy Policy</a>
             <div class="divider-right mx-2"></div>
-            <a href="#" class="p-label text-center">FAQs</a>
+            <a href="https://consular.dfa.gov.ph/advisories/97-faqs-authentication" class="p-label text-center">FAQs</a>
         </div>
     </div>
 </div>

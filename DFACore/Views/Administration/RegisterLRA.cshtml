@@ -1,58 +1,165 @@
 ﻿
-@model DFACore.Models.Holiday;
+@model DFACore.Models.AdminRegisterViewModel;
 
 @{
     Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
-    ViewData["Title"] = "Add Holiday";
-    var branches = ViewBag.Branches;
+    ViewData["Title"] = "Register LRA";
+    var roles = ViewBag.Roles;
 }
-<div class="row" style="margin-top: 50px;">
+<style>
+    #registrationForm label, #registrationForm input {
+        font-size: 14px;
+        font-weight: 500;
+        color: #9a9a9a;
+    }
+
+    #reg-info input {
+        text-transform: uppercase;
+    }
+
+    #reg-account input {
+        text-transform: none !important;
+    }
+
+    .form-group {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    button a {
+        color: white;
+    }
+
+    label {
+        color: #000000 !important;
+        font-family: Arial;
+        font-weight: normal;
+    }
+</style>
+<div class="row pageContainers">
     <div class="col-lg-3 col-md-1 col-sm-1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10">
-        <form id="registrationForm" method="post" style="        border: 1px solid #b7b7b7;
+        <form id="registrationForm" method="post" asp-action="Register" style="        border: 1px solid #b7b7b7;
         height: auto;
 ">
             <div style="background-color: #217ff3;color: white;height: 35px;">
-                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Edit Calendar</p>
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
             </div>
             <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
             <p class="form-group" style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></p>
             <div style="padding:10px;">
                 <div id="reg-info" style="margin-top: 20px;">
                     <div class="form-group ">
-                        <label class="black-text" asp-for="Title">Title <span class="red">*</span></label>
-                        <input asp-for="Title" class="form-control black-text" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
+                        <label class="black-text" asp-for="FirstName">First Name <span class="red">*</span></label>
+                        <input asp-for="FirstName" class="form-control black-text" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="Date">Date <span class="red">*</span></label>
-                        <input type="date" asp-for="Date" class="form-control black-text" />
-                        <span asp-validation-for="Date" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group black-text" hidden>
-                        <label class="black-text" asp-for="Type">Type <span class="red">*</span></label>
-                        <input asp-for="Type" value="Type" class="form-control black-text" />
-                        <span asp-validation-for="Type" class="text-danger"></span>
+                        <label class="black-text" asp-for="MiddleName"></label>
+                        <input asp-for="MiddleName" class="form-control black-text" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group black-text">
-                        <label class="black-text" asp-for="BranchId">Consular Office <span class="red">*</span></label>
-                        <select asp-for="BranchId" class="form-control">
-                            <option value=0>Applied to All</option>
-                            @foreach (var branch in branches)
-                            {
-                                <option value=@branch.Id>@branch.BranchName</option>
-                            }
+                        <label class="black-text" asp-for="LastName">Last Name <span class="red">*</span></label>
+                        <input asp-for="LastName" class="form-control black-text" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="Suffix"></label>
+                        @*<input asp-for="Suffix" class="form-control" />*@
+                        <select asp-for="Suffix" class="form-control black-text">
+                            <option value="">N/A</option>
+                            <option value="JR.">JR.</option>
+                            <option value="SR.">SR.</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
                         </select>
-                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                        <span asp-validation-for="Suffix" class="text-danger"></span>
+                    </div>
+                    <div class="form-group black-text">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-3">
+                                <label class="black-text" asp-for="Gender">Gender <span class="red">*</span></label>
+                                <br />
+                                @Html.RadioButtonFor(m => m.Gender, "Male") @Html.Label("Male")
+                                @Html.RadioButtonFor(m => m.Gender, "Female") @Html.Label("Female")
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 col-sm-10">
+                                <label class="black-text" asp-for="DateOfBirth">Date of Birth <span class="red">*</span></label>
+                                <input type="date" asp-for="DateOfBirth" class="form-control black-text" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div id="reg-account">
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="Email">Email <span class="red">*</span></label>
+                        <input asp-for="Email" class="form-control black-text" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="Password">Password <span class="red">*</span></label>
+                        <input asp-for="Password" class="form-control black-text" id="reg-password" />
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password float-right" style="position: relative;top: -24px;right: 10px;"></span>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="ConfirmPassword">Confirm Password <span class="red">*</span></label>
+                        <input asp-for="ConfirmPassword" class="form-control black-text" id="reg-confirmpassword" />
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-confirmpassword float-right" style="position: relative;top: -24px;right: 10px;"></span>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    @*<div class="form-group black-text">
+                            <label class="black-text" asp-for="Type">Role <span class="red">*</span></label>
+                            <input asp-for="Type" class="form-control black-text" />
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>*@
+
+                 
+
+                    <div class="form-group black-text">
+                        <label class="black-text" asp-for="Role">Role <span class="red">*</span></label>
+                        <select asp-for="Role" class="form-control">
+
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Id">@role.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+
+
+
+                </div>
+
+                <!--<div class="form-group">
+                    <div class="col-md-12 col-sm-12" style="        text-align: center;">-->
+                @*<input asp-for="IsTermsAndConditionChecked" />
+                    <label class="form-check-label" for="terms_and_condition">
+                        I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
+                    </label>*@
+                <!--<div class="form-check">
+                            <label class="form-check-label">
+                                <input asp-for="IsTermsAndConditionChecked" type="checkbox" class="form-check-input">I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>-->
                 <div class="row form-group">
-                    <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Holiday", "Administration")</button></div>
+                    <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("HomePage", "Home", "Administration")</button></div>
                     <div class="col-md-2 col-sm-2">
                     </div>
-                    <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Add</button></div>
+                    <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Register</button></div>
                 </div>
             </div>
 
@@ -205,4 +312,32 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
+    <script>$(document).on('click', '.toggle-password', function() {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#reg-password");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
+        });
+        $(document).on('click', '.toggle-confirmpassword', function () {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#reg-confirmpassword");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
+        });
+         $('#reg-confirmpassword').on("cut copy paste",function(e) {
+                e.preventDefault();
+         });
+        function TermsAndConditionsAction(result) {
+            console.log(result);
+            //$('#IsTermsAndConditionChecked').ch
+            $("#IsTermsAndConditionChecked").prop("checked", result);
+            $("#IsTermsAndConditionChecked").val(result);
+            console.log($("#IsTermsAndConditionChecked").val());
+        }
+
+   //});</script>
 }

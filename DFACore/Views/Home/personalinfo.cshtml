@@ -87,6 +87,10 @@
     .img-fluid {
         width: 100% !important;
     }
+
+    input {
+        text-transform: uppercase !important;
+    }
 </style>
 
 <div class="pageContainers" id="application-form" padding: 20px;
@@ -179,9 +183,39 @@
                                                     <input asp-for="LastName" class="form-control" />
                                                     <span class="text-danger lnameValidation bold p-label"></span>
                                                 </div>
+
+                                                <div class="col-md-4 col-sm-12">
+                                                    <div class="show-on-small-only">
+                                                        <label class="p-label bold mb-0" asp-for="Suffix"></label>
+                                                        @*<input asp-for="Suffix" class="form-control" />*@
+                                                        <select asp-for="Suffix" class="form-control  entry-bg">
+                                                            <option value="">N/A</option>
+                                                            <option value="JR.">JR.</option>
+                                                            <option value="SR.">SR.</option>
+                                                            <option value="I">I</option>
+                                                            <option value="II">II</option>
+                                                            <option value="III">III</option>
+                                                            <option value="IV">IV</option>
+                                                            <option value="V">V</option>
+                                                            <option value="VI">VI</option>
+                                                            <option value="VII">VII</option>
+                                                            <option value="VIII">VIII</option>
+                                                            <option value="IX">IX</option>
+                                                            <option value="X">X</option>
+                                                            <option value="XI">XI</option>
+                                                            <option value="XII">XII</option>
+                                                            <option value="XIII">XIII</option>
+                                                            <option value="XIV">XIV</option>
+                                                            <option value="XV">XV</option>
+                                                        </select>
+                                                        <span asp-validation-for="Suffix" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
 
-                                            <div class="ml-4">
+                                            <div class="ml-4 hide-on-small">
                                                 <label class="p-label bold mb-0" asp-for="Suffix"></label>
                                                 @*<input asp-for="Suffix" class="form-control" />*@
                                                 <select asp-for="Suffix" class="form-control  entry-bg">
@@ -208,6 +242,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
                                     <div class="form-group mb-0">
                                         <div class="row">
@@ -250,8 +285,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             @if (ViewBag.DocumentType != "Authorized")
                             {
@@ -337,7 +370,7 @@
                         </div>
                         <div class="show-on-small-only mt-5 my-auto">
                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                            <input type="button" id="submitButton" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                            <input type="button" id="submitButtonSM" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
                         </div>
                     </div>
 
@@ -401,7 +434,7 @@
 
 
 
-                    <div class="d-flex">
+                    <div id="quantityInputSelector" class="d-flex">
                         <div class="d-flex flex-column ml-auto mr-2">
                             <span class="bold" style="text-align:center">Regular</span>
                             <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-0 regular" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
@@ -441,7 +474,10 @@
 
     <script>
         $("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
-        $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })</script>
+        $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })
+
+        
+    </script>
 
     <script src="~/js/personalinfo.js"></script>
 

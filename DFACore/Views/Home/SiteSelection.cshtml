@@ -86,6 +86,17 @@
     .img-fluid {
         width: 100% !important;
     }
+
+    @@media only screen and (max-width: 1400px) {
+        .siteInfo {
+            margin-bottom: 150px!important;
+        }
+    }
+    @@media only screen and (max-width: 600px) {
+        .siteInfo {
+            margin-bottom: 0 !important;
+        }
+    }
 </style>
 
 <div class="pageContainers" id="application-form" padding: 20px;
@@ -131,7 +142,7 @@
                             <div class="card-body p-0">
                                 <div class="col-lg-12 col-md-12 col-sm-12 p-0">
                                     <!-- Where will the document be used? -->
-                                    <div class="card-panel px-5 py-3 sm-p-2 mb-3">
+                                    <div class="card-panel border px-5 py-3 sm-p-2 mb-3">
                                         <div class="d-flex sm-p-0">
                                             <div class="d-flex flex-column mr-5">
                                                 <label class="mb-0 bold">Where will the document be used?</label>
@@ -186,7 +197,7 @@
 
 
                                     <!-- I am the -->
-                                    <div class="card-panel px-5 py-3 sm-p-2 mb-3">
+                                    <div class="card-panel border px-5 py-3 sm-p-2 mb-3">
                                         <div class="d-flex sm-p-0">
                                             <div class="d-flex flex-column mr-5">
                                                 <label class="mb-0 bold">I am the</label>
@@ -197,7 +208,7 @@
                                                 <label class="radio-container">
                                                     Document Owner<br />
                                                     <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
-                                                    <input id="DocumentType" type="radio"  name="DocumentType" value="DocumentOwner">
+                                                    <input id="DocumentType" type="radio" name="DocumentType" value="DocumentOwner">
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -240,7 +251,7 @@
                                     </div>
 
 
-                                    <div id="siteaddress" class="card-panel px-5 py-3 sm-p-2 mb-3">
+                                    <div id="siteaddress" class="card-panel border px-5 py-3 sm-p-2 mb-3">
                                         <label class="mb-0 bold">Please select the site where you wish to process your Apostille</label>
                                         <p class="mb-0 p-alt p-label"><i>(Piliin ang site kung saan mo nais iproseso ang iyong Apostille)</i></p>
 
@@ -269,8 +280,8 @@
                                         </select>
 
                                         @*<input id="HasExpidite" name="HasExpidite" class="form-control" value="0" style="display:none" />*@
-                                        <div class="card-panel no-shadow p-3 entry-bg">
-                                            <a class="btn bold text-white btn-green p-label mb-3" href="@defaultBranch.MapAddress" target="_blank">View Map</a>
+                                        <div class="card-panel no-shadow p-3 entry-bg siteInfo">
+                                            <a id="mapAddress" class="btn bold text-white btn-green p-label mb-3" href="@defaultBranch.MapAddress" target="_blank">View Map</a>
                                             <div class="row">
                                                 <div class="col-lg-2 d-flex mb-2">
                                                     <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
@@ -364,7 +375,7 @@
                                         </div>
                                         <div class="show-on-small-only mt-5 my-auto">
                                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                                            <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3"> Next</button>
+                                            <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase w-100 mr-auto ml-3"> Next</button>
                                         </div>
                                     </div>
 

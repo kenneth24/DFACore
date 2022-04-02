@@ -460,3 +460,73 @@ table th {
 .validation-summary-errors ul {
     margin-bottom: 5px!important;
 }
+
+.pageContainers {
+    margin-top: 25px!important;
+}
+
+
+.show-on-small-only button {
+    margin-left: 0 !important;
+}
+
+.status-container {
+    border-left: 1px solid #ccc;
+}
+
+    /*.status-container::after {
+        content: "";
+        height: 50px;
+        width: 20px;
+        background-color: white;
+        bottom: 0;
+        left: 40px;
+        position:absolute;
+    }*/
+
+    .status-container .status::after {
+        height: 12px;
+        width: 12px;
+        background-color: #ccc;
+        content: "";
+        position: absolute;
+        left: -6px;
+        border-radius: 50%;
+    }
+    .status-container .status:last-child::before {
+        content: "";
+        height: 18px;
+        width: 20px;
+        background-color: white;
+        bottom: 0;
+        left: -4px;
+        position: absolute;
+    }
+
+    .status-container .status.green::after {
+        background-color: green;
+    }
+
+    .status-container .status.gray::after {
+        background-color: gray;
+    }
+
+    .status-container .status.orange::after {
+        background-color: orange;
+    }
+
+    .status-container .status.orange {
+        color: orange;
+    }
+
+    .status-container .status.red::after {
+        background-color: red;
+    }
+
+    .status-container .status.red {
+        color: red;
+    }
+
+    .status-container .status {
+        padding-left: 20px !important;
+    }

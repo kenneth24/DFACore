@@ -387,8 +387,6 @@ namespace DFACore.Controllers
             return applicantCode;
         }
 
-
-
         private string AddtnlCode(ApplicantRecord model)
         {
             var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(model.ApostileData);
@@ -509,16 +507,17 @@ namespace DFACore.Controllers
             return Json(result);
         }
 
-        public ActionResult ValidateScheduleDate2(string scheduleDate, int applicationCount, long branchId)
+        public async Task<ActionResult> ValidateScheduleDate2(string scheduleDate, int applicationCount, long branchId)
         {
 
             var date = DateTime.ParseExact(scheduleDate, "MM/dd/yyyy hh:mm tt",
                                        System.Globalization.CultureInfo.InvariantCulture);
 
-            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId);
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main.IsLRA)
-                result = true;
+            var user = await _userManager.GetUserAsync(User);
+            var result = _applicantRepo.ValidateScheduleDate(date, applicationCount, branchId, user.Type);
+            //var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+            //if (main.IsLRA)
+            //    result = true;
 
             return Json(result);
         }
@@ -585,8 +584,6 @@ namespace DFACore.Controllers
             return Json("");
         }
 
-
-
         public int SetNumberOfApplicants(int applicantsCount)
         {
             //var stringify = JsonConvert.SerializeObject(_applicantRepo.GenerateListOfDates(DateTime.Now));
@@ -636,17 +633,6 @@ namespace DFACore.Controllers
 
         }
 
-        [AllowAnonymous]
-        public string GetIP()
-        {
-            var ip = _accessor.ActionContext.HttpContext.Connection.RemoteIpAddress.ToString();
-            var ip2 = HttpContext.Connection.RemoteIpAddress.ToString();
-
-            GetUserCountryByIp("136.158.28.217");
-            var browser = _browserDetector.Browser;
-            return ip;
-        }
-
         public IpInfo GetUserCountryByIp(string ip)
         {
             //string info = new WebClient().DownloadString("http://ipinfo.io/" + ip);
@@ -680,7 +666,8 @@ namespace DFACore.Controllers
                     OS = browser.OS,
                     DeviceType = browser.DeviceType,
                     Remarks = data,
-                    Email = email
+                    Email = email,
+                    UserType = 0
                 };
                 _applicantRepo.AddActivityLog(activity);
             }
@@ -1077,8 +1064,6 @@ namespace DFACore.Controllers
             return View();
         }
 
-
-
         public ActionResult SiteSelection(List<FormErrorModel> model = null)
         {
             HttpContext.Session.SetComplexData("Model", new MainViewModel());
@@ -1198,7 +1183,6 @@ namespace DFACore.Controllers
             return View();
         }
 
-
         public ActionResult ShippingInformation()
         {
             return View();
@@ -1215,7 +1199,6 @@ namespace DFACore.Controllers
 
             return RedirectToAction("ShippingInformation");
         }
-
 
         public ActionResult ApostilleSchedule()
         {
@@ -1277,7 +1260,42 @@ namespace DFACore.Controllers
         public ActionResult ApostilleSchedule(List<ApplicantRecordViewModel> model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            main.Applicants = model;
+            var price = _applicantRepo.GetPrice();
+            var branch = _applicantRepo.GetBranch(main.ProcessingSite);
+
+            List<ApplicantRecordViewModel> processedModel = new();
+
+            foreach (var item in model)
+            {
+                int fees = 0;
+                var data = JsonConvert.DeserializeObject<List<ApostilleDocumentModel>>(item.ApostileData);
+                foreach (var i in data)
+                {
+                    if (i.Transaction == "Regular")
+                        fees += (i.Quantity * Convert.ToInt32(price.Regular));
+                    else if (i.Transaction == "Expedite")
+                    {
+                        if (branch.HasExpidite == false)
+                        {
+                            HttpContext.Session.Remove("Model");
+                            throw new Exception();
+                        }
+                        fees += (i.Quantity * Convert.ToInt32(price.Expedite));
+                    }
+                    else
+                    {
+                        // if someone alter data in UI/model
+                        HttpContext.Session.Remove("Model");
+                        throw new Exception();
+                    }
+                }
+
+                item.Fees = $"{fees}";
+                processedModel.Add(item);
+            }
+
+            main.Applicants = processedModel;
+            main.TotalFees = processedModel.Sum(x => Convert.ToInt32(x.Fees));
 
             if (main.DocumentType == "Authorized")
             {
@@ -1286,9 +1304,8 @@ namespace DFACore.Controllers
             }
 
             HttpContext.Session.SetComplexData("Model", main);
-
-            return RedirectToAction("ApostilleSchedule");
-            //return View();
+            return Ok();
+            //return RedirectToAction("ApostilleSchedule");
         }
 
         [AllowAnonymous]
@@ -1311,7 +1328,7 @@ namespace DFACore.Controllers
 
         public ActionResult ApplicationSummary()
         {
-      
+
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             if (main.ScheduleDate is null)
             {
@@ -1324,6 +1341,24 @@ namespace DFACore.Controllers
         public ActionResult ApplicationSummary(ApostilleScheduleViewModel model)
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
+
+            var dateTimeSched = DateTime.ParseExact(model.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+
+            var isSchedExist = _applicantRepo.CheckIfSchedExist(dateTimeSched, main.ProcessingSite);
+
+            if (isSchedExist)
+            {
+                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+            var isSchedExistInHoliday = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+
+            if (isSchedExistInHoliday)
+            {
+                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+                return View("Error");
+            }
+
             main.ScheduleDate = model.ScheduleDate;
             HttpContext.Session.SetComplexData("Model", main);
 
@@ -1354,21 +1389,19 @@ namespace DFACore.Controllers
             var applicantRecords = new List<ApplicantRecord>();
             var attachments = new List<Attachment>();
 
-            //bool generatePowerOfAttorney = false;
-            //bool generateAuthLetter = false;
-
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
 
             var dateTimeSched = DateTime.ParseExact(main.ScheduleDate, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
+            var user = await _userManager.GetUserAsync(User);
 
-            var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
+            //var isSchedExist = _applicantRepo.CheckIfSchedExistInHoliday(dateTimeSched);
 
-            if (isSchedExist)
-            {
-                ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
-                //return View("Error");
-                return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
-            }
+            //if (isSchedExist)
+            //{
+            //    ViewBag.errorMessage = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!";
+            //    //return View("Error");
+            //    return Json(new { Status = "Error", Message = $"The schedule {main.ScheduleDate} you have selected is not available. Please select another date and time slot. Thank you!" });
+            //}
 
             var branch = _applicantRepo.GetBranch(main.ProcessingSite);
 
@@ -1395,7 +1428,7 @@ namespace DFACore.Controllers
                     ApplicationCode = appDocOwner.ApplicationCode,
                     CreatedBy = new Guid(_userManager.GetUserId(User)),
                     Fees = appDocOwner.Fees,
-                    Type = 0,
+                    Type = user.Type == 2 ? 2 : 0,
                     DateCreated = DateTime.Now,
                     //QRCode = _applicantRepo.GenerateQRCode($"{appDocOwner.FirstName?.ToUpper()} {appDocOwner.MiddleName?.ToUpper()} {appDocOwner.LastName?.ToUpper()}" +
                     //    $"{Environment.NewLine}{appDocOwner.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
@@ -1437,7 +1470,7 @@ namespace DFACore.Controllers
                         ApplicationCode = record.ApplicationCode, //record.ApplicationCode,
                         CreatedBy = new Guid(_userManager.GetUserId(User)),
                         Fees = record.Fees,
-                        Type = 1,
+                        Type = user.Type == 2 ? 2 : 1,
                         DateCreated = DateTime.Now,
                         //QRCode = _applicantRepo.GenerateQRCode($"{record.FirstName?.ToUpper()} {record.MiddleName?.ToUpper()} {record.LastName?.ToUpper()}" +
                         //    $"{Environment.NewLine}{record.ApplicationCode}{Environment.NewLine}{dateTimeSched.ToString("MM/dd/yyyy")}" +
@@ -1460,12 +1493,12 @@ namespace DFACore.Controllers
                 }
             };
 
-            var validate = ValidateScheduleDate3(main.ScheduleDate, total, branch.Id);
-            if (!validate)
-            {
-                ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
-                return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
-            }
+            //var validate = ValidateScheduleDate3(main.ScheduleDate, total, branch.Id);
+            //if (!validate)
+            //{
+            //    ViewBag.errorMessage = $"The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!";
+            //    return Json(new { Status = "Error", Message = "The date and time slot you have selected is already filled-up. Please select another date and time slot. Thank you!" });
+            //}
 
             var result = _applicantRepo.AddRange(applicantRecords);
             if (!result)
@@ -1474,22 +1507,7 @@ namespace DFACore.Controllers
                 return Json(new { Status = "Error", Message = "An error occured file saving data. Please try again." });  //ModelState.AddModelError(string.Empty, "An error has occured while saving the data.");
             }
 
-            //if (generatePowerOfAttorney)
-            //{
-            //    attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            //}
-
-            //if (generateAuthLetter)
-            //{
-            //    attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            //}
-
-            //await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File", //$"<p><bold>Download the attachment and present to the selected branch.</bold></p>",
-            //        HtmlTemplate(), attachments.ToArray());
             await SendApostilleToEmail();
-            //ViewData["ApplicantCount"] = model.ApplicantCount;
-            //ViewData["Attachments"] = attachments;
-            //ViewData["ApptCode"] = apptCode;
 
             Log($"Generate appointment successfully with code of {string.Join(",", apptCode)} .", User.Identity.Name);
             return Json(new { Status = "Success", Message = "" });
@@ -1497,7 +1515,7 @@ namespace DFACore.Controllers
 
         public async Task<bool> SendApostilleToEmail()
         {
-            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");            
+            var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
             var apostilleDocs = _applicantRepo.GetByCode(main.ApplicationCode);
             var attachments = new List<Attachment>();
             bool generatePowerOfAttorney = false;
@@ -1519,16 +1537,14 @@ namespace DFACore.Controllers
             //attach only 1 pdf for this
             if (generatePowerOfAttorney)
                 attachments.Add(new Attachment("Power-Of-Attorney.pdf", await GeneratePowerOfAttorneyPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            
+
             if (generateAuthLetter)
                 attachments.Add(new Attachment("Authorization-Letter.pdf", await GenerateAuthorizationLetterPDF(new TestData()), new MimeKit.ContentType("application", "pdf")));
-            
+
             await _messageService.SendEmailAsync(User.Identity.Name, User.Identity.Name, "Application File",
                     HtmlTemplate(), attachments.ToArray());
             return true;
         }
-
-
 
         public ActionResult OrderSummary()
         {
@@ -1542,13 +1558,16 @@ namespace DFACore.Controllers
             return View(main);
         }
 
-        public ActionResult PaymentSuccess()
+        public async Task<ActionResult> PaymentSuccess()
         {
             var main = HttpContext.Session.GetComplexData<MainViewModel>("Model");
-            if (main.ScheduleDate is null)
+            if (string.IsNullOrEmpty(main.ScheduleDate) || main.IsPaymentSuccess == false)
             {
                 return RedirectToAction("SiteSelection");
             }
+
+            await SaveApostille();
+
             HttpContext.Session.Remove("Model");
             return View();
         }
@@ -1563,6 +1582,27 @@ namespace DFACore.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult TrackApplication()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult TrackApplication(string code)
+            {
+            var data = _administrationRepository.TrackApplication(code, "B6BB2B27-BA30-4CBD-A0BB-CEDC3B0DBE79"); //_userManager.GetUserId(User)
+            if (data is null)
+            {
+                return Json(new { Status = "Error", Message = "No record found." });
+            }
+            else
+            {
+                return Json(new { Status = "Success", data = data });
+            }
+            
+        }
 
         public ActionResult GetInfo()
         {

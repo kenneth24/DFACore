@@ -1,0 +1,257 @@
+﻿
+@{
+    
+}
+<style>
+    p {
+        line-height: 13px;
+        font-size: 12px !important;
+        margin-bottom: 10px!important;
+    }
+</style>
+
+
+<div class="pageContainers px-0 pb-0 mt-3" style="padding: 20px;">
+
+
+    <div class="media">
+        <div class="media-body">
+            <p class="grey-text-bold font-weight-bold p-0 p-label">
+                @User.Identity.Name<br />
+                @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+            </p>
+        </div>
+        <p class="float-right text-right mt-auto p-label">
+            <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
+        </p>
+    </div>
+</div>
+
+@*<section class="header px-4 mt-3">
+    <div class="text-center mt-3 w-100 mb-4">
+        <h3 class="black-text bold   mt-2 h3">Apostille Appointment Tracking System</h3>
+    </div>
+</section>*@
+
+<div class=" px-0 py-0" id="application-form" style="padding: 20px;
+        height: auto;min-height:450px;">
+
+
+    <div id="stepOne">
+        @*<div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 2: Search Appointment</p>
+        </div>*@
+
+        <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-0 d-flex flex-column justify-content-center pt-4">
+            <h4 class="blue-text bold   mt-0 h3 text-center">e-Apostille </h4>
+            <h4 class="blue-text bold mb-2 mt-0 h3 text-center">Document Status Tracking System</h4>
+            <div class="cancellation-container w-100 mx-auto px-4">
+                <p class="  p-alt p-label text-center mt-4  "><i>Please enter the Appointment Code you wish to track. Afterwards, click the TRACK button</i></p>
+                @*<div class="card-header bold p-1 mx-2 mx-lg-0 white-bg text-center mt-4">Please enter the Appointment Code you wish to track. Afterwards, click the TRACK button</div>*@
+                <div class="card-body px-5 pb-5 pt-4 mx-auto">
+                    <div class="form-group col-md-12 col-sm-12 p-0">
+                        <input id="code" class="form-control no-border" placeholder="Appointment Code" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
+                        <span id="codeError" class="text-danger"></span>
+                    </div>
+                    <button id="searchButton" class="btn btn-primary  w-100 d-block text-uppercase mb-3 searchButton">TRACK</button>
+
+                </div>
+
+            </div>
+
+            <center>
+                <div id="stepTwo">
+
+
+                    <div class="text-center white-bg mb-3 p-4 px-5">
+                        <h6 class="blue-text bold text-left">Application Details</h6>
+
+                        <div class="row text-left">
+                            <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                                <p class="  ">Appointment Code</p>
+                                <p id="appointmentCode" class="bold  "></p>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                                <p class="  ">Appointment Date</p>
+                                <p id="appointmentDate" class="bold  "></p>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                                <p class="bold  ">Time</p>
+                                <p id="appointmentTime" class=" "></p>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3"></div>
+
+
+                        <div class="row text-left">
+                            <div class="col-sm-12 d-flex flex-column">
+                                <p class="  ">Processing Site</p>
+                                <p id="processingSite" class="  bold"></p>
+                                <p id="processingSiteAddress" class="  bold"></p>
+                            </div>
+                        </div>
+
+                        <div class="row text-left">
+                            <div class="col-sm-6 d-flex flex-column">
+                                <p class=" ">Contact Number</p>
+                                <p id="coContactNumber" class="bold  "></p>
+                            </div>
+                            <div class="col-sm-6 d-flex flex-column">
+                                <p class=" ">Email</p>
+                                <p id="coEmail" class="bold  "></p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3"></div>
+
+                        <div class="row text-left">
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Document Owner:</p>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-sm-12">
+                                <p id="documentOwner" class="  bold"></p>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Contact No.:</p>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-sm-12">
+                                <p id="ownerContactNumber" class="  bold"></p>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Country of Destination:</p>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-sm-12">
+                                <p id="destination" class="  bold"></p>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Documents:</p>
+                            </div>
+                            <div id="documents" class="col-lg-9 col-md-8 col-sm-12 bold">
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Email:</p>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-sm-12">
+                                <p id="ownerEmail" class="  bold"></p>
+                            </div>
+                        </div>
+                        <hr class="mb-3" />
+
+                        <h6 class="blue-text bold text-left">Payment Details</h6>
+
+                        <div class="row text-left">
+                            <div class="col-sm-4 d-flex flex-column">
+                                <p class=" ">Payment Reference No.:</p>
+                                <p id="paymentReferenceNo" class="bold  ">1214123132131</p>
+                            </div>
+                            <div class="col-sm-4 d-flex flex-column">
+                                <p class=" ">Payment Date:</p>
+                                <p id="paymentDate" class="bold  ">@DateTime.Now</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3"></div>
+                        <div class="row text-left">
+                            <div class="col-sm-4 d-flex flex-column">
+                                <p class=" ">Invoice No.:</p>
+                                <p id="paymentReferenceNo" class="bold  ">1214123132131</p>
+                            </div>
+                            <div class="col-sm-4 d-flex flex-column">
+                                <p class=" ">Paid Thru:</p>
+                                <p id="paymentDate" class="bold  ">Union Bank</p>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <p class=" ">Amount:</p>
+                                <p id="totalFees" class="  bold"></p>
+                            </div>
+
+                        </div>
+
+                        <hr class="mb-3" />
+
+                        <h6 class="blue-text bold text-left mb-4">Document Status</h6>
+
+                        <div class="row text-left status-container ml-1">
+                            <div class="status col-sm-12 d-flex flex-column mb-3">
+                                <p id="recevingStatus" class=" bold"></p>
+                            </div>
+                            <div class="status col-sm-12 d-flex flex-column mb-3">
+                                <p id="assessmentStatus" class="bold "></p>
+                            </div>
+                            <div class="status col-sm-12 d-flex flex-column mb-3">
+                                <p id="encodingStatus" class="bold "></p>
+                            </div>
+                            <div class="status col-sm-12 d-flex flex-column mb-3">
+                                <p id="printingStatus" class=" bold"></p>
+                            </div>
+                            <div class="status col-sm-12 d-flex flex-column">
+                                <p id="releasingStatus" class="bold "></p>
+                            </div>
+                        </div>
+
+
+                        @*<p id="conditionError" class="text-left conditionError text-danger"></p>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="condition">
+                    <label class="custom-control-label" for="condition"><i>By continuing, I fully understand that once this appointment is cancelled, I will have to schedule a new appointment to proceed with my application. </i></label>
+                </div>
+
+
+                <div class="row mt-4">
+                    <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12  ">
+                        <button type="button" id="stepTwoBackButton" class=" btn button-secondary text-white col-md-12 col-sm-12 mb-2">Back</button>
+                    </div>
+                    <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12  ">
+                        <button class="btn button-primary col-md-12 col-sm-12 float-right mb-2 text-uppercase" style="color:white;" id="cancelAppointment">Cancel Appointment</button>
+                    </div>
+                </div>*@
+                    </div>
+                    <div class="cancellation-container w-100 mx-auto p-4">
+                        <button id="searchButton" class="btn w-50 btn-primary d-block text-uppercase mb-3 searchButton">REFRESH</button>
+                        <button id="backButton" class="btn btn-secondary w-50 d-block text-uppercase">EXIT</button>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-column p-3 px-4 text-center">
+                <img src="~/dfa.png" class="mx-auto mb-4" style="height: 50px" />
+                <div class="mx-auto text-center px-2">
+                    <p class="text-danger text-uppercase bold  " id="errorMessage" style="color:red!important"></p>
+                </div>
+                <p id="message"></p>
+                <p id="date" class="bold" style="font-size:22px!important;"></p>
+                <button id="exitButton" data-dismiss="modal" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;">EXIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loadingModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body align-self-center d-flex flex-column p-3">
+                <img src="~/dfa.png" class="mx-auto mb-2" style="height: 50px" />
+                <small>Searching appointment. Please wait.</small>
+                <div id="loading-image" class="mx-auto mt-2">
+                    <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: #4d4d4d; font"></i>
+                </div>
+                <button id="closeLoading" data-dismiss="modal" style="display: none"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/trackapplication.js"></script>
