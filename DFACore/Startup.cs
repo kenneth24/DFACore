@@ -119,6 +119,7 @@ namespace DFACore
                 var keys = keysRepository.GetKeys(Models.Enums.UnionBankApiKeysEnviroment.Uat);
                 var configuration = new UnionBankClientConfiguration
                 {
+                    BaseUri = Configuration["UnionBankApiBaseUri"],
                     ClientId = keys.ClientId,
                     ClientSecret = keys.ClientSecret,
                     PartnerId = keys.PartnerId

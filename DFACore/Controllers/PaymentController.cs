@@ -27,6 +27,7 @@ namespace DFACore.Controllers
             _unionBankClient = unionBankClient;
             _userManager = userManger;
             _paymentDataCache = paymentDataCache;
+            _paymentRepository = paymentRepository;
         }
 
         [HttpGet("process-merchant-payment")]

@@ -12,6 +12,7 @@
         public void CreatePayment(Models.Payment payment)
         {
             _applicationDbContext.PaymentHistory.Add(payment);
+            _applicationDbContext.SaveChanges();
         }
     }
 }
