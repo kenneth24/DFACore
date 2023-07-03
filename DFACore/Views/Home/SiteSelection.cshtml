@@ -1,0 +1,402 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.SiteSelectionViewModel
+@using Microsoft.Extensions.Options
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
+    var errorMessages = (List<FormErrorModel>)ViewData["ErrorMessages"];
+
+}
+<style>
+    body {
+        margin: 0 !important;
+    }
+
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: black;
+    }
+
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input, #step-one-authorized input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+
+
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: auto;
+    }
+
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 500px;
+        width: 100% !important;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+
+    .img-fluid {
+        width: 100% !important;
+    }
+
+    @@media only screen and (max-width: 1400px) {
+        .siteInfo {
+            margin-bottom: 150px!important;
+        }
+    }
+    @@media only screen and (max-width: 600px) {
+        .siteInfo {
+            margin-bottom: 0 !important;
+        }
+    }
+</style>
+
+<div class="pageContainers" id="application-form" padding: 20px;
+     height: auto;">
+    <div id="loading">
+        <div id="loading-image">
+            <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
+        </div>
+    </div>
+    <div id="formContainer">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+        @*<section class="header px-4 mt-3">
+                <div class="text-center mt-3 w-100 mb-4">
+                    <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+                </div>
+            </section>*@
+        <section>
+            <div class="media">
+                <div class="media-body">
+                    <p class="grey-text-bold font-weight-bold p-0 p-label">
+                        @User.Identity.Name<br />
+                        @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                    </p>
+                </div>
+                <p class="float-right text-right mt-auto p-label">
+                    <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
+                </p>
+            </div>
+        </section>
+
+        @{
+            <form id="account" method="post" asp-action="SiteSelection" asp-controller="Home">
+
+                <div id="step-select-processing-site" class="tabcontent">
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 5</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 5</p>
+                    </div>
+
+                    <div class="mb-3 w-100 mt-4 d-flex flex-column justify-content-center">
+                        <div class="home-container w-100 mx-auto">
+                            <div class="card-body p-0">
+                                <div class="col-lg-12 col-md-12 col-sm-12 p-0">
+                                    <!-- Where will the document be used? -->
+                                    <div class="card-panel border px-5 py-3 sm-p-2 mb-3">
+                                        <div class="d-flex sm-p-0">
+                                            <div class="d-flex flex-column mr-5">
+                                                <label class="mb-0 bold">Where will the document be used?</label>
+                                                <p class="mb-0 p-alt p-label"><i>(Saan gagamitin ang dokumento?)</i></p>
+                                            </div>
+
+                                            <div class="mr-5 my-auto show-on-large-only">
+                                                <label class="radio-container">
+                                                    Abroad<br />
+                                                    <i class="p-alt p-label font-italic">(Ibang bansa)</i>
+                                                    <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Abroad">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="my-auto show-on-large-only">
+                                                <label class="radio-container">
+                                                    Philippines<br />
+                                                    <i class="p-alt p-label font-italic">(Pilipinas)</i>
+                                                    <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Philippines">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="hide-on-large w-100 mt-3">
+                                            <div class="d-flex">
+                                                <div class="mr-5 my-auto">
+                                                    <label class="radio-container">
+                                                        Abroad<br />
+                                                        <i class="p-alt p-label font-italic">(Ibang bansa)</i>
+                                                        <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Abroad">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="my-auto mr-auto">
+                                                    <label class="radio-container">
+                                                        Philippines<br />
+                                                        <i class="p-alt p-label font-italic">(Pilipinas)</i>
+                                                        <input id="DocumentStatus" type="radio" asp-for="DocumentStatus" value="Philippines">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @{
+                                            var error = errorMessages.FirstOrDefault(x => x.Property == "DocumentStatus");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
+                                    </div>
+
+
+                                    <!-- I am the -->
+                                    <div class="card-panel border px-5 py-3 sm-p-2 mb-3">
+                                        <div class="d-flex sm-p-0">
+                                            <div class="d-flex flex-column mr-5">
+                                                <label class="mb-0 bold">I am the</label>
+                                                <p class="mb-0 p-alt p-label"><i>(Ako ang)</i></p>
+                                            </div>
+
+                                            <div class="mr-5 my-auto show-on-large-only">
+                                                <label class="radio-container">
+                                                    Document Owner<br />
+                                                    <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
+                                                    <input id="DocumentType" type="radio" name="DocumentType" value="DocumentOwner">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="my-auto show-on-large-only">
+                                                <label class="radio-container">
+                                                    Authorized Representative<br />
+                                                    <i class="p-alt p-label font-italic">(Kinatawan ng may-ari)</i>
+                                                    <input id="DocumentType" type="radio" name="DocumentType" value="Authorized">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="hide-on-large w-100 mt-3">
+                                            <div class="d-flex">
+                                                <div class="mr-5 my-auto">
+                                                    <label class="radio-container">
+                                                        Document Owner<br />
+                                                        <i class="p-alt p-label font-italic">(May-ari ng dokumento)</i>
+                                                        <input id="DocumentType" type="radio" name="DocumentType" value="DocumentOwner">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="my-auto mr-auto">
+                                                    <label class="radio-container">
+                                                        Authorized Representative<br />
+                                                        <i class="p-alt p-label font-italic">(Kinatawan ng may-ari)</i>
+                                                        <input id=" " type="radio" name="DocumentType" value="Authorized">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @{
+                                            error = errorMessages.FirstOrDefault(x => x.Property == "DocumentType");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
+                                    </div>
+
+
+                                    <div id="siteaddress" class="card-panel border px-5 py-3 sm-p-2 mb-3">
+                                        <label class="mb-0 bold">Please select the site where you wish to process your Apostille</label>
+                                        <p class="mb-0 p-alt p-label"><i>(Piliin ang site kung saan mo nais iproseso ang iyong Apostille)</i></p>
+
+                                        @{
+                                            error = errorMessages.FirstOrDefault(x => x.Property == "ApostileSite");
+                                            if (error != null)
+                                            {
+                                                <span class="text-danger p-label bold">@error.ErrorMessage</span>
+                                            }
+                                        }
+
+                                        <select id="site" class="form-control my-3 entry-bg" asp-for="ApostileSite">
+
+                                            @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                            {
+                                                if (item.Id == 1)
+                                                {
+                                                    <option value="@item.Id">@item.BranchName</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id" class="ph">@item.BranchName</option>
+                                                }
+
+                                            }
+                                        </select>
+
+                                        @*<input id="HasExpidite" name="HasExpidite" class="form-control" value="0" style="display:none" />*@
+                                        <div class="card-panel no-shadow p-3 entry-bg siteInfo">
+                                            <a id="mapAddress" class="btn bold text-white btn-green p-label mb-3" href="@defaultBranch.MapAddress" target="_blank">View Map</a>
+                                            <div class="row">
+                                                <div class="col-lg-2 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Address</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-10 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteAddress" class="p-0 p-label mb-0 my-auto">@defaultBranch.BranchAddress</label>
+                                                    <input id="address" class="form-control" value="@defaultBranch.BranchAddress" style="display:none" />
+                                                </div>
+
+                                                <div class="col-lg-2 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Office Hours</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-10 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteOfficeHours" class="p-0 p-label mb-0 my-auto">@defaultBranch.OfficeHours</label>
+                                                </div>
+
+                                                <div class="col-lg-2 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-10 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@defaultBranch.ContactNumber</label>
+                                                </div>
+
+                                                <div class="col-lg-2 d-flex mb-2">
+                                                    <p class="p-label bold mb-0 my-auto">Email</p><b class="p-label hide-on-large">:</b>
+                                                </div>
+                                                <div class="col-lg-10 d-flex mb-2">
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteEmail" class="p-0 p-label mb-0 my-auto">@defaultBranch.Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="row justify-content-center">
+                                            <div class="col-12 mb-2">
+                                                <label class="mb-0 bold">Please select the site where you wish to process your Apostille</label>
+                                            </div>
+                                            <div class="col-12">
+                                                <select id="site" class="form-control" asp-for="ApostileSite">
+
+                                                    @foreach (var item in ViewData["Branches"] as List<Branch>)
+                                                    {
+                                                        <option value="@item.BranchName">@item.BranchName</option>
+                                                    }
+
+                                                </select>
+                                                <div class="card-panel no-shadow p-3 entry-bg">
+                                                    <button id="viewMap-trigger" data-toggle="modal" data-target="#viewMap-modal" type="button" class="button-other text-white mt-3">View Map</button>
+
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+
+                                    @*<div class="row m-0 justify-content-center mt-3">
+                                            <div class="col-12 p-0" style="padding: 10px;">
+                                                <label class="col-sm-12 p-0" style="font-weight:bold">Address</label>
+                                                <label id="lblProcessingSiteAddress" class="col-sm-12 p-0">@defaultBranch.BranchAddress</label>
+                                                <input id="address" class="form-control" value="@defaultBranch.BranchAddress" style="display:none" />
+
+                                                <label class="col-sm-12 p-0" style="font-weight:bold">Office Hours</label>
+                                                <label id="lblProcessingSiteOfficeHours" class="col-sm-12 p-0">@defaultBranch.OfficeHours</label>
+
+                                                <label class="col-sm-12 p-0" style="font-weight:bold">Contact Number</label>
+                                                <label id="lblProcessingSiteContactNumber" class="col-sm-12 p-0">@defaultBranch.ContactNumber</label>
+
+                                                <label class="col-sm-12 p-0" style="font-weight:bold">Email</label>
+                                                <label id="lblProcessingSiteEmail" class="col-sm-12 p-0">@defaultBranch.Email</label>
+                                            </div>
+                                        </div>*@
+
+                                    @*<div class="row">
+                                            <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
+                                                <button id="backToStepOne" type="button" class="btn button-secondary col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+
+                                            </div>
+                                            <div class="col-md-5 col-sm-5">
+                                                <input type="submit" value="Next" />
+                                                <button id="stepTwoNextBtn" asp-action="PersonalInfo" type="button" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Next</button>
+                                            </div>
+                                        </div>*@
+
+                                    <div class="fixed-bottom white-bg p-4">
+                                        <div class="hide-on-small">
+                                            <div class="card-body px-5 py-5 d-flex w-100">
+                                                <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                                <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3"> Next</button>
+                                            </div>
+                                        </div>
+                                        <div class="show-on-small-only mt-5 my-auto">
+                                            <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                                            <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase w-100 mr-auto ml-3"> Next</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </form>
+
+        }
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/siteselection.js"></script>
+}

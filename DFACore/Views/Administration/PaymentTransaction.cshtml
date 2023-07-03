@@ -1,0 +1,64 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Branches";
+}
+
+
+<div>
+
+    <h3 style="margin-top:50px;">Payment Transaction History</h3>
+
+    <p>Last Running Balance: @Model.LastRunningBalance</p>
+    <p>Total Records: @Model.TotalRecords</p>
+
+    <table class="table" style="font-size:12px;margin-top:10px;">
+        <thead>
+            <tr style="background-color: #217ff3 !important; color: white;">
+                <th>
+                    RecordNumber
+                </th>
+                <th>
+                    TranId
+                </th>
+                <th>
+                    TranType
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Currency
+                </th>
+                <th>
+                    TranDate
+                </th>
+
+                <th>
+                    Remarks
+                </th>
+                <th>
+                    Remarks2
+                </th>
+                <th>
+                    Balance
+                </th>
+                <th>
+                    BalanceCurrency
+                </th>
+
+                <th>
+                    PostedDate
+                </th>
+                <th>
+                    TranDescription
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>

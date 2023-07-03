@@ -1,0 +1,255 @@
+﻿@model DFACore.Models.LoginViewModel
+@using Microsoft.Extensions.Options
+@inject IOptions<DFACore.Models.ReCAPTCHASetting> GoogleRecaptcha
+
+@{
+    ViewData["Title"] = "Log in";
+    //var announcement = (Notice)@ViewData["NoticeMessage"];
+    //var declaration = (Notice)@ViewData["DeclarationMessage"];
+    //var termsAndConditions = (Notice)@ViewData["TermsAndConditionsMessage"];
+}
+<style>
+
+    .navbar-toggler {
+        display: none
+    }
+
+    @@media screen and (min-width: 601px) {
+        /*      .form-group {
+                padding-left: 100px;
+                padding-right: 100px;
+            }*/
+        #dfa-title {
+            margin-top: 100px !important;
+        }
+
+        .loginTitleVisible2 {
+            display: none;
+        }
+    }
+
+    /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+    @@media screen and (max-width: 600px) {
+        #dfa-title {
+            margin-top: 40px !important;
+        }
+
+        .loginTitleVisible {
+            display: none;
+        }
+
+        .bannerDetails {
+            font-size: 12px;
+        }
+    }
+
+    .no-border {
+        border: 0;
+        box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    }
+
+    .loginTitle {
+        font-family: 'BEBAS' !important;
+    }
+
+    /*@@media only screen and (max-width: 600px) {
+            #BannerLogo {
+                display: none;
+            }
+        }*/
+    /*#terms-and-conditions-modal {
+            margin-top: 10vh !important;
+        }
+
+        #declaration-modal {
+            margin-top: 10vh !important;
+        }*/
+
+    button a {
+        color: white;
+    }
+
+    .validation-summary-errors ul {
+        list-style: none;
+        margin-left: -14px;
+        text-align: left;
+    }
+
+</style>
+<section class="header px-4 mt-5">
+    <div class="text-center mt-3 w-100 mb-60">
+        <p class="black-text bold mb-0 p-label">Office of the Consular Affairs</p>
+        <p class="black-text bold p-label mb-3">Authentication Division</p>
+        <small class="black-text ">Welcome to</small>
+        <h2 class="blue-text bold mb-0 mt-2 h2">Apostille Appointment System</h2>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-lg-3 col-md-2 col-sm-0">
+    </div>
+    <div class="col-lg-6 col-md-8 col-sm-12">
+
+        <section class="loginSection" style="height:auto;margin-top: -55px;">
+            <form id="account" method="post" asp-action="login" asp-controller="account">
+                @*<div style="background-color: #217ff3;color: white;height: 35px;">
+                        <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Login</p>
+                    </div>*@
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <div style="padding:10px">
+                    @{
+                        if (!String.IsNullOrEmpty(ViewBag.errorMessage))
+                        {
+                            <span class="text-danger p-label bold ml-3">@ViewBag.errorMessage</span>
+                        }
+                    }
+                    <div class="form-group col-md-12 col-sm-12">
+                        <input asp-for="Email" class="form-control no-border" placeholder="Email" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
+                        @*<span asp-validation-for="Email" class="text-danger p-label bold"></span>*@
+                    </div>
+                    <div class="form-group col-md-12 col-sm-12">
+                        <input asp-for="Password" class="form-control no-border" placeholder="Password" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
+                        <i toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password float-right" style="position: relative;top: -27px;right: 10px;"></i>
+                        @*<span asp-validation-for="Password" class="text-danger p-label bold"></span>*@
+                    </div>
+                    <input id="Token" asp-for="Token" type="hidden" />
+
+                    @*<div class="form-group col-md-12 col-sm-12" style="text-align: center;">
+                        <div class="checkbox " >
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe" />
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>*@
+
+                    <div class="form-group col-md-12 col-sm-12">
+                        <button type="submit" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12" >LOGIN</button>
+                    </div>
+                    <div class="form-group col-md-12 col-sm-12 mb-5" style="text-align: center;">
+                        <h6>
+                            <a id="forgot-password" asp-action="ForgotPassword">Forgot your password?</a>
+                        </h6>
+                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2" />
+                        <a asp-action="Register" asp-controller="Account" class="float-right bold">Create an account</a>
+                        <br />
+
+                        <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
+                    </div>
+
+                </div>
+            </form>
+            
+        </section>
+
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+
+    $(document).ready(function () {
+
+
+        @*$("#login-button").click(function () {
+            var model = {
+                Email: $("#Email").val(),
+                Password: $("#Password").val(),
+                RememberMe: false
+            };
+
+            var url = "@Url.Action("ValidateAccount", "Account")"; //ValidateAccount
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(model),
+                success: function (result) {
+                    if (result == true)
+                        $("#declaration-modal").modal('show');
+                    else
+                        $("#account").submit();
+                },
+                error: function () {
+                    $("#account").submit();
+                }
+
+            });
+            //$("#declaration-modal").modal('show');
+        });*@
+
+        $("#declaration-agree").click(function () {
+            $("#declaration-modal").modal('hide');
+            $("#terms-and-conditions-modal").modal('show');
+        });
+        $("#terms-and-conditions-agree").click(function () {
+            $("#account").submit();
+        });
+        $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+            if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+            }
+            var vidEnglish = document.getElementById("instruction-video-english");
+            vidEnglish.pause();
+            var vidTagalog = document.getElementById("instruction-video-tagalog");
+            vidTagalog.pause();
+        });
+
+        $(document).on('click', '.toggle-password', function () {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#Password");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
+        });
+    });
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+                console.log(token);
+                $('#Token').val(token);
+            });
+        });
+        $(document).on('click', '.toggle-password', function () {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#reg-password");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
+        });
+        $(document).on('click', '.toggle-confirmpassword', function () {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $("#reg-confirmpassword");
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password');
+            console.log(input.attr('type'));
+        });
+        $('#reg-confirmpassword').on("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        function TermsAndConditionsAction(result) {
+            console.log(result);
+            //$('#IsTermsAndConditionChecked').ch
+            $("#IsTermsAndConditionChecked").prop("checked", result);
+            $("#IsTermsAndConditionChecked").val(result);
+            console.log($("#IsTermsAndConditionChecked").val());
+        }
+
+           //});
+    </script>
+}

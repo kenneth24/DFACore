@@ -1,0 +1,140 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model List<DFACore.Models.DocumentStatistic>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Homepage";
+
+    
+}
+
+
+<link href="~/lib/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+
+<div class="container">
+
+    <div id="loading" style="display:none;">
+        <div id="loading-image">
+            <span id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></span>
+        </div>
+    </div>
+
+    <h3 style="margin-top:50px;">Dashboard</h3>
+
+    <div class="col-md-12">
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+
+    <form method="post" style="margin-bottom:20px;">
+        <div class="form-row align-items-center">
+
+            @*@if (User.IsInRole("Super Administrator"))
+                {*@
+            <label for="inlineFormInputGroupUsername" style="margin:0 10px">CO</label>
+            <div class="col-sm-3 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">CO</label>
+                <select class="form-control" id="BranchId" name="branchId">
+                    @*<option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>*@
+                    @*<option value="0">All</option>*@
+                    @foreach (var branch in ViewBag.Branches)
+                    {
+                        <option value="@branch.Id">@branch.BranchName</option>
+                    }
+                </select>
+            </div>
+            @*}*@
+
+            <label for="inlineFormInputGroupUsername" style="margin:0 10px">Date</label>
+            <div class="col-sm-2 my-1">
+                <label class="sr-only" for="inlineFormInputGroupUsername">Start</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" id="StartDate" name="startDate" placeholder="Start" >
+                </div>
+            </div>
+
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Load</button>
+            </div>
+
+
+
+
+        </div>
+    </form>
+
+    <br />
+    <div class="table-responsive">
+
+
+        <table id="documentStatistic" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        Time
+                    </th>
+                    <th>
+                        Document Limit
+                    </th>
+                    <th>
+                        Total Applicants
+                    </th>
+                    <th>
+                        Total Documents
+                    </th>
+                    <th>
+                        Document Limit Rate
+                    </th>
+
+                </tr>
+            </thead>
+            @if (Model != null)
+            {
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        var percent = Math.Round(((double)item.TotalDocument / (double)item.Capacity) * 100.00, 2);
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Time)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Capacity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalApplicant)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotalDocument)
+                            </td>
+                            <td>
+                                @percent %
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            }
+
+        </table>
+
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+
+        $(document).ready(function () {
+            //$("BranchId select").val("val2");
+            $('#BranchId option[value=@Convert.ToInt32(ViewBag.Branch)]').attr('selected', 'selected');
+            $('#StartDate').val('@Convert.ToDateTime(ViewBag.FilterDate).ToString("yyyy-MM-dd")')
+            
+        });
+    </script>
+
+}

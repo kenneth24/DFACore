@@ -1,0 +1,144 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model PaginatedList<DFACore.Models.Holiday>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Holidays";
+    var branches = ViewBag.Branches;
+}
+<div style="margin-top:50px;">
+
+    <h3 style="margin-top:50px;">Calendar</h3>
+
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-primary pull-right" asp-action="AddHoliday">Create New</a>
+        </div>
+    </div>
+
+    <form asp-action="Holiday" method="get" style="margin-bottom:20px;">
+        <div class="form-row align-items-center">
+
+            @*<div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Enter title or type here">
+                    </div>
+                </div>*@
+            <label class="black-text">By CO:</label>
+            <div class="col-sm-3 my-1">
+                <select class="form-control" name="SearchString">
+                    <option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>
+                    <option value="0">Applied to All</option>
+                    @foreach (var branch in branches)
+                    {
+                        <option value="@branch.Id">@branch.BranchName</option>
+                    }
+                </select>
+            </div>
+
+            @*<div class="col-sm-2 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">From</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="From">
+                    </div>
+                </div>
+                <div class="col-sm-2 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">To</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="To">
+                    </div>
+                </div>*@
+            <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Search</button> |
+                <a asp-action="Holiday">Refresh</a>
+            </div>
+            
+        </div>
+        <div>
+            <div class="col-auto my-1 pull-right">
+                <a asp-action="ExceptionDay" class="pull-right">Go to Exception Day</a>
+            </div>
+        </div>
+    </form>
+    <table class="table" style="font-size:12px;">
+        <thead>
+            @*<th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Scheduled Date</a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Last Name</a>
+                </th>*@
+            <tr style="background-color: #217ff3 !important; color: white;">
+                <th>
+                    Title
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    DateCreated
+                </th>
+
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+             
+                <td>
+                    @*<a asp-action="EditHoliday" asp-route-holidayId="@item.Id">Edit</a> |*@
+                    <a asp-action="DeleteHoliday" asp-route-holidayId="@item.Id">Delete</a>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

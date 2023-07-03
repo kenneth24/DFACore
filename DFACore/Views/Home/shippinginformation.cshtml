@@ -1,0 +1,202 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.ShippingInfoViewModel
+@using Microsoft.Extensions.Options
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
+
+
+}
+<style>
+    body {
+        margin: 0 !important;
+    }
+
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: black;
+    }
+
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input, #step-one-authorized input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+
+
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: auto;
+    }
+
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 500px;
+        width: 100% !important;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+
+    .img-fluid {
+        width: 100% !important;
+    }
+</style>
+
+<div class="pageContainers" id="application-form" padding: 20px;
+     height: auto;">
+    <div id="loading">
+        <div id="loading-image">
+            <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
+        </div>
+    </div>
+    <div id="formContainer" class="mt-5">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+
+        <div class="media">
+            <div class="media-body">
+                <p class="grey-text-bold font-weight-bold p-0 p-label">
+                    @User.Identity.Name<br />
+                    @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                </p>
+            </div>
+            <p class="float-right text-right mt-auto p-label">
+                <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
+            </p>
+        </div>
+
+        @{
+
+
+            <form id="account" method="post" asp-action="ApostilleSchedule" asp-controller="Home">
+
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 3 of 5</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 3 of 5</p>
+                    </div>
+
+                    <div class="card-panel white-bg p-0">
+                                <div class="mb-3">
+                                    <div class="d-flex mb-0 px-4 pt-4 pb-2">
+                                        <label class="mb-0 bold mr-3"><i>Shipping Information</i>  <span class="mb-0 p-alt p-label"><i>(Impormasyon sa pagpapadala)<b class="red-text">*</b></i></span></label>
+
+                                    </div>
+                                    <div style="background-color: #ffe5c2!important" class="px-4 py-3">
+                                        <p class="p-label mb-0">Document pick-up (courier service) will be automatically activated once the payment has been successfully made. The schedule of document pick-up will be during office hours (8:00 AM - 5:00 PM, Monday to Friday). Applications submitted on non-working days or holidays shall be automatically picked-up and delivered on the next working day. </p>
+                                    </div>
+                                    <div class="px-4 mb-4">
+                                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 px-4" />
+                                    </div>
+
+                                    <div class="row px-4 mb-5">
+                                        <div class="col-md-8 col-sm-12">
+                                            <label for="ShippersName" class="p-label bold mb-0">Shipper's Name <span class="p-alt"><i>(Pangalan ng magpapadala)</i></span> <span class="red">*</span></label>
+                                            <input id="ShippersName" name="ShippersName" class="form-control" />
+                                            <span for="ShippersName" class="text-danger fname"></span>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label for="ContactNumber" class="p-label bold mb-0">Contact No. <span class="p-alt"><i>(Numerong tatawagan)</i></span> <span class="red">*</span></label>
+                                            <input id="ContactNumber" name="ContactNumber" class="form-control" />
+                                            <span for="ContactNumber" class="text-danger fname"></span>
+                                        </div>
+                                    </div>
+                                    <div class="px-4 mb-4">
+                                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 px-4" />
+                                    </div>
+
+                                    <div class="row px-4 mb-5">
+                                        <div class="col-md-6 col-sm-12">
+                                            <label for="PickupAddress" class="p-label bold mb-0">Address for pick-up <span class="p-alt"><i>(Address sa pag pick-up ng dokumento)</i></span> <span class="red">*</span></label>
+                                            <input id="PickupAddress" name="PickupAddress" class="form-control" />
+                                            <span for="PickupAddress" class="text-danger fname"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label for="DeliveryAddress" class="p-label bold mb-0">Address for delivery of Apostille <span class="p-alt"><i>(Address sa pag deliver ng Apostille)</i></span> <span class="red">*</span></label>
+                                            <input id="DeliveryAddress" name="DeliveryAddress" class="form-control" />
+                                            <span for="DeliveryAddress" class="text-danger fname"></span>
+                                        </div>
+                                    </div>
+                                    <div class="px-4">
+                                        <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 px-4" />
+                                    </div>
+                                </div>
+
+                        <div>
+                            <div class="hide-on-small">
+                                <div class="card-body px-5 py-5 d-flex w-100">
+                                    <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
+                                    <input type="submit" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
+                                </div>
+                            </div>
+                            <div class="show-on-small-only mt-5 my-auto">
+                                <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
+                                <input type="submit" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+            </form>
+
+
+        }
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="~/js/apostilleschedule.js"></script>
+
+}

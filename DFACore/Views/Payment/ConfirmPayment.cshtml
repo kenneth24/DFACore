@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model DFACore.Models.ConfirmPaymentViewModel
+
+@*<form method="post" asp-route="test-process-payment">
+    <input type="hidden" asp-for="Caat" />
+
+    <label>Please enter otp:</label>
+    <input type="text" asp-for="Otp" />
+    <span asp-validation-for="Otp"></span>
+    <button type="submit">Continue</button>
+</form>*@
+
+<style>
+
+    .navbar-toggler {
+        display: none
+    }
+
+    @@media screen and (min-width: 601px) {
+
+        #dfa-title {
+            margin-top: 100px !important;
+        }
+
+        .loginTitleVisible2 {
+            display: none;
+        }
+    }
+
+    /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+    @@media screen and (max-width: 600px) {
+        #dfa-title {
+            margin-top: 40px !important;
+        }
+
+        .loginTitleVisible {
+            display: none;
+        }
+
+        .bannerDetails {
+            font-size: 12px;
+        }
+    }
+
+    .no-border {
+        border: 0;
+        box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+    }
+
+    .loginTitle {
+        font-family: 'BEBAS' !important;
+    }
+
+
+    button a {
+        color: white;
+    }
+
+    .validation-summary-errors ul {
+        list-style: none;
+        margin-left: -14px;
+    }
+</style>
+<section class="header px-4 mt-5">
+    <div class="text-center mt-3 w-100 mb-60">
+        <p class="black-text bold mb-0 p-label">Office of the Consular Affairs</p>
+        <p class="black-text bold p-label">Authentication Division</p>
+        <h2 class="blue-text bold mb-0 mt-2 h2">Apostille Appointment System</h2>
+        <h4 class="bold mt-2 h4">Please enter OTP</h4>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-md-3 col-sm-0">
+    </div>
+    <div class="col-md-6 col-sm-12">
+
+        <section class="loginSection" style="height:auto;margin-top: -55px;">
+            <form method="post" asp-route="test-process-payment">
+                @*<input type="hidden" asp-for="Caac" />
+                <input type="hidden" asp-for="OtpRequestId" />*@
+                <div style="padding:10px">
+                    @{ if (!String.IsNullOrEmpty(ViewBag.errorMessage))
+                        {
+                            <span class="text-danger p-label bold ml-3">@ViewBag.errorMessage</span>
+                        }
+                    }
+                    <div class="form-group col-md-12 col-sm-12">
+                        <input asp-for="Otp" class="form-control no-border" placeholder="Otp" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
+                        <span asp-validation-for="Otp" class="text-danger p-label bold"></span>
+                    </div>
+                    <div class="form-group col-md-12 col-sm-12">
+                        <button type="submit" class="btn btn-primary mx-auto d-block col-md-12 col-sm-12">Continue</button>
+                    </div>
+
+                    <hr style="color: #DFE8F5; background-color: #DFE8F5;" class="mb-2 mt-5 mx-3" />
+                </div>
+            </form>
+
+        </section>
+
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
+
+
+</div>
+@{
+}

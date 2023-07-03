@@ -1,0 +1,279 @@
+﻿/* lg */
+@media (min-width: 993px) {
+    .show-on-large-only {
+        display: block !important;
+    }
+
+    .show-on-medium-only {
+        display: none !important;
+    }
+
+    .show-on-small-only {
+        display: none !important;
+    }
+
+    .hide-on-large {
+        display: none !important;
+    }
+
+    .hide-on-small {
+        display: block !important;
+    }
+
+    .dashboard .content {
+        max-width: 644px !important;
+    }
+
+    .login-options {
+        max-width: 700px !important;
+    }
+
+    .cancellation-container .card-body {
+        max-width: 70% !important;
+    }
+
+    .cancellation-container {
+        max-width: 70% !important;
+    }
+
+    #quantityInputSelector .flex-column {
+        max-width: 175px !important;
+    }
+
+    .courier-btn {
+        width: 244px !important;
+    }
+}
+
+/* md */
+@media (min-width: 577px) and (max-width: 992px) {
+    .show-on-large-only {
+        display: none !important;
+    }
+
+    .show-on-medium-only {
+        display: block !important;
+    }
+
+    .show-on-small-only {
+        display: none !important;
+    }
+
+    .hide-on-large {
+        display: block !important;
+    }
+
+    .hide-on-small {
+        display: block !important;
+    }
+
+    .dashboard .content {
+        max-width: 570px !important;
+    }
+
+    .img-container {
+        height: 70px !important;
+    }
+
+    .location-container {
+        max-width: 75% !important;
+    }
+
+    .success-message, .success-message button {
+        max-width: 75%;
+    }
+
+    .login-options {
+        max-width: 700px !important;
+    }
+
+    .cancellation-container, .cancellation-container .card-body {
+        max-width: 100% !important;
+    }
+
+    .mr-5rem {
+        margin-right: 2rem !important;
+    }
+
+    .courier-btn {
+        width: 244px !important;
+    }
+}
+
+/* sm */
+@media (max-width: 576px) {
+    .show-on-large-only {
+        display: none !important;
+    }
+
+    .show-on-medium-only {
+        display: none !important;
+    }
+
+    .show-on-small-only {
+        display: block !important;
+    }
+
+    .hide-on-large {
+        display: block !important;
+    }
+
+    .hide-on-small {
+        display: none !important;
+    }
+
+    .img-container {
+        height: 90px;
+    }
+
+    .video-thumbnail {
+        width: 100%;
+        height: auto;
+    }
+
+    .card-body {
+        padding-left: .5rem !important;
+        padding-right: .5rem !important;
+    }
+
+    .location-container {
+        max-width: 100% !important;
+    }
+
+    .cancellation-container {
+        max-width: 100% !important;
+    }
+
+    .sm-p-0 {
+        padding: 0 !important;
+    }
+
+    .sm-pt-0 {
+        padding-top: 0 !important;
+    }
+
+    .sm-p-2 {
+        padding: 1rem !important;
+    }
+
+    #scheduleSelection .card {
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    .fc-toolbar.fc-header-toolbar {
+        margin-bottom: 0 !important;
+    }
+
+    .container {
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+
+    .p-label span {
+        font-size: 11.4px !important;
+    }
+
+    #selectedDateAndTime {
+        padding: 0 !important;
+    }
+
+    .success-message, .success-message button {
+        max-width: 100%;
+    }
+
+    .cancellation-container, .cancellation-container .card-body {
+        max-width: 100% !important;
+    }
+
+    #mainContainer.db {
+        padding: 0 !important
+    }
+
+    #loginPanel, #verificationPanel, #registrationPanel {
+        width: 80% !important;
+    }
+
+    .card-panel.db .ic-container {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+    }
+
+    #siteaddress {
+        margin-bottom: 150px !important;
+    }
+
+    .ic-container img {
+        height: 47px !important;
+        width: 47px !important;
+    }
+
+    .card-panel.db .header p {
+        font-size: 23px !important;
+    }
+
+    .card-panel.db .header {
+        height: 77px;
+        padding: 7px 15px;
+        color: white;
+    }
+}
+
+@media (max-width: 400px) {
+    .img-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .hide-on-xs-only {
+        display: none !important;
+    }
+
+    .show-on-xs-only {
+        display: block !important;
+    }
+
+    #mainContainer.db {
+        padding: 0 !important
+    }
+
+    #loginPanel, #verificationPanel, #registrationPanel {
+        width: 80% !important;
+    }
+
+    .card-panel.db .ic-container {
+        height: 90px;
+        width: 90px;
+        border-radius: 50%;
+    }
+
+    .sm-p-2 {
+        padding: 1rem !important;
+    }
+
+    #siteaddress {
+        margin-bottom: 150px !important;
+    }
+
+    .ic-container img {
+        height: 47px !important;
+        width: 47px !important;
+    }
+
+    .card-panel.db .header p {
+        font-size: 23px !important;
+    }
+
+    .card-panel.db .header {
+        height: 77px;
+        padding: 7px 15px;
+        color: white;
+    }
+}
+
+@media (min-width: 559px) and (max-width: 769px) {
+    .container {
+        max-width: 100% !important;
+    }
+}

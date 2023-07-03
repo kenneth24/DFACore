@@ -1,0 +1,83 @@
+﻿
+@model DFACore.Models.Holiday;
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Add Holiday";
+    var branches = ViewBag.Branches;
+}
+<div class="row" style="margin-top: 50px;">
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
+    <div class="col-lg-6 col-md-10 col-sm-10">
+        <form asp-action="Calendar" method="post" style="        border: 1px solid #b7b7b7;
+        height: auto;
+">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Add Exception Days</p>
+            </div>
+            
+            <p class="form-group" style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></p>
+            <div style="padding:10px;">
+                <div id="reg-info" style="margin-top: 20px;">
+
+                    @*<div class="form-group black-text">
+            <label class="black-text" asp-for="Date">DateFrom <span class="red">*</span></label>
+            <input asp-for="Date" class="form-control black-text" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>*@
+                    <div class="col-md-12">
+                        <div asp-validation-summary="All" class="text-danger" ></div>
+                    </div>
+                    
+
+                    <div class="form-group black-text">
+                        <label class="black-text">Date From <span class="red">*</span></label>
+
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateFrom" placeholder="From">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group black-text">
+                        <label class="black-text">Date To <span class="red">*</span></label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="inlineFormInputGroupUsername" name="dateTo" placeholder="To">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group black-text">
+                        <label class="black-text">Consular Office <span class="red">*</span></label>
+                        <select class="form-control" name="branchId">
+                            @*<option value="@ViewData["CurrentFilter"]">@ViewData["CurrentValue"]</option>*@
+                            <option value="0">All</option>
+                            @foreach (var branch in ViewBag.Branches)
+                            {
+                                <option value="@branch.Id">@branch.BranchName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "ExceptionDay", "Administration")</button></div>
+                    <div class="col-md-2 col-sm-2">
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                        <button type="submit" asp-action="Calendar" class="btn btn-primary col-12">Add</button>
+                        
+                    </div>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="col-lg-3 col-md-1 col-sm-1"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

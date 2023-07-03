@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+<head>
+    <meta charset="utf-8" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+    <link rel="stylesheet" href="~/css/footer.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/typography.css" />
+    <link rel="stylesheet" href="~/css/card.css" />
+    <link rel="stylesheet" href="~/css/colors.css" />
+    <link rel="stylesheet" href="~/css/responsiveness.css" />
+    <link rel="stylesheet" href="~/css/accordion.css" />
+    <link rel="stylesheet" href="~/css/radiobutton.css" />
+
+    
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    
+
+    @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">*@
+    @*<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">*@
+    @*<link href="~/lib/bootstrap/dist/css/font-awesome.css" rel="stylesheet" />*@
+
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+
+    <style>
+        .navbar-toggler {
+            display: none
+        }
+
+        @@media screen and (min-width: 601px) {
+            div.example {
+                font-size: 80px;
+            }
+        }
+
+        /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+        @@media screen and (max-width: 600px) {
+            /*#BannerLogo {
+                display: none;
+            }*/
+            #dfaTitle {
+                font-size: 15px;
+                margin-top: 5px;
+            }
+
+            #dfaAddress {
+                display: none;
+            }
+        }
+
+        /*
+            src: src: url('../font/bebas/BEBAS.woff') format('woff');
+            src: local('BEBAS'), url('../font/bebas/BEBAS.woff') format('woff'), url('../font/bebas/BEBAS.ttf') format('truetype');
+        */
+        @@font-face {
+            font-family: 'BEBAS';
+            src: url('../font/bebas/BEBAS.ttf');
+        }
+
+        #standard-footer {
+            color: #505050;
+            padding: 1.25rem 0;
+            font-size: .7rem;
+        }
+        #standard-footer .row {
+            width: 100%;
+            max-width: 1280px;
+        }
+
+        .contact-us {
+            padding: 11px 50px;
+        }
+
+        @@media only screen and (max-width: 600px) {
+            #standard-footer {
+                text-align: center;
+            }
+
+            .contact-us {
+                padding: 11px 20px;
+            }
+        }
+
+
+        @@media only screen and (min-width: 64.063em) .large-4 {
+            width: 33.33333%;
+        }
+
+        @@media only screen and (min-width: 64.063em)
+        .large-5 {
+            width: 41.66667%;
+        }
+
+        @@media only screen and (min-width: 64.063em) .column, .columns {
+            position: relative;
+            padding-left: 0.9375em;
+            padding-right: 0.9375em;
+            float: left;
+        }
+
+        @@media only screen and (min-width: 40.063em) .column, .columns {
+            position: relative;
+            padding-left: 0.9375em;
+            padding-right: 0.9375em;
+            float: left;
+        }
+
+        .column, .columns {
+            position: relative;
+            padding-left: 0.9375em;
+            padding-right: 0.9375em;
+            float: left;
+        }
+
+        @@import url(//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900);
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: 'Roboto',sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #standard-footer .row {
+            width: 100%;
+            max-width: 1280px;
+        }
+
+        #standard-footer body, #standard-footer div, #standard-footer dl, #standard-footer dt, #standard-footer dd, #standard-footer ul, #standard-footer ol, #standard-footer li, #standard-footer h1, #standard-footer h2, #standard-footer h3, #standard-footer h4, #standard-footer h5, #standard-footer h6, #standard-footer pre, #standard-footer form, #standard-footer p, #standard-footer blockquote, #standard-footer th, #standard-footer td {
+            font-size: 1rem;
+            font-size: inherit;
+        }
+
+        #standard-footer {
+            color: #505050;
+            padding: 1.25rem 0;
+            font-size: .7rem;
+        }
+
+            #standard-footer h1, #standard-footer h2, #standard-footer h3, #standard-footer h4, #standard-footer h5, #standard-footer h6 {
+                color: #505050;
+            }
+
+            #standard-footer ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+                #standard-footer ul li {
+                }
+
+                    #standard-footer ul li a {
+                        color: #505050 !important;
+                    }
+
+                        #standard-footer ul li a:hover {
+                            text-decoration: underline;
+                        }
+
+            #standard-footer h4 {
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 0.9em;
+            }
+
+            input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea {
+                margin: 0;
+            }
+
+            
+
+    </style>
+</head>
+<body>
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow" style="background-color: #0062FF !important;">
+            <div class="container">
+                <div id="dfa-banner" class="mx-auto">
+                    <img src="~/Banner.png" class="img-fluid" style="width:50%!important" />
+                    @*<img id="BannerLogo" src="~/logo.png" alt="Home" style="margin-top: -45px; height:auto;width: 55px;" />
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;">
+                                REPUBLIC OF THE PHILIPPINES
+                            </h6>
+                            <div style="background-color:#ffffffc9;height:2px;width: 470px;margin-top:-5px;"></div>
+                            <h3 style="color:#fffffffc;font-weight:bold;font-size: 24px; text-align:left;">
+                                DEPARTMENT OF FOREIGN AFFAIRS
+                            </h3>
+                            <h6 style="color:#ffffffc9;font-size: 12px; text-align:left;margin-top: -10px;">
+                                2330 ROXAS BOULEVARD, PASAY CITY, PHILIPPINES 1300
+                            </h6>
+                        </a>*@
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                @*<div class="navbar-collapse collapse d-sm-inline-flex d-md-inline-flex flex-dm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link float-right" asp-area="" asp-controller="Home" asp-action="Index" style="color:#fffffffc;">ONLINE APOSTILLE APPLICATION & APPOINTMENT SYSTEM</a>
+                            </li>
+                        </ul>
+                    </div>*@
+            </div>
+        </nav>
+    </header>
+    <div id="mainContainer" class="container">
+        <main role="main" style="background-color:#F9F9FA!important;">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="row" style="background-color: #FFFFFF!important;">
+        <div class=" col-6" >
+            <div class="d-flex w-100 justify-content-start pt-3 contact-us" style="font-size: 12px;">
+                <span>1.0.0.0</span>
+            </div>
+        </div>
+        <div class=" col-6" >
+            <div class="d-flex w-100 justify-content-end pt-3 contact-us" style="font-weight: bold;">
+
+                <a href="https://dfa-oca.ph/authentication/authentication-faqs" class="p-label text-center">Authentication FAQs</a>
+                <div class="divider-right mx-2"></div>
+                <a asp-action="PrivacyPolicy" asp-controller="Home" class="p-label text-center">Privacy Policy</a>
+                <div class="divider-right mx-2"></div>
+                <a href="https://dfa-oca.ph/contact-us" class="p-label text-center">Contact Us</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="standard-footer" style="background-color: #efefef;">
+        <style type="text/css" scoped="" style="display:none;">
+
+        </style>
+	    <div class="row">
+		    <div class="large-4 columns">
+			    <div class="row">
+				    <div class="large-5 columns">
+					    <img src="//gwhs.i.gov.ph/gwt-footer/govph-seal-mono-footer.jpg">
+				    </div>
+				    <div class="large-7 columns">
+					    <h4>Republic of the Philippines</h4>
+					    <p>All content is in the public domain unless otherwise stated.</p>
+					    <!-- <p>Privacy Policy</p> -->
+				    </div>
+			    </div>
+		    </div>
+		    <div class="large-7 large-offset-1 medium-offset-1 columns">
+			    <div class="row">
+				    <div class="large-5 medium-5 columns">
+					    <h4>About GOVPH</h4>
+					    <p>Learn more about the Philippine government, its structure, how government works and the people behind it.</p>
+					    <ul>
+						    <li><a href="http://www.gov.ph/">GOV.PH</a></li>
+						    <li><a href="http://www.gov.ph/data">Open Data Portal</a></li>
+						    <li><a href="http://www.officialgazette.gov.ph">Official Gazette</a></li>
+					    </ul>
+				    </div>
+				    <div class="large-6 medium-6 large-offset-1 medium-offset-1 columns">
+					    <h4>Government Links</h4>
+					    <ul>
+						    <li><a href="http://president.gov.ph/">Office of the President</a></li>
+						    <li><a href="http://ovp.gov.ph/">Office of the Vice President</a></li>
+						    <li><a href="http://www.senate.gov.ph/">Senate of the Philippines</a></li>
+						    <li><a href="http://www.congress.gov.ph/">House of Representatives</a></li>
+						    <li><a href="http://sc.judiciary.gov.ph/">Supreme Court</a></li>
+						    <li><a href="http://ca.judiciary.gov.ph/">Court of Appeals</a></li>
+						    <li><a href="http://sb.judiciary.gov.ph/">Sandiganbayan</a></li>
+					    </ul>
+				    </div>
+			    </div>
+		    </div>
+	    </div>
+    </div>
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - DFACore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link href='~/lib/calendar/core/main.css' rel='stylesheet' />
+    <link href='~/lib/calendar/daygrid/main.css' rel='stylesheet' />
+    <link href='~/lib/calendar/timegrid/main.css' rel='stylesheet' />
+    <script src='~/lib/calendar/core/main.js'></script>
+    <script src='~/lib/calendar/interaction/main.js'></script>
+    <script src='~/lib/calendar/daygrid/main.js'></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-input-spinner.js"></script>
+    <script src="~/lib/jquery/dist/moment.min.js"></script>
+
+    <script type="text/javascript">
+        var urlBase = '@string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host.Value , Url.Content("~/"))';
+    </script>
+    <script>
+        // call timerInterval function every 1 minute if mouse in idle
+        // validate if no. of minutes idle is > 9
+        // if true, logoff user
+        let baseUrl = urlBase;
+
+        var idleInterval = null;
+        var idleTime = 0;
+
+        $(document).ready(function () {
+            idleInterval = setInterval(timerIncrement, 60000); // 1m
+            //alert(urlBase);
+            $(this).mousemove(function (e) {
+                idleTime = 0;
+            });
+            $(this).keypress(function (e) {
+                idleTime = 0;
+            });
+        });
+
+        function timerIncrement() {
+            var userAuthorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+            if (userAuthorized) {
+                idleTime += 1;
+                console.log(idleTime);
+                if (idleTime > 9) {
+                    clearInterval(idleInterval);
+                    window.alert('You have been logged out due to inactivity!');
+                    window.location = `${urlBase}Account/LogOff`;
+                }
+            }
+        }
+
+        $(function () {
+            if ($(".modal-autoheight").length > 0) {
+                $(".modal").on("show.bs.modal", resize);
+                $(window).on("resize", resize);
+            }
+        });
+
+
+        function resize() {
+            var winHeight = $(window).height();
+            $(".modal-autoheight .modal-body").css({
+                width: "auto",
+                height: (winHeight - 200) + "px"
+            });
+        }
+
+        let stickyHeader = $('.hdr');
+
+        $(window).resize(function () {
+            if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
+            else stickyHeader.removeClass('sticky-top');
+        });
+
+        if (window.innerWidth <= 577) stickyHeader.addClass('sticky-top');
+        else stickyHeader.removeClass('sticky-top');
+
+    </script>
+
+
+    @*<script src='https://momentjs.com/downloads/moment.min.js'></script>*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

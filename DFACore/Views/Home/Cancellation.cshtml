@@ -1,0 +1,205 @@
+﻿
+@{
+    var announcement = (Notice)@ViewData["NoticeMessage"];
+}
+
+<section class="header px-4 mt-3">
+    <div class="text-center mt-3 w-100 mb-4">
+        <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment Cancellation System</h3>
+    </div>
+</section>
+
+<div class="pageContainers px-0" id="application-form" style="padding: 20px;
+        height: auto;min-height:450px;">
+
+    <p style=" margin-bottom: 2rem;" class="show-on-large-only">
+        <span class="float-left grey-text-bold font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="hide-on-large">
+        <p class="p-label mb-1">
+            <span class="grey-text-bold">@User.Identity.Name</span>
+            <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+        </p>
+        <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
+    </div>
+
+    <div id="stepOne">
+        <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 2: Search Appointment</p>
+        </div>
+
+        <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column justify-content-center">
+            <div class="cancellation-container w-100 mx-auto px-4">
+                <div class="card-header bold p-1 mx-2 mx-lg-0 white-bg text-center mt-4">Please enter the Appointment Code you wish to cancel. Afterwards, click the SEARCH button</div>
+                <div class="card-body px-5 pb-5 pt-4 mx-auto">
+                    <div class="form-group col-md-12 col-sm-12 p-0">
+                        <input id="code" class="form-control no-border" placeholder="Appointment Code" style="font-size: 16px;text-align:center;background-color:#DFE8F5;" />
+                        <span id="codeError" class="text-danger"></span>
+                    </div>
+                    <button id="searchButton" class="btn btn-primary  w-100 d-block text-uppercase mb-3">SEARCH</button>
+                    <button id="backButton" class="btn btn-secondary w-100 d-block text-uppercase">BACK</button>
+                </div>
+
+  
+                        <div class="form-group col-md-12 col-sm-12" style="text-align: center;">
+
+                            <div class="card bg-light mb-3 w-100 white-bg mt-4">
+                                <div class="card-header text-uppercase bold p-1 white-bg">reminder to all users</div>
+                                <div style="margin-top:10px;">
+                                    <p class="card-text">
+                                        Appointments cannot be cancelled on the scheduled
+                                        day itself. Please allow at least one (1) day for appointment
+                                        cancellation. (ex. If your appointment is on 29 August you cannot
+                                        cancel it on the same day. The last day to cancel it will be
+                                        28 August) Previous appointments cannot be cancelled anymore.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+           
+
+            </div>
+        </div>
+    </div>
+
+    <div id="stepTwo">
+        <div class="choose-user-container" style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+            <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 2 of 2: Cancel Appointment</p>
+        </div>
+
+
+        <div class="card-panel text-center white-bg mb-3 p-4 px-5">
+            <h6 class="text-uppercase bold">View Appointment</h6>
+            <small class="text-danger bold">Note for users: Please double check the Appointment before clicking the CANCEL APPOINTMENT button.</small>
+            <small class="text-danger bold">Once the appointment has been cancelled, you will not be able to recover this appointment.</small>
+            <hr class="mb-3" />
+
+            <div class="row text-left">
+                <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                    <p class="bold mb-0">Appointment Code</p>
+                    <p id="appointmentCode" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                    <p class="bold mb-0">Appointment Date</p>
+                    <p id="appointmentDate" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                    <p class="bold mb-0">Appointment Time</p>
+                    <p id="appointmentTime" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 d-flex flex-column">
+                    <p class="bold mb-0">Processing Site</p>
+                    <p id="processingSite" class="mb-0"></p>
+                    <p id="processingSiteAddress" class="mb-0"></p>
+                </div>
+            </div>
+            <hr class="mb-3" />
+
+            <div class="row text-left">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <p class="mb-0 bold">Document Owner:</p>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <p id="documentOwner" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <p class="mb-0 bold">Authorized Representative:</p>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <p id="representative" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <p class="mb-0 bold">Country of Destination:</p>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <p id="destination" class="mb-0"></p>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <p class="mb-0 bold">Documents:</p>
+                </div>
+                <div id="documents" class="col-lg-9 col-md-8 col-sm-12">
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <p class="mb-0 bold">Total Fees:</p>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <p id="fees" class="mb-0"></p>
+                </div>
+            </div>
+            <hr class="mb-3" />
+
+            <p id="conditionError" class="text-left conditionError text-danger"></p>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="condition">
+                <label class="custom-control-label" for="condition"><i>By continuing, I fully understand that once this appointment is cancelled, I will have to schedule a new appointment to proceed with my application. </i></label>
+            </div>
+
+
+            <div class="row mt-4">
+                <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12 mb-0">
+                    <button type="button" id="stepTwoBackButton" class=" btn button-secondary text-white col-md-12 col-sm-12 mb-2">Back</button>
+                </div>
+                <div class="col-lg-3 offset-lg-2 col-md-4 offset-md-1 col-sm-12 mb-0">
+                    <button class="btn button-primary col-md-12 col-sm-12 float-right mb-2 text-uppercase" style="color:white;" id="cancelAppointment">Cancel Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="success" style="display: none">
+        <div class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
+            <h5 class="mb-3 bold text-primary">Your Appointment has been successfully cancelled.</h5>
+            <div class="success-message mx-auto">
+                <p>Please check your inbox, span and other folder to view the confirmation receipt of cancellation.</p>
+                <p id="DidntReceivedMail">Didn't receive the email? Click <a id="resendEmail" class="pointer text-primary">here</a> to resend.</p>
+                <p id="AlreadySent" style="display:none;">Successfully resend. Please check your inbox.</p>
+                <button id="cancelAnother" type="button" class="btn button-primary w-75 text-uppercase mb-2" style="color:white;">Cancel another appointment</button>
+                <button id="exit" type="button" class="btn button-primary w-75 text-uppercase" style="color:white;">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body d-flex flex-column p-3 px-4 text-center">
+                <img src="~/dfa.png" class="mx-auto mb-4" style="height: 50px" />
+                <div class="mx-auto text-center px-2">
+                    <p class="text-danger text-uppercase bold mb-0" id="errorMessage" style="color:red!important"></p>
+                </div>
+                <p id="message"></p>
+                <p id="date" class="bold" style="font-size:22px!important;"></p>
+                <button id="exitButton" data-dismiss="modal" type="button" class="btn btn-primary col-md-12 col-sm-12" style="color:white;background-color:#217ff3;">EXIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="loadingModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body align-self-center d-flex flex-column p-3">
+                <img src="~/dfa.png" class="mx-auto mb-2" style="height: 50px" />
+                <small>Searching appointment. Please wait.</small>
+                <div id="loading-image" class="mx-auto mt-2">
+                    <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: #4d4d4d; font"></i>
+                </div>
+                <button id="closeLoading" data-dismiss="modal" style="display: none"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/cancellation.js"></script>

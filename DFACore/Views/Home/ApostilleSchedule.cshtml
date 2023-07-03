@@ -1,0 +1,1360 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.ApostilleScheduleViewModel
+@using Microsoft.Extensions.Options
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var selectedBranch = (BranchModel)ViewData["SelectedBranch"];
+
+
+}
+<style>
+    body {
+        margin: 0 !important;
+    }
+
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: black;
+    }
+
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input, #step-one-authorized input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+
+
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: auto;
+    }
+
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 500px;
+        width: 100% !important;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+
+    .img-fluid {
+        width: 100% !important;
+    }
+</style>
+
+<div class="pageContainers" id="application-form" padding: 20px;
+     height: auto;">
+    <div id="loading">
+        <div id="loading-image">
+            <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
+        </div>
+    </div>
+    <div id="formContainer" class="mt-5">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+
+        <div class="media">
+            <div class="media-body">
+                <p class="grey-text-bold font-weight-bold p-0 p-label">
+                    @User.Identity.Name<br />
+                    @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                </p>
+            </div>
+            <p class="float-right text-right mt-auto p-label">
+                <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
+            </p>
+        </div>
+
+        @{
+
+
+            <form id="account" method="post" asp-action="ApplicationSummary" asp-controller="Home">
+                <div>
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 4 of 5</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 4 of 5</p>
+                    </div>
+
+                    <div class="card-panel white-bg p-0">
+                        <div class="mb-3">
+                            <div class="d-flex mb-0 px-4 pt-4 pb-2">
+                                <label class="mb-0 bold mr-3"><i>Please select your preferred schedule of processing</i>  <span class="mb-0 p-alt p-label"><i>(Piliin ang iyong nais na schedule ng pagproseso)</i></span></label>
+
+                            </div>
+
+                            <div class="mt-3 px-4 pb-4">
+
+                                <div id="scheduleSelection" class="row col-12 m-0 p-0" style="margin-top:10px;">
+                                    <div class="col-lg-6 col-md-12 col-sm-12 px-0" style="margin-bottom: 10px">
+                                        <div class="card bg-light white-bg h-100" style="padding: 10px;">
+                                            <label class="black-text mb-0 bold">Select Available Schedule</label>
+
+                                            <partial name="_CalendarPartial" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-12 col-sm-12 px-0 px-lg-2 p-sm-0" style="z-index: -1; opacity: 0.5" id="selectTimeContainer">
+                                        <div class=" white-bg card bg-light " style="height:auto;padding:5px;margin-bottom: 10px">
+                                            <label class="black-text bold">Select Time</label>
+                                            <div class="row justify-content-center">
+                                                <div id="AvailableTime" class="col-lg-10 col-md-12 col-sm-12">
+                                                    @foreach (var hour in selectedBranch.AvailableHours)
+                                                    {
+                                                        <label class="black-text mr-2"><input type="radio" class="option1" name="option1" value="@hour.Value" /> @hour.Caption</label>
+                                                    }
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 col-sm-12"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-12 col-sm-12 px-0 card bg-light white-bg">
+                                        <div id="selectedDateAndTime" style="height:auto;padding:10px;">
+                                            <p class="black-text">Selected Date and Time</p>
+                                            <p class="font-weight-bold">May 20, 2020 Friday 11:00 AM</p>
+                                            <input id="appointmentSchedule" asp-for="ScheduleDate" class="form-control font-weight-bold" readonly>
+                                            <p id="appointmentDate" style="display:none;"></p>
+                                            <p id="appointmentScheduleTime" style="display:none;"></p>
+                                            <div id="schedLoader" class="text-center" style="display:none;">
+                                                <div class="spinner-border m-3" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+
+                                            <p id="availableSchedMessage" class="text-success font-weight-bold" style="margin-top:10px;display:none;">Schedule available</p>
+                                            <p id="unAvailableSchedMessage" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please choose available time slot.</p>
+                                            <p id="errSchedDate" class="text-danger font-weight-bold" style="margin-top:10px;display:none;">Please select schedule date.</p>
+                                            @*<p style="margin-top:10px;">Selected Site</p>*@
+                                            <p class="font-weight-bold">(Site and Address)</p>
+                                            <p id="siteAndNameAddress" class="font-weight" style="margin-bottom:0;font-weight:bold">@selectedBranch.BranchName</p>
+                                            <p id="siteAndAddress" class="font-weight">@selectedBranch.BranchAddress</p>
+                                            <div class="row">
+                                                <div class="col-md-5 col-sm-5" style="margin-bottom: 10px;">
+                                                    <button onclick="history.back()" type="button" class="btn button-secondary  col-md-12 col-sm-12" style="color: white;border: 1px solid darkgray;">Back</button>
+                                                </div>
+                                                <div class="col-md-2 col-sm-2">
+
+                                                </div>
+                                                <div class="col-md-5 col-sm-5">
+                                                    <button type="submit" class="btn button-primary col-md-12 col-sm-12 " style="color:white;">Confirm</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+        }
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+
+    <script>$("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
+        $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })</script>
+
+    <script src="~/js/oas.js"></script>
+    <script>
+
+
+        var calendar;
+        var total = 0;
+        var docuTotalCount = 0;
+        var canConfirm = false;
+        var branchId = 0;
+        var isBranchHasExpidite = false;
+        var expeditePrice = 0;
+        var regularPrice = 0;
+        var hasTerms = false;
+
+        
+
+        $('#applicationTypeSelection').hide();
+
+        @*$('#ownerButton').on('click', function () {
+            @{
+                a = 0;
+            }
+        })
+
+    $('#authorizedButton').on('click', function () {
+            @{
+                a = 1;
+            }
+        })*@
+
+
+        @*grecaptcha.ready(function () {
+            grecaptcha.execute('@GoogleRecaptcha.Value.ReCAPTCHA_Site_Key', { action: 'homepage' }).then(function (token) {
+                console.log(token);
+                $('#Token').val(token);
+            });
+        });*@
+
+        $(document).ready(function () {
+
+            $(document).ready(function () {
+                var e = document.querySelectorAll('option')
+                e.forEach(x => {
+                    if (x.textContent.length > 20)
+                        x.textContent = x.textContent.substring(0, 80) + '...';
+                });
+
+                SetCode("@ViewData["ApplicationCode"]", hasTerms);
+            });
+
+            branchId = @selectedBranch.Id;
+            @*expeditePrice = @price.Expedite;
+            regularPrice = @price.Regular;*@
+
+
+            @*$.ajax({
+                    url: '@Url.Action("GetBranches")',
+                    type: 'GET',
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        //console.log(result.branchName);
+                        $('#site').html("");
+                        $.each(result, function (index, val) {
+                            console.log(val.branchName);
+                            $('#site').append(
+                                $('<option></option>').val(val.branchName).html(val.branchName)
+                            );
+                        });
+                        //$('#loading').show();
+                    },
+                    error: function () {
+
+                        alert('Something went wrong!');
+                    }
+
+            });*@
+
+            
+
+            function onSubmit() {
+                $('#loading').show();
+                var valid = false;
+                var x = $.ajax({
+                        url: '@Url.Action("ValidateScheduleDate2")',
+                        method: 'GET',
+                        cache: false,
+                        contentType: 'application/json; charset=utf-8',
+                        data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
+                        success: function (result) {
+                            console.log('success');
+                            if (result) {
+                                valid = true;
+                            }
+                            else {
+                                valid = false;
+                                $('#onSubmit-modal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                    show: true
+                                });
+                            }
+                        },
+                        error: function () {
+                            valid =  false;
+                            alert('CODE: 0004 - Something went wrong!');
+                    },
+                    async: false
+
+                });
+
+            console.log(valid);
+            return valid;
+            //if (valid) {
+            //    alert('True: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+            //else {
+            //    alert('False: The schedule you have selected is already full.  Please go back to the calendar to select another slot. Thank you!');
+            //    return true;
+            //}
+        }
+
+            $(".unAvailableModal").click(function () {
+                console.log("unavailable modal");
+
+                $("#stepThreeBackBtn").click();
+            });
+
+            $("#testSubmit").click(function () {
+                console.log("testform");
+                $("#application-form").submit();
+            });
+
+
+            $('#loading').hide();
+
+            $('.numberInput').keyup(function () {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+
+            //$('.dateOfBirthOwner').focusout(function () {
+            //    var bdate = new Date($('.dateOfBirthOwner').val());
+            //    var dateToday = new Date();
+            //    var age = dateToday.getFullYear() - bdate.getFullYear();
+            //    console.log(age);
+            //    if (age < 18) {
+            //        $('#viewMinorReminder-modal').modal('show');
+            //    }
+            //});
+            $('.transactionQuantity').keypress(function (e) {
+                if (this.value.length == 0 && e.which == 48) {
+                    return false;
+                }
+            });
+            $(".form-check-input").on("click", function () {
+                var getId = $(this).attr('id');
+                var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
+                var expediteId = '#qty' + formatId + 'Expedite';
+                var regularId = '#qty' + formatId + 'Regular';
+
+                if ($(this).is(':checked') == true) {
+                    console.log(formatId);
+                    if (isBranchHasExpidite) {
+                        $(expediteId).removeAttr("dapplicationTypeSelectionisabled");
+                    }
+                    $(regularId).removeAttr("disabled");
+                }
+                else {
+                    $(expediteId).attr("disabled", true);
+                    $(regularId).attr("disabled", true);
+                }
+            });
+            //if ($("#IsUserAgreed").text() !== "Agreed") {
+            //    $("#declaration-modal").modal({
+            //        backdrop: 'static',
+            //        keyboard: false
+            //    });
+            //}
+            var applicants = parseInt($("#applicantCount").text());
+            if (applicants != 0) {
+                for (i = 0; i < applicants; i++) {
+                    console.log(i);
+                    //var partial = [];
+                    $.ajax({
+                        url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
+                        cache: false,
+                        success: function (html) {
+                            //partial.push(html);
+                            // initial load
+                            //insertAtIndex(i, html);
+                            //$("#documentOwners").prepend(html);
+
+                            if (i == 0) {
+                                $("#documentOwners").append(html);
+
+                            } else {
+                                $("#documentOwners").append(html).insertAfter('documentOwner-' + i - 1);
+                            }
+
+
+                        },
+                        async: false
+
+                    });
+                    //$("#documentOwners").append(partial[i]);
+                    //console.log(partial);
+                }
+            }
+
+
+            //    $("#documentOwners").prepend(html);
+            //    return;
+            //}
+            //$("#documentOwners > div:nth-child(" + (i) + ")").after(html);
+            //}
+
+
+
+
+
+            $("#Region").change(function () {
+                $.ajax({
+                    url: '@Url.Action("GetCity")',
+                    method: 'GET',
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    data: { municipality: $('#Region').val() },
+                    success: function (result) {
+                        console.log(result);
+                        $('#City').html("");
+                        $('#City').append(
+                            $('<option></option>').val("").html("")
+                        );
+                        $.each(result, function (index, val) {
+                            console.log(index, val)
+
+                            $('#City').append(
+                                $('<option></option>').val(val).html(val)
+                            );
+                        });
+
+                    },
+                    error: function () {
+
+                        alert('CODE: 0002 - Something went wrong!');
+                    }
+
+                });
+            });
+
+            //$("#Region").val('NCR');
+
+            //console.log('dob=' + $('#Record_DateOfBirth').val());
+
+            $("#stepSelectProcessingSiteNextBtn").click(function () {
+                //$('#stepOneBtn').click();
+                $("#step-one").show();
+                $("#step-one-authorized").show();
+                $("#step-two").hide();
+                $("#step-three").hide();
+                $("#step-select-processing-site").hide();
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+
+            //$("#stepOneBackBtn").click(function () {
+            //    //$('#stepOneBtn').click();
+            //    $("#step-select-processing-site").show();
+            //    $("#step-one").hide();
+            //    $("#step-one-authorized").hide();
+            //    $("#step-two").hide();
+            //    $("#step-three").hide();
+            //    document.body.scrollTop = 0;
+            //    document.documentElement.scrollTop = 0;
+            //});
+
+            $("#backToStepOne").click(function () {
+                //$('#stepOneBtn').click();
+                //$("#step-one").show();
+                //$("#step-one-authorized").show();
+                //$("#step-two").hide();
+                //$("#step-three").hide();
+                //document.body.scrollTop = 0;
+                //document.documentElement.scrollTop = 0;
+                //alert(urlBase);
+                window.location.href = `${urlBase}Home/DocumentLocation`; //'/Home/DocumentLocation'
+            });
+
+
+            $("#stepTwoNextBtn").click(function () {
+                let siteAndScheduleSelection = $('#step-select-processing-site');
+                let applicationTypeSelection = $('#applicationTypeSelection');
+                let siteAndScheduleButton = $('#stepTwoNextBtn');
+
+                if (canConfirm == false) {
+                    $("#errSchedDate").show();
+                    return;
+                }
+
+                siteAndScheduleSelection.hide();
+                applicationTypeSelection.show();
+
+                $("#step-one").hide();
+                $("#step-one-authorized").hide();
+                $("#step-two").hide();
+                $("#step-three").hide();
+
+                $('#stepThreeBtn').click();
+
+                $('#LblNameOfApplicant').text($('#Record_FirstName').val().toUpperCase() + ' ' + $('#Record_MiddleName').val().toUpperCase() + ' ' + $('#Record_LastName').val().toUpperCase() + ' ' + $('#Record_Suffix').val().toUpperCase());
+                total = 0;
+                var subtotal = 0;
+                @*if (applicants == 0) {
+                    var docuType = JSON.parse($('#apostileData').val());
+                    var lbldocuType = $('#LblTypeOfDocument');
+                    lbldocuType.empty();
+                    docuType.forEach(function (v) {
+                        var Quantity = v.Quantity;
+                        var DocuName = v.Name;
+                        var Transaction = v.Transaction;
+                        lbldocuType.append('(' + Quantity + ') ' + '(' + Transaction +  ') ' + DocuName + ' ' + '<br />');
+                        if (Transaction == "Expedite") {
+                            subtotal += (@price.Expedite * parseInt(Quantity));
+                        }
+                        else {
+                            subtotal += (@price.Regular * parseInt(Quantity));
+                        }
+
+                    });
+                }*@
+
+
+
+                //console.log(docuType);
+                //$('#LblTypeOfDocument').text($('#apostileData').val());
+                $('#LblAddress').text($('#Record_Address').val());
+                $('#LblAddress').text($('#Record_Address').val());
+                $('#LblContactNumber').text($('#Record_ContactNumber').val());
+                $('#LblAuthorizeRepresentative').text($('#Record_NameOfRepresentative').val());
+                $('#LblRepresentativeContactNumber').text($('#Record_RepresentativeContactNumber').val());
+                $('#LblCompany').text($('#Record_CompanyName').val());
+
+
+                $('#LblCountryDestination').text($('#Record_CountryDestination').val());
+
+                $('#LblDateOfAppointment').text($('#appointmentDate').text()); //appointmentDate
+                $('#LblTimeOfAppointment').text($('input[name=option1]:checked').val());
+                //$('#LblPayment').text('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#LblPayment').text('PhP'.concat(' ', subtotal, '.00'));
+                //$('#Fees').val('PhP'.concat(' ', parseInt($('#documentsCount').text()) * 100, '.00'));
+                $('#Fees').val('PhP'.concat(' ', subtotal, '.00'));
+                $('#Record_Fees').val(subtotal);
+                //$('#LblAppointmentCode').text('MNL-20200524');
+                $('#LblProcessingSite').text($('#site').val().toUpperCase()/* + ' ' + $('#address').val().toUpperCase()*/);
+                $('#LblProcessingSiteAddress').text($('#address').val());
+                console.log($("span[id^='LblPayment-']").text());
+            });
+
+
+
+            $('#stepOneBtn').click();
+
+            $('#siteAndNameAddress').text($('#site').val());
+            $('#siteAndAddress').text($('#address').val());
+
+            //$('.backBtn').click(function () {
+            //    $('#stepOneBtn').click();
+            //    $('#selectTimeContainer').css('z-index','-1');
+            //    $('#selectTimeContainer').css('opacity', '0.5');
+            //    $('#appointmentSchedule').val('');
+            //});
+            //$('#stepOneNextBtn').click(function () {
+            //    $('#stepTwoBtn').click();
+            //});
+            //$('#stepThreeBackBtn').click(function () {
+            //    //$('#stepOneBtn').click();
+            //    canConfirm = false;
+            //    $('#appointmentSchedule').val('');
+            //    $('#availableSchedMessage').hide();
+            //    $("#step-one").hide();
+            //    $("#step-one-authorized").hide();
+            //    $("#step-two").show();
+            //    $("#step-three").hide();
+            //});
+            $('#documentsCount').text(0);
+            $('#selectDocumentsBtn').click(function () {
+                console.log('here');
+                var documentObject = [];
+                $(':checkbox:checked').each(function (i) {
+                    var getId = $(this).attr('id');
+                    var formatId = getId.charAt(0).toUpperCase() + getId.slice(1);
+                    var expediteId = '#qty' + formatId + 'Expedite';
+                    var regularId = '#qty' + formatId + 'Regular';
+
+                    if (parseInt($(expediteId).val()) > 0 && !$(regularId).val()) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()) , Transaction: "Expedite"});
+                        }
+                        else if (parseInt($(regularId).val()) > 0 && !$(expediteId).val()) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()) , Transaction: "Regular"});
+                        }
+                        else if (parseInt($(expediteId).val()) > 0 && parseInt($(regularId).val()) > 0) {
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(expediteId).val()), Transaction: "Expedite" });
+                            documentObject.push({ Name: $(this).val(), Quantity: parseInt($(regularId).val()), Transaction: "Regular" });
+                        }
+                        else { return; }
+                });
+
+                $("#documentsTable tbody > tr").empty();
+                $("#documentsTable").append('<tr><th>Document</th><th>Quantity</th><th>Transaction</th></tr>');
+                //var tbodyContent = '';
+                var numberOfDocuments = 0;
+                var newDocument = [];
+                $.each(documentObject, function (index, value) {
+                    var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+                    if (isExists == undefined) {
+                        $('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+                        numberOfDocuments += value.Quantity;
+                        newDocument.push(value);
+                    }
+                });
+                //console.log(tbodyContent);
+                //$('#documentsTable tbody').append(tbodyContent);
+                $('#documentsCount').text(numberOfDocuments);
+                $('#apostileData').val(JSON.stringify(newDocument));
+                console.log(JSON.stringify(newDocument));
+                console.log(documentObject);
+                if (documentObject.length === 0)
+                    alert('Please ADD and/or INSERT number of documents.');
+                else
+                    $('.modal').modal('hide');//$("#apostileModal .close").click()//$('#apostileModal').modal('hide');
+
+            });
+
+            $("#AvailableTime input:radio:first").attr('checked', true);
+            $('#appointmentScheduleTime').text($('input[name="option1"]:checked').val());
+
+            $(document).on('change', '.option1', function () {
+                console.log($(this).val());
+                $('#appointmentScheduleTime').text($(this).val());
+                $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                $('#appointmentSchedule').change();
+            });
+            //$('#appointmentScheduleTime').text('07:00 AM')
+                // $("input[type*='radio']").click(function () {
+
+                //    console.log($(this).val());
+                //    $('#appointmentScheduleTime').text($(this).val());
+                //    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                //    $('#appointmentSchedule').change();
+                //});
+
+            @*var doc = new jsPDF();
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+            $('#sendPdfToEmail').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GeneratePdf")',
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: {html : JSON.stringify("<h1>Hello World</h1>")}
+                    //success: function (result) {
+                    //    console.log($('#appointmentSchedule').val());
+                    //    if (result) {
+                    //        $('#availableSchedMessage').show();
+                    //    }
+                    //    else {
+                    //        $('#unavailableSchedMessage').show();
+                    //    }
+                    //}
+                });
+                //doc.fromHTML($('#step-three').html(), 30, 30, {
+                //    'width': 550,
+                //    'elementHandlers': specialElementHandlers
+                //});
+                //doc.save('sample-file.pdf');
+            });*@
+
+
+
+
+            $('#appointmentSchedule').change(function () {
+                $("#errSchedDate").hide();
+                $('#schedLoader').show();
+                $.ajax({
+                    url: '@Url.Action("ValidateScheduleDate2")',
+                    method: 'GET',
+                    cache: false,
+                    contentType: 'application/json; charset=utf-8',
+                    data: { scheduleDate: $('#appointmentSchedule').val(), applicationCount: docuTotalCount, branchId: branchId },
+                    success: function (result) {
+                        console.log('success');
+                        $('#schedLoader').hide();
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                            $('#unAvailableSchedMessage').hide();
+                            //$('#errSchedDate').hide();
+                            canConfirm = true;
+                        }
+                        else {
+                            $('#availableSchedMessage').hide();
+                            $('#unAvailableSchedMessage').show();
+                            //$('#errSchedDate').show();
+                            canConfirm = false;
+                        }
+                    },
+                    error: function () {
+                        $('#schedLoader').hide();
+                        canConfirm = false;
+                        alert('CODE: 0003 - Something went wrong!');
+                    }
+
+                });
+
+            });
+            $('.carousel').carousel();
+            //$('#personalCopyNotValid-modal').on('hide.bs.modal', function (e) {
+            //    $('#apostileModal').modal('show');
+            //});
+
+
+
+            $('#qtyNbiClearanceExpedite').focusout(function () {
+                if (parseInt($('#qtyNbiClearanceExpedite').val()) > 0 && !$('#qtyNbiClearanceRegular').val()) {
+                    $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceExpedite').val()))
+                }
+                else {
+                    $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceExpedite').val()) + parseInt($('#qtyNbiClearanceRegular').val()))
+                }
+            });
+            $('#qtyNbiClearanceRegular').focusout(function () {
+                if (parseInt($('#qtyNbiClearanceRegular').val()) > 0 && !$('#qtyNbiClearanceExpedite').val()) {
+                    $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceRegular').val()))
+
+                }
+                else {
+                    $('#qtyNbiClearance').val(parseInt($('#qtyNbiClearanceExpedite').val()) + parseInt($('#qtyNbiClearanceRegular').val()))
+
+                }
+            });
+
+            $('#qtyBirthCertificateExpedite').focusout(function () {
+                if (parseInt($('#qtyBirthCertificateExpedite').val()) > 0 && !$('#qtyBirthCertificateRegular').val()) {
+                    $('#qtyBirthCertificate').val(parseInt($('#qtyBirthCertificateExpedite').val()))
+                }
+                else {
+                    $('#qtyBirthCertificate').val(parseInt($('#qtyBirthCertificateExpedite').val()) + parseInt($('#qtyBirthCertificateRegular').val()))
+                }
+            });
+            $('#qtyBirthCertificateRegular').focusout(function () {
+                if (parseInt($('#qtyBirthCertificateRegular').val()) > 0 && !$('#qtyBirthCertificateExpedite').val()) {
+                    $('#qtyBirthCertificate').val(parseInt($('#qtyBirthCertificateRegular').val()))
+                }
+                else {
+                    $('#qtyBirthCertificate').val(parseInt($('#qtyBirthCertificateExpedite').val()) + parseInt($('#qtyBirthCertificateRegular').val()))
+                }
+            });
+
+            $('#qtyMarriageCertificateExpedite').focusout(function () {
+                if (parseInt($('#qtyMarriageCertificateExpedite').val()) > 0 && !$('#qtyMarriageCertificateRegular').val()) {
+                    $('#qtyMarriageCertificate').val(parseInt($('#qtyMarriageCertificateExpedite').val()))
+                }
+                else {
+                    $('#qtyMarriageCertificate').val(parseInt($('#qtyMarriageCertificateExpedite').val()) + parseInt($('#qtyMarriageCertificateRegular').val()))
+                }
+            });
+            $('#qtyMarriageCertificateRegular').focusout(function () {
+                if (parseInt($('#qtyMarriageCertificateRegular').val()) > 0 && !$('#qtyMarriageCertificateExpedite').val()) {
+                    $('#qtyMarriageCertificate').val(parseInt($('#qtyMarriageCertificateRegular').val()))
+                }
+                else {
+                    $('#qtyMarriageCertificate').val(parseInt($('#qtyMarriageCertificateExpedite').val()) + parseInt($('#qtyMarriageCertificateRegular').val()))
+                }
+            });
+
+            $('#qtyDeathCertificateExpedite').focusout(function () {
+                if (parseInt($('#qtyDeathCertificateExpedite').val()) > 0 && !$('#qtyDeathCertificateRegular').val()) {
+                    $('#qtyDeathCertificate').val(parseInt($('#qtyDeathCertificateExpedite').val()))
+                }
+                else {
+                    $('#qtyDeathCertificate').val(parseInt($('#qtyDeathCertificateExpedite').val()) + parseInt($('#qtyDeathCertificateRegular').val()))
+                }
+            });
+            $('#qtyDeathCertificateRegular').focusout(function () {
+                if (parseInt($('#qtyDeathCertificateRegular').val()) > 0 && !$('#qtyDeathCertificateExpedite').val()) {
+                    $('#qtyDeathCertificate').val(parseInt($('#qtyDeathCertificateRegular').val()))
+                }
+                else {
+                    $('#qtyDeathCertificate').val(parseInt($('#qtyDeathCertificateExpedite').val()) + parseInt($('#qtyDeathCertificateRegular').val()))
+                }
+            });
+
+            $('#qtyCenomarExpedite').focusout(function () {
+                if (parseInt($('#qtyCenomarExpedite').val()) > 0 && !$('#qtyCenomarRegular').val()) {
+                    $('#qtyCenomar').val(parseInt($('#qtyCenomarExpedite').val()))
+                }
+                else {
+                    $('#qtyCenomar').val(parseInt($('#qtyCenomarExpedite').val()) + parseInt($('#qtyCenomarRegular').val()))
+                }
+            });
+            $('#qtyCenomarRegular').focusout(function () {
+                if (parseInt($('#qtyCenomarRegular').val()) > 0 && !$('#qtyCenomarExpedite').val()) {
+                    $('#qtyCenomar').val(parseInt($('#qtyCenomarRegular').val()))
+                }
+                else {
+                    $('#qtyCenomar').val(parseInt($('#qtyCenomarExpedite').val()) + parseInt($('#qtyCenomarRegular').val()))
+                }
+            });
+
+            $('#qtyElementaryAndHighschoolExpedite').focusout(function () {
+                if (parseInt($('#qtyElementaryAndHighschoolExpedite').val()) > 0 && !$('#qtyElementaryAndHighschoolRegular').val()) {
+                    $('#qtyElementaryAndHighschool').val(parseInt($('#qtyElementaryAndHighschoolExpedite').val()))
+                }
+                else {
+                    $('#qtyElementaryAndHighschool').val(parseInt($('#qtyElementaryAndHighschoolExpedite').val()) + parseInt($('#qtyElementaryAndHighschoolRegular').val()))
+                }
+            });
+            $('#qtyElementaryAndHighschoolRegular').focusout(function () {
+                if (parseInt($('#qtyElementaryAndHighschoolRegular').val()) > 0 && !$('#qtyElementaryAndHighschoolExpedite').val()) {
+                    $('#qtyElementaryAndHighschool').val(parseInt($('#qtyElementaryAndHighschoolRegular').val()))
+                }
+                else {
+                    $('#qtyElementaryAndHighschool').val(parseInt($('#qtyElementaryAndHighschoolExpedite').val()) + parseInt($('#qtyElementaryAndHighschoolRegular').val()))
+                }
+            });
+
+            $('#qtyTechVochExpedite').focusout(function () {
+                if (parseInt($('#qtyTechVochExpedite').val()) > 0 && !$('#qtyTechVochRegular').val()) {
+                    $('#qtyTechVoch').val(parseInt($('#qtyTechVochExpedite').val()))
+                }
+                else {
+                    $('#qtyTechVoch').val(parseInt($('#qtyTechVochExpedite').val()) + parseInt($('#qtyTechVochRegular').val()))
+                }
+            });
+            $('#qtyTechVochRegular').focusout(function () {
+                if (parseInt($('#qtyTechVochRegular').val()) > 0 && !$('#qtyTechVochExpedite').val()) {
+                    $('#qtyTechVoch').val(parseInt($('#qtyTechVochRegular').val()))
+                }
+                else {
+                    $('#qtyTechVoch').val(parseInt($('#qtyTechVochExpedite').val()) + parseInt($('#qtyTechVochRegular').val()))
+                }
+            });
+
+            $('#qtyStateCollegesAndUniversitiesExpedite').focusout(function () {
+                if (parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesRegular').val()) {
+                    $('#qtyStateCollegesAndUniversities').val(parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()))
+                }
+                else {
+                    $('#qtyStateCollegesAndUniversities').val(parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) + parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()))
+                }
+            });
+            $('#qtyStateCollegesAndUniversitiesRegular').focusout(function () {
+                if (parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()) > 0 && !$('#qtyStateCollegesAndUniversitiesExpedite').val()) {
+                    $('#qtyStateCollegesAndUniversities').val(parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()))
+                }
+                else {
+                    $('#qtyStateCollegesAndUniversities').val(parseInt($('#qtyStateCollegesAndUniversitiesExpedite').val()) + parseInt($('#qtyStateCollegesAndUniversitiesRegular').val()))
+                }
+            });
+
+            $('#qtyPrivateOrLocalCollegesExpedite').focusout(function () {
+                if (parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) > 0 && !$('#qtyPrivateOrLocalCollegesRegular').val()) {
+                    $('#qtyPrivateOrLocalColleges').val(parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()))
+                }
+                else {
+                    $('#qtyPrivateOrLocalColleges').val(parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) + parseInt($('#qtyPrivateOrLocalCollegesRegular').val()))
+                }
+            });
+            $('#qtyPrivateOrLocalCollegesRegular').focusout(function () {
+                if (parseInt($('#qtyPrivateOrLocalCollegesRegular').val()) > 0 && !$('#qtyPrivateOrLocalCollegesExpedite').val()) {
+                    $('#qtyPrivateOrLocalColleges').val(parseInt($('#qtyPrivateOrLocalCollegesRegular').val()))
+                }
+                else {
+                    $('#qtyPrivateOrLocalColleges').val(parseInt($('#qtyPrivateOrLocalCollegesExpedite').val()) + parseInt($('#qtyPrivateOrLocalCollegesRegular').val()))
+                }
+            });
+
+            $('#qtyPRCExpedite').focusout(function () {
+                if (parseInt($('#qtyPRCExpedite').val()) > 0 && !$('#qtyPRCRegular').val()) {
+                    $('#qtyPRC').val(parseInt($('#qtyPRCExpedite').val()))
+                }
+                else {
+                    $('#qtyPRC').val(parseInt($('#qtyPRCExpedite').val()) + parseInt($('#qtyPRCRegular').val()))
+                }
+            });
+            $('#qtyPRCRegular').focusout(function () {
+                if (parseInt($('#qtyPRCRegular').val()) > 0 && !$('#qtyPRCExpedite').val()) {
+                    $('#qtyPRC').val(parseInt($('#qtyPRCRegular').val()))
+                }
+                else {
+                    $('#qtyPRC').val(parseInt($('#qtyPRCExpedite').val()) + parseInt($('#qtyPRCRegular').val()))
+                }
+            });
+
+            $('#qtyMedCertsExpedite').focusout(function () {
+                if (parseInt($('#qtyMedCertsExpedite').val()) > 0 && !$('#qtyMedCertsRegular').val()) {
+                    $('#qtyMedCerts').val(parseInt($('#qtyMedCertsExpedite').val()))
+                }
+                else {
+                    $('#qtyMedCerts').val(parseInt($('#qtyMedCertsExpedite').val()) + parseInt($('#qtyMedCertsRegular').val()))
+                }
+            });
+            $('#qtyMedCertsRegular').focusout(function () {
+                if (parseInt($('#qtyMedCertsRegular').val()) > 0 && !$('#qtyMedCertsExpedite').val()) {
+                    $('#qtyMedCerts').val(parseInt($('#qtyMedCertsRegular').val()))
+                }
+                else {
+                    $('#qtyMedCerts').val(parseInt($('#qtyMedCertsExpedite').val()) + parseInt($('#qtyMedCertsRegular').val()))
+                }
+            });
+
+            $('#qtyCAAPExpedite').focusout(function () {
+                if (parseInt($('#qtyCAAPExpedite').val()) > 0 && !$('#qtyCAAPRegular').val()) {
+                    $('#qtyCAAP').val(parseInt($('#qtyCAAPExpedite').val()))
+                }
+                else {
+                    $('#qtyCAAP').val(parseInt($('#qtyCAAPExpedite').val()) + parseInt($('#qtyCAAPRegular').val()))
+                }
+            });
+            $('#qtyCAAPRegular').focusout(function () {
+                if (parseInt($('#qtyCAAPRegular').val()) > 0 && !$('#qtyCAAPExpedite').val()) {
+                    $('#qtyCAAP').val(parseInt($('#qtyCAAPRegular').val()))
+                }
+                else {
+                    $('#qtyCAAP').val(parseInt($('#qtyCAAPExpedite').val()) + parseInt($('#qtyCAAPRegular').val()))
+                }
+            });
+
+            $('#qtyDriverLicenseExpedite').focusout(function () {
+                if (parseInt($('#qtyDriverLicenseExpedite').val()) > 0 && !$('#qtyDriverLicenseRegular').val()) {
+                    $('#qtyDriverLicense').val(parseInt($('#qtyDriverLicenseExpedite').val()))
+                }
+                else {
+                    $('#qtyDriverLicense').val(parseInt($('#qtyDriverLicenseExpedite').val()) + parseInt($('#qtyDriverLicenseRegular').val()))
+                }
+            });
+            $('#qtyDriverLicenseRegular').focusout(function () {
+                if (parseInt($('#qtyDriverLicenseRegular').val()) > 0 && !$('#qtyDriverLicenseExpedite').val()) {
+                    $('#qtyDriverLicense').val(parseInt($('#qtyDriverLicenseRegular').val()))
+                }
+                else {
+                    $('#qtyDriverLicense').val(parseInt($('#qtyDriverLicenseExpedite').val()) + parseInt($('#qtyDriverLicenseRegular').val()))
+                }
+            });
+
+            $('#qtyCOEExpedite').focusout(function () {
+                if (parseInt($('#qtyCOEExpedite').val()) > 0 && !$('#qtyCOERegular').val()) {
+                    $('#qtyCOE').val(parseInt($('#qtyCOEExpedite').val()))
+                }
+                else {
+                    $('#qtyCOE').val(parseInt($('#qtyCOEExpedite').val()) + parseInt($('#qtyCOERegular').val()))
+                }
+            });
+            $('#qtyCOERegular').focusout(function () {
+                if (parseInt($('#qtyCOERegular').val()) > 0 && !$('#qtyCOEExpedite').val()) {
+                    $('#qtyCOE').val(parseInt($('#qtyCOERegular').val()))
+                }
+                else {
+                    $('#qtyCOE').val(parseInt($('#qtyCOEExpedite').val()) + parseInt($('#qtyCOERegular').val()))
+                }
+            });
+
+            $('#qtyInvitationLetterExpedite').focusout(function () {
+                if (parseInt($('#qtyInvitationLetterExpedite').val()) > 0 && !$('#qtyInvitationLetterRegular').val()) {
+                    $('#qtyInvitationLetter').val(parseInt($('#qtyInvitationLetterExpedite').val()))
+                }
+                else {
+                    $('#qtyInvitationLetter').val(parseInt($('#qtyInvitationLetterExpedite').val()) + parseInt($('#qtyInvitationLetterRegular').val()))
+                }
+            });
+            $('#qtyInvitationLetterRegular').focusout(function () {
+                if (parseInt($('#qtyInvitationLetterRegular').val()) > 0 && !$('#qtyInvitationLetterExpedite').val()) {
+                    $('#qtyInvitationLetter').val(parseInt($('#qtyInvitationLetterRegular').val()))
+                }
+                else {
+                    $('#qtyInvitationLetter').val(parseInt($('#qtyInvitationLetterExpedite').val()) + parseInt($('#qtyInvitationLetterRegular').val()))
+                }
+            });
+
+            $('#qtyTrainingsExpedite').focusout(function () {
+                if (parseInt($('#qtyTrainingsExpedite').val()) > 0 && !$('#qtyTrainingsRegular').val()) {
+                    $('#qtyTrainings').val(parseInt($('#qtyTrainingsExpedite').val()))
+                }
+                else {
+                    $('#qtyTrainings').val(parseInt($('#qtyTrainingsExpedite').val()) + parseInt($('#qtyTrainingsRegular').val()))
+                }
+            });
+            $('#qtyTrainingsRegular').focusout(function () {
+                if (parseInt($('#qtyTrainingsRegular').val()) > 0 && !$('#qtyTrainingsExpedite').val()) {
+                    $('#qtyTrainings').val(parseInt($('#qtyTrainingsRegular').val()))
+                }
+                else {
+                    $('#qtyTrainings').val(parseInt($('#qtyTrainingsExpedite').val()) + parseInt($('#qtyTrainingsRegular').val()))
+                }
+            });
+
+            $('#qtyBaptismalCertExpedite').focusout(function () {
+                if (parseInt($('#qtyBaptismalCertExpedite').val()) > 0 && !$('#qtyBaptismalCertRegular').val()) {
+                    $('#qtyBaptismalCert').val(parseInt($('#qtyBaptismalCertExpedite').val()))
+                }
+                else {
+                    $('#qtyBaptismalCert').val(parseInt($('#qtyBaptismalCertExpedite').val()) + parseInt($('#qtyBaptismalCertRegular').val()))
+                }
+            });
+            $('#qtyBaptismalCertRegular').focusout(function () {
+                if (parseInt($('#qtyBaptismalCertRegular').val()) > 0 && !$('#qtyBaptismalCertExpedite').val()) {
+                    $('#qtyBaptismalCert').val(parseInt($('#qtyBaptismalCertRegular').val()))
+                }
+                else {
+                    $('#qtyBaptismalCert').val(parseInt($('#qtyBaptismalCertExpedite').val()) + parseInt($('#qtyBaptismalCertRegular').val()))
+                }
+            });
+
+            $('#qtyPrivateIssuedOtherDocuExpedite').focusout(function () {
+                if (parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuRegular').val()) {
+                    $('#qtyPrivateIssuedOtherDocu').val(parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()))
+                }
+                else {
+                    $('#qtyPrivateIssuedOtherDocu').val(parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) + parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()))
+                }
+            });
+            $('#qtyPrivateIssuedOtherDocuRegular').focusout(function () {
+                if (parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()) > 0 && !$('#qtyPrivateIssuedOtherDocuExpedite').val()) {
+                    $('#qtyPrivateIssuedOtherDocu').val(parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()))
+                }
+                else {
+                    $('#qtyPrivateIssuedOtherDocu').val(parseInt($('#qtyPrivateIssuedOtherDocuExpedite').val()) + parseInt($('#qtyPrivateIssuedOtherDocuRegular').val()))
+                }
+            });
+
+            $('#qtySpecialPowerOfAttorneyExpedite').focusout(function () {
+                if (parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) > 0 && !$('#qtySpecialPowerOfAttorneyRegular').val()) {
+                    $('#qtySpecialPowerOfAttorney').val(parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()))
+                }
+                else {
+                    $('#qtySpecialPowerOfAttorney').val(parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) + parseInt($('#qtySpecialPowerOfAttorneyRegular').val()))
+                }
+            });
+            $('#qtySpecialPowerOfAttorneyRegular').focusout(function () {
+                if (parseInt($('#qtySpecialPowerOfAttorneyRegular').val()) > 0 && !$('#qtySpecialPowerOfAttorneyExpedite').val()) {
+                    $('#qtySpecialPowerOfAttorney').val(parseInt($('#qtySpecialPowerOfAttorneyRegular').val()))
+                }
+                else {
+                    $('#qtySpecialPowerOfAttorney').val(parseInt($('#qtySpecialPowerOfAttorneyExpedite').val()) + parseInt($('#qtySpecialPowerOfAttorneyRegular').val()))
+                }
+            });
+
+            $('#qtyMOAExpedite').focusout(function () {
+                if (parseInt($('#qtyMOAExpedite').val()) > 0 && !$('#qtyMOARegular').val()) {
+                    $('#qtyMOA').val(parseInt($('#qtyMOAExpedite').val()))
+                }
+                else {
+                    $('#qtyMOA').val(parseInt($('#qtyMOAExpedite').val()) + parseInt($('#qtyMOARegular').val()))
+                }
+            });
+            $('#qtyMOARegular').focusout(function () {
+                if (parseInt($('#qtyMOARegular').val()) > 0 && !$('#qtyMOAExpedite').val()) {
+                    $('#qtyMOA').val(parseInt($('#qtyMOARegular').val()))
+                }
+                else {
+                    $('#qtyMOA').val(parseInt($('#qtyMOAExpedite').val()) + parseInt($('#qtyMOARegular').val()))
+                }
+            });
+
+            $('#qtyMOUExpedite').focusout(function () {
+                if (parseInt($('#qtyMOUExpedite').val()) > 0 && !$('#qtyMOURegular').val()) {
+                    $('#qtyMOU').val(parseInt($('#qtyMOUExpedite').val()))
+                }
+                else {
+                    $('#qtyMOU').val(parseInt($('#qtyMOUExpedite').val()) + parseInt($('#qtyMOURegular').val()))
+                }
+            });
+            $('#qtyMOURegular').focusout(function () {
+                if (parseInt($('#qtyMOURegular').val()) > 0 && !$('#qtyMOUExpedite').val()) {
+                    $('#qtyMOU').val(parseInt($('#qtyMOURegular').val()))
+                }
+                else {
+                    $('#qtyMOU').val(parseInt($('#qtyMOUExpedite').val()) + parseInt($('#qtyMOURegular').val()))
+                }
+            });
+
+            $('#qtyAnyContractExpedite').focusout(function () {
+                if (parseInt($('#qtyAnyContractExpedite').val()) > 0 && !$('#qtyAnyContractRegular').val()) {
+                    $('#qtyAnyContract').val(parseInt($('#qtyAnyContractExpedite').val()))
+                }
+                else {
+                    $('#qtyAnyContract').val(parseInt($('#qtyAnyContractExpedite').val()) + parseInt($('#qtyAnyContractRegular').val()))
+                }
+            });
+            $('#qtyAnyContractRegular').focusout(function () {
+                if (parseInt($('#qtyAnyContractRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
+                    $('#qtyAnyContract').val(parseInt($('#qtyAnyContractRegular').val()))
+                }
+                else {
+                    $('#qtyAnyContract').val(parseInt($('#qtyAnyContractExpedite').val()) + parseInt($('#qtyAnyContractRegular').val()))
+                }
+            });
+
+            $('#qtyAffidavitOfConsentExpedite').focusout(function () {
+                if (parseInt($('#qtyAffidavitOfConsentExpedite').val()) > 0 && !$('#qtyAffidavitOfConsentRegular').val()) {
+                    $('#qtyAffidavitOfConsent').val(parseInt($('#qtyAffidavitOfConsentExpedite').val()))
+                }
+                else {
+                    $('#qtyAffidavitOfConsent').val(parseInt($('#qtyAffidavitOfConsentExpedite').val()) + parseInt($('#qtyAffidavitOfConsentRegular').val()))
+                }
+            });
+            $('#qtyAffidavitOfConsentRegular').focusout(function () {
+                if (parseInt($('#qtyAffidavitOfConsentRegular').val()) > 0 && !$('#qtyAnyContractExpedite').val()) {
+                    $('#qtyAffidavitOfConsent').val(parseInt($('#qtyAffidavitOfConsentRegular').val()))
+                }
+                else {
+                    $('#qtyAffidavitOfConsent').val(parseInt($('#qtyAffidavitOfConsentExpedite').val()) + parseInt($('#qtyAffidavitOfConsentRegular').val()))
+                }
+            });
+
+            $('#qtyJointAffidavitExpedite').focusout(function () {
+                if (parseInt($('#qtyJointAffidavitExpedite').val()) > 0 && !$('#qtyJointAffidavitRegular').val()) {
+                    $('#qtyJointAffidavit').val(parseInt($('#qtyJointAffidavitExpedite').val()))
+                }
+                else {
+                    $('#qtyJointAffidavit').val(parseInt($('#qtyJointAffidavitExpedite').val()) + parseInt($('#qtyJointAffidavitRegular').val()))
+                }
+            });
+            $('#qtyJointAffidavitRegular').focusout(function () {
+                if (parseInt($('#qtyJointAffidavitRegular').val()) > 0 && !$('#qtyJointAffidavitExpedite').val()) {
+                    $('#qtyJointAffidavit').val(parseInt($('#qtyJointAffidavitRegular').val()))
+                }
+                else {
+                    $('#qtyJointAffidavit').val(parseInt($('#qtyJointAffidavitExpedite').val()) + parseInt($('#qtyJointAffidavitRegular').val()))
+                }
+            });
+
+            $('#qtyOtherAffidavitExpedite').focusout(function () {
+                if (parseInt($('#qtyOtherAffidavitExpedite').val()) > 0 && !$('#qtyOtherAffidavitRegular').val()) {
+                    $('#qtyOtherAffidavit').val(parseInt($('#qtyOtherAffidavitExpedite').val()))
+                }
+                else {
+                    $('#qtyOtherAffidavit').val(parseInt($('#qtyOtherAffidavitExpedite').val()) + parseInt($('#qtyOtherAffidavitRegular').val()))
+                }
+            });
+            $('#qtyOtherAffidavitRegular').focusout(function () {
+                if (parseInt($('#qtyOtherAffidavitRegular').val()) > 0 && !$('#qtyOtherAffidavitExpedite').val()) {
+                    $('#qtyOtherAffidavit').val(parseInt($('#qtyOtherAffidavitRegular').val()))
+                }
+                else {
+                    $('#qtyOtherAffidavit').val(parseInt($('#qtyOtherAffidavitExpedite').val()) + parseInt($('#qtyOtherAffidavitRegular').val()))
+                }
+            });
+
+            $('#qtyCourtDecisionExpedite').focusout(function () {
+                if (parseInt($('#qtyCourtDecisionExpedite').val()) > 0 && !$('#qtyCourtDecisionRegular').val()) {
+                    $('#qtyCourtDecision').val(parseInt($('#qtyCourtDecisionExpedite').val()))
+                }
+                else {
+                    $('#qtyCourtDecision').val(parseInt($('#qtyCourtDecisionExpedite').val()) + parseInt($('#qtyCourtDecisionRegular').val()))
+                }
+            });
+            $('#qtyCourtDecisionRegular').focusout(function () {
+                if (parseInt($('#qtyCourtDecisionRegular').val()) > 0 && !$('#qtyCourtDecisionExpedite').val()) {
+                    $('#qtyCourtDecision').val(parseInt($('#qtyCourtDecisionRegular').val()))
+                }
+                else {
+                    $('#qtyCourtDecision').val(parseInt($('#qtyCourtDecisionExpedite').val()) + parseInt($('#qtyCourtDecisionRegular').val()))
+                }
+            });
+
+            $('#qtyCourtResolutionExpedite').focusout(function () {
+                if (parseInt($('#qtyCourtResolutionExpedite').val()) > 0 && !$('#qtyCourtResolutionRegular').val()) {
+                    $('#qtyCourtResolution').val(parseInt($('#qtyCourtResolutionExpedite').val()))
+                }
+                else {
+                    $('#qtyCourtResolution').val(parseInt($('#qtyCourtResolutionExpedite').val()) + parseInt($('#qtyCourtResolutionRegular').val()))
+                }
+            });
+            $('#qtyCourtResolutionRegular').focusout(function () {
+                if (parseInt($('#qtyCourtResolutionRegular').val()) > 0 && !$('#qtyCourtResolutionExpedite').val()) {
+                    $('#qtyCourtResolution').val(parseInt($('#qtyCourtResolutionRegular').val()))
+                }
+                else {
+                    $('#qtyCourtResolution').val(parseInt($('#qtyCourtResolutionExpedite').val()) + parseInt($('#qtyCourtResolutionRegular').val()))
+                }
+            });
+
+            $('#qtyCourtOtherDocumentExpedite').focusout(function () {
+                if (parseInt($('#qtyCourtOtherDocumentExpedite').val()) > 0 && !$('#qtyCourtOtherDocumentRegular').val()) {
+                    $('#qtyCourtOtherDocument').val(parseInt($('#qtyCourtOtherDocumentExpedite').val()))
+                }
+                else {
+                    $('#qtyCourtOtherDocument').val(parseInt($('#qtyCourtOtherDocumentExpedite').val()) + parseInt($('#qtyCourtOtherDocumentRegular').val()))
+                }
+            });
+            $('#qtyCourtOtherDocumentRegular').focusout(function () {
+                if (parseInt($('#qtyCourtOtherDocumentRegular').val()) > 0 && !$('#qtyCourtOtherDocumentExpedite').val()) {
+                    $('#qtyCourtOtherDocument').val(parseInt($('#qtyCourtOtherDocumentRegular').val()))
+                }
+                else {
+                    $('#qtyCourtOtherDocument').val(parseInt($('#qtyCourtOtherDocumentExpedite').val()) + parseInt($('#qtyCourtOtherDocumentRegular').val()))
+                }
+            });
+
+            $('#qtyImmigrationExpedite').focusout(function () {
+                if (parseInt($('#qtyImmigrationExpedite').val()) > 0 && !$('#qtyImmigrationRegular').val()) {
+                    $('#qtyImmigration').val(parseInt($('#qtyImmigrationExpedite').val()))
+                }
+                else {
+                    $('#qtyImmigration').val(parseInt($('#qtyImmigrationExpedite').val()) + parseInt($('#qtyImmigrationRegular').val()))
+                }
+            });
+            $('#qtyImmigrationRegular').focusout(function () {
+                if (parseInt($('#qtyImmigrationRegular').val()) > 0 && !$('#qtyImmigrationExpedite').val()) {
+                    $('#qtyImmigration').val(parseInt($('#qtyImmigrationRegular').val()))
+                }
+                else {
+                    $('#qtyImmigration').val(parseInt($('#qtyImmigrationExpedite').val()) + parseInt($('#qtyImmigrationRegular').val()))
+                }
+            });
+
+            $('#qtyDSWDClearanceExpedite').focusout(function () {
+                if (parseInt($('#qtyDSWDClearanceExpedite').val()) > 0 && !$('#qtyDSWDClearanceRegular').val()) {
+                    $('#qtyDSWDClearance').val(parseInt($('#qtyDSWDClearanceExpedite').val()))
+                }
+                else {
+                    $('#qtyDSWDClearance').val(parseInt($('#qtyDSWDClearanceExpedite').val()) + parseInt($('#qtyDSWDClearanceRegular').val()))
+                }
+            });
+            $('#qtyDSWDClearanceRegular').focusout(function () {
+                if (parseInt($('#qtyDSWDClearanceRegular').val()) > 0 && !$('#qtyDSWDClearanceExpedite').val()) {
+                    $('#qtyDSWDClearance').val(parseInt($('#qtyDSWDClearanceRegular').val()))
+                }
+                else {
+                    $('#qtyDSWDClearance').val(parseInt($('#qtyDSWDClearanceExpedite').val()) + parseInt($('#qtyDSWDClearanceRegular').val()))
+                }
+            });
+
+            $('#qtyPoliceClearanceExpedite').focusout(function () {
+                if (parseInt($('#qtyPoliceClearanceExpedite').val()) > 0 && !$('#qtyPoliceClearanceRegular').val()) {
+                    $('#qtyPoliceClearance').val(parseInt($('#qtyPoliceClearanceExpedite').val()))
+                }
+                else {
+                    $('#qtyPoliceClearance').val(parseInt($('#qtyPoliceClearanceExpedite').val()) + parseInt($('#qtyPoliceClearanceRegular').val()))
+                }
+            });
+            $('#qtyPoliceClearanceRegular').focusout(function () {
+                if (parseInt($('#qtyPoliceClearanceRegular').val()) > 0 && !$('#qtyPoliceClearanceExpedite').val()) {
+                    $('#qtyPoliceClearance').val(parseInt($('#qtyPoliceClearanceRegular').val()))
+                }
+                else {
+                    $('#qtyPoliceClearance').val(parseInt($('#qtyPoliceClearanceExpedite').val()) + parseInt($('#qtyPoliceClearanceRegular').val()))
+                }
+            });
+
+            $('#qtyBusinessRegistrationExpedite').focusout(function () {
+                if (parseInt($('#qtyBusinessRegistrationExpedite').val()) > 0 && !$('#qtyBusinessRegistrationRegular').val()) {
+                    $('#qtyBusinessRegistration').val(parseInt($('#qtyBusinessRegistrationExpedite').val()))
+                }
+                else {
+                    $('#qtyBusinessRegistration').val(parseInt($('#qtyBusinessRegistrationExpedite').val()) + parseInt($('#qtyBusinessRegistrationRegular').val()))
+                }
+            });
+            $('#qtyBusinessRegistrationRegular').focusout(function () {
+                if (parseInt($('#qtyBusinessRegistrationRegular').val()) > 0 && !$('#qtyBusinessRegistrationExpedite').val()) {
+                    $('#qtyBusinessRegistration').val(parseInt($('#qtyBusinessRegistrationRegular').val()))
+                }
+                else {
+                    $('#qtyBusinessRegistration').val(parseInt($('#qtyBusinessRegistrationExpedite').val()) + parseInt($('#qtyBusinessRegistrationRegular').val()))
+                }
+            });
+
+            $('#qtyBarangayClearanceExpedite').focusout(function () {
+                if (parseInt($('#qtyBarangayClearanceExpedite').val()) > 0 && !$('#qtyBarangayClearanceRegular').val()) {
+                    $('#qtyBarangayClearance').val(parseInt($('#qtyBarangayClearanceExpedite').val()))
+                }
+                else {
+                    $('#qtyBarangayClearance').val(parseInt($('#qtyBarangayClearanceExpedite').val()) + parseInt($('#qtyBarangayClearanceRegular').val()))
+                }
+            });
+            $('#qtyBarangayClearanceRegular').focusout(function () {
+                if (parseInt($('#qtyBarangayClearanceRegular').val()) > 0 && !$('#qtyBarangayClearanceExpedite').val()) {
+                    $('#qtyBarangayClearance').val(parseInt($('#qtyBarangayClearanceRegular').val()))
+                }
+                else {
+                    $('#qtyBarangayClearance').val(parseInt($('#qtyBarangayClearanceExpedite').val()) + parseInt($('#qtyBarangayClearanceRegular').val()))
+                }
+            });
+
+            $('#qtyExportDocumentsExpedite').focusout(function () {
+                if (parseInt($('#qtyExportDocumentsExpedite').val()) > 0 && !$('#qtyExportDocumentsRegular').val()) {
+                    $('#qtyExportDocuments').val(parseInt($('#qtyExportDocumentsExpedite').val()))
+                }
+                else {
+                    $('#qtyExportDocuments').val(parseInt($('#qtyExportDocumentsExpedite').val()) + parseInt($('#qtyExportDocumentsRegular').val()))
+                }
+            });
+            $('#qtyExportDocumentsRegular').focusout(function () {
+                if (parseInt($('#qtyExportDocumentsRegular').val()) > 0 && !$('#qtyExportDocumentsExpedite').val()) {
+                    $('#qtyExportDocuments').val(parseInt($('#qtyExportDocumentsRegular').val()))
+                }
+                else {
+                    $('#qtyExportDocuments').val(parseInt($('#qtyExportDocumentsExpedite').val()) + parseInt($('#qtyExportDocumentsRegular').val()))
+                }
+            });
+
+            $('.modal').on('show.bs.modal', function () {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+            });
+
+            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                }
+            });
+
+
+        });
+
+        function Navigate(step, element) {
+            var i, tabcontent, tablinks;
+            tabcontent = $('.tabcontent');
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = $('.nav-link');
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+                tablinks[i].style.color = "gray";
+            }
+            element.style.backgroundColor = "#217ff3";
+            element.style.color = "white";
+            document.getElementById(step).style.display = "block";
+            if (step == "step-one") {
+                $('#selectTimeContainer').css('z-index','-1');
+                $('#selectTimeContainer').css('opacity', '0.5');
+                $('#appointmentSchedule').val('');
+            }
+        };
+
+    </script>
+}

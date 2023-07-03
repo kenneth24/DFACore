@@ -1,0 +1,157 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.SiteSelectionViewModel
+@using Microsoft.Extensions.Options
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    var defaultBranch = (BranchModel)ViewData["DefaultBranch"];
+
+
+}
+<style>
+    body {
+        margin: 0 !important;
+    }
+
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: black;
+    }
+
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input, #step-one-authorized input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+
+
+    .mapouter {
+        position: relative;
+        text-align: right;
+        height: 500px;
+        width: auto;
+    }
+
+    .gmap_canvas {
+        overflow: hidden;
+        background: none !important;
+        height: 500px;
+        width: 100% !important;
+    }
+
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        opacity: 0.7;
+        background: rgba(0, 0, 0, 0.91);
+        z-index: 9999;
+        text-align: center;
+    }
+
+    #loading-image {
+        margin: auto;
+    }
+
+    .img-fluid {
+        width: 100% !important;
+    }
+</style>
+
+<div class="pageContainers" id="application-form" padding: 20px;
+     height: auto;">
+    <div id="loading">
+        <div id="loading-image">
+            <i id="loading-image" class="fa fa-spinner fa-spin fa-3x" style="color: white"></i>
+        </div>
+    </div>
+    <div id="formContainer" class="mt-5">
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+
+        <div class="media">
+            <div class="media-body">
+                <p class="grey-text-bold font-weight-bold p-0 p-label">
+                    @User.Identity.Name<br />
+                    @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+                </p>
+            </div>
+            <p class="float-right text-right mt-auto p-label">
+                <a class="text-uppercase bold" asp-action="LogOff" asp-controller="Account">Logout</a>
+            </p>
+        </div>
+
+        @{
+
+
+            <form id="account" method="post" asp-action="ApplicationSummary" asp-controller="Home">
+                <div>
+                    <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                        <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 6 of 6</p>
+                        <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 6 of 6</p>
+                    </div>
+
+
+                    <div id="documentLocation" class="card-panel bg-light mb-3 w-100 white-bg mt-3 d-flex flex-column justify-content-center">
+                        <div class="location-container w-100 mx-auto px-4">
+                            <p class="mb-0 bold p-1 white-bg text-center mt-5">SELECT PAYMENT METHOD </p>
+                            <p class="p-alt p-label text-center"><i>Pumili ng paraan ng pagbayad</i></p>
+
+                            <div class="card-body px-5 pb-5 pt-3">
+                                @*<button asp-controller="Home" asp-action="OrderSummary" asp-route-id="0" id="philippines-button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4">Pay online</button>
+        <button asp-controller="Home" asp-action="Index" asp-route-id="1" id="abroad-button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4">Payment centers</button>*@
+                                <button type="button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4" onclick="window.location.href = 'https://api-uat.unionbankph.com/partners/sb/customers/v1/oauth2/authorize?response_type=code&client_id=fe667681-2650-4c0b-93fb-c365b2cc0953&redirect_uri=@ViewBag.ReturnUrl.ToString()&scope=payments&type=single&partnerId=5dff2cdf-ef15-48fb-a87b-375ebff415bb'">UnionBank Payment</button>
+                                <button type="button" class="btn btn-primary bold w-100 d-block text-uppercase mb-4" onclick="window.location.href = 'https://api-uat.unionbankph.com/ubp/external/customers/v1/oauth2/authorize?response_type=code&client_id=608e9f9c-b412-49ae-9d02-7ae6e23d1764&redirect_uri=@ViewBag.ReturnUrl.ToString()&scope=payments&type=single&partnerId=4af3d4f5-1bba-4cf5-8715-8bab7af59229'">UnionBank Payment Staging</button>
+                                <button class="btn btn-secondary w-100 d-block text-uppercase bold">Back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+
+        }
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="~/js/apostilleschedule.js"></script>
+
+}

@@ -1,0 +1,85 @@
+﻿@using Newtonsoft.Json;
+@using System.Collections.Generic;
+@model List<DFACore.Models.AdminAccountViewModel>
+
+@{
+    Layout = "~/Views/Shared/_AdministrationLayout.cshtml";
+    ViewData["Title"] = "Branches";
+}
+
+<h3 style="margin-top:50px;">Accounts</h3>
+
+<div class="row">
+    <div class="col-12">
+
+        @if (User.IsInRole("Super Administrator"))
+        {
+            <a class="btn btn-primary pull-right" asp-action="RegisterLRA">Create LRA Account</a>
+            <a class="btn btn-primary pull-right" asp-action="Register" style="margin-right:10px;">Create Admin Account</a>
+            <a class="btn btn-primary pull-right" asp-action="UserAccount" style="margin-right:10px;">View Users</a>
+        }
+
+    </div>
+</div>
+
+
+
+<table class="table" style="font-size:12px;margin-top:10px;">
+    <thead>
+        <tr style="background-color: #217ff3 !important; color: white;">
+            <th style="display:none">
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                CreatedDate
+            </th>
+            <th>
+                Branch
+            </th>
+            <th>
+                Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="display:none">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.MiddleName) @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.Suffix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Branch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Roles)
+                </td>
+                @if (item.Roles != "Super Administrator")
+                {
+                    <td>
+                        <a asp-action="EditAccount" asp-route-userId="@item.Id">Edit</a> | 
+                        <a asp-action="DeleteAccount" asp-route-userId="@item.Id">Delete</a>
+                    </td>
+
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

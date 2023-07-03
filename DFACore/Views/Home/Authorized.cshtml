@@ -1,0 +1,213 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model DFACore.Models.ApplicantsViewModel
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+<style>
+    .nav-item a {
+        height: 30px;
+        line-height: 15px;
+        border: 1px solid #b7b7b7;
+        color: gray;
+    }
+
+    .nav-item .active {
+        color: white;
+    }
+
+    div#application-form {
+        color: gray;
+    }
+
+    /*button {
+        width: 200px;
+    }*/
+    #documentList h6 {
+        font-weight: 600;
+    }
+
+    #appointmentTime div {
+        margin-left: 10px;
+    }
+
+    #step-one input {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .red {
+        color: red;
+    }
+
+    /*.step-three-field {
+        margin-top: 10px;
+    }*/
+
+    p.appointmentHeader {
+        margin-bottom: 0;
+    }
+    /*li.nav-item {
+        height:25px;
+        overflow-y:hidden;
+    }
+        li.nav-item a {
+        height: 25px;
+        line-height: 10px;
+        }*/
+</style>
+
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<div class="pageContainers" id="application-form" style="border: 1px solid #b7b7b7;
+        padding: 20px;
+        height: auto;">
+    <p style=" margin-bottom: 2rem;" class="d-none d-md-block">
+        <span class="float-left font-weight-bold">
+            @User.Identity.Name
+        </span>
+        <span class="float-right">
+            <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a>
+        </span>
+        <span class="float-right" style="padding-right:20px;">
+            @DateTime.Now.ToString("MMMM dd yyy HH:mm tt")
+        </span>
+    </p>
+    <div class="d-sm-none">
+        <p>
+            <span>@User.Identity.Name</span>
+            <span class="float-right"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></span>
+        </p>
+        <p class="text-center">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</p>
+    </div>
+    <div class="modal fade" id="view-requirements-modal" tabindex="-1" role="dialog" aria-labelledby="declarationModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header primary"></div>
+                <div class="modal-body">
+                    <div class="form-group container">
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Requirements for filing/claiming Authentication applications via Authorized Representative:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            1. Authorization letter from the owner. For Minor Applicants - Original Special Power
+                            of Attorney executed by parent/s. <br />
+                            2. Photocopy of the owner's ID bearing his/her signature. <br />
+                            3. Photocopy and original copy of representative's ID. br
+                        </p>
+                        <p class="black-text-bold" style="font-size:12px;">
+                            Acceptable IDs:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            *Digitized Government issued IDs bearing applicant's signature except Pag-Ibig Loyalty Card. <br />
+                            *Senior Citizen, PWD, Solo Parent, Voter's ID/Certification, Passport, Seaman's Book, Alumni ID . <br />
+                            *Digital Student ID (valid for the duration of his studies up to 1 year upon graduation)
+                        </p>
+                        <p class="black-text-bold text-center" style="font-size:14px;">
+                            REMINDER FOR MINOR APPLICANTS
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            For applications / documents involving Minor (age below 18 years old), the following additional documents
+                            must be presented if the applicant / representative processing the authentication / Apostille is:
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any of the parent as reflected on Birth Certificate:</strong> proof of filiation such as Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>Any representative other than the parent as reflected on Birth Certificate:</strong> notarized Special Power of Attorney
+                            executed by any of the parent of the minor as reflected on Birth Certificate.
+                        </p>
+                        <p class="black-text" style="font-size:12px;">
+                            <strong>NOTE:</strong> If the child is not acknowledged by the father, then any  representative (even if he is the biological father) who
+                            is NOT the mother of the minor applicant must present a notarized Special Power of Attorney executed by the mother.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row" style="width: 100%;">
+                            <div class="col-md-4 col-sm-12"> </div>
+
+                            <button id="declaration-agree"
+                                    type="button"
+                                    class="button-secondary text-white col-md-4 col-sm-12"
+                                    data-dismiss="modal"
+                                    style="height:30px;">
+                                CLOSE
+                            </button>
+
+                            <div class="col-md-4 col-sm-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="post" id="application-form">
+
+        <div id="step-one-authorized" class="tabcontent">
+
+            <div style="background-color: #217ff3;color: white;height: 35px;border-radius:5px;margin-bottom:10px;">
+                <p class="text-center" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 3: Apostille Application</p>
+            </div>
+            <h6 style="font-weight:bold">Authorized Representative</h6>
+            <div id="ApplicantContainer">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <input id="AddApplicant" type="button" value="Add" />
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 col-sm-12"></div>
+            <div class="col-md-4 col-sm-12">
+                <button id="stepOneNextBtn" type="button" class="btn col-md-12 col-sm-12" style="background-color:#217ff3;color:white;">Next</button>
+            </div>
+            <div class="col-md-4 col-sm-12"></div>
+        </div>
+        <div>
+            <div class="col-md-4 col-sm-12">
+                <input id="AddApplicant" type="submit" value="Submit" />
+            </div>
+        </div>
+
+    </form>
+
+</div>
+@section Scripts {
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+    <script>
+
+
+
+        $(document).ready(function () {
+            var i = 1;
+            $.ajax({
+                    url: '@Url.Action("PartialApplicant", $"Home")?i=' + 0,
+                    cache: false,
+                    success: function (html) {
+                        $("#ApplicantContainer").append(html); // initial load
+                    }
+                });
+            $("#AddApplicant").click(function () {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("PartialApplicant", $"Home")?i=' + i,
+                    cache: false,
+                    success: function (html) {
+                        $("#ApplicantContainer").append(html);
+                        i++;
+                    }
+                });
+            });
+
+        });
+
+
+    </script>
+}

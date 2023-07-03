@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Failed";
+}
+<div class="card-panel bg-light mb-3 w-100 white-bg mt-4 d-flex flex-column text-center justify-content-center p-4">
+    <form>
+        <center class="mb-4"><i class="fa fa-times text-danger" style="font-size: 50px"></i></center>
+        <h5 class="mb-3 bold text-danger">PAYMENT UNSUCCESSFUL</h5>
+        <h5 class="mb-3 bold text-primary">Your Appointment has not been created.</h5>
+        <div>
+            <div>
+                <button asp-action="LogOff" asp-controller="Account" type="button" class="btn button-primary w-50 text-uppercase" style="color:white;">Exit</button>
+            </div>
+        </div>
+    </form>
+</div>

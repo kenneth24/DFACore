@@ -1,0 +1,140 @@
+﻿@*<link href='~/lib/calendar/core/main.css' rel='stylesheet' />
+<link href='~/lib/calendar/daygrid/main.css' rel='stylesheet' />
+<link href='~/lib/calendar/timegrid/main.css' rel='stylesheet' />
+<script src='~/lib/calendar/core/main.js'></script>
+<script src='~/lib/calendar/interaction/main.js'></script>
+<script src='~/lib/calendar/daygrid/main.js'></script>
+<script src='https://momentjs.com/downloads/moment.min.js'></script>*@
+
+<style>
+
+    body {
+        margin: 40px 10px;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        /*max-width: 900px;*/
+        margin: 0 auto;
+    }
+
+    .fc-scroller {
+        height: auto !important;
+    }
+
+    span.fc-title {
+        color: white !important;
+        padding-left: 5px;
+    }
+
+    span.fc-time {
+        color: white !important;
+    }
+    a.fc-event {
+        cursor:pointer !important;
+        text-align: center!important
+    }
+</style>
+<div id='calendar'></div>
+<script>
+
+     var data =@Html.Raw(ViewData["AvailableDates"]);
+ 
+    //var date = new Date();
+    //var date2 = new Date();
+    //var dateToCompare = date2.setDate(date2.getDate() + 30);
+    //var month = date.getMonth();
+    //var all_days = [];
+    //while (new Date(date) <= new Date(dateToCompare)) {
+    //    var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 8:00';
+    //    all_days.push({ start: new Date(am).toISOString() });
+    //    var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 9:00';
+    //    all_days.push({ start: new Date(am).toISOString() });
+    //    var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 10:00';
+    //    all_days.push({ start: new Date(am).toISOString() });
+    //    var am = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 11:00';
+    //    all_days.push({ start: new Date(am).toISOString() });
+    //    var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 12:00';
+    //    all_days.push({ start: new Date(am).toISOString() });
+    //    var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 13:00';
+    //    all_days.push({ start: new Date(pm).toISOString() });
+    //    var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 14:00';
+    //    all_days.push({ start: new Date(pm).toISOString() });
+    //    var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 15:00';
+    //    all_days.push({ start: new Date(pm).toISOString() });
+    //    var pm = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + ' 16:00';
+    //    all_days.push({ start: new Date(pm).toISOString() });
+    //    date.setDate(date.getDate() + 1);
+    //}
+    //console.log(all_days);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+
+            plugins: ['interaction', 'dayGrid'],
+            header: {
+                //right: 'prevYear,prev,next,nextYear,today',
+                left: 'title',
+                //right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                //right: 'dayGridDay,dayGridWeek,prev,next'
+                right: 'dayGridMonth,prev,next'
+            },
+            defaultView: 'dayGridMonth',
+            defaultDate: new Date(),
+            navLinks: false, // can click day/week names to navigate views
+            //editable: true,
+            eventLimit: false, // allow "more" link when too many events
+            //events: all_days,
+            events: data,
+            eventClick: function (info) {
+                //console.log(info.event.start.getDate());
+                @*$.ajax({
+                    url: '@Url.Action("ValidateScheduleDate")',
+                    type: 'GET',
+                    data: { scheduleDate: moment(info.event.start).format('MM/DD/YYYY hh:mm a') },
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        console.log($('#appointmentSchedule').val());
+                        if (result) {
+                            $('#availableSchedMessage').show();
+                        }
+                        else {
+                            $('#unavailableSchedMessage').show();
+                        }
+                    }
+                });*@
+                if (info.event.title == "Available") {
+                    $('#appointmentDate').text('');
+                    $('#appointmentDate').text(moment(info.event.start).format('MM/DD/YYYY'));
+                    $('#appointmentSchedule').val($('#appointmentDate').text().concat(' ', $('#appointmentScheduleTime').text()));
+                    $('#selectTimeContainer').css('z-index', '1');
+                    $('#selectTimeContainer').css('opacity', '1');
+                    $('#appointmentSchedule').change();
+                }
+                
+                //canConfirm = validateSchedule();
+
+                //z-index: -1; opacity: 0.5;
+
+                //alert('Event: ' + info.event.title);
+                //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                //alert('View: ' + info.view.type);
+
+                // change the border color just for fun
+                //info.el.style.borderColor = 'red';
+            }
+
+        });
+        calendar.render();
+
+        //$('#calendar').fullCalendar('removeEvents');
+        //calendar.rerenderEvents();
+        //$('.fc-view-container').show();
+
+    });
+
+</script>

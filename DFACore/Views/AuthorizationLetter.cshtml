@@ -1,0 +1,97 @@
+﻿@model DFACore.Models.TestData
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authorization Letter</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif, Helvetica, sans-serif;
+            font-weight: 400;
+            color: black;
+            font-size: 20px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .appointMentTable {
+            font-size: 14px;
+        }
+
+        .appointMentValue {
+            font-weight: bold;
+        }
+
+        .customTable table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+            .customTable table td {
+                padding: 5px;
+            }
+
+        .borderless td {
+            border: none;
+        }
+
+        .borderless td {
+            padding: 1px;
+            vertical-align: top;
+        }
+
+        .padding30 {
+            padding-left: 30px !important;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .box {
+            width: 100%;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <p style="text-align:center;font-weight:bold;font-size:20px;">AUTHORIZATION LETTER</p>
+    </header>
+    <div>
+        <p style="margin-top:40px;">Department of Foreign Affairs - Authentication Division</p>
+
+        <p style="margin-top:60px;">This is to authorize _____________________________________________________________ with valid</p>
+        <p style="margin-left:320px;font-size:16px;">(Name of Authorized Representative)</p>
+
+        <p style="margin-top:40px;">ID presented to process, receive and claim authentication / Apostille application on my behalf for the following documents:</p>
+
+        <div class="box" style="min-height:200px;margin-top:15px;"></div>
+
+        <p style="margin-top:40px;">For the purpose of ______________________________________.</p>
+
+        <p style="margin-top:40px;">I am providing a copy of my valid ID ________________________________________ with</p>
+        <p style="margin-left:460px;font-size:16px;">(Valid ID presented)</p>
+
+        <p style="margin-top:40px;">ID number __________________________ and expiry date __________________________.</p>
+
+        <p style="margin-top:80px;">
+            __________________________ <br>
+            Name of the Document Owner <br>
+            (Signature over Printed Name)
+        </p>
+
+        <p style="margin-top:40px;">Date: _____________________</p>
+    </div>
+</body>
+</html>

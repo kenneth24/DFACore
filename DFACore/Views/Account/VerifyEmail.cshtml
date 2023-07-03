@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Verify Email";
+}
+<style>
+    button a {
+        color:white;
+    }
+</style>
+<div class="row pageContainers">
+    <div class="col-md-3 col-sm-0">
+    </div>
+    <div class="col-md-6 col-sm-12" style="text-align: center;">
+
+        <h2 class="blue-text bold mb-2 mt-0 h2">Verify your email</h2>
+        <h6>
+            For added security, we need to verify your <br> email address. We sent a verification link to:
+        </h6>
+
+        <h6>
+            @ViewData["ModifiedEmail"]
+        </h6>
+
+        <h6>
+            Kindly check your inbox, spam or other folder <br>
+            to view the verification link. The verification link will <br> be valid for 30 minutes.
+        </h6>
+
+        <h6>
+            If you do not received the link in 2 minutes, click <br> the RESEND button below:
+        </h6>
+        <br />
+        <div class="form-group col-md-12 col-sm-12">
+            <a class="btn btn-primary" asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color: white!important">RESEND</a>
+        </div>
+
+     @*   <div style="border: 1px solid #b7b7b7;height:auto;">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Verify emails</p>
+            </div>
+            <div style="padding:30px;">
+                <h6>
+                    For added security, we need to verify your address. We sent a verification link to (email address)
+                </h6>
+                <p>
+                    <span style="font-weight:bold">REMINDER:</span> Please check you inbox, spam or other folder to view the verification link
+                </p>
+                <p>
+                    If you do not receive it in 2 minutes, click <a asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color:#217ff3">SEND AGAIN</a>
+                    @ViewData["Email"]
+                </p>
+
+            </div>
+        </div>*@
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
+</div>

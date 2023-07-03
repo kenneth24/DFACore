@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "ConfirmEmail";
+}
+<style>
+    button a {
+        color: white;
+    }
+</style>
+<div class="row pageContainers">
+    <div class="col-md-3 col-sm-0">
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div style="border: 1px solid #b7b7b7;height:auto;">
+            <div style="background-color: #217ff3;color: white;height: 35px;">
+                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Confirm email</p>
+            </div>
+            <div style="padding:30px;">
+                <p style="text-align:center;">
+                    Your account has been successfully created!
+                </p>
+                <div class="row">
+                    <div class="col-md-2 col-sm-1"></div>
+                    <div class="col-md-8 col-sm-10">
+                        <button type="submit" class="btn btn-primary col-md-12 col-sm-12" style="background-color:#217ff3;">@Html.ActionLink("Proceed to Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</button>
+                    </div>
+                    <div class="col-md-2 col-sm-1"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-0">
+    </div>
+</div>
