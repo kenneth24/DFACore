@@ -594,9 +594,9 @@ namespace DFACore.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
-                    Log($"Email not exist or Email not confirmed. Email: {model.Email}");
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("/ForgotPasswordConfirmation");
+                    ModelState.AddModelError("", "Email address does not exist.");
+                    //Log($"Email not exist or Email not confirmed. Email: {model.Email}");
+                    return View();
                 }
 
                 // For more information on how to enable account confirmation and password reset please 
@@ -630,7 +630,7 @@ namespace DFACore.Controllers
                 //        $"Please reset your password by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}'> clicking here </a>.",
                 //        attachment);
                 Log($"Click ForgotPassword button and send email for reset password to {model.Email}.");
-                return RedirectToAction("ForgotPasswordConfirmation");
+                return RedirectToAction("ForgotPasswordConfirmation", new { Email = model.Email });
             }
 
             return View();
@@ -668,9 +668,10 @@ namespace DFACore.Controllers
         //}
 
         [AllowAnonymous]
-        public ActionResult ForgotPasswordConfirmation()
+        public ActionResult ForgotPasswordConfirmation(ForgotPasswordViewModel model)
         {
-            Log($"Visit ForgotPasswordConfirmation page");
+            ViewData["Email"] = model.Email;
+            //Log($"Visit ForgotPasswordConfirmation page");
             return View();
         }
 
