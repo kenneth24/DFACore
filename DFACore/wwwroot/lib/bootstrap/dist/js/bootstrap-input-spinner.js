@@ -66,6 +66,7 @@
             groupClass: "", // css class of the resulting input-group
             buttonsClass: "btn-outline-secondary",
             buttonsWidth: "2.5rem",
+            buttonsHeight: "2.5rem",
             textAlign: "center", // alignment of the entered number
             autoDelay: 500, // ms threshold before auto value change
             autoInterval: 50, // speed of auto value change, set to `undefined` to disable auto-change
@@ -75,9 +76,9 @@
             editor: I18nEditor, // the editor (parsing and rendering of the input)
             template: // the template of the input
                 '<div class="input-group ${groupClass}">' +
-                '<button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus" type="button">${decrementButton}</button>' +
-                '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input"/>' +
-                '<button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus" type="button">${incrementButton}</button>' +
+                '<button style="min-width: ${buttonsWidth}" class="btn btn-decrement ${buttonsClass} btn-minus h25r" type="button">${decrementButton}</button>' +
+                '<input type="text" inputmode="decimal" style="text-align: ${textAlign}" class="form-control form-control-text-input h25r"/>' +
+                '<button style="min-width: ${buttonsWidth}" class="btn btn-increment ${buttonsClass} btn-plus h25r" type="button">${incrementButton}</button>' +
                 '</div>'
         }
 

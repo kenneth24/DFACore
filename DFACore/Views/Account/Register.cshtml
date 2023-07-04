@@ -39,11 +39,9 @@
 <div class="row pageContainers">
     <div class="col-lg-3 col-md-1 col-sm-1"></div>
     <div class="col-lg-6 col-md-10 col-sm-10">
-        <form id="registrationForm" method="post" style="border: 1px solid #b7b7b7;
-        height: auto;
-">
+        <form id="registrationForm" method="post" style="height: auto;background-color:#FFFFFF">
             <div style="background-color: #217ff3;color: white;height: 35px;">
-                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
+                <p class="text-center " style="padding: 8px;font-weight:600;font-size:16px;">Account Registration</p>
             </div>
             <div asp-validation-summary="All" class="text-danger" style="margin-top:20px;"></div>
             <p class="form-group" style="float:right;"><i>(Fields with asterisks (<span class="red-text">*</span>) are required)</i></p>
@@ -137,14 +135,19 @@
                             </label>*@
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input asp-for="IsTermsAndConditionChecked" type="checkbox" class="form-check-input">I accept the <a href="#" data-toggle="modal" data-target="#exampleModal">Terms and Conditions</a>
+                                <input asp-for="IsTermsAndConditionChecked" type="checkbox" class="form-check-input">
+                                <span class="red">*</span>By accepting here, I certify that I have read, understood and agreed with the <a href="#" data-toggle="modal" data-target="#termsOfUseModal">Terms of Use</a>
                             </label>
                         </div>
                     </div>
 
                 </div>
                 <div class="row form-group">
-                    <div class="col-md-5 col-sm-5"><button type="button" class="btn button-secondary col-12" onclick="location.href='@Url.Action("Dashboard", "Home")'" style="color:white; margin-bottom:10px;">@Html.ActionLink("Back", "Dashboard", "Home")</button></div>
+                    <div class="col-md-5 col-sm-5">
+                        <button type="button" class="btn button-secondary col-12" onclick="location.href='@Url.Action("Dashboard", "Home")'" style="color:white; margin-bottom:10px;">
+                            @Html.ActionLink("Back", "Dashboard", "Home", null, new { style = "color: #FFFFFF!important;" })
+                        </button>
+                    </div>
                     <div class="col-md-2 col-sm-2">
                     </div>
                     <div class="col-md-5 col-sm-5"><button type="submit" class="btn btn-primary col-12">Register</button></div>
@@ -157,6 +160,53 @@
     <div class="col-lg-3 col-md-1 col-sm-1"></div>
 </div>
 <div class="row">
+
+
+    <!-- Terms of use -->
+    <div class="modal fade" id="termsOfUseModal" tabindex="-1" role="dialog" aria-labelledby="termsOfUseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="blue-text bold mb-0 mt-2 h3 text-center w100">TERMS OF USE</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        1. The Apostille Application and Appointment System (AAAS) allows users to schedule and manage appointments. Users agree to use the System only for its intended purpose and in compliance with these Terms and any applicable laws and regulations.
+                    </p>
+
+                    <p>
+                        2. The AAAS allocate slots on a first come, first served basis. Users accept the responsibility for supplying, checking, and verifying the accuracy and correctness of the information they provide on this system in connection with their application.
+                    </p>
+
+                    <p>
+                        3. Incorrect information supplied may result in delay or rejection of authentication / Apostille application. Misrepresentation of the user supplying inaccurate information may be considered grounds for refusal / cancellation / forfeiture of authentication / Apostille application.
+                    </p>
+
+                    <p>
+                        4. Once the appointment is made, the applicable fees are non-refundable and the appointment slot/s cannot be transferred to another person regardless of cancellation or missed appointments.
+                    </p>
+
+                    <p style="font-style:italic;">
+                        By proceeding with this application, I understand that I am signifying my consent to the disclosure, collection, and use of my personal information and the data required under the Executive Order No. 582. My consent which effectively constitutes a waiver of any and all privacy rights pertaining to the disclosure, collection, and use of my Appointment System Website's Privacy Policy, the Data Privacy Act of 2012 and it's Implementing Rules and Regulations, and other pertinent DFA rules, regulation, policies on the matter.
+                    </p>
+
+                    <p>
+                        (Last updated: June 27, 2023)
+                    </p>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary b150 m20r" data-dismiss="modal">DECLINE</button>
+                    <button type="button" onclick="TermsAndConditionsAction(true)" class="btn btn-primary b150" data-dismiss="modal">I AGREE</button>
+
+                   
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Modal -->

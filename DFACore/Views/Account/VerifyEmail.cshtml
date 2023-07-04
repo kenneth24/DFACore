@@ -1,10 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Verify Email";
 }
 <style>
     button a {
-        color:white;
+        color: white;
     }
 </style>
 <div class="row pageContainers">
@@ -12,6 +11,7 @@
     </div>
     <div class="col-md-6 col-sm-12" style="text-align: center;">
 
+        <img class="img-fluid" src="~/images/icons/verifypage.png" />
         <h2 class="blue-text bold mb-2 mt-0 h2">Verify your email</h2>
         <h6>
             For added security, we need to verify your <br> email address. We sent a verification link to:
@@ -30,29 +30,94 @@
             If you do not received the link in 2 minutes, click <br> the RESEND button below:
         </h6>
         <br />
-        <div class="form-group col-md-12 col-sm-12">
-            <a class="btn btn-primary" asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color: white!important">RESEND</a>
+        <div id="timer"></div>
+
+        <div class="row">
+            <div class="col-md-2 col-sm-1"></div>
+            <div class="col-md-8 col-sm-10">
+                <button id="btnResendDisabled" class="btn btn-primary col-md-12 col-sm-12" style="color: white!important">RESEND</button>
+                <a id="btnResend" class="btn btn-primary col-md-12 col-sm-12" asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color: white!important; display:none;">RESEND</a>
+            </div>
+            <div class="col-md-2 col-sm-1"></div>
         </div>
 
-     @*   <div style="border: 1px solid #b7b7b7;height:auto;">
-            <div style="background-color: #217ff3;color: white;height: 35px;">
-                <p class="text-left " style="padding: 8px;font-weight:600;font-size:16px;">Verify emails</p>
-            </div>
-            <div style="padding:30px;">
-                <h6>
-                    For added security, we need to verify your address. We sent a verification link to (email address)
-                </h6>
-                <p>
-                    <span style="font-weight:bold">REMINDER:</span> Please check you inbox, spam or other folder to view the verification link
-                </p>
-                <p>
-                    If you do not receive it in 2 minutes, click <a asp-action="ResendEmail" asp-controller="Account" asp-route-email="@ViewData["Email"]" style="color:#217ff3">SEND AGAIN</a>
-                    @ViewData["Email"]
-                </p>
-
-            </div>
-        </div>*@
     </div>
     <div class="col-md-3 col-sm-0">
     </div>
 </div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+
+            var duration = 2; // Duration in minutes
+            var countdown = duration * 60; // Convert minutes to seconds
+            var timer = $('#timer');
+            var button = $('#btnResendDisabled');
+            var button2 = $('#btnResend');
+
+            // Disable the button initially
+            button.prop('disabled', true);
+
+            // Update the countdown timer every second
+            var interval = setInterval(function () {
+                var minutes = Math.floor(countdown / 60);
+                var seconds = countdown % 60;
+
+                timer.text(minutes + ':' + seconds + ' remaining');
+                countdown--;
+
+
+                // Enable the button when the countdown reaches 0
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    timer.text('');
+                    button.prop('disabled', false);
+
+
+                    button.hide();
+                    button2.show();
+                }
+
+
+
+            }, 1000);
+
+            // Click event handler for the send button
+            button.click(function () {
+                button.prop('disabled', true); // Disable the button
+                countdown = duration * 60; // Reset the countdown
+
+                var interval = setInterval(function () {
+                    var minutes = Math.floor(countdown / 60);
+                    var seconds = countdown % 60;
+
+                    timer.text(minutes + ' minutes ' + seconds + ' seconds remaining');
+                    countdown--;
+
+                    // Enable the button when the countdown reaches 0
+                    if (countdown < 0) {
+                        clearInterval(interval);
+                        timer.text('');
+                        button.prop('disabled', false); // Re-enable the button
+
+                        button.hide();
+                        button2.show();
+                    }
+
+
+
+                }, 1000);
+            });
+
+
+        });
+
+
+
+    </script>
+}

@@ -39,9 +39,12 @@ let loading = $('#loading');
 let termsAndConditions = $('#terms-and-conditions-modal');
 let agreeterms = $('#terms-and-conditions-agree');
 let addDocumentOwnerButton = $('#addDocumentOwnerButton');
+let btnAgreeDeclaration = $('#btnAgreeDeclaration');
 let info = {};
 let hasTermsAndConditions = false;
-let hasExpedite = false;
+let hasExpedite = false;;
+
+let recordToSubmit = []
 
 let ownerModel = {
     FirstName: '',
@@ -715,7 +718,7 @@ function docOwnerStepFive() {
 
         fnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
         lnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
-        dateOfBirthValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        dateOfBirthValidation.text(dateOfBirth.val() == '' ? 'This field is required.' : '');
         contactNumberValidation.text(fname.val() == '' ? 'This field is required.' : '');
         countryDestinationValidation.text(countryDestination.val() == '' ? 'This field is required.' : '');
 
@@ -784,8 +787,31 @@ function docOwnerStepFive() {
     record.Records = records;
     record.Record = ownerModel;
 
+    recordToSubmit = record;
 
+    loading.hide();
+    //show declaration modal here
+    console.log('show declaration');
+    $("#declarationModal").modal("show");
 
+    //$.ajax({
+    //    type: "POST",
+    //    url: `${urlBase}Home/ApostilleSchedule`,
+    //    data: { 'model': record.Records },
+    //    success: function () {
+    //        loading.hide();
+    //        window.location.href = `${urlBase}Home/ApostilleSchedule`
+    //    },
+    //    error: function (data) {
+    //        loading.hide();
+    //    }
+    //}).done(function (data) {
+    //    //console.log(data);
+    //});
+}
+
+btnAgreeDeclaration.on('click', function () {
+    loading.show();
     $.ajax({
         type: "POST",
         url: `${urlBase}Home/ApostilleSchedule`,
@@ -800,7 +826,9 @@ function docOwnerStepFive() {
     }).done(function (data) {
         //console.log(data);
     });
-}
+});
+
+
 
 function authorizedStepFive() {
 
@@ -947,21 +975,27 @@ function authorizedStepFive() {
     record.Records = records;
     record.Record = authorized;
 
+    recordToSubmit = record;
 
-    $.ajax({
-        type: "POST",
-        url: `${urlBase}Home/ApostilleSchedule`,
-        data: { 'model': record.Records },
-        success: function () {
-            loading.hide();
-            window.location.href = `${urlBase}Home/ApostilleSchedule`
-        },
-        error: function (data) {
-            loading.hide();
-        }
-    }).done(function (data) {
+    loading.hide();
+    //show declaration modal here
+    console.log('show declaration');
+    $("#declarationModal").modal("show");
 
-    });
+    //$.ajax({
+    //    type: "POST",
+    //    url: `${urlBase}Home/ApostilleSchedule`,
+    //    data: { 'model': record.Records },
+    //    success: function () {
+    //        loading.hide();
+    //        window.location.href = `${urlBase}Home/ApostilleSchedule`
+    //    },
+    //    error: function (data) {
+    //        loading.hide();
+    //    }
+    //}).done(function (data) {
+
+    //});
 
 }
 

@@ -104,10 +104,10 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
         @*<section class="header px-4 mt-3">
-                <div class="text-center mt-3 w-100 mb-4">
-                    <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
-                </div>
-            </section>*@
+        <div class="text-center mt-3 w-100 mb-4">
+        <h3 class="black-text bold mb-0 mt-2 h3">Apostille Appointment System</h3>
+        </div>
+        </section>*@
 
 
         <div class="media">
@@ -124,13 +124,13 @@
 
         @*<br class="show-on-large-only" />
 
-            <div class="hide-on-large">
-                <p class="p-label mb-1">
-                    <span class="grey-text-bold">@User.Identity.Name</span>
-                    <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
-                </p>
-                <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
-            </div>*@
+        <div class="hide-on-large">
+        <p class="p-label mb-1">
+        <span class="grey-text-bold">@User.Identity.Name</span>
+        <span class="float-right">@DateTime.Now.ToString("MMMM dd yyy HH:mm tt")</span>
+        </p>
+        <p class="text-right p-label"> <a asp-action="LogOff" asp-controller="Account" style="font-weight:bold;">Logout</a></p>
+        </div>*@
 
         @{
             <form id="account" method="post" asp-action="ApostilleSchedule" asp-controller="Home">
@@ -158,9 +158,13 @@
 
                                 <div class="border p-3 ">
                                     @if (ViewBag.DocumentType == "Authorized")
-                                    {<p class="text-primary bold">Authorized Representative</p>}
+                                    {
+                                        <p class="text-primary bold">Authorized Representative</p>
+                                    }
                                     else
-                                    {<p class="text-primary bold">Document Owner</p>}
+                                    {
+                                        <p class="text-primary bold">Document Owner</p>
+                                    }
 
 
                                     <div class="form-group">
@@ -292,11 +296,11 @@
                                 <div class="mb-4">
                                     <div class="position-relative  mx-3 px-0 mb-3">
                                         <div id="documentList" class="border" style="
-                                        padding: 10px;
-                                        height: 150px;
-                                        overflow-y: scroll;
-                                        position: relative;
-                                        top: 10px;">
+                                                padding: 10px;
+                                                height: 150px;
+                                                overflow-y: scroll;
+                                                position: relative;
+                                                top: 10px;">
                                             <div class="px-5">
                                                 <table class="table" id="documentsTable">
                                                     <tr>
@@ -325,7 +329,6 @@
 
                         </div>
                         <div id="documentOwners">
-
                         </div>
 
                         <section class="addDocumentOwnerContainer">
@@ -365,12 +368,12 @@
                         <div class="hide-on-small">
                             <div class="card-body px-5 py-5 d-flex w-100">
                                 <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
-                                <input type="button" id="submitButton" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3" value="Next">
+                                <input type="button" id="submitButton" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3 h100" value="Next">
                             </div>
                         </div>
                         <div class="show-on-small-only mt-5 my-auto">
                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
-                            <input type="button" id="submitButtonSM" class="courier-btn btn btn-primary text-uppercase w-100" value="Next">
+                            <input type="button" id="submitButtonSM" class="courier-btn btn btn-primary text-uppercase w-100 h100" value="Next">
                         </div>
                     </div>
 
@@ -437,13 +440,13 @@
                     <div id="quantityInputSelector" class="d-flex">
                         <div class="d-flex flex-column ml-auto mr-2">
                             <span class="bold" style="text-align:center">Regular</span>
-                            <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-0 regular" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
+                            <input type="number" min="0" max="10" value="0" class="small transactionQuantity mx-auto mb-0 regular h25r" id="qtyNbiClearanceRegular" style="width: 50px!important;height:auto!important; font-size: 24px">
 
                         </div>
                         <div class="d-flex flex-column mr-auto ml-2">
-                            <div>
+                            <div style="text-align: center;">
                                 <span class="bold" style="text-align:center">Expedite</span>
-                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-0 expedite" id="qtyNbiClearanceExpedite" style="width: 50px !important; height: auto !important; font-size: 24px ">
+                                <input type="number" min="0" max="10" value="0" disabled class="small transactionQuantity mx-auto mb-0 expedite h25r" id="qtyNbiClearanceExpedite" style="width: 50px !important; height: auto !important; font-size: 24px ">
                             </div>
                         </div>
                     </div>
@@ -470,13 +473,55 @@
     </div>
 </div>
 
+
+<!-- Declaration -->
+<div class="modal fade" id="declarationModal" tabindex="-1" role="dialog" aria-labelledby="declarationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h3 class="blue-text bold mb-0 mt-2 h3 text-center w100">DECLARATION</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    I hereby declare and certify that the documents submitted are authentic, I understand that the documents submitted shall be subjected to verification by the Department of Foreign Affairs (DFA).
+                </p>
+
+                <p>
+                    In case my document needs further verification from the issuing agency, I am aware that release of submitted document/s may exceed beyond the prescribed processing time depending on the compliance of the verification request from the issuing agency.
+                </p>
+
+                <p>
+                    I understand that should my document/s be submitted to any jurisdiction where the Hague Convention Abolishing the Requirement of Legalization for Foreign Public Documents (otherwise known as the Apostille Convention of 1961) does not apply, I shall undertake to present said document/s to the appropriate Embassy/Consulate in the Philippines for legalization.
+                </p>
+
+                <p>
+                    Further, I hold the DFA free from any liability should the Apostilized document be not accepted by any foreign jurisdiction, or for any delay, delivery error, loss, or damage due to unforeseen events beyond the control of the DFA, or once the Apostillized documents has been issued to the courier company or to my authorized representative.
+                </p>
+
+                <p>
+                    By proceeding with this application, I understand that I am signifying my consent which effectively constitutes as waiver of any and all privacy rights pertaining to the disclosure, collection, and use of my personal information and data under the specific terms and conditions of R.A. No. 10173 or the Data Privacy Act of 2012 and its Implementing Rules and Regulations, and other pertinent DFA rules, regulations and policies on the matter.
+                </p>
+
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button button id="btnDeclineDeclaration" type="button" class="btn btn-secondary b150 m20r" data-dismiss="modal">DECLINE</button>
+                <button id="btnAgreeDeclaration" type="button" onclick="TermsAndConditionsAction(true)" class="btn btn-primary b150" data-dismiss="modal">I AGREE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
 
     <script>
         $("#qtyNbiClearanceRegular").inputSpinner({ buttonsOnly: true })
         $("#qtyNbiClearanceExpedite").inputSpinner({ buttonsOnly: true })
 
-        
+
     </script>
 
     <script src="~/js/personalinfo.js"></script>

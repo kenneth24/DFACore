@@ -303,9 +303,9 @@ namespace DFACore.Controllers
                 return View(model);
             }
 
-            ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
-            ViewData["DeclarationMessage"] = _applicantRepo.GetNotice(2);
-            ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
+            //ViewData["NoticeMessage"] = _applicantRepo.GetNotice(1);
+            //ViewData["DeclarationMessage"] = _applicantRepo.GetNotice(2);
+            //ViewData["TermsAndConditionsMessage"] = _applicantRepo.GetNotice(3);
 
             //var user = await _userManager.FindByEmailAsync(model.Email);
             var user = _userManager.Users.Where(a => a.Email == model.Email).FirstOrDefault();
@@ -622,7 +622,7 @@ namespace DFACore.Controllers
                 await _emailService.SendAsync(
                     model.Email,
                     "Reset Password",
-                    strTemplate);
+                    strTemplate, true);
 
                 //var attachment = new Attachment("test.pdf", await GeneratePDF(), new ContentType("application", "pdf"));
 
