@@ -200,7 +200,7 @@
         border-radius: 50%;
     }
 
-    #siteaddress {
+    .footerMarker {
         margin-bottom: 150px !important;
     }
 
@@ -252,7 +252,7 @@
         padding: 1rem !important;
     }
 
-    #siteaddress {
+    .footerMarker {
         margin-bottom: 150px !important;
     }
 

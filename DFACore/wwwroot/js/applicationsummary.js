@@ -3,7 +3,7 @@
 
 
     $(".btnsummary").on('click', function () {
-
+        localStorage.setItem('selectedSite', '1');
         window.location.href = `${urlBase}Home/PaymentMethod`;
         
         //$.ajax({

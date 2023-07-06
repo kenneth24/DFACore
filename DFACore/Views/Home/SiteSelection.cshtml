@@ -88,14 +88,14 @@
     }
 
     @@media only screen and (max-width: 1400px) {
-        .siteInfo {
-            margin-bottom: 150px!important;
+        .footerMarker {
+            margin-bottom: 100px!important;
         }
     }
     @@media only screen and (max-width: 600px) {
-        .siteInfo {
+       /* .footerMarker {
             margin-bottom: 0 !important;
-        }
+        }*/
     }
 </style>
 
@@ -136,8 +136,8 @@
                         <p class="text-center d-none d-md-block" style="padding: 8px;font-weight:600;font-size:16px;">Step 1 of 5</p>
                         <p class="text-center d-md-none" style="padding: 8px;font-weight:600;font-size:11px;">Step 1 of 5</p>
                     </div>
-
-                    <div class="mb-3 w-100 mt-4 d-flex flex-column justify-content-center">
+                    <span class="pull-right" style="font-size: 12px;font-style: italic;margin-right: 5px;">All fields are required</span>
+                    <div class="mb-3 w-100 d-flex flex-column justify-content-center">
                         <div class="home-container w-100 mx-auto">
                             <div class="card-body p-0">
                                 <div class="col-lg-12 col-md-12 col-sm-12 p-0">
@@ -269,7 +269,7 @@
                                             {
                                                 if (item.Id == 1)
                                                 {
-                                                    <option value="@item.Id">@item.BranchName</option>
+                                                    <option value="@item.Id" selected>@item.BranchName</option>
                                                 }
                                                 else
                                                 {
@@ -302,7 +302,7 @@
                                                     <p class="p-label bold mb-0 my-auto">Contact Number</p><b class="p-label hide-on-large">:</b>
                                                 </div>
                                                 <div class="col-lg-10 d-flex mb-2">
-                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto">@defaultBranch.ContactNumber</label>
+                                                    <b class="mr-4 bold show-on-large-only p-label">:</b><label id="lblProcessingSiteContactNumber" class="p-0 p-label mb-0 my-auto" style="color: black;">@defaultBranch.ContactNumber</label>
                                                 </div>
 
                                                 <div class="col-lg-2 d-flex mb-2">
@@ -366,14 +366,14 @@
                                             </div>
                                         </div>*@
 
-                                    <div class="fixed-bottom white-bg p-4">
+                                    <div class="fixed-bottom white-bg">
                                         <div class="hide-on-small">
-                                            <div class="card-body px-5 py-5 d-flex w-100">
+                                            <div class="card-body px-5  d-flex w-100">
                                                 <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase ml-auto mr-3">Back</button>
                                                 <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase mr-auto ml-3"> Next</button>
                                             </div>
                                         </div>
-                                        <div class="show-on-small-only mt-5 my-auto">
+                                        <div class="show-on-small-only mt-5 my-auto" style="padding:10px;">
                                             <button onclick="history.back()" id="backToStepOne" type="button" class="courier-btn btn btn-secondary text-uppercase w-100 mb-4">Back</button>
                                             <button type="submit" id="stepTwoNextBtn" class="courier-btn btn btn-primary text-uppercase w-100 mr-auto ml-3"> Next</button>
                                         </div>
