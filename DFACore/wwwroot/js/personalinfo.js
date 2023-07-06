@@ -791,9 +791,21 @@ function docOwnerStepFive() {
 
     loading.hide();
     //show declaration modal here
-    console.log('show declaration');
-    $("#declarationModal").modal("show");
-
+    //console.log('show declaration');
+    $.ajax({
+        type: "POST",
+        url: `${urlBase}Home/ApostilleSchedule`,
+        data: { 'model': record.Records },
+        success: function () {
+            loading.hide();
+            window.location.href = `${urlBase}Home/ApostilleSchedule`
+        },
+        error: function (data) {
+            loading.hide();
+        }
+    }).done(function (data) {
+        //console.log(data);
+    });
     //$.ajax({
     //    type: "POST",
     //    url: `${urlBase}Home/ApostilleSchedule`,
@@ -810,23 +822,23 @@ function docOwnerStepFive() {
     //});
 }
 
-btnAgreeDeclaration.on('click', function () {
-    loading.show();
-    $.ajax({
-        type: "POST",
-        url: `${urlBase}Home/ApostilleSchedule`,
-        data: { 'model': record.Records },
-        success: function () {
-            loading.hide();
-            window.location.href = `${urlBase}Home/ApostilleSchedule`
-        },
-        error: function (data) {
-            loading.hide();
-        }
-    }).done(function (data) {
-        //console.log(data);
-    });
-});
+//btnAgreeDeclaration.on('click', function () {
+//    loading.show();
+//    $.ajax({
+//        type: "POST",
+//        url: `${urlBase}Home/ApostilleSchedule`,
+//        data: { 'model': record.Records },
+//        success: function () {
+//            loading.hide();
+//            window.location.href = `${urlBase}Home/ApostilleSchedule`
+//        },
+//        error: function (data) {
+//            loading.hide();
+//        }
+//    }).done(function (data) {
+//        //console.log(data);
+//    });
+//});
 
 
 
@@ -1040,6 +1052,8 @@ function init() {
         //console.log(hasExpedite)
         loading.hide();
     });
+
+    $("#declarationModal").modal("show");
 }
 
 $('#submitButton, #submitButtonSM').on('click', function () {

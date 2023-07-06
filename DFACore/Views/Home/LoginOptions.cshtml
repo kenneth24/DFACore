@@ -43,9 +43,10 @@
             </div>
         </div>*@
 
-    <h2 class="blue-text bold mb-5 mt-0 h2">e-Apostille System</h2>
+    <h2 class="blue-text bold mb-2 mt-0 h2">e-Apostille System</h2>
+    <p class="bold mt-0 mb-4">Electronic Apostille | Appointment System | DocTrack | e-Payment</p>
     <p class="text-uppercase bold mb-0">Please Choose One:</p>
-    <small class="p-alt"><i>Pulumili ng isa:</i></small>
+    <small class="p-alt"><i>Pumili ng isa:</i></small>
 
     <div class="d-flex flex-column mt-3 options">
         <a asp-action="SiteSelection" asp-controller="Home" class="btn-blue text-white text-uppercase px-3 py-2 btn-ctm w-290 bold mx-auto" style="width : 300px!important">
@@ -56,18 +57,67 @@
             <img src="~/images/icons/track.png" class="mr-3"/>Track Application
         </a>
         <small class="p-alt"><i>Subaybayan ang aplikasyon</i></small>
-        <a asp-action="Cancellation" asp-controller="Home" class="btn-red text-white text-uppercase px-3 py-2 btn-ctm w-290 bold mx-auto mt-3" style="width : 300px!important">
+    @*    <a asp-action="Cancellation" asp-controller="Home" class="btn-red text-white text-uppercase px-3 py-2 btn-ctm w-290 bold mx-auto mt-3" style="width : 300px!important">
             <img src="~/images/icons/cancel.png" class="mr-3"/>Cancel Application
         </a>
-        <small class="p-alt"><i>Kanselahin ang aplikasyon</i></small>
+        <small class="p-alt"><i>Kanselahin ang aplikasyon</i></small>*@
     </div>
 </section>
+
+
+<!-- Terms of use -->
+<div class="modal fade" id="termsOfUseModal" tabindex="-1" role="dialog" aria-labelledby="termsOfUseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h3 class="blue-text bold mb-0 mt-2 h3 text-center w100">TERMS OF USE</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    1. The Apostille Application and Appointment System (AAAS) allows users to schedule and manage appointments. Users agree to use the System only for its intended purpose and in compliance with these Terms and any applicable laws and regulations.
+                </p>
+
+                <p>
+                    2. The AAAS allocate slots on a first come, first served basis. Users accept the responsibility for supplying, checking, and verifying the accuracy and correctness of the information they provide on this system in connection with their application.
+                </p>
+
+                <p>
+                    3. Incorrect information supplied may result in delay or rejection of authentication / Apostille application. Misrepresentation of the user supplying inaccurate information may be considered grounds for refusal / cancellation / forfeiture of authentication / Apostille application.
+                </p>
+
+                <p>
+                    4. Once the appointment is made, the applicable fees are non-refundable and the appointment slot/s cannot be transferred to another person regardless of cancellation or missed appointments.
+                </p>
+
+                <p style="font-style:italic;">
+                    By proceeding with this application, I understand that I am signifying my consent to the disclosure, collection, and use of my personal information and the data required under the Executive Order No. 582. My consent which effectively constitutes a waiver of any and all privacy rights pertaining to the disclosure, collection, and use of my Appointment System Website's Privacy Policy, the Data Privacy Act of 2012 and it's Implementing Rules and Regulations, and other pertinent DFA rules, regulation, policies on the matter.
+                </p>
+
+                <p>
+                    (Last updated: June 27, 2023)
+                </p>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary b150 m20r" data-dismiss="modal">DECLINE</button>
+                <button type="button" onclick="TermsAndConditionsAction(true)" class="btn btn-primary b150" data-dismiss="modal">I AGREE</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             localStorage.setItem('selectedSite', '1');
+            $('#termsOfUseModal').modal('show');
+            $('#myModal').modal('handleUpdate')
         });
     </script>
 }

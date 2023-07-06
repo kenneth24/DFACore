@@ -11,12 +11,14 @@ $(document).ready(function () {
         lblProcessingSiteContactNumber = $('#lblProcessingSiteContactNumber'),
         lblProcessingSiteEmail = $('#lblProcessingSiteEmail'),
         mapAddressButton = $('#mapAddress')
-        addressInput = $('#address'),
+    addressInput = $('#address'),
         hasExpiditeInput = $('#HasExpidite'),
         branches = [];
 
     getBranches();
-    
+
+
+
     documentStatusRadio.change(function () {
         let $this = $(this),
             value = $this.val(),
@@ -76,11 +78,24 @@ $(document).ready(function () {
                     lblProcessingSiteEmail.text(branchDetail.email);
                     addressInput.val(branchDetail.branchAddress);
                 }
+                //check if ph is selected on back btn
+                let $this = $('input[type=radio][name=DocumentStatus]:checked'),
+                    value = $this.val(),
+                    philippinesOptions = $('option.ph');
+
+                //siteButton.val('1');
+
+                if (value != 'Abroad') {
+                    philippinesOptions.hide();
+                }
+                else {
+                    philippinesOptions.show();
+                }
             } else {
                 // The request encountered an error
                 console.log("Error: " + status);
             }
-            
+
         });
     };
 

@@ -228,14 +228,17 @@ body {
 
 /*For medium screens and below*/
 @media only screen and (max-width: 1000px) {
-    .transactionQuantity {
-        width: 50px !important;
-        height: 30px !important;
-    }
-
     .small {
         width: 50px !important;
         height: 30px !important;
+    }
+    .transactionQuantity {
+        width: 50px !important;
+        height: 45px !important;
+    }
+
+    .h25r {
+        height: 45px !important;
     }
     /*
     #documentOwners {
@@ -551,8 +554,4 @@ table th {
 
 .m20r {
     margin-right: 20px!important;
-}
-
-.h25r {
-    height: 2.5rem!important;
 }
