@@ -555,3 +555,12 @@ table th {
 .m20r {
     margin-right: 20px!important;
 }
+
+.docListItem, .partialItem {
+    background-color: #e6f2ff !important;
+    padding: 4px 20px !important;
+    padding-right: 40px!important;
+    border-radius: 9px !important;
+    width: fit-content !important;
+    font-size: 0.875rem !important;
+}

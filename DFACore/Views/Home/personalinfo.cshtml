@@ -258,6 +258,7 @@
                                                     <span class="text-danger dateofbirthValidation bold p-label"></span>
                                                 </div>
                                             }
+
                                             <div class="col-md-4 col-sm-12">
                                                 <label class="p-label bold mb-0" asp-for="ContactNumber">Contact Number <span class="p-alt"><i>(Numerong tawagan)</i></span>  <span class="red">*</span></label>
                                                 <input asp-for="ContactNumber" class="form-control numberInput " type="tel" min="1" />
@@ -290,17 +291,67 @@
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div id="documentOwners">
+                        </div>
+
+                        <section class="addDocumentOwnerContainer">
+                            <div class="doc-action d-flex text-center w-100">
+                                @if (ViewBag.DocumentType != "Authorized")
+                                {
+                                    <div class="d-flex flex-column mx-auto mt-4">
+                                        <button type="button" class="btn btn-primary text-uppercase mb-1 px-5" data-toggle="modal" data-target="#documentTypesModal">ADD DOCUMENTS</button>
+                                        <p class="p-alt mb-0 p-label"><i>Magdagdag ng dokumento</i></p>
+                                    </div>
+
+                                    //<button type="button" class="btn p-0 mr-3" data-toggle="modal" data-target="#documentTypesModal">
+                                    //    <img src="~/images/icons/adddoc.png" />
+                                    //</button>
+
+                                    //<div class="d-flex flex-column mr-5">
+                                    //    <p class="bold mb-0"><i>Add documents</i></p>
+                                    //    <p class="p-alt mb-0 p-label"><i>Magdagdag ng dokumento</i></p>
+                                    //</div>
+
+                                }
+
+                                @if (ViewBag.DocumentType == "Authorized")
+                                {
+                                    <div class="d-flex">
+                                        <button id="addDocumentOwnerBtn" type="button" class="btn p-0 mr-3">
+                                            <img src="~/images/icons/addowner.png" />
+                                        </button>
+
+                                        <div class="d-flex flex-column mr-5">
+                                            <p class="bold mb-0"><i>Add document owner</i></p>
+                                            <p class="p-alt mb-0 p-label"><i>Magdagdag ng aplikante</i></p>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+
+                        </section>
+
+                        <div class="mt-4">
+
                             @if (ViewBag.DocumentType != "Authorized")
                             {
+                                <div id="docList" class="d-flex w-100">
+                                    
+                                </div>
                                 <span class="text-danger documentsDataValidation bold p-label"></span>
-                                <div class="mb-4">
+                                <div class="mb-4" hidden>
                                     <div class="position-relative  mx-3 px-0 mb-3">
                                         <div id="documentList" class="border" style="
-                                                padding: 10px;
-                                                height: 150px;
-                                                overflow-y: scroll;
-                                                position: relative;
-                                                top: 10px;">
+                                                                        padding: 10px;
+                                                                        height: 150px;
+                                                                        overflow-y: scroll;
+                                                                        position: relative;
+                                                                        top: 10px;">
                                             <div class="px-5">
                                                 <table class="table" id="documentsTable">
                                                     <tr>
@@ -321,46 +372,11 @@
                                         <div class="bg-secondary px-5 position-absolute w-100 total-number">
                                             <p class="text-left text-white bold p-label py-2 mb-0">Total Number of Documents for Apostolization: <span id="documentsCount">0</span></p>
                                         </div>
-
                                     </div>
 
                                 </div>
                             }
-
                         </div>
-                        <div id="documentOwners">
-                        </div>
-
-                        <section class="addDocumentOwnerContainer">
-                            <div class="doc-action d-flex">
-                                @if (ViewBag.DocumentType != "Authorized")
-                                {
-                                    <button type="button" class="btn p-0 mr-3" data-toggle="modal" data-target="#documentTypesModal">
-                                        <img src="~/images/icons/adddoc.png" />
-                                    </button>
-
-                                    <div class="d-flex flex-column mr-5">
-                                        <p class="bold mb-0"><i>Add documents</i></p>
-                                        <p class="p-alt mb-0 p-label"><i>Magdagdag ng dokumento</i></p>
-                                    </div>
-
-                                }
-
-                                @if (ViewBag.DocumentType == "Authorized")
-                                {
-                                    <div class="d-flex">
-                                        <button id="addDocumentOwnerBtn" type="button" class="btn p-0 mr-3">
-                                            <img src="~/images/icons/addowner.png" />
-                                        </button>
-
-                                        <div class="d-flex flex-column mr-5">
-                                            <p class="bold mb-0"><i>Add document owner</i></p>
-                                            <p class="p-alt mb-0 p-label"><i>Magdagdag ng aplikante</i></p>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </section>
 
                     </div>
 

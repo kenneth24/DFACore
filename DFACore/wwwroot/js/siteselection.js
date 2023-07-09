@@ -45,9 +45,9 @@ $(document).ready(function () {
             branchDetail = branches.filter(x => x.id == selectedSite)[0];
 
 
-        //console.log(branchDetail);
+        ////console.log(branchDetail);
         hasExpiditeInput.val(branchDetail.hasExpidite ? 1 : 0);
-        //console.log(hasExpiditeInput.val());
+        ////console.log(hasExpiditeInput.val());
 
         mapAddressButton.attr('href', branchDetail.mapAddress);
         lblProcessingSiteAddress.text(branchDetail.branchAddress);
@@ -93,7 +93,7 @@ $(document).ready(function () {
                 }
             } else {
                 // The request encountered an error
-                console.log("Error: " + status);
+                //console.log("Error: " + status);
             }
 
         });

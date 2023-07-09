@@ -96,7 +96,7 @@ applicationTypeSelection.hide();
 ownerDocument.hide();
 authorizeDocument.hide();
 init();
-//console.log($('#appointmentSchedule').val());
+////console.log($('#appointmentSchedule').val());
 
 siteAndScheduleButton.on('click', function () {
     if ($('#appointmentSchedule').val() == '') {
@@ -120,7 +120,7 @@ ownerButton.on('click', function () {
         $("#ChckIfhasExpedite").text("");
 
         $('.transactionQuantity.expedite').val("0");
-        //console.log('hasExpedite');
+        ////console.log('hasExpedite');
         $('.transactionQuantity.expedite').attr('disabled', false);
         $('.transactionQuantity.regular').attr('disabled', false);
     }
@@ -133,7 +133,7 @@ authorizedButton.on('click', function () {
     loading.show();
     applicantType = 1;
     applicationTypeSelection.hide();
-    //console.log('pass');
+    ////console.log('pass');
     authorizeDocument.show();
     addDocumentOwnerBtn.click();
     loading.hide();
@@ -168,7 +168,7 @@ docTypeSelect.on('change', function () {
         expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
         baseUrl = urlBase;//window.location.origin;
 
-    //console.log(selectedData);
+    ////console.log(selectedData);
     documentTypeSample.children().remove();
     if (selectedData != null) {
         // change displayed document info
@@ -186,7 +186,7 @@ docTypeSelect.on('change', function () {
         if (hasExpedite) {
             $("#" + expediteQuantity.id).val("0");
             expediteQuantityElement.attr("disabled", false);
-            //console.log('hererhehrehehr');
+            ////console.log('hererhehrehehr');
         }
 
         regularQuantityElement.attr('min', regularQuantity.min);
@@ -240,8 +240,8 @@ selectDocumentsBtn.on('click', function () {
         return;
     }
 
-    //console.log('passed here');
-    //console.log(documentObject);
+    ////console.log('passed here');
+    ////console.log(documentObject);
     var docIndex = documentObject.findIndex(x => x.Name == $this.val());
     var doc = documentObject.find(x => x.Name == $this.val());
 
@@ -292,12 +292,29 @@ selectDocumentsBtn.on('click', function () {
             newDocument.push(value);
         }
     });
-    //console.log(tbodyContent);
+
+    //new UI
+    $('.docListItem').remove();
+    var numberOfDocuments = 0;
+    var newDocument = [];
+
+    $.each(documentObject, function (index, value) {
+        var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+        if (isExists == undefined) {
+            //$('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+            $('#docList').after(`<div class="docListItem text-primary bold mx-auto mb-3" data-name="${value.Name}" data-transac="${value.Transaction}"><i class="deleteItem fa fa-times-circle text-danger mr-4 pointer" aria-hidden="true" onclick="deleteItem($(this))"></i> (${value.Quantity})  (${value.Transaction.substring(0,3)})  (${value.Name})</div>`);
+                
+            numberOfDocuments += value.Quantity;
+            newDocument.push(value);
+        }
+    });
+
+    ////console.log(tbodyContent);
     //$('#documentsTable tbody').append(tbodyContent);
     $('#documentsCount').text(numberOfDocuments);
     $('#apostileData').val(JSON.stringify(newDocument));
-    //console.log(JSON.stringify(newDocument));
-    //console.log(documentObject.length);
+    ////console.log(JSON.stringify(newDocument));
+    ////console.log(documentObject.length);
     if (documentObject.length === 0)
         alert('Please ADD and/or INSERT number of documents.');
     else
@@ -305,6 +322,40 @@ selectDocumentsBtn.on('click', function () {
 
     loading.hide();
 });
+
+function deleteItem (e) {
+
+    let parent = e.parent(),
+        name = parent.attr('data-name'),
+        transact = parent.attr('data-transac');
+
+    //console.log(name);
+    //console.log(transact);
+
+    var filteredIndex = documentObject.findIndex(x => x.Name == name && x.Transaction == transact);
+    documentObject.splice(filteredIndex, 1);
+
+    $('.docListItem').remove();
+    var numberOfDocuments = 0;
+    var newDocument = [];
+
+    //documentObject = filtered;
+
+    $.each(documentObject, function (index, value) {
+        var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+        if (isExists == undefined) {
+            //$('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+            $('#docList').after(`<div class="docListItem text-primary bold mx-auto mb-3" data-name="${value.Name}" data-transac="${value.Transaction}"><i class="deleteItem fa fa-times-circle text-danger mr-4 pointer" aria-hidden="true" onclick="deleteItem($(this))"></i> (${value.Quantity})  (${value.Transaction.substring(0, 3)})  (${value.Name})</div>`);
+
+            numberOfDocuments += value.Quantity;
+            newDocument.push(value);
+        }
+    });
+
+
+    $('#documentsCount').text(numberOfDocuments);
+    $('#apostileData').val(JSON.stringify(newDocument));
+}
 
 backToStepThreeBtn.on('click', function () {
     loading.show();
@@ -341,14 +392,14 @@ addDocumentOwnerBtn.on('click', function () {
         loading.hide();
         var errorModal = $('#errorModal');
         var errorMessageElement = $('.modal #errorMessage');
-        //console.log(errorMessageElement);
+        ////console.log(errorMessageElement);
         errorMessageElement.text('You have exceeded the maximum no. of document owners!');
         errorModal.modal('show');
         return;
     }
 
     loading.show();
-    //console.log('clicked');
+    ////console.log('clicked');
     docOwner += 1;
     window['documentObject' + docOwner] = [];
 
@@ -391,8 +442,8 @@ addDocumentOwnerBtn.on('click', function () {
                     expediteQuantity = selectedData.quantities.filter(x => x.name == 'Expedite')[0],
                     baseUrl = urlBase; //window.location.origin;
 
-                //console.log('docOwner');
-                //console.log(docOwnerBase);
+                ////console.log('docOwner');
+                ////console.log(docOwnerBase);
                 $(`#documentTypeSample${docOwnerBase}`).children().remove();
                 if (selectedData != null) {
                     // change displayed document info
@@ -403,7 +454,7 @@ addDocumentOwnerBtn.on('click', function () {
                         $(`#documentInfoText${docOwnerBase}`).text(selectedData.description);
                     }
 
-                    //console.log(regularQuantity);
+                    ////console.log(regularQuantity);
 
 
                     $(`#documentQuantity${docOwnerBase} .regular`).attr('id', `${regularQuantity.id}${docOwnerBase}`);
@@ -438,15 +489,15 @@ addDocumentOwnerBtn.on('click', function () {
             $(`#selectDocumentsBtnModal${docOwner}`).on('click', function () {
                 let docOwnerBase = $(this).attr('id').replace(/[^\d.]/g, ''),
                     $this = $(`#docTypeSelect${docOwnerBase}`);
-                selected = $this.find(":selected"),
+                    selected = $this.find(":selected"),
                     id = selected.attr('id').replace(docOwnerBase.toString(), ""),
                     regularId = $(`#documentQuantity${docOwnerBase} .regular`).attr('id'),
                     expediteId = $(`#documentQuantity${docOwnerBase} .expedite`).attr('id'),
                     regularQuantity = parseInt($(`#documentQuantity${docOwnerBase} .regular`).val()),
                     expediteQuantity = parseInt($(`#documentQuantity${docOwnerBase} .expedite`).val());
 
-                //console.log('docOwner');
-                //console.log(docOwnerBase);
+                ////console.log('docOwner');
+                ////console.log(docOwnerBase);
 
                 if (regularQuantity > 51 || expediteQuantity > 51) {
                     loading.hide();
@@ -508,13 +559,31 @@ addDocumentOwnerBtn.on('click', function () {
                         newDocument.push(value);
                     }
                 });
-                //console.log(tbodyContent);
+
+                //new UI
+                $(`.docListItem${docOwnerBase}`).remove();
+                var numberOfDocuments = 0;
+                var newDocument = [];
+
+                $.each(window['documentObject' + docOwnerBase], function (index, value) {
+                    var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+                    if (isExists == undefined) {
+                        //$('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+                        $(`#docList${docOwnerBase}`).after(`<div class="docListItem${docOwnerBase} partialItem text-primary bold mx-auto mb-3" data-base="${docOwnerBase}" data-name="${value.Name}" data-transac="${value.Transaction}"><i class="deleteItemPartial fa fa-times-circle text-danger mr-4 pointer" aria-hidden="true" onclick="deleteItemPartial($(this))"></i> (${value.Quantity})  (${value.Transaction.substring(0, 3)})  (${value.Name})</div>`);
+
+                        numberOfDocuments += value.Quantity;
+                        newDocument.push(value);
+                    }
+                });
+
+
+                ////console.log(tbodyContent);
                 //$('#documentsTable tbody').append(tbodyContent);
                 $(`#documentsCount${docOwnerBase}`).text(numberOfDocuments);
                 $(`#apostileData${docOwnerBase}`).val(JSON.stringify(newDocument));
-                //console.log(JSON.stringify(newDocument));
-                //console.log('DOC');
-                //console.log(window['documentObject' + docOwnerBase]);
+                ////console.log(JSON.stringify(newDocument));
+                ////console.log('DOC');
+                ////console.log(window['documentObject' + docOwnerBase]);
                 if (window['documentObject' + docOwnerBase].length === 0)
                     alert('Please ADD and/or INSERT number of documents.');
                 else
@@ -522,9 +591,14 @@ addDocumentOwnerBtn.on('click', function () {
 
             });
 
+            $(`#removeDocumentOwnerBtn${docOwner}`).on('click', function () {
+                $(`#documentOwners-${docOwner}`).remove();
+                docOwner = docOwner - 1;
+                $(`#addDocumentOwnerContainer${docOwner}`).show();
+            });
 
             if (hasExpedite) {
-                //console.log('hasExpedite');
+                ////console.log('hasExpedite');
                 $('.transactionQuantity.expedite').attr('disabled', false);
                 $('.transactionQuantity.regular').attr('disabled', false);
             }
@@ -535,6 +609,44 @@ addDocumentOwnerBtn.on('click', function () {
     loading.hide();
 
 });
+
+
+function deleteItemPartial(e) {
+    let parent = e.parent(),
+        docOwnerBase = parent.attr('data-base'),
+        name = parent.attr('data-name'),
+        transact = parent.attr('data-transac');
+
+    //console.log(docOwnerBase);
+    //console.log(name);
+    //console.log(transact);
+
+    var filteredIndex = window['documentObject' + docOwnerBase].findIndex(x => x.Name == name && x.Transaction == transact);
+    window['documentObject' + docOwnerBase].splice(filteredIndex, 1);
+    //console.log(filteredIndex);
+    //console.log(window['documentObject' + docOwnerBase]);
+    $(`.docListItem${docOwnerBase}`).remove();
+    var numberOfDocuments = 0;
+    var newDocument = [];
+
+    //window['documentObject' + docOwnerBase] = filtered;
+
+    $.each(window['documentObject' + docOwnerBase], function (index, value) {
+        var isExists = newDocument.find(e => e.Name == value.Name && e.Transaction == value.Transaction);
+        if (isExists == undefined) {
+            //$('#documentsTable tr:last').after('<tr><td>'.concat(value.Name, '</td><td>', value.Quantity, '</td><td>', value.Transaction, '</td></tr>'));
+            $(`#docList${docOwnerBase}`).after(`<div class="docListItem${docOwnerBase} partialItem text-primary bold mx-auto mb-3" data-base="${docOwnerBase}" data-name="${value.Name}" data-transac="${value.Transaction}"><i class="deleteItemPartial fa fa-times-circle text-danger mr-4 pointer" aria-hidden="true" onclick="deleteItemPartial($(this))"></i> (${value.Quantity})  (${value.Transaction.substring(0, 3)})  (${value.Name})</div>`);
+
+            numberOfDocuments += value.Quantity;
+            newDocument.push(value);
+        }
+    });
+
+
+    $(`#documentsCount${docOwnerBase}`).text(numberOfDocuments);
+    $(`#apostileData${docOwnerBase}`).val(JSON.stringify(newDocument));
+}
+
 
 $('.gotoApostileSchedule').on('click', function () {
     //alert("test3");
@@ -561,7 +673,7 @@ $('.gotoApostileSchedule').on('click', function () {
 
         }
     }).done(function (data) {
-        //console.log(data);
+        ////console.log(data);
     });
 
     //event.preventDefault();
@@ -690,7 +802,7 @@ function getPrices() {
 function SetCode(codeParam, ifHasTerms) {
     code = codeParam;
     hasTermsAndConditions = ifHasTerms;
-    //console.log(ifHasTerms);
+    ////console.log(ifHasTerms);
 }
 
 function docOwnerStepFive() {
@@ -791,7 +903,7 @@ function docOwnerStepFive() {
 
     loading.hide();
     //show declaration modal here
-    //console.log('show declaration');
+    ////console.log('show declaration');
     $.ajax({
         type: "POST",
         url: `${urlBase}Home/ApostilleSchedule`,
@@ -804,7 +916,7 @@ function docOwnerStepFive() {
             loading.hide();
         }
     }).done(function (data) {
-        //console.log(data);
+        ////console.log(data);
     });
     //$.ajax({
     //    type: "POST",
@@ -818,7 +930,7 @@ function docOwnerStepFive() {
     //        loading.hide();
     //    }
     //}).done(function (data) {
-    //    //console.log(data);
+    //    ////console.log(data);
     //});
 }
 
@@ -836,7 +948,7 @@ function docOwnerStepFive() {
 //            loading.hide();
 //        }
 //    }).done(function (data) {
-//        //console.log(data);
+//        ////console.log(data);
 //    });
 //});
 
@@ -991,23 +1103,23 @@ function authorizedStepFive() {
 
     loading.hide();
     //show declaration modal here
-    console.log('show declaration');
-    $("#declarationModal").modal("show");
+    ////console.log('show declaration');
+    //$("#declarationModal").modal("show");
 
-    //$.ajax({
-    //    type: "POST",
-    //    url: `${urlBase}Home/ApostilleSchedule`,
-    //    data: { 'model': record.Records },
-    //    success: function () {
-    //        loading.hide();
-    //        window.location.href = `${urlBase}Home/ApostilleSchedule`
-    //    },
-    //    error: function (data) {
-    //        loading.hide();
-    //    }
-    //}).done(function (data) {
+    $.ajax({
+        type: "POST",
+        url: `${urlBase}Home/ApostilleSchedule`,
+        data: { 'model': record.Records },
+        success: function () {
+            loading.hide();
+            window.location.href = `${urlBase}Home/ApostilleSchedule`
+        },
+        error: function (data) {
+            loading.hide();
+        }
+    }).done(function (data) {
 
-    //});
+    });
 
 }
 
@@ -1037,7 +1149,7 @@ function init() {
     loading.show();
     $.get(`${urlBase}Home/GetInfo`, function (data, status) {
         info = data;
-        //console.log(info);
+        ////console.log(info);
         hasExpedite = info.hasExpedite
         code = info.applicationCode;
         if (hasExpedite)
@@ -1049,7 +1161,7 @@ function init() {
         else {
             applicantType = 0;
         }
-        //console.log(hasExpedite)
+        ////console.log(hasExpedite)
         loading.hide();
     });
 
