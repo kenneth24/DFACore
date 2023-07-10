@@ -837,7 +837,7 @@ function docOwnerStepFive() {
         loading.hide();
         return;
     }
-
+    console.log(documentObject);
     if (documentObject.length <= 0) {
         documentsDataValidation.text(documentObject.length <= 0 ? 'Please add documents for apostillization.' : '');
         loading.hide();
@@ -960,6 +960,9 @@ function authorizedStepFive() {
     docuTotalCount = 0;
     ownerContainer.attr('style', 'display: none');
     authContainer.show();
+
+    let hasErrorInField = false;
+
     let fname = $('#FirstName'),
         lname = $('#LastName'),
         dateOfBirth = $('#DateOfBirth'),
@@ -976,44 +979,45 @@ function authorizedStepFive() {
     if (fname.val() == '' ||
         lname.val() == '' ||
         dateOfBirth.val() == '' ||
-        contactNumber.val() == '' ||
-        fNamePartial.val() == '' ||
-        lNamePartial.val() == '' ||
-        dateOfbirthPartial.val() == '' ||
-        countrydestinationPartial.val() == '') {
+        contactNumber.val() == '') {
 
         fnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
-        lnameValidation.text(fname.val() == '' ? 'This field is required.' : '');
-        dateOfBirthValidation.text(fname.val() == '' ? 'This field is required.' : '');
-        contactNumberValidation.text(fname.val() == '' ? 'This field is required.' : '');
+        lnameValidation.text(lname.val() == '' ? 'This field is required.' : '');
+        dateOfBirthValidation.text(dateOfBirth.val() == '' ? 'This field is required.' : '');
+        contactNumberValidation.text(contactNumber.val() == '' ? 'This field is required.' : '');
 
-        fNamePartial.each(function () {
-            let $this = $(this);
-            let span = $this.siblings('.fNamePartialValidation');
-            span.text($this.val() == '' ? 'This field is required.' : '');
-        });
-
-        lNamePartial.each(function () {
-            let $this = $(this);
-            let span = $this.siblings('.lNamePartialValidation');
-            span.text($this.val() == '' ? 'This field is required.' : '');
-        });
-
-        dateOfbirthPartial.each(function () {
-            let $this = $(this);
-            let span = $this.siblings('.dateOfbirthPartialValidation');
-            span.text($this.val() == '' ? 'This field is required.' : '');
-        });
-
-        countrydestinationPartial.each(function () {
-            let $this = $(this);
-            let span = $this.siblings('.countrydestinationPartialValidation');
-            span.text($this.val() == '' ? 'This field is required.' : '');
-        });
-
-        loading.hide();
-        return;
+        
+        hasErrorInField = true;
+        
     }
+
+    fNamePartial.each(function () {
+        let $this = $(this);
+        let span = $this.siblings('.fNamePartialValidation');
+        span.text($this.val() == '' ? 'This field is required.' : '');
+        if ($this.val() == '') hasErrorInField = true;
+    });
+
+    lNamePartial.each(function () {
+        let $this = $(this);
+        let span = $this.siblings('.lNamePartialValidation');
+        span.text($this.val() == '' ? 'This field is required.' : '');
+        if ($this.val() == '') hasErrorInField = true;
+    });
+
+    dateOfbirthPartial.each(function () {
+        let $this = $(this);
+        let span = $this.siblings('.dateOfbirthPartialValidation');
+        span.text($this.val() == '' ? 'This field is required.' : '');
+        if ($this.val() == '') hasErrorInField = true;
+    });
+
+    countrydestinationPartial.each(function () {
+        let $this = $(this);
+        let span = $this.siblings('.countrydestinationPartialValidation');
+        span.text($this.val() == '' ? 'This field is required.' : '');
+        if ($this.val() == '') hasErrorInField = true;
+    });
 
     let hasEmptyData = false;
     for (var i = 1; i <= docOwner; i++) {
@@ -1023,10 +1027,12 @@ function authorizedStepFive() {
         if (count == 0) hasEmptyData = true;
     }
 
-    if (hasEmptyData) {
+    if (hasErrorInField || hasEmptyData) {
         loading.hide();
         return;
     }
+
+    
 
     let totalFees = 0;
     let documentsParent = $('#documentsContainer');

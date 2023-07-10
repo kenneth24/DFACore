@@ -66,7 +66,7 @@
 
 
 <!-- Terms of use -->
-<div class="modal fade" id="termsOfUseModal" tabindex="-1" role="dialog" aria-labelledby="termsOfUseModalLabel" aria-hidden="true">
+@*<div class="modal fade" id="termsOfUseModal" tabindex="-1" role="dialog" aria-labelledby="termsOfUseModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -109,15 +109,15 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             localStorage.setItem('selectedSite', '1');
-            $('#termsOfUseModal').modal('show');
-            $('#myModal').modal('handleUpdate')
+            //$('#termsOfUseModal').modal('show');
+            //$('#myModal').modal('handleUpdate')
         });
     </script>
 }
